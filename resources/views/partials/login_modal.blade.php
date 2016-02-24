@@ -8,7 +8,7 @@
 	      </div>
 	      <div class="modal-body">
 			<div class="form-group">
-				<input type="text" class="form-control form-control-login" name="username" id="username" placeholder="Username" aria-describedby="sizing-addon2">
+				<input type="text" class="form-control form-control-login" name="email" id="email" placeholder="Email" aria-describedby="sizing-addon2">
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control form-control-login" name="password" id="password" placeholder="Password" aria-describedby="sizing-addon2">			

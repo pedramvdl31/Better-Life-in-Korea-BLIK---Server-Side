@@ -1,5 +1,11 @@
 <div class="modal fade" id="register-modal">
 	{!! Form::open(array('action' => 'UsersController@postRegistration','id'=>'reg-form', 'class'=>'','role'=>"form")) !!}
+	<style type="text/css">
+	.error-feedback{
+		color: #d9534f;
+	}
+
+	</style>
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -10,15 +16,15 @@
 
 			<div class="form-group">
 	      		<input type="text" class="form-control form-control-login" id="email" name="email" placeholder="Email *" aria-describedby="sizing-addon2">
+	      		<span class="error-feedback email-error-feedback hide">Not Matched</span>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control form-control-login" name="username" id="username" placeholder="Username" aria-describedby="sizing-addon2">
-			</div>
-			<div class="form-group">
-				<input type="password" class="form-control form-control-login" name="password" id="password" placeholder="Password" aria-describedby="sizing-addon2">			
+				<input type="password" class="form-control form-control-login" name="password" id="password" placeholder="Password" aria-describedby="sizing-addon2">
+				<span class="error-feedback password-error-feedback hide">Not Matched</span>	
 			</div>
 			<div class="form-group">
 				<input type="password" class="form-control form-control-login"  name="password_again" id="password_again" placeholder="Re-Enter Password" aria-describedby="sizing-addon2">
+				<span class="error-feedback password-again-error-feedback hide">Not Matched</span>
 			</div>
 
 	      </div>
@@ -26,7 +32,7 @@
     		<a class="btn btn-link-1 btn-link-1-facebook" href="auth/facebook">
         		<i class="fa fa-facebook"></i>  Sign Up with Facebook
         	</a>
-	        <button type="submit" id="login-btn-1" class="btn btn-warning pull-right login-btn">Register</button>
+	        <a class="btn modal-btn btn-primary" id="submit-btn">Register</a>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

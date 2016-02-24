@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div><!--/header_top-->
-        
+        @include('flash::message')
         <div class="header-middle"><!--header-middle-->
             <div class="container">
                 <div class="row">

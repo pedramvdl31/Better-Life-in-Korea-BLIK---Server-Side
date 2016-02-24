@@ -12,6 +12,7 @@ use Route;
 use Response;
 use Auth;
 use URL;
+use Mail;
 use Session;
 use Laracasts\Flash\Flash;
 
@@ -46,67 +47,25 @@ class UsersController extends Controller
         if ($validator->passes()) {
             $user = new User;
             $user->roles = 5;
-            $user->username = Input::get('username');
-            $user->firstname = Input::get('first_name');
-            $user->lastname = Input::get('last_name');
             $user->email = Input::get('email');
-            $user->age = Input::get('age');
-            // $user->country = Input::get('country');
-            // $user->city = Input::get('city');
-            // $user->district_gu = Input::get('district');
-            // $user->area_dong = Input::get('area');
-            // $user->unit = Input::get('unit');
-            // $user->apartment = Input::get('apartment');
-            // $user->phone = str_replace("-","",Input::get('phone'));
-            // $user->zipcode = Input::get('zipcode');
-            // $user->company = (Input::get('company'))?Input::get('company'):null;
             $user->password = Hash::make(Input::get('password')); 
-            // $user->address_array = Input::get('address')?json_encode(Input::get('address')):null; 
-
-
-            //REFORMATE IMAGE NAME
-            if (Input::get('profile-image')) {
-                $imagePath = public_path("assets/images/profile-images/perm/");
-                $now_time = time();
-                $imagename = Input::get('profile-image');
-                $image_ex = explode('.', $imagename);
-                $image_type = $image_ex[1];
-                $new_imagename = $now_time . '-' . $imagename[0];
-                $final_path = preg_replace('#[ -]+#', '-', $new_imagename);
-            }
-
-            $user->profile_image = Input::get('profile-image')?$final_path.'.'.$image_type:'blank_male.png';           
+            $rand_sting = Job::generateRandomString(25);
+            $user->verification_token = $rand_sting;
              if($user->save()) { // Save the user and redirect to owners home
-
+                $rand = Request::root().'/verify-email/'.$rand_sting;
+                $mailer_return = Job::VerificationMailer(Input::get('email'),$rand);
                 //ASSIGN LEVEL TWO ACL (GUESTS)
                 $new_rule = new RoleUser;
                 $new_rule->role_id = 5;
                 $new_rule->user_id = $user->id;
 
                 if($new_rule->save()) {
-                    if (Input::get('profile-image')) {
-                        if( ! \File::isDirectory($imagePath) ) {
-                            \File::makeDirectory($imagePath, 493, true);
-                        }
-                        if (!is_writable(dirname($imagePath))) {
-                            $status = 401;
-                            return Response::json(array(
-                                "error" => 'Destination Unwritable'
-                                ));
-                        } else {
-                            $oldpath = public_path("assets/images/profile-images/tmp/".Input::get('profile-image'));
-                            $newpath = public_path("assets/images/profile-images/perm/".$final_path.'.'.$image_type);
-                            rename($oldpath, $newpath);
-                        }
-                    }
-                    if (Auth::attempt(array('username'=> $user->username, 'password'=>Input::get('password')))) {
+                    if (Auth::attempt(array('email'=> $user->email, 'password'=>Input::get('password')),true)) {
                         $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-                        
+                        Flash::success('You have been successfully registered as '.$user->email.'! An activation email has been sent to your email address');
                         if(isset($redirect)) {
-                            Flash::success('You have successfully been registered as '.$user->username.'!');
                             return Redirect::to(Session::get('redirect'));
                         } else {
-                            Flash::success('You have successfully been registered as '.$user->username.'!');
                             //SESION DOESN'T EXIST
                             return Redirect::route('home_index');
                         }
@@ -124,6 +83,22 @@ class UsersController extends Controller
         }
 
     }
+
+    public function getEmailVerify($id=null)
+    {
+        $user = User::where('verification_token',$id)->first();
+        if (isset($user)) {
+            $user->status = 1;
+            $user->verification_token = '1';
+            $user->save();
+            Flash::success('Thank you for verifying your email. Hope you enjoy our services!');
+        } else {
+            Flash::Error('This link has been expired. Please request a new verification email.');
+        }
+        
+        return Redirect::route('home_index');
+    }
+
     public function getLogin()
     {
         return view('users.login')
@@ -131,12 +106,12 @@ class UsersController extends Controller
     }
     public function postLogin()
     {
-        $username = Input::get('username');
+        $email = Input::get('email');
         $password = Input::get('password');
         $remember = Input::get('remember');
 
-        if (Auth::attempt(array('username'=>$username, 'password'=>$password),isset($remember)?true:false)) {
-            Flash::success('Welcome back '.$username.'!');
+        if (Auth::attempt(array('email'=>$email, 'password'=>$password),isset($remember)?true:false)) {
+            Flash::success('Welcome back '.$email.'!');
             return redirect()->action('HomeController@postIndex');
         } else { //LOGING FAILED
             if (isset($direct_login)) {
@@ -153,16 +128,13 @@ class UsersController extends Controller
  
     public function postLoginModal()
     {
-        $username = Input::get('username');
+        $email = Input::get('email');
         $password = Input::get('password');
         $remember = Input::get('remember');
-        if (isset($remember)) {
-            Job::dump('dd');
-        }
-        if (Auth::attempt(array('username'=>$username, 'password'=>$password),isset($remember)?true:false)) {
+        if (Auth::attempt(array('email'=>$email, 'password'=>$password),isset($remember)?true:false)) {
             $redirect = (Session::get('redirect_flash')) ? Session::get('redirect_flash') : null; 
+            Flash::success('Welcome back '.$email.'!');
             if(isset($redirect)) {
-                Flash::success('Welcome back '.$username.'!');
                 return Redirect::to($redirect);
             } else { //SESSION DOESN'T EXIST
                 return Redirect::action('HomeController@getHomepage');
@@ -237,26 +209,11 @@ class UsersController extends Controller
 
 public function postValidate()
 {
+    if(Request::ajax()){
+        $reg_form = null;
+        parse_str(Input::get('reg_form'), $reg_form);
+        $validation_results = Job::validate_data($reg_form);
     
-    $reg_form = null;
-    parse_str(Input::get('reg_form'), $reg_form);
-
-    $validation_results = Job::validate_data($reg_form);
-    if(Request::ajax()){
-        return Response::json(array(
-            'status' => 200,
-            'validation_callback' => $validation_results
-            ));
-    }
-}
-
-public function postValidateSales()
-{
-    $reg_form = null;
-    parse_str(Input::get('reg_form'), $reg_form);
-
-    $validation_results = Job::validate_data_sales($reg_form['address_add_user']);
-    if(Request::ajax()){
         return Response::json(array(
             'status' => 200,
             'validation_callback' => $validation_results

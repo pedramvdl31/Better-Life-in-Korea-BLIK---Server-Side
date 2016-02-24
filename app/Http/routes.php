@@ -13,7 +13,7 @@
 
 Route::group(['middleware' => 'beforeFilter'], function () {
 
-	//FACEBOOK
+	// WEBSITE PUBLIC PAGES
 	Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
 
@@ -24,6 +24,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('users/return-users',  ['uses' => 'UsersController@postReturnUsers', 'middleware' => ['acl:admins/acl/view']]);
 	Route::post('users/invoice-users',  ['uses' => 'UsersController@postInvoiceUsers', 'middleware' => ['acl:admins/acl/view']]);
 	Route::post('users/user-info',  ['uses' => 'UsersController@postUserInfo', 'middleware' => ['acl:admins/acl/view']]);
+	Route::get('/verify-email/{id}',  ['as'=>'verify_mail', 'uses' => 'UsersController@getEmailVerify']);
 
 	Route::group(['prefix' => 'users'], function () {
 		Route::get('login', ['as'=>'users_login','uses'=>'UsersController@getLogin']);
