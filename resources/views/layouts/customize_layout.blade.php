@@ -15,6 +15,9 @@
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
 
+    <link href="/packages/bootstrap-social/bootstrap-social.css" rel="stylesheet">
+    <link href="/packages/bootstrap-social/assets/css/docs.css" rel="stylesheet">
+
     <link href="/assets/css/prettyPhoto.css" rel="stylesheet">
     <link href="/assets/css/price-range.css" rel="stylesheet">
     <link href="/assets/css/animate.css" rel="stylesheet">
@@ -61,6 +64,7 @@
             </div>
         </div><!--/header_top-->
         @include('flash::message')
+
         <div class="header-middle"><!--header-middle-->
             <div class="container">
                 <div class="row">
@@ -1009,16 +1013,434 @@
     {!! View::make('partials.login_modal') !!}    
     {!! View::make('partials.register_modal') !!}    
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ------------------------------------------- -->
+<!-- ----------------------------------- -->
+
+<style type="text/css">
+ .chrome .dock_wrapper {
+    transform: translateZ(0);
+}
+.dockWrapperRight {
+    left: auto;
+}
+.dock-min {
+    bottom: 4px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 300;
+}
+.dock-max {
+    bottom: 280px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 300;
+}
+.dock-child {
+    bottom: 280px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 300;
+}
+._dock {
+    margin: 0 15px 0 0;
+}
+._dockChild {
+    padding-top: 10px;
+    margin: 0 15px 0 0;
+}
+.m_clearfix {
+    zoom: 1;
+}
+.m_clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
+}
+._dock .rNubContainer {
+    float: right;
+}
+._dockChild .rNubContainerChild {
+    float: right;
+}
+
+.nubContainer>div, ._dock {
+    float: right;
+    position: relative;
+}
+.rNubContainer ._50-v {
+    margin-left: 12px;
+}
+.rNubContainerChild ._50-v {
+    margin-left: 12px;
+}
+._4mq3.wpNub, ._4mq3.wpNub.openToggler {
+    margin-left: 12px;
+    margin-right: 1px;
+}
+._50-v, .wpNubGroup, .wpDock .nubContainer>div,.wpDock .nubContainerChild>div, .wpDock .wpNubGroup>div {
+    float: left;
+    position: relative;
+}
+._4mq3 {
+    height: 25px;
+    min-width: 201px;
+    width: 276px;
+}
+._4mq3 .wpNubButton {
+    background-color: #f6f7f8;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: none;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+._4mq3 .wpNubButton-max {
+    background-color: #f6f7f8;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 2px;
+}
+.wpNubButton, .wpNubButton:hover,.wpNubButton-max, ._50-v.openToggler .wpNubButton, .wpNubFlyout, .wpNubFlyout .flyoutInner, .wpNubFlyoutTitlebar, .wpNubFlyoutHeader, .wpNubFlyoutBody, .wpNubFlyoutFooter {
+    background-clip: padding-box;
+}
+.wpNubButton {
+    background: #f6f7f8 url(/rsrc.php/v2/yt/r/D47CF9k_yA8.png) repeat-x 0 -58px;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-width: 1px 0 0;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    height: 69px;
+    outline: none;
+    padding: 6px 4px 5px;
+    position: relative;
+    z-index: 1;
+}
+.wpNubButton-max {
+    background: #f6f7f8 url(/rsrc.php/v2/yt/r/D47CF9k_yA8.png) repeat-x 0 -58px;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-width: 1px 0 0;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    min-height: 311px;
+    height: 311px;
+    outline: none;
+    padding: 6px 4px 5px;
+    position: relative;
+    z-index: 1;
+}
+.wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
+    content: '';
+    height: 28px;
+    position: absolute;
+    top: -1px;
+    width: 4px;
+}
+._4mq3 .wpNubButton:before, ._4mq3 .wpNubButton:after,._4mq3 .wpNubButton-max:before, ._4mq3 .wpNubButton-max:after, {
+    background-image: none;
+}
+.wpNubButton:after,.wpNubButton-max:after {
+    background-image: url(/rsrc.php/v2/yL/r/twEUb2SoVKD.png);
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: -15px -40px;
+    right: -4px;
+}
+.wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
+    content: '';
+    height: 28px;
+    position: absolute;
+    top: -1px;
+    width: 4px;
+}
+._4mq3 .wpNubButton .label {
+    color: black;
+    font-size: 14px;
+    line-height: 16px;
+    margin-right: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+._4mq3 .wpNubButton-max .label {
+    color: black;
+    font-size: 14px;
+    line-height: 16px;
+    margin-right: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.lb-m{
+   padding-left: 20px;
+   line-height: 35px !important;
+}
+
+
+
+#inner-chat-wrapper{
+    height: 100%;
+    background-color: #f6f7f8;;
+    border-top: 1px solid rgba(29, 49, 91, .3); 
+    padding: 5px 10px;
+    max-height: 275px;
+    overflow-y: scroll;
+}
+
+.conv-wrapper {
+    height: 40px;
+    margin-bottom: 2px;
+}
+.conv-wrapper img {
+    width: 39px;
+}
+.sp_BNtOXyg0vlE {
+    background-image: url(/assets/images/icons/on.png);
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 12px;
+    width: 16px;
+}
+._4mq3 .wpNubButton ._4xia {
+    float: left;
+    height: 12px;
+    margin: 2px 4px 0 0;
+    width: 12px;
+}
+.sp_BNtOXyg0vlE.sx_78fc23 {
+    width: 12px;
+    background-position: -75px -471px;
+}
+.conv-c{
+    color: white !important;
+    float: right;
+    margin-top: 5px;
+}
+
+
+
+
+
+
+</style>
+
+
+<div class="chat_dock">
+    <div class="dock_wrapper dock-min dockWrapperRight" type="0">
+        <div class="_dock m_clearfix">
+            <div class="m_clearfix nubContainer rNubContainer">
+                <div id="BuddylistPagelet">
+                    <div class="_56ox ">
+                        <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                            <div class="wpNubButton">
+                                <span class="label nb-lb pointer">Chat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dock_wrapper dock-max dockWrapperRight hide korachat-open" type="1">
+        <div class="_dock m_clearfix">
+            <div class="m_clearfix nubContainer rNubContainer">
+                <div id="BuddylistPagelet">
+                    <div class="_56ox ">
+                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                            <div class="wpNubButton-max">
+                                <span class="label nb-lb lb-m pointer ">Chat</span>
+                                <div id="inner-chat-wrapper">
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="_dockChild m_clearfix">
+            <div class="m_clearfix nubContainerChild rNubContainerChild">
+                <div id="BuddylistPagelet">
+                    <div class="_56ox ">
+                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                            <div class="wpNubButton-max">
+                                <span class="label nb-lb lb-m pointer ">Chat</span>
+                                <div id="inner-chat-wrapper">
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+    <!-- --------------------------------------------- -->
+    <!-- -------------------------------------------- -->
+
   
     <!-- Load js libs only when the page is loaded. -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="/packages/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="/assets/js/jquery.scrollUp.min.js"></script>
+    <!-- <script src="/assets/js/jquery.scrollUp.min.js"></script> -->
     <script src="/assets/js/price-range.js"></script>
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
+    <script src="/assets/js/layouts/main.js"></script>
+    <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
+
+    
 </body>
 </html>

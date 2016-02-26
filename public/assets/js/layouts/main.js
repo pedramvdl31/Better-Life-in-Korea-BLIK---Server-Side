@@ -9,8 +9,27 @@ mainf = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
+		$('#inner-chat-wrapper').slimScroll({
+        	height: '250px'
+    	});
+
 	},
 	events: function() {
+		$('.nb-lb').click(function(){
+			var parent = $(this).parents('.dock_wrapper:first');
+			var type = parseInt(parent.attr('type'));
+			parent.addClass('hide');
+			switch(type) {
+				case 0: 
+					$('.dock-max').removeClass('hide');
+				break;				
+				case 1: 
+					$('.dock-min').removeClass('hide');
+				break;
+				default:
+				break;
+			}
+		});
         $(document).on('click','.login-btn',function(){
 			$('#login-modal').modal('show');
         });

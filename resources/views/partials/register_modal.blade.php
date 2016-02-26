@@ -29,10 +29,10 @@
 
 	      </div>
 	      <div class="modal-footer clearfix">
-    		<a class="btn btn-link-1 btn-link-1-facebook" href="auth/facebook">
-        		<i class="fa fa-facebook"></i>  Sign Up with Facebook
+	        <a class="btn btn-social btn-facebook" href="auth/facebook">
+        		<span class="fa fa-facebook"></span>  Sign in with Facebook
         	</a>
-	        <a class="btn modal-btn btn-primary" id="submit-btn">Register</a>
+	        <a class="btn modal-btn btn-warning " id="submit-btn">Register</a>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

@@ -16,15 +16,12 @@
 			<div class="checkbox">
 			  <label><input name="remember" type="checkbox" value="">Remember me</label>
 			</div>
+	        <a href="/password-reset" class="a-style" id="forgot"> I forgot my password</a>
 	      </div>
 	      <div class="modal-footer clearfix">
-	      	<div id="forgot-wrapper pull-left">
-	        	<a href="/password-reset" class="a-style" id="forgot"> I forgot my password</a>
-	        	</br>
-		        <a class="btn btn-link-1 btn-link-1-facebook" href="auth/facebook">
-	        		<i class="fa fa-facebook"></i>  Login with Facebook
-	        	</a>
-	        </div>
+	        <a class="btn btn-social btn-facebook" href="auth/facebook">
+        		<span class="fa fa-facebook"></span>  Sign in with Facebook
+        	</a>
 	        <button type="submit" id="login-btn-1" class="btn btn-warning pull-right login-btn">Login</button>
 	      </div>
 	    </div><!-- /.modal-content -->
