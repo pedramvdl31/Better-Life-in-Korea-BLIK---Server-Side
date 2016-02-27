@@ -153,9 +153,10 @@ class PermissionsController extends Controller
         foreach ($all_routes as $key => $value) {
             if ($value != 'Select Permission') {
                 $permissions = new Permission;
-                $permissions->permission_title = $value;
-                $permissions->permission_slug = $value;
-                $permissions->permission_description = $value.' route';
+                $n = str_replace("/{id}","",$value);
+                $permissions->permission_title = $n;
+                $permissions->permission_slug = $n;
+                $permissions->permission_description = $n.' route';
                 $permissions->save();
             }
         }

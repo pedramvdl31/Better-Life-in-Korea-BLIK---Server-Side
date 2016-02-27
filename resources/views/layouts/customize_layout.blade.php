@@ -1055,7 +1055,7 @@
  .chrome .dock_wrapper {
     transform: translateZ(0);
 }
-.dockWrapperRight {
+.dockWrapperRight,.dockWrapperRightChilds {
     left: auto;
 }
 .dock-min {
@@ -1068,7 +1068,7 @@
     z-index: 300;
 }
 .dock-max {
-    bottom: 280px;
+    bottom: 295px;
     direction: ltr;
     height: 28px;
     left: 0;
@@ -1076,22 +1076,29 @@
     right: 0;
     z-index: 300;
 }
-.dock-child {
+.dock-max-1 {
     bottom: 280px;
     direction: ltr;
     height: 28px;
     left: 0;
     position: fixed;
-    right: 0;
+    right: 285px;
     z-index: 300;
 }
+.dock-max-2 {
+    bottom: 280px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 570px;
+    z-index: 300;
+}
+
 ._dock {
     margin: 0 15px 0 0;
 }
-._dockChild {
-    padding-top: 10px;
-    margin: 0 15px 0 0;
-}
+
 .m_clearfix {
     zoom: 1;
 }
@@ -1107,9 +1114,7 @@
 ._dock .rNubContainer {
     float: right;
 }
-._dockChild .rNubContainerChild {
-    float: right;
-}
+
 
 .nubContainer>div, ._dock {
     float: right;
@@ -1118,14 +1123,12 @@
 .rNubContainer ._50-v {
     margin-left: 12px;
 }
-.rNubContainerChild ._50-v {
-    margin-left: 12px;
-}
+
 ._4mq3.wpNub, ._4mq3.wpNub.openToggler {
     margin-left: 12px;
     margin-right: 1px;
 }
-._50-v, .wpNubGroup, .wpDock .nubContainer>div,.wpDock .nubContainerChild>div, .wpDock .wpNubGroup>div {
+._50-v, .wpNubGroup, .wpDock .nubContainer>div, .wpDock .wpNubGroup>div {
     float: left;
     position: relative;
 }
@@ -1178,6 +1181,20 @@
     font-weight: bold;
     min-height: 311px;
     height: 311px;
+    outline: none;
+    padding: 6px 4px 5px;
+    position: relative;
+    z-index: 1;
+}
+.wpNubButton-max-main {
+    background: #f6f7f8 url(/rsrc.php/v2/yt/r/D47CF9k_yA8.png) repeat-x 0 -58px;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-width: 1px 0 0;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    min-height: 311px;
+    height: 325px;
     outline: none;
     padding: 6px 4px 5px;
     position: relative;
@@ -1237,7 +1254,16 @@
     background-color: #f6f7f8;;
     border-top: 1px solid rgba(29, 49, 91, .3); 
     padding: 5px 10px;
-    max-height: 275px;
+    max-height: 285px;
+    overflow-y: scroll;
+}
+
+.inner-wrapper-child{
+    height: 100%;
+    background-color: #f6f7f8;;
+    border-top: 1px solid rgba(29, 49, 91, .3); 
+    padding: 5px 10px;
+    max-height: 257px;
     overflow-y: scroll;
 }
 
@@ -1271,8 +1297,19 @@
     float: right;
     margin-top: 5px;
 }
-
-
+.ChatClose{
+    margin-right: 8px;
+}
+.ChatTextArea{
+    background: white;
+    border-top: 1px solid #C7C7C7;
+}
+#cta1{
+    height: 52px;
+}
+#cta2{
+    height: 52px;
+}
 
 
 
@@ -1303,7 +1340,7 @@
                 <div id="BuddylistPagelet">
                     <div class="_56ox ">
                         <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                            <div class="wpNubButton-max">
+                            <div class="wpNubButton-max wpNubButton-max-main">
                                 <span class="label nb-lb lb-m pointer ">Chat</span>
                                 <div id="inner-chat-wrapper">
                                     <div class="conv-wrapper pointer">
@@ -1323,54 +1360,7 @@
                                         <img src="/assets/images/home/product4.jpg" alt="" />
                                         <span>Pedram</span>
                                         <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="_dockChild m_clearfix">
-            <div class="m_clearfix nubContainerChild rNubContainerChild">
-                <div id="BuddylistPagelet">
-                    <div class="_56ox ">
-                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                            <div class="wpNubButton-max">
-                                <span class="label nb-lb lb-m pointer ">Chat</span>
-                                <div id="inner-chat-wrapper">
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
+                                    </div>                                    
                                     <div class="conv-wrapper pointer">
                                         <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
                                         <img src="/assets/images/home/product4.jpg" alt="" />
@@ -1417,7 +1407,134 @@
     </div>
 
 </div>
+<div class="chat_dockChilds">
+    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds" type="1">
+        <div class="_dock m_clearfix">
+            <div class="m_clearfix nubContainer rNubContainer">
+                <div id="BuddylistPagelet">
+                    <div class="_56ox ">
+                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                            <div class="wpNubButton-max">
+                                <span class="label nb-lb lb-m pointer ">Chat <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
+                                <div class="inner-wrapper-child">
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                </div>
+                                <div class="inputBar">
+                                    <textarea class="ChatTextArea" id="cta1"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds" type="1">
+        <div class="_dock m_clearfix">
+            <div class="m_clearfix nubContainer rNubContainer">
+                <div id="BuddylistPagelet">
+                    <div class="_56ox ">
+                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                            <div class="wpNubButton-max">
+                                <span class="label nb-lb lb-m pointer ">Chat <span class="cc2 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
+                                <div class="inner-wrapper-child">
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                    <div class="conv-wrapper pointer">
+                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+                                        <img src="/assets/images/home/product4.jpg" alt="" />
+                                        <span>Pedram</span>
+                                        <span class="label label-success conv-c">2</span>
+                                    </div>
+                                </div>
+                                <div class="inputBar">
+                                    <textarea class="ChatTextArea" id="cta2"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
+
+</div>
 
 
 
@@ -1437,6 +1554,7 @@
     <script src="/assets/js/price-range.js"></script>
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
     <script src="/assets/js/main.js"></script>
+    <script src="/assets/js/chat.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
