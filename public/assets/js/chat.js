@@ -29,9 +29,6 @@ chat = {
 		    }
 		});
 
-		$("input").keyup(function(){
-		    $("input").css("background-color", "pink");
-		});
 		$('.cc1').click(function(){
 			if ($('.dc2').hasClass('hide')) {
 				$('.dc1').addClass('hide');

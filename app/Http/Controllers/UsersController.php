@@ -43,45 +43,41 @@ class UsersController extends Controller
     }
     public function postRegistration()
     {
-        $validator = Validator::make(Input::all(), User::$registration);
-        if ($validator->passes()) {
-            $user = new User;
-            $user->roles = 5;
-            $user->email = Input::get('email');
-            $user->password = Hash::make(Input::get('password')); 
-            $rand_sting = Job::generateRandomString(25);
-            $user->verification_token = $rand_sting;
-             if($user->save()) { // Save the user and redirect to owners home
-                $rand = Request::root().'/verify-email/'.$rand_sting;
-                $mailer_return = Job::VerificationMailer(Input::get('email'),$rand);
-                //ASSIGN LEVEL TWO ACL (GUESTS)
-                $new_rule = new RoleUser;
-                $new_rule->role_id = 5;
-                $new_rule->user_id = $user->id;
-
-                if($new_rule->save()) {
-                    if (Auth::attempt(array('email'=> $user->email, 'password'=>Input::get('password')),true)) {
-                        $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-                        Flash::success('You have been successfully registered as '.$user->email.'! An activation email has been sent to your email address');
-                        if(isset($redirect)) {
-                            return Redirect::to(Session::get('redirect'));
-                        } else {
-                            //SESION DOESN'T EXIST
-                            return Redirect::route('home_index');
+            $validator = Validator::make(Input::all(), User::$registration);
+            if ($validator->passes()) {
+                $user = new User;
+                $user->roles = 5;
+                $user->email = Input::get('email');
+                $user->password = Hash::make(Input::get('password')); 
+                $rand_sting = Job::generateRandomString(25);
+                $user->verification_token = $rand_sting;
+                 if($user->save()) { // Save the user and redirect to owners home
+                    $rand = Request::root().'/verify-email/'.$rand_sting;
+                    // $mailer_return = Job::VerificationMailer(Input::get('email'),$rand);
+                    //ASSIGN LEVEL TWO ACL (GUESTS)
+                    $new_rule = new RoleUser;
+                    $new_rule->role_id = 5;
+                    $new_rule->user_id = $user->id;
+                    if($new_rule->save()) {
+                        if (Auth::attempt(array('email'=> $user->email, 'password'=>Input::get('password')),true)) {
+                            Flash::success('You have been successfully registered as '.$user->email.'! An activation email has been sent to your email address');
+                            if(isset($redirect)) {
+                                return Redirect::to(Session::get('redirect'));
+                            } else {
+                                //SESION DOESN'T EXIST
+                                return Redirect::route('home_index');
+                            }
                         }
                     }
                 }
+
+            } else {
+                return Redirect::back()
+                ->with('message', 'The following errors occurred')
+                ->with('alert_type','alert-danger')
+                ->withErrors($validator)
+                ->withInput();
             }
-
-        } else {
-            // validation has failed, display error messages    
-            return Redirect::back()
-            ->with('message', 'The following errors occurred')
-            ->with('alert_type','alert-danger')
-            ->withErrors($validator)
-            ->withInput();
-        }
-
     }
 
     public function getEmailVerify($id=null)
@@ -132,18 +128,11 @@ class UsersController extends Controller
         $password = Input::get('password');
         $remember = Input::get('remember');
         if (Auth::attempt(array('email'=>$email, 'password'=>$password),isset($remember)?true:false)) {
-            $redirect = (Session::get('redirect_flash')) ? Session::get('redirect_flash') : null; 
             Flash::success('Welcome back '.$email.'!');
-            if(isset($redirect)) {
-                return Redirect::to($redirect);
-            } else { //SESSION DOESN'T EXIST
-                return Redirect::action('HomeController@getHomepage');
-            }
         } else { //LOGIN FAILED
-            return view('users.login')
-                ->with('layout',$this->layout)
-                ->with('wrong',1); 
+            Flash::error('Wrong Username or Password!');
         }
+        return Redirect::route('home_index');
     }
     public function getLogout()
     {

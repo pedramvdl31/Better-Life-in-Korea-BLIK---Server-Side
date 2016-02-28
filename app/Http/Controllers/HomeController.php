@@ -39,11 +39,8 @@ class HomeController extends Controller
         public function getHomePage()
     {
         $layout_title = 'layouts.customize_layout';
-        $pages = Page::take(1)->first();
-        if (isset($pages)) {
             return view('home.homepage')
             ->with('layout',$layout_title);
-        }
     }
 
 

@@ -14,6 +14,7 @@ use Hash;
 use Route;
 use Laracasts\Flash\Flash;
 use View;
+use App\Relationship;
 
 class BeforeFilter
 {
@@ -27,8 +28,16 @@ class BeforeFilter
      */
     public function __construct()
     {
-        Page::Isset_Homepage();
-        $this->route = null;
+        //GET FRIENDS
+        if (Auth::check()) {
+            $friends_list= Relationship::PrepareFriendsHtmlForChat(
+                Relationship::where('status',1)
+                ->where('user_one',Auth::user()->id)->orWhere('user_two',Auth::user()->id)->get());
+        }
+        view::share('friends_list',isset($friends_list)?$friends_list:null);
+
+        // Page::Isset_Homepage();
+        // $this->route = null;
     }
     /**
      * Handle an incoming request.

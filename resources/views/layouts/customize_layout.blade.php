@@ -1310,7 +1310,9 @@
 #cta2{
     height: 52px;
 }
-
+.tooltip {
+    position: fixed;
+}
 
 
 
@@ -1343,60 +1345,7 @@
                             <div class="wpNubButton-max wpNubButton-max-main">
                                 <span class="label nb-lb lb-m pointer ">Chat</span>
                                 <div id="inner-chat-wrapper">
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>                                    
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
+                                    {!!$friends_list!!}
                                 </div>
                             </div>
                         </div>
@@ -1408,7 +1357,7 @@
 
 </div>
 <div class="chat_dockChilds">
-    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds" type="1">
+    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" type="1">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
@@ -1470,7 +1419,7 @@
             </div>
         </div>
     </div>
-    <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds" type="1">
+    <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide" type="1">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
@@ -1532,8 +1481,6 @@
             </div>
         </div>
     </div>
-
-
 </div>
 
 
@@ -1555,7 +1502,6 @@
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/chat.js"></script>
-    <script src="/assets/js/layouts/main.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
 

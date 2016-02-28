@@ -9,7 +9,7 @@ mainf = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-
+		$('[data-toggle="tooltip"]').tooltip();
 
 	},
 	events: function() {
@@ -31,6 +31,7 @@ mainf = {
 }
 requestm = {
 	form_validate: function(reg_form) {
+		$('#validating').removeClass('hide');
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/users/validate',
@@ -39,6 +40,7 @@ requestm = {
 				"reg_form":reg_form
 			},
 			function(result){
+				$('#validating').addClass('hide');
 				var status = result.status;
 				var call_back = result.validation_callback;
 				reset_errors();

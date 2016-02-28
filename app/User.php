@@ -31,7 +31,7 @@ AuthenticatableContract, CanResetPasswordContract
      */
     protected $table = 'users';
     public static $registration = array(
-        'email'=>'required|email|unique:users',
+        'email'=>'required|unique:users|email',
         'password'=>'required|between:6,25|',
         'password_again'=>'required|between:6,25',
     );

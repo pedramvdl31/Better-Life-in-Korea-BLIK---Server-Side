@@ -28,7 +28,6 @@ class Job extends Model
 
 	static public function ViewShareAdminPrivateData() {
 		$array = [];
-
 		$this_username = null;
         $this_user_profile_image = null;
         if (Auth::check()) {
@@ -36,10 +35,8 @@ class Job extends Model
             $this_username = $this_user->username;
             $this_user_profile_image = Job::imageValidator($this_user->profile_image);
         } 
-
         View::share('this_username',$this_username);
         View::share('this_user_profile_image',$this_user_profile_image);
-
 		return $array;
 	}
 	static public function ViewSharesPublicData() {

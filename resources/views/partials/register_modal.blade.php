@@ -26,9 +26,9 @@
 				<input type="password" class="form-control form-control-login"  name="password_again" id="password_again" placeholder="Re-Enter Password" aria-describedby="sizing-addon2">
 				<span class="error-feedback password-again-error-feedback hide">Not Matched</span>
 			</div>
-
 	      </div>
 	      <div class="modal-footer clearfix">
+			<img class="hide" id="validating" src="/assets/images/icons/gif/loading1.gif" width="20px;">
 	        <a class="btn btn-social btn-facebook" href="auth/facebook">
         		<span class="fa fa-facebook"></span>  Sign in with Facebook
         	</a>
