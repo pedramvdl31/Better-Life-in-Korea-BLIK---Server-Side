@@ -53,7 +53,7 @@ class ConversationMessage extends Model
 			}
 			$js_array .= ']';
 			$html .= '	<script>
-						cdata_'.$_tu.'_'.$_fid.' = '.$js_array.';
+						window.cdata_'.$_tu.'_'.$_fid.' = '.$js_array.';
 						</script>';
 		}
 		return $html;
@@ -64,7 +64,7 @@ class ConversationMessage extends Model
     	if (isset($fd)) {
     		$new_email = strlen($fd->email) > 15 ? substr($fd->email,0,15)."..." : $fd->email;
     		$ntt = strlen($fd->email) > 15 ? true : false;
-    		$html .= '<div class="conv-wrapper pointer"';
+    		$html .= '<div class="conv-wrapper pointer" tf="'.$fid.'"';
     		if ($ntt==true) {
     		 	$html .= 'data-toggle="tooltip" data-placement="top" title="'.$fd->email.'"';
     		 }

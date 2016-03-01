@@ -10,7 +10,7 @@ chat = {
 		$('.inner-wrapper-child').slimScroll({
         	height: '218px'
     	});
-
+    		
 
 	    EmbedJS.setOptions({
 		  	//An option when set to true will use marked.js to parse markdown and convert it to HTML.
@@ -185,6 +185,16 @@ chat = {
 		
 
 		$('.conv-wrapper').click(function(){
+			var cu = $('#ufh').val();
+			var fu = $(this).attr('tf');
+			if (typeof(cu) != "undefined" && cu !== null) {
+		    	var _ar = $(window["cdata_"+cu+"_"+fu]);
+		    	$.each(_ar, function( index, value ) {
+		    		if (index != 0) {
+		    			alert(value);
+		    		}
+				});
+			}
 			if ($('.dc1').hasClass('hide')) {
 				$('.dc1').removeClass('hide');
 			} else if ($('.dc2').hasClass('hide')){

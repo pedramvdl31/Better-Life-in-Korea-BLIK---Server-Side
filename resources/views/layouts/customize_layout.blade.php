@@ -1356,7 +1356,9 @@
 
 </style>
 
-
+@if(Auth::check())
+ <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
+@endif
 <div class="chat_dock">
     <div class="dock_wrapper dock-min dockWrapperRight" type="0">
         <div class="_dock m_clearfix">
