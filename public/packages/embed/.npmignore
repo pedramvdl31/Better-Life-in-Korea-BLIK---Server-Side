@@ -1,0 +1,11 @@
+*.es6
+test/
+demo/
+bower_components/
+.git*
+
+node_modules/
+.DS_Store
+.npmignore
+
+

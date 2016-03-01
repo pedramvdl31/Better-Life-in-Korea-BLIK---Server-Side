@@ -601,7 +601,7 @@ class Job extends Model
 		}
 		return $image_path;
 	}
-	static public function humanTiming ($time)
+	static public function humanTiming($time)
 	{
 		// Job::dump($time);
 		$time=strtotime($time);
@@ -623,6 +623,7 @@ class Job extends Model
 	    }
 
 	}
+	
 	static public function formatTimeAgo($human_time_data) {
 		if ($human_time_data == null) {
 			$human_time_data = 'just now';

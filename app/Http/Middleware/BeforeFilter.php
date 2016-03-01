@@ -15,6 +15,8 @@ use Route;
 use Laracasts\Flash\Flash;
 use View;
 use App\Relationship;
+use App\Conversation;
+use App\ConversationMessage;
 
 class BeforeFilter
 {
@@ -30,11 +32,20 @@ class BeforeFilter
     {
         //GET FRIENDS
         if (Auth::check()) {
-            $friends_list= Relationship::PrepareFriendsHtmlForChat(
-                Relationship::where('status',1)
-                ->where('user_one',Auth::user()->id)->orWhere('user_two',Auth::user()->id)->get());
+            $relations= Relationship::where('status',1)
+                ->where('user_one',Auth::user()->id)
+                ->orWhere('user_two',Auth::user()->id)
+                ->get();
+            //Get Convs
+            $convs = Conversation::where('status',1)
+                ->where('user_one',Auth::user()->id)
+                ->orWhere('user_two',Auth::user()->id)
+                ->get();
+
+            $chat_html = ConversationMessage::PrepareChatHtml($relations,$convs);
+
         }
-        view::share('friends_list',isset($friends_list)?$friends_list:null);
+        view::share('friends_list',isset($chat_html)?$chat_html:null);
 
         // Page::Isset_Homepage();
         // $this->route = null;

@@ -13,7 +13,9 @@
     <!-- Custom Fonts -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
+    <link href="http://vjs.zencdn.net/5.0.0/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.css">
 
     <link href="/packages/bootstrap-social/bootstrap-social.css" rel="stylesheet">
     <link href="/packages/bootstrap-social/assets/css/docs.css" rel="stylesheet">
@@ -25,6 +27,8 @@
     <link href="/assets/css/responsive.css" rel="stylesheet">
 
     <link href="/assets/css/general.css" rel="stylesheet">
+    <link rel="stylesheet" href="/packages/embed/dist/embed.min.css" />
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -999,7 +1003,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
@@ -1012,41 +1015,6 @@
     </footer><!--/Footer-->
     {!! View::make('partials.login_modal') !!}    
     {!! View::make('partials.register_modal') !!}    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- ------------------------------------------- -->
 <!-- ----------------------------------- -->
@@ -1316,6 +1284,76 @@
 
 
 
+
+._mb {
+    position: relative;
+    display: inline-block;
+    margin: .5em .75em;
+    padding: 6px 15px 6px 15px;
+    border-radius: 1.5em;
+    text-shadow: 0 1px 1px white;
+    background-color: #fff;
+    border: 1px solid #CDCDCA;
+    box-shadow: 0 1px 1px 0 #CDCDCA;
+    overflow: hidden;
+
+}
+
+._msnd{
+    text-align: right;   
+    width: 100%;
+}
+._mrcv{
+    text-align: left;
+    width: 100%;
+}
+._mtxt{
+    color: #373e4d;
+    text-shadow: rgba(255, 255, 255, .5) 0 1px 0;
+    line-height: 1.28;
+    font-size: 12px;
+    word-break: break-word;
+}
+._sndb {
+    background-color: #e0edff !important;
+    border: 1px solid #bcc7d6 !important;
+    border-top-right-radius: 0;
+}
+._rcvb {
+    border-top-left-radius: 0;
+}
+._msgss{
+    float: right;
+    width: 100%;
+}
+._mavs{
+    float: right;
+    width: 15%;
+}
+._mtwps{
+    float: right;
+    width: 85%;
+}
+._msgsr{
+    float: left;
+    width: 100%;
+}
+._mavr{
+    float: left;
+    width: 15%;
+}
+._mtwpr{
+    float: left;
+    width: 85%;
+}
+._mtime{
+    color: #9197a3;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
 </style>
 
 
@@ -1357,59 +1395,55 @@
 
 </div>
 <div class="chat_dockChilds">
-    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" type="1">
+    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds" type="1">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
                     <div class="_56ox ">
                         <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                             <div class="wpNubButton-max">
-                                <span class="label nb-lb lb-m pointer ">Chat <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
+                                <span class="label nb-lb lb-m pointer "><span class="_cbnm">Pedram</span> <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
                                 <div class="inner-wrapper-child">
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
+                                    <div class="_mrcv _msgsr"> 
+                                        <div class="_mavr">
+                                            <img src="/assets/images/profile-images/perm/blank_male.png" width="35px">
+                                        </div>  
+                                        <div class="_mtwpr">
+                                            <div class="_mb _rcvb">
+                                                <span class="_mtxt embd" >
+                                                    <span class="_plin">
+                                                        :smile:
+                                                        Default
+                                                    </span>
+                                                    <div class="_mtime" style="width: 100%">
+                                                        <small>1 hour ago</small>
+                                                    </div>
+                                                </span>
+                                            </div>  
+                                        </div>
                                     </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
+                                    <div class="_msnd _msgss"> 
+                                        <div class="_mavs">
+                                            <img src="/assets/images/profile-images/perm/blank_male.png" width="35px">
+                                        </div>  
+                                        <div class="_mtwps">
+                                            <div class="_mb _sndb">
+                                             <span class="_mtxt tstbox">
+                                                <span class="_plin">
+                                                    :smile:
+                                                    Default
+                                                </span>
+                                                <div class="_mtime" style="width: 100%">
+                                                    <small>1 hour ago</small>
+                                                </div>
+                                             </span>
+                                            </div>  
+                                        </div>
                                     </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
+
                                 </div>
                                 <div class="inputBar">
+
                                     <textarea class="ChatTextArea" id="cta1"></textarea>
                                 </div>
                             </div>
@@ -1505,6 +1539,16 @@
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script src="//platform.twitter.com/widgets.js"></script>
+    <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
+    <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
+    <script src="/packages/embed/src/embed.js"></script>
+    <script>
+
+    </script>
     
 </body>
 </html>
