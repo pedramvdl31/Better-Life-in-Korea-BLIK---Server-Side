@@ -16,7 +16,7 @@
 			<div class="checkbox">
 			  <label><input name="remember" type="checkbox" value="">Remember me</label>
 			</div>
-	        <a href="/password-reset" class="a-style" id="forgot"> I forgot my password</a>
+	        <a href="password/email" class="a-style" id="forgot"> I forgot my password</a>
 	      </div>
 	      <div class="modal-footer clearfix">
 	        <a class="btn btn-social btn-facebook" href="auth/facebook">

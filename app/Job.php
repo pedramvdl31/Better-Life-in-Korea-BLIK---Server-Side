@@ -698,5 +698,27 @@ class Job extends Model
         return $status;
 	}
 
+	public static function cat_select() {
+            return array(
+                '0'          => 'Search users by',
+                'id'        => 'user id',
+                'phone'      => 'phone',
+                'username'  => 'username',
+                'email'     => 'email',
+                'name'      => 'full name'
+                );
+        }
+
+	public static function subcat_select() {
+            return array(
+                '0'          => 'Search users by',
+                'id'        => 'user id',
+                'phone'      => 'phone',
+                'username'  => 'username',
+                'email'     => 'email',
+                'name'      => 'full name'
+                );
+        }
+
 
 }

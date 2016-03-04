@@ -37,9 +37,16 @@ class HomeController extends Controller
      */
 
         public function getHomePage()
-    {
+    {   
+        if (Auth::check()) {
+            $cats = Job::cat_select();
+            $subcats = Job::subcat_select();
+        }
+        
         $layout_title = 'layouts.customize_layout';
             return view('home.homepage')
+            ->with('cats',isset($cats)?$cats:null)
+            ->with('subcats',isset($subcats)?$subcats:null)
             ->with('layout',$layout_title);
     }
 

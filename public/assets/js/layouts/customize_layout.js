@@ -8,13 +8,8 @@ cust_layout = {
 		alert();
 	},
 	events: function() {
-
-
-
-
 	}
 }
 requestws = {
-
 };
 

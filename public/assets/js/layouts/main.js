@@ -1,18 +1,70 @@
 $(document).ready(function(){
 	mainf.pageLoad();
 	mainf.events();
-
 });
 mainf = {
-
 	pageLoad: function() {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
 		$('[data-toggle="tooltip"]').tooltip();
 
+		$('.body-wrapp').slimScroll({
+        	height: '100%'
+    	});
+
 	},
 	events: function() {
+
+
+
+		$("#cats").change(function(){
+			var t_v = $("option:selected", this).val();
+			if (t_v != '0') {
+				$('#subcat-wrap').removeClass('hide');
+				setTimeout(function(){
+					$('#subcat-wrap').css('visibility','visible').css('opacity',1);
+				}, 50);
+
+			} else {
+				$('#subcat-wrap').css('visibility','hidden').css('opacity',0);
+				$('#title-wrap').css('visibility','hidden').css('opacity',0);
+				$('#des-wrap').css('visibility','hidden').css('opacity',0);
+				$('#dropzone').css('visibility','hidden').css('opacity',0);
+				setTimeout(function(){
+					$('#subcat-wrap').addClass('hide');
+					$('#title-wrap').addClass('hide');
+					$('#des-wrap').addClass('hide');
+					$('#dropzone').addClass('hide');
+				}, 500);
+			}
+		});
+		$("#subcats").change(function(){
+			var t_v = $("option:selected", this).val();
+			if (t_v != '0') {
+				$('#title-wrap').removeClass('hide');
+				$('#des-wrap').removeClass('hide');
+				$('#dropzone').removeClass('hide');
+				setTimeout(function(){
+					$('#title-wrap').css('visibility','visible').css('opacity',1);
+					$('#des-wrap').css('visibility','visible').css('opacity',1);
+					$('#dropzone').css('visibility','visible').css('opacity',1);
+				}, 50);
+			} else {
+					$('#title-wrap').css('visibility','hidden').css('opacity',0);
+					$('#des-wrap').css('visibility','hidden').css('opacity',0);
+					$('#dropzone').css('visibility','hidden').css('opacity',0);
+				setTimeout(function(){
+					$('#title-wrap').addClass('hide');
+					$('#des-wrap').addClass('hide');
+					$('#dropzone').addClass('hide');
+				}, 500);
+			}
+		});
+
+
+
+
 
         $(document).on('click','.login-btn',function(){
 			$('#login-modal').modal('show');
@@ -22,6 +74,14 @@ mainf = {
         });
         $(document).on('click','.reg-btn',function(){
 			$('#register-modal').modal('show');
+        });
+        $(document).on('click','.qkpost',function(){
+        	var _auth = parseInt($('#_auth').attr('data'));
+        	if (_auth == 1) {
+				$('#qkpost-modal').modal('show');
+        	} else {
+        		$('#login-modal').modal('show');
+        	}
         });
         $('#submit-btn').click(function(){
 			var reg_form = $('#reg-form').serialize();

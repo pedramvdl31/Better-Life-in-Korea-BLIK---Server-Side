@@ -28,7 +28,7 @@
 
     <link href="/assets/css/general.css" rel="stylesheet">
     <link rel="stylesheet" href="/packages/embed/dist/embed.min.css" />
-
+    <link rel="stylesheet" href="/packages/dropzone/dropzone.css" />
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -39,7 +39,11 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets//assets/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="/assets//assets/images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
-
+<style type="text/css">
+    .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+    outline: none;
+    }
+</style>
 <body>
     <header id="header"><!--header-->
         <div class="header_top"><!--header_top-->
@@ -68,7 +72,7 @@
             </div>
         </div><!--/header_top-->
         @include('flash::message')
-
+        <input type="hidden" id="_auth" data={!!Auth::check()?1:0!!}></input>
         <div class="header-middle"><!--header-middle-->
             <div class="container">
                 <div class="row">
@@ -76,42 +80,17 @@
                         <div class="logo pull-left">
                             <a href="index.html"><img src="/assets/images/home/logo.png" alt="" /></a>
                         </div>
-                        <div class="btn-group pull-right">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    USA
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canada</a></li>
-                                    <li><a href="#">UK</a></li>
-                                </ul>
-                            </div>
-                            
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
-                                    DOLLAR
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Canadian Dollar</a></li>
-                                    <li><a href="#">Pound</a></li>
-                                </ul>
-                            </div>
-                        </div>
                     </div>
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
-                                <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
                                 @if(Auth::check())
                                 <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
                                 @else
                                 <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
                                 <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
                                 @endif
+                                <li><button href="" class="btn btn-primary btn-lg qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
                             </ul>
                         </div>
                     </div>
@@ -143,14 +122,6 @@
                                         <li><a href="login.html">Login</a></li> 
                                     </ul>
                                 </li> 
-                                <li class="dropdown"><a href="#">Blog<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="blog.html">Blog List</a></li>
-                                        <li><a href="blog-single.html">Blog Single</a></li>
-                                    </ul>
-                                </li> 
-                                <li><a href="404.html">404</a></li>
-                                <li><a href="contact-us.html">Contact</a></li>
                             </ul>
                         </div>
                     </div>
@@ -185,11 +156,8 @@
                                 <div id="sportswear" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Nike </a></li>
-                                            <li><a href="#">Under Armour </a></li>
-                                            <li><a href="#">Adidas </a></li>
-                                            <li><a href="#">Puma</a></li>
-                                            <li><a href="#">ASICS </a></li>
+                                            <li><a href="#">Agencies </a></li>
+                                            <li><a href="#">Private </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -199,23 +167,17 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordian" href="#mens">
                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Mens
+                                            Used Car
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="mens" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Fendi</a></li>
-                                            <li><a href="#">Guess</a></li>
-                                            <li><a href="#">Valentino</a></li>
-                                            <li><a href="#">Dior</a></li>
-                                            <li><a href="#">Versace</a></li>
-                                            <li><a href="#">Armani</a></li>
-                                            <li><a href="#">Prada</a></li>
-                                            <li><a href="#">Dolce and Gabbana</a></li>
-                                            <li><a href="#">Chanel</a></li>
-                                            <li><a href="#">Gucci</a></li>
+                                            <li><a href="#">Dealership </a></li>
+                                            <li><a href="#">C-C </a></li>
+                                            <li><a href="#">Sofa Document Fee </a></li>
+                                            <li><a href="#">Insurance </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -226,74 +188,33 @@
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" data-parent="#accordian" href="#womens">
                                             <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Womens
+                                            Move In/Out
                                         </a>
                                     </h4>
                                 </div>
                                 <div id="womens" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Fendi</a></li>
-                                            <li><a href="#">Guess</a></li>
-                                            <li><a href="#">Valentino</a></li>
-                                            <li><a href="#">Dior</a></li>
-                                            <li><a href="#">Versace</a></li>
+                                            <li><a href="#">Cleaning</a></li>
+                                            <li><a href="#">Services</a></li>
+                                            <li><a href="#">Moving Company</a></li>
+                                            <li><a href="#">Medical</a></li>
+                                            <li><a href="#">Cellphone</a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Kids</a></h4>
+                                    <h4 class="panel-title"><a href="#">Flea Market</a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Fashion</a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Households</a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Interiors</a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Clothing</a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Bags</a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Shoes</a></h4>
+                                    <h4 class="panel-title"><a href="#">Events</a></h4>
                                 </div>
                             </div>
                         </div><!--/category-products-->
-                    
-                        <div class="brands_products"><!--brands_products-->
-                            <h2>Brands</h2>
-                            <div class="brands-name">
-                                <ul class="nav nav-pills nav-stacked">
-                                    <li><a href="#"> <span class="pull-right">(50)</span>Acne</a></li>
-                                    <li><a href="#"> <span class="pull-right">(56)</span>Grüne Erde</a></li>
-                                    <li><a href="#"> <span class="pull-right">(27)</span>Albiro</a></li>
-                                    <li><a href="#"> <span class="pull-right">(32)</span>Ronhill</a></li>
-                                    <li><a href="#"> <span class="pull-right">(5)</span>Oddmolly</a></li>
-                                    <li><a href="#"> <span class="pull-right">(9)</span>Boudestijn</a></li>
-                                    <li><a href="#"> <span class="pull-right">(4)</span>Rösch creative culture</a></li>
-                                </ul>
-                            </div>
-                        </div><!--/brands_products-->
-                        
                         <div class="price-range"><!--price-range-->
                             <h2>Price Range</h2>
                             <div class="well text-center">
@@ -301,10 +222,6 @@
                                  <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
                             </div>
                         </div><!--/price-range-->
-                        
-                        <div class="shipping text-center"><!--shipping-->
-                            <img src="/assets/images/home/shipping.jpg" alt="" />
-                        </div><!--/shipping-->
                     
                     </div>
                 </div>
@@ -955,30 +872,6 @@
                     </div>
                     <div class="col-sm-2">
                         <div class="single-widget">
-                            <h2>Quock Shop</h2>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">T-Shirt</a></li>
-                                <li><a href="#">Mens</a></li>
-                                <li><a href="#">Womens</a></li>
-                                <li><a href="#">Gift Cards</a></li>
-                                <li><a href="#">Shoes</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="single-widget">
-                            <h2>Policies</h2>
-                            <ul class="nav nav-pills nav-stacked">
-                                <li><a href="#">Terms of Use</a></li>
-                                <li><a href="#">Privecy Policy</a></li>
-                                <li><a href="#">Refund Policy</a></li>
-                                <li><a href="#">Billing System</a></li>
-                                <li><a href="#">Ticket System</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="single-widget">
                             <h2>About Shopper</h2>
                             <ul class="nav nav-pills nav-stacked">
                                 <li><a href="#">Company Information</a></li>
@@ -989,7 +882,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-3 col-sm-offset-1">
+                    <div class="col-sm-3 col-sm-offset-5">
                         <div class="single-widget">
                             <h2>About Shopper</h2>
                             <form action="#" class="searchform">
@@ -1013,8 +906,7 @@
         </div>
         
     </footer><!--/Footer-->
-    {!! View::make('partials.login_modal') !!}    
-    {!! View::make('partials.register_modal') !!}    
+
 
 <!-- ------------------------------------------- -->
 <!-- ----------------------------------- -->
@@ -1128,7 +1020,6 @@
     background-clip: padding-box;
 }
 .wpNubButton {
-    background: #f6f7f8 url(/rsrc.php/v2/yt/r/D47CF9k_yA8.png) repeat-x 0 -58px;
     border: 1px solid rgba(29, 49, 91, .3);
     border-width: 1px 0 0;
     color: #333;
@@ -1141,7 +1032,6 @@
     z-index: 1;
 }
 .wpNubButton-max {
-    background: #f6f7f8 url(/rsrc.php/v2/yt/r/D47CF9k_yA8.png) repeat-x 0 -58px;
     border: 1px solid rgba(29, 49, 91, .3);
     border-width: 1px 0 0;
     color: #333;
@@ -1155,7 +1045,6 @@
     z-index: 1;
 }
 .wpNubButton-max-main {
-    background: #f6f7f8 url(/rsrc.php/v2/yt/r/D47CF9k_yA8.png) repeat-x 0 -58px;
     border: 1px solid rgba(29, 49, 91, .3);
     border-width: 1px 0 0;
     color: #333;
@@ -1179,7 +1068,6 @@
     background-image: none;
 }
 .wpNubButton:after,.wpNubButton-max:after {
-    background-image: url(/rsrc.php/v2/yL/r/twEUb2SoVKD.png);
     background-repeat: no-repeat;
     background-size: auto;
     background-position: -15px -40px;
@@ -1243,7 +1131,6 @@
     width: 39px;
 }
 .sp_BNtOXyg0vlE {
-    background-image: url(/assets/images/icons/on.png);
     background-size: auto;
     background-repeat: no-repeat;
     display: inline-block;
@@ -1376,7 +1263,7 @@
         </div>
     </div>
 
-    <div class="dock_wrapper dock-max dockWrapperRight hide korachat-open" type="1">
+    <div class="dock_wrapper dock-max dockWrapperRight hide" type="1">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
@@ -1397,7 +1284,7 @@
 
 </div>
 <div class="chat_dockChilds">
-    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds" type="1">
+    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" type="1">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
@@ -1526,7 +1413,14 @@
 
     <!-- --------------------------------------------- -->
     <!-- -------------------------------------------- -->
-
+    {!! View::make('partials.login_modal') !!}    
+    {!! View::make('partials.register_modal') !!}    
+    @if(Auth::check())
+        {!! View::make('partials.qkpost_modal')
+        ->with('subcats',$subcats)
+        ->with('cats',$cats)
+        ->__toString()!!}   
+    @endif
   
     <!-- Load js libs only when the page is loaded. -->
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -1548,6 +1442,7 @@
     <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
     <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
     <script src="/packages/embed/src/embed.js"></script>
+    <script src="/packages/dropzone/dropzone.js"></script>
     <script>
 
     </script>
