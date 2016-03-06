@@ -14,6 +14,7 @@ use Auth;
 use URL;
 use Mail;
 use Session;
+use File;
 use Laracasts\Flash\Flash;
 
 use App\Http\Requests;
@@ -25,6 +26,7 @@ use App\Category;
 use App\RoleUser;
 use App\QuestionsNAnswer;
 use App\Review;
+use App\ConversationMessage;
 
 class UsersController extends Controller
 {
@@ -34,6 +36,50 @@ class UsersController extends Controller
 
     }
 
+    public function getGetContent()
+    {
+        $new_msg = ConversationMessage::where('status',9)->get();
+        // set php runtime to unlimited
+        set_time_limit(0);
+
+        $filepath = 'storage/work/checkin_poll_' . Auth::user()->id;
+
+        $last_cycle = File::get($filepath);
+
+        // if last cycle was > 60 secs continue
+        $time_dif = time() - $last_cycle;
+        Log::last($time_dif);
+
+
+        while (1) {
+            // if ajax request has send a timestamp, then $last_ajax_call = timestamp, else $last_ajax_call = null
+            $last_ajax_call = isset($_GET['timestamp']) ? (int)$_GET['timestamp'] : null;
+            // PHP caches file data, like requesting the size of a file, by default. clearstatcache() clears that cache
+            clearstatcache();
+            // get timestamp of when file has been changed the last time
+            $last_change_in_data_file = filemtime($data_source_file);
+            // if no timestamp delivered via ajax or data.txt has been changed SINCE last ajax timestamp
+            if ($time_dif > 60) {
+                File::put($filepath, time());
+                // get content of data.txt
+                $data = file_get_contents($data_source_file);
+                // put data.txt's content and timestamp of last data.txt change into array
+                $result = array(
+                    'data_from_file' => $data,
+                    'timestamp' => $last_change_in_data_file
+                );
+                // encode to JSON, render the result (for AJAX)
+                $json = json_encode($result);
+                echo $json;
+                // leave this loop step
+                break;
+            } else {
+                // wait for 1 sec (not very sexy as this blocks the PHP/Apache process, but that's how it goes)
+                sleep(1);
+                continue;
+            }
+        }
+    }
     public function getRegistration()
     {
         $country_code = Job::country_code();
@@ -483,6 +529,7 @@ public function postUsersAuthCheckReview()
         ));
     }
 }
+
 
 
 

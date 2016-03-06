@@ -21,6 +21,7 @@ return array(
     'Canvas_Factory' => $vendorDir . '/dompdf/dompdf/include/canvas_factory.cls.php',
     'Cellmap' => $vendorDir . '/dompdf/dompdf/include/cellmap.cls.php',
     'CreateAdminsTable' => $baseDir . '/database/migrations/2015_09_14_043442_create_admins_table.php',
+    'CreateAdsTable' => $baseDir . '/database/migrations/2016_03_05_043548_create-ads-table.php',
     'CreateConversationMessagesTable' => $baseDir . '/database/migrations/2016_02_28_133400_create-conversation-messages-table.php',
     'CreateConversationsTable' => $baseDir . '/database/migrations/2016_02_28_132542_create-conversations-table.php',
     'CreatePagesTable' => $baseDir . '/database/migrations/2015_10_10_172631_create_pages_table.php',

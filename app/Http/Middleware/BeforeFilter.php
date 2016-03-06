@@ -72,10 +72,6 @@ class BeforeFilter
                     break;
             }
         }
-
-
-
-        
         // Perform before page load
         
         $url = ($request->isMethod('post')) ? Session::get('_previous')['url'] : $request->url();

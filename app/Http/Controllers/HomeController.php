@@ -22,6 +22,7 @@ use App\Job;
 use App\User;
 use App\Page;
 use App\WebsiteBrand;
+use App\Ads;
 
 class HomeController extends Controller
 {
@@ -40,15 +41,15 @@ class HomeController extends Controller
     {   
         if (Auth::check()) {
             $cats = Job::cat_select();
-            $subcats = Job::subcat_select();
         }
         
         $layout_title = 'layouts.customize_layout';
             return view('home.homepage')
             ->with('cats',isset($cats)?$cats:null)
-            ->with('subcats',isset($subcats)?$subcats:null)
             ->with('layout',$layout_title);
     }
+
+
 
 
 }

@@ -57,6 +57,15 @@ class Job extends Model
 
 		return false;
 	}
+	static public function d($results) {
+		if(isset($results)) {
+			echo '<pre>';
+			print_r($results);
+			echo '</pre>';
+		}
+
+		return false;
+	}
 	static public function UrlFriendly($string) {
 		if(isset($string)) {
 			return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($string, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
@@ -164,15 +173,6 @@ class Job extends Model
 		}
 		return $output;
 	}
-
-
-
-
-
-
-
-
-
 	public static function country_code(){
 	    return array
 	    (
@@ -547,20 +547,21 @@ class Job extends Model
 	    $output = preg_replace($search, '', $input);
 	    return $output;
 	}
+
 	static public function sanitize($input) {
 
-    if (is_array($input)) {
-        foreach($input as $var=>$val) {
-            $output[$var] = Job::sanitize($val);
-        }
-    }
-    else {
-        if (get_magic_quotes_gpc()) {
-            $input = stripslashes($input);
-        }
-        $output  = Job::cleanInput($input);
-    }
-    return $output;
+	    if (is_array($input)) {
+	        foreach($input as $var=>$val) {
+	            $output[$var] = Job::sanitize($val);
+	        }
+	    }
+	    else {
+	        if (get_magic_quotes_gpc()) {
+	            $input = stripslashes($input);
+	        }
+	        $output  = Job::cleanInput($input);
+	    }
+	    return $output;
 
 	}
 
@@ -601,6 +602,7 @@ class Job extends Model
 		}
 		return $image_path;
 	}
+
 	static public function humanTiming($time)
 	{
 		// Job::dump($time);
@@ -633,14 +635,6 @@ class Job extends Model
 		return $human_time_data;
 	}
 
-	/**
-	* Count string and replace remainder of string with ...
-	* @param $limit - length of string needed
-	* @param $string - string to be checked
-	* @param $repl - what to replace remaining string with
-	* @return string
-	**/
-
 	static public function replaceLongTextWithElipses($limit, $string, $repl) {
 		if(strlen($string) > $limit) {
 			return substr($string, 0, $limit) . $repl; 
@@ -650,27 +644,27 @@ class Job extends Model
 	}
 
     static public function StatesOfKoreaForSelect() {
-	return [
-		''	=> 'Select a State',
-		'1' => '광역시도',
-		'2' => '강원도',
-		'3' => '경기도',
-		'4' => '경상남도',
-		'5' => '경상북도',
-		'6' => '광주광역시',
-		'7' => '대구광역시',
-		'8' => '대전광역시',
-		'9' => '부산광역시',
-		'10' => '서울특별시',
-		'11' => '세종특별자치시',
-		'12' => '울산광역시',
-		'13' => '인천광역시',
-		'14' => '전라남도',
-		'15' => '전라북도',
-		'16' => '제주특별자치도',
-		'17' => '충청남도',
-		'18' => '충청북도'		
-	];
+		return [
+			''	=> 'Select a State',
+			'1' => '광역시도',
+			'2' => '강원도',
+			'3' => '경기도',
+			'4' => '경상남도',
+			'5' => '경상북도',
+			'6' => '광주광역시',
+			'7' => '대구광역시',
+			'8' => '대전광역시',
+			'9' => '부산광역시',
+			'10' => '서울특별시',
+			'11' => '세종특별자치시',
+			'12' => '울산광역시',
+			'13' => '인천광역시',
+			'14' => '전라남도',
+			'15' => '전라북도',
+			'16' => '제주특별자치도',
+			'17' => '충청남도',
+			'18' => '충청북도'		
+		];
 	}
     static public function generateRandomString($length) {
 	    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -700,25 +694,12 @@ class Job extends Model
 
 	public static function cat_select() {
             return array(
-                '0'          => 'Search users by',
-                'id'        => 'user id',
-                'phone'      => 'phone',
-                'username'  => 'username',
-                'email'     => 'email',
-                'name'      => 'full name'
+                '0'          => 'Select Category',
+                'realestate'        => 'Real Estate',
+                'usedcar'      => 'Used Car',
+                'movinginout'  => 'Moving In/Out',
+                'fleamarket'     => 'Flea Market',
+                'events'      => 'Events'
                 );
         }
-
-	public static function subcat_select() {
-            return array(
-                '0'          => 'Search users by',
-                'id'        => 'user id',
-                'phone'      => 'phone',
-                'username'  => 'username',
-                'email'     => 'email',
-                'name'      => 'full name'
-                );
-        }
-
-
 }

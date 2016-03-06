@@ -12,23 +12,28 @@
 */
 
 Route::group(['middleware' => 'beforeFilter'], function () {
+
+	Route::group(['middleware' => 'only.auth'], function () {
+		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
+		// Post AD
+		Route::post('/upload-ads-tmp', ['as'=>'post-ads-image','uses'=>'AdsController@postAdsImageTmp']);
+	});
+
 	//HOME ROUTE
 	Route::get('/', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
 	Route::get('/home', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
+
 	// WEBSITE PUBLIC PAGES
 	Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
-
 	// Password reset link request routes...
 	Route::get('password/email', 'Auth\PasswordController@getEmail');
 	Route::post('password/email', 'Auth\PasswordController@postEmail');
-
 	// Password reset routes...
 	Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 	Route::post('password/reset', 'Auth\PasswordController@postReset');
 
-	Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
-	Route::get('/admins-simple',  ['as'=>'simple_admin_index', 'uses' => 'AdminsController@getSimpleIndex']);
+
 	Route::get('registration', ['as'=>'registration_view','uses'=>'UsersController@getRegistration']);
 	Route::post('registration', ['uses'=>'UsersController@postRegistration']);
 	Route::post('users/return-users',  ['uses' => 'UsersController@postReturnUsers', 'middleware' => ['acl:admins/acl/view']]);
@@ -37,6 +42,8 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('/verify-email/{id}',  ['as'=>'verify_mail', 'uses' => 'UsersController@getEmailVerify']);
 
 	Route::group(['prefix' => 'users'], function () {
+		Route::get('get-content',['uses'=>'UsersController@getGetContent']);
+
 		Route::get('login', ['as'=>'users_login','uses'=>'UsersController@getLogin']);
 		Route::post('login',['uses'=>'UsersController@postLogin']);
 		Route::post('login-invoices',['uses'=>'InvoicesController@postLoginInvoices']);
