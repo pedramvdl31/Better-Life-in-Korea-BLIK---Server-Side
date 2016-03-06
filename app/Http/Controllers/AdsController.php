@@ -43,7 +43,6 @@ class AdsController extends Controller
                     'status' => 400
                     ));
             }
-
             $ThisUserId = Auth::user()->id;
             //ELSE
             $ads = new Ad();

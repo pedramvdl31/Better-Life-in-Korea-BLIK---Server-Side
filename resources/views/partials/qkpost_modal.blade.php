@@ -81,7 +81,7 @@
                     <form accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone">
                       <div class="dz-message needsclick">
                         Drop images and videos here or click to upload.<br>
-                        <span class="note needsclick">(Images and Videos max size <strong>30mb</strong>.)</span>
+                        <span class="note needsclick">(Images and Videos max size <strong>30000000mb</strong>.)</span>
                       </div>
                     </form>
                 </div>            
