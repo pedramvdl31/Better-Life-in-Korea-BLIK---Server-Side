@@ -99,7 +99,7 @@ class UsersController extends Controller
                 $user->verification_token = $rand_sting;
                  if($user->save()) { // Save the user and redirect to owners home
                     $rand = Request::root().'/verify-email/'.$rand_sting;
-                    // $mailer_return = Job::VerificationMailer(Input::get('email'),$rand);
+                    $mailer_return = Job::VerificationMailer(Input::get('email'),$rand);
                     //ASSIGN LEVEL TWO ACL (GUESTS)
                     $new_rule = new RoleUser;
                     $new_rule->role_id = 5;
