@@ -574,6 +574,8 @@ return array(
     'Page_Frame_Reflower' => $vendorDir . '/dompdf/dompdf/include/page_frame_reflower.cls.php',
     'Positioner' => $vendorDir . '/dompdf/dompdf/include/positioner.cls.php',
     'Renderer' => $vendorDir . '/dompdf/dompdf/include/renderer.cls.php',
+    'RolesTableSeeder' => $baseDir . '/database/seeds/RolesTableSeeder.php',
+    'RoleusersTableSeeder' => $baseDir . '/database/seeds/RoleusersTableSeeder.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',
     'SebastianBergmann\\Comparator\\ComparisonFailure' => $vendorDir . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -631,4 +633,5 @@ return array(
     'Text_Frame_Reflower' => $vendorDir . '/dompdf/dompdf/include/text_frame_reflower.cls.php',
     'Text_Renderer' => $vendorDir . '/dompdf/dompdf/include/text_renderer.cls.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );

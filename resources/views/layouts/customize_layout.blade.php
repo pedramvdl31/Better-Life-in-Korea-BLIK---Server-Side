@@ -21,7 +21,6 @@
     <link href="/packages/bootstrap-social/assets/css/docs.css" rel="stylesheet">
 
     <link href="/assets/css/prettyPhoto.css" rel="stylesheet">
-    <link href="/assets/css/price-range.css" rel="stylesheet">
     <link href="/assets/css/animate.css" rel="stylesheet">
     <link href="/assets/css/main.css" rel="stylesheet">
     <link href="/assets/css/responsive.css" rel="stylesheet">
@@ -29,15 +28,15 @@
     <link href="/assets/css/general.css" rel="stylesheet">
     <link rel="stylesheet" href="/packages/embed/dist/embed.min.css" />
     <link rel="stylesheet" href="/packages/dropzone/dropzone.css" />
+    <!-- AUTOCOMPLETE -->
+    <link rel="stylesheet" href="/packages/easy_autocomplete/easy-autocomplete.css" />
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->       
-    <link rel="shortcut icon" href="/assets//assets/images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/assets//assets/images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/assets//assets/images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/assets//assets/images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="/assets//assets/images/ico/apple-touch-icon-57-precomposed.png">
+
+    <link rel="apple-touch-icon-precomposed" href="/assets/images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 <style type="text/css">
     .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
@@ -45,6 +44,7 @@
     }
 </style>
 <body>
+
     <header id="header"><!--header-->
         <div class="header_top"><!--header_top-->
             <div class="container">
@@ -84,7 +84,9 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
+                            <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Dashboard</a></li>
                                 @if(Auth::check())
+                                
                                 <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
                                 @else
                                 <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
@@ -113,15 +115,6 @@
                         <div class="mainmenu pull-left">
                             <ul class="nav navbar-nav collapse navbar-collapse">
                                 <li><a href="index.html" class="active">Home</a></li>
-                                <li class="dropdown"><a href="#">Shop<i class="fa fa-angle-down"></i></a>
-                                    <ul role="menu" class="sub-menu">
-                                        <li><a href="shop.html">Products</a></li>
-                                        <li><a href="product-details.html">Product Details</a></li> 
-                                        <li><a href="checkout.html">Checkout</a></li> 
-                                        <li><a href="cart.html">Cart</a></li> 
-                                        <li><a href="login.html">Login</a></li> 
-                                    </ul>
-                                </li> 
                             </ul>
                         </div>
                     </div>
@@ -215,20 +208,11 @@
                                 </div>
                             </div>
                         </div><!--/category-products-->
-                        <div class="price-range"><!--price-range-->
-                            <h2>Price Range</h2>
-                            <div class="well text-center">
-                                 <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="600" data-slider-step="5" data-slider-value="[250,450]" id="sl2" ><br />
-                                 <b class="pull-left">$ 0</b> <b class="pull-right">$ 600</b>
-                            </div>
-                        </div><!--/price-range-->
-                    
                     </div>
                 </div>
                 
                 <div class="col-sm-9 padding-right">
-                    
-                    
+                    @yield('content')
                 </div>
             </div>
         </div>
@@ -884,7 +868,6 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <!-- <script src="/assets/js/jquery.scrollUp.min.js"></script> -->
-    <script src="/assets/js/price-range.js"></script>
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
     <script src="/assets/js/main.js"></script>
     <script src="/assets/js/chat.js"></script>
@@ -899,9 +882,8 @@
     <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
     <script src="/packages/embed/src/embed.js"></script>
     <script src="/packages/dropzone/dropzone.js"></script>
-    <script>
+    <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
 
-    </script>
     
 </body>
 </html>

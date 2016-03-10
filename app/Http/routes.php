@@ -15,6 +15,14 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 
 	Route::group(['middleware' => 'only.auth'], function () {
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
+
+		//Dashboard
+		Route::get('/dashboard', ['as'=>'users_dash', 'uses' => 'DashboardsController@getIndex']);
+		Route::get('/dashboard/all-posts', ['as'=>'dash_view_posts', 'uses' => 'DashboardsController@getPostsIndex']);
+		Route::get('/dashboard/posts-edit/{id}',  ['as' => 'edit-post','uses' => 'AdsController@getPostsEdit', function ($id) {}]);
+		Route::post('/dashboard/posts-edit',  ['as' => 'posts-edit','uses' => 'AdsController@postPostsEdit']);
+		Route::get('/dashboard/posts-remove/{id}',  ['as' => 'remove-post','uses' => 'AdsController@getPostsRemove', function ($id) {}]);
+
 		// Post AD
 		Route::post('/upload-ads-tmp', ['as'=>'post-ads-image','uses'=>'AdsController@postAdsImageTmp']);
 	});

@@ -18,77 +18,106 @@ mainf = {
     	});
 
 		Dropzone.autoDiscover = false;
-		  $('#post_upload_zone').dropzone({ 
+		  $('#post_upload_zone_image').dropzone({ 
 		    url: "/upload-ads-tmp",
 		    paramName: "file",
 		    maxFilesize: 10,
+		    acceptedFiles: "image/*",
 		    maxFiles: 100,
 		    addRemoveLinks: true,
 		    init: function() {
-		      
 				 this.on('success', function(file, json) {
 				   var new_name = json['img_name'];
 				   var old_name = json['old_name'];
-				   var new_input = create_input(new_name,old_name);
+				   var base_type = json['base_type'];
+				   var new_input = create_input(new_name,old_name,base_type);
 				   $("#file-div").append(new_input);
+				   $('#qk-post-btn').removeAttr('disabled');
 				 });
 				  
 				 this.on('addedfile', function(file) {
+				 	$('#qk-post-btn').attr('disabled','disabled');
 				 });
 				  
 				 this.on('drop', function(file) {
 				 });
 
 				this.on("removedfile", function(file) {
-					var name = file['name'];
-					var poste_input = $('.posted-files[old-name="'+name+'"]');
-					if (poste_input.length == 1) {
-						poste_input.remove();
-					} else {
-						alert('Somthing Went Wrong!');
-					}
+					dropz_removefile(file);
 				}); 
 		    }
-		  });
+		 });
+		Dropzone.autoDiscover = false;
+		  $('#post_upload_zone_video').dropzone({ 
+		    url: "/upload-ads-tmp",
+		    paramName: "file",
+		    maxFilesize: 10,
+		    acceptedFiles: "video/*",
+		    maxFiles: 100,
+		    addRemoveLinks: true,
+		    init: function() {
+				 this.on('success', function(file, json) {
+				   var new_name = json['img_name'];
+				   var old_name = json['old_name'];
+				   var base_type = json['base_type'];
+				   var new_input = create_input(new_name,old_name,base_type);
+				   $("#file-div").append(new_input);
+				   $('#qk-post-btn').removeAttr('disabled');
+				 });
+				  
+				 this.on('addedfile', function(file) {
+				 	$('#qk-post-btn').attr('disabled','disabled');
+				 });
+				  
+				 this.on('drop', function(file) {
+				 });
 
-// $(function(){
-//   Dropzone.options.myAwesomeDropzone = {
-//     maxFilesize: 5,
-//     addRemoveLinks: true,
-//     dictResponseError: 'Server not Configured',
-//     acceptedFiles: ".png,.jpg,.gif,.bmp,.jpeg",
-//     init:function(){
-//       var self = this;
-//       // config
-//       self.options.addRemoveLinks = true;
-//       self.options.dictRemoveFile = "Delete";
-//       //New file added
-//       self.on("addedfile", function (file) {
-//         console.log('new file added ', file);
-//       });
-//       // Send file starts
-//       self.on("sending", function (file) {
-//         console.log('upload started', file);
-//         $('.meter').show();
-//       });
-      
-//       // File upload Progress
-//       self.on("totaluploadprogress", function (progress) {
-//         console.log("progress ", progress);
-//         $('.roller').width(progress + '%');
-//       });
+				this.on("removedfile", function(file) {
+					dropz_removefile(file);
+				}); 
+		    }
+		 });
 
-//       self.on("queuecomplete", function (progress) {
-//         $('.meter').delay(999).slideUp(999);
-//       });
-      
-//       // On removing file
-//       self.on("removedfile", function (file) {
-//         console.log(file);
-//       });
-//     }
-//   };
-// })
+	//--------------------------------------
+	//--------------------------------------
+
+	var options = {
+
+	    url: "/assets/cities.json",
+
+	    categories: [{
+	        listLocation: "Korea",
+	        maxNumberOfElements: 4,
+	        header: "South Korea"
+	    }],
+
+	    getValue: function(element) {
+	        return element.name;
+	    },
+
+	    template: {
+	        type: "description",
+	        fields: {
+	            description: "realName"
+	        }
+	    },
+
+	    list: {
+	        maxNumberOfElements: 8,
+	        match: {
+	            enabled: true
+	        },
+	        sort: {
+	            enabled: true
+	        }
+	    },
+	    theme: "square"
+	};
+
+	$("#cities-autocomplete").easyAutocomplete(options);
+
+	//--------------------------------------
+	//--------------------------------------
 
 	},
 	events: function() {
@@ -101,40 +130,27 @@ mainf = {
 					$('#subcat-wrap').css('visibility','visible').css('opacity',1);
 				}, 50);
 			} else {
-				$('#subcat-wrap').css('visibility','hidden').css('opacity',0);
-				$('#title-wrap').css('visibility','hidden').css('opacity',0);
-				$('#des-wrap').css('visibility','hidden').css('opacity',0);
-				$('#dropzone').css('visibility','hidden').css('opacity',0);
+				$('.2t-wrap').css('visibility','hidden').css('opacity',0);
 				$('#qk-post-btn').attr('disabled','disabled');
 				setTimeout(function(){
-					$('#subcat-wrap').addClass('hide');
-					$('#title-wrap').addClass('hide');
-					$('#des-wrap').addClass('hide');
-					$('#dropzone').addClass('hide');
+					$('.2t-wrap').addClass('hide');
 				}, 500);
 			}
 		});
+
 		$("#subcat-select").change(function(){
 			var t_v = $("option:selected", this).val();
 			if (t_v != '0') {
-				$('#title-wrap').removeClass('hide');
-				$('#des-wrap').removeClass('hide');
-				$('#dropzone').removeClass('hide');
+				$('.2t-wrap').removeClass('hide');
 				setTimeout(function(){
-					$('#title-wrap').css('visibility','visible').css('opacity',1);
-					$('#des-wrap').css('visibility','visible').css('opacity',1);
-					$('#dropzone').css('visibility','visible').css('opacity',1);
+					$('.2t-wrap').css('visibility','visible').css('opacity',1);
 					$('#qk-post-btn').removeAttr('disabled');
 				}, 50);
 			} else {
-					$('#title-wrap').css('visibility','hidden').css('opacity',0);
-					$('#des-wrap').css('visibility','hidden').css('opacity',0);
-					$('#dropzone').css('visibility','hidden').css('opacity',0);
+					$('.2t-wrap').css('visibility','hidden').css('opacity',0);
 					$('#qk-post-btn').attr('disabled','disabled');
 				setTimeout(function(){
-					$('#title-wrap').addClass('hide');
-					$('#des-wrap').addClass('hide');
-					$('#dropzone').addClass('hide');
+					$('.2t-wrap').addClass('hide');
 				}, 500);
 			}
 		});
@@ -187,7 +203,7 @@ requestm = {
 		 				setTimeout(function(){ 
 		 					$('#success-modal').modal('hide');
 		 				 }, 1500);
-		 				
+		 				clear_qp_modal();
 		 			break;
 
 		 			case 400:
@@ -271,22 +287,7 @@ function view_errors(data)
  		};
 
 }
-function removeHash() {
-    var scrollV, scrollH, loc = window.location;
-    if ('replaceState' in history) {
-        history.replaceState('', document.title, loc.pathname + loc.search);
-    } else {
-        // Prevent scrolling by storing the page's current scroll offset
-        scrollV = document.body.scrollTop;
-        scrollH = document.body.scrollLeft;
 
-        loc.hash = '';
-
-        // Restore the scroll offset, should be flicker free
-        document.body.scrollTop = scrollV;
-        document.body.scrollLeft = scrollH;
-    }
-}
 function addCommas(val) {
 
 	while (/(\d+)(\d{3})/.test(val.toString())){
@@ -300,9 +301,9 @@ function addCommas(val) {
     return(!obj || $.trim(obj) === "");
   };
 })(jQuery);
-function create_input(name,old_name) {
+function create_input(name,old_name,base_type) {
 	var count = $(document).find('.posted-files').length;
-	return '<input old-name="'+old_name+'" class="posted-files" name="posted_files['+count+'][name]" type="hidden" value="'+name+'"/>';
+	return '<input old-name="'+old_name+'" class="posted-files" name="posted_files['+count+']['+base_type+'][name]" type="hidden" value="'+name+'"/>';
 }
 
 function getContent(timestamp)
@@ -329,28 +330,28 @@ function renew_subcat(t_v)
 {
 	var select_html = '<option value="0">Select Sub Category</option>';
 	switch(t_v){
-		case "realestate":
+		case "1":
 			select_html += 	'<option value="1">Agencies</option>'+
 							'<option value="2">Private</option>';
 		break;		
-		case "usedcar":
+		case "2":
 			select_html += 	'<option value="1">Dealership</option>'+
 							'<option value="2">Private</option>'+
 							'<option value="3">Sofa Document Fee</option>'+
 							'<option value="4">Insurance</option>';
 		break;		
-		case "movinginout":
+		case "3":
 			select_html += 	'<option value="1">Cleaning</option>'+
 							'<option value="2">Services</option>'+
 							'<option value="3">Moving Company</option>'+
 							'<option value="4">Medical</option>'+
 							'<option value="5">CellPhone</option>';
 		break;		
-		case "fleamarket":
+		case "4":
 			select_html += 	'<option value="1">Agencies</option>'+
 							'<option value="2">Private</option>';
 		break;		
-		case "events":
+		case "5":
 			select_html += 	'<option value="1">Agencies</option>'+
 							'<option value="2">Private</option>';
 		break;		
@@ -374,3 +375,24 @@ function removeHash() {
         document.body.scrollLeft = scrollH;
     }
 }
+
+function dropz_removefile(file) {
+	var name = file['name'];
+	var poste_input = $('.posted-files[old-name="'+name+'"]');
+	if (poste_input.length > 0) {
+		poste_input.remove();
+	} else {
+		alert('Somthing Went Wrong!');
+	}
+}
+
+function clear_qp_modal() {
+	$('.pk-form').val('');
+	$(".qp-selects").val("0");
+	Dropzone.forElement("#post_upload_zone_image").removeAllFiles(true);
+	Dropzone.forElement("#post_upload_zone_video").removeAllFiles(true);
+	$('#file-div').html('');
+}
+
+
+

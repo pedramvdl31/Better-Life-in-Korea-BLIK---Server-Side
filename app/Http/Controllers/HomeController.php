@@ -22,7 +22,7 @@ use App\Job;
 use App\User;
 use App\Page;
 use App\WebsiteBrand;
-use App\Ads;
+use App\Ad;
 
 class HomeController extends Controller
 {
@@ -42,10 +42,12 @@ class HomeController extends Controller
         if (Auth::check()) {
             $cats = Job::cat_select();
         }
+        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->paginate(10));
         
         $layout_title = 'layouts.customize_layout';
             return view('home.homepage')
             ->with('cats',isset($cats)?$cats:null)
+            ->with('ads',$ads)
             ->with('layout',$layout_title);
     }
 

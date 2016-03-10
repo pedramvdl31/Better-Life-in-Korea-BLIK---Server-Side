@@ -12,6 +12,9 @@ blank = {
 		alert();
 	},
 	events: function() {
+		$("").click(function(){
+		});
+
         $(document).on('click','.blank',function(){
         	if (!$.isBlank('text')) {
 

@@ -695,11 +695,62 @@ class Job extends Model
 	public static function cat_select() {
             return array(
                 '0'          => 'Select Category',
-                'realestate'        => 'Real Estate',
-                'usedcar'      => 'Used Car',
-                'movinginout'  => 'Moving In/Out',
-                'fleamarket'     => 'Flea Market',
-                'events'      => 'Events'
+                '1'        => 'Real Estate',
+                '2'      => 'Used Car',
+                '3'  => 'Moving In/Out',
+                '4'     => 'Flea Market',
+                '5'      => 'Events'
                 );
+        }
+	public static function perpare_subcat($cat_id) {
+		$tarray = null;
+		switch ($cat_id) {
+			case '1':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Agencies',
+			                '2'      => 'Private',
+			                );
+				break;
+			case '2':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Dealership',
+			                '2'      => 'Private',
+			                '3'      => 'Sofa Document Fee',
+			                '4'      => 'Insurance',
+			                );
+				break;
+			case '3':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Cleaning',
+			                '2'      => 'Services',
+			                '3'      => 'Moving Company',
+			                '4'      => 'CellPhone',
+			                );
+				break;
+			case '4':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Agencies',
+			                '2'      => 'Private',
+			                );
+				break;
+			case '5':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Agencies',
+			                '2'      => 'Private',
+			                );
+				break;
+			
+			default:
+				$tarray =	array(
+			                '0'          => 'Select SubCategory',
+			                );
+				break;
+		}
+            return $tarray; 
         }
 }

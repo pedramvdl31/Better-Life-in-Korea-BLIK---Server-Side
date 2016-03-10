@@ -1,0 +1,9 @@
+{
+	"Korea": [
+		{"name": "Seoul", "realName": "서울특별시"},
+		{"name": "Busan", "realName": "부산광역시"},
+		{"name": "Anyang", "realName": "안양시"},
+		{"name": "Asan", "realName": "아산시"},
+		{"name": "Daegu", "realName": "대구광역시"}
+	]
+}

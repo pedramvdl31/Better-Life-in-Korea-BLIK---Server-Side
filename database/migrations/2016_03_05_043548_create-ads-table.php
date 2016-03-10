@@ -18,6 +18,7 @@ class CreateAdsTable extends Migration
             $table->integer('cat_id');
             $table->integer('subcat_id');
             $table->string('title');
+            $table->string('city');
             $table->text('description');
             $table->text('file_srcs');
             $table->integer('views');
