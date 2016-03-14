@@ -22,7 +22,7 @@
 	        <a class="btn btn-social btn-facebook" href="auth/facebook">
         		<span class="fa fa-facebook"></span>  Sign in with Facebook
         	</a>
-	        <button type="submit" id="login-btn-1" class="btn btn-warning pull-right login-btn">Login</button>
+	        <button type="submit" id="login-btn-1" class="btn btn-warning pull-right">Login</button>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

@@ -8,100 +8,6 @@ posts_i = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-			//--------------------------------------
-	//--------------------------------------
-
-		var options = {
-		    url: "/assets/cities.json",
-
-		    categories: [{
-		        listLocation: "Korea",
-		        maxNumberOfElements: 4,
-		        header: "South Korea"
-		    }],
-
-		    getValue: function(element) {
-		        return element.name;
-		    },
-
-		    template: {
-		        type: "description",
-		        fields: {
-		            description: "realName"
-		        }
-		    },
-
-		    list: {
-		        maxNumberOfElements: 8,
-		        match: {
-		            enabled: true
-		        },
-		        sort: {
-		            enabled: true
-		        }
-		    },
-		    theme: "square"
-		};
-		$("#cities-autocomplete").easyAutocomplete(options);
-		Dropzone.autoDiscover = false;
-		  $('#post_upload_zone_image').dropzone({ 
-		    url: "/upload-ads-tmp",
-		    paramName: "file",
-		    maxFilesize: 10,
-		    acceptedFiles: "image/*",
-		    maxFiles: 100,
-		    addRemoveLinks: true,
-		    init: function() {
-				 this.on('success', function(file, json) {
-				   var new_name = json['img_name'];
-				   var old_name = json['old_name'];
-				   var base_type = json['base_type'];
-				   var new_input = create_input(new_name,old_name,base_type);
-				   $("#file-div").append(new_input);
-				   $('#qk-post-btn').removeAttr('disabled');
-				 });
-				  
-				 this.on('addedfile', function(file) {
-				 	$('#qk-post-btn').attr('disabled','disabled');
-				 });
-				  
-				 this.on('drop', function(file) {
-				 });
-
-				this.on("removedfile", function(file) {
-					dropz_removefile(file);
-				}); 
-		    }
-		 });
-		  $('#post_upload_zone_video').dropzone({ 
-		    url: "/upload-ads-tmp",
-		    paramName: "file",
-		    maxFilesize: 10,
-		    acceptedFiles: "video/*",
-		    maxFiles: 100,
-		    addRemoveLinks: true,
-		    init: function() {
-				 this.on('success', function(file, json) {
-				   var new_name = json['img_name'];
-				   var old_name = json['old_name'];
-				   var base_type = json['base_type'];
-				   var new_input = create_input(new_name,old_name,base_type);
-				   $("#file-div").append(new_input);
-				   $('#qk-post-btn').removeAttr('disabled');
-				 });
-				  
-				 this.on('addedfile', function(file) {
-				 	$('#qk-post-btn').attr('disabled','disabled');
-				 });
-				  
-				 this.on('drop', function(file) {
-				 });
-
-				this.on("removedfile", function(file) {
-					dropz_removefile(file);
-				}); 
-		    }
-		 });
 	},
 	events: function() {
 		$(".remove-post").click(function(){
@@ -121,16 +27,13 @@ posts_i = {
 		});
 		$(".remove-ofile").click(function(){
 			var name = $(this).attr('data');
-			var poste_input = $('.posted-files[old-name="'+name+'"]');
-			if (poste_input.length > 0) {
-				poste_input.remove();
-				$(this).parents('.thumb-wrap:first').remove();
-			} else {
-				alert('Somthing Went Wrong!');
-			}
+			var newri = create_remove_input(name);
+			$("#remove-file-div").append(newri);
+			$(this).parents('.thumb-wrap:first').remove();
 		});
-
-
+		$("#post-btn").click(function(){
+			$('#post-form').submit()
+		});
 	}
 }
 request = {
@@ -170,7 +73,11 @@ function posts_if(url)
 })(jQuery);
 function create_input(name,old_name,base_type) {
 	var count = $(document).find('.posted-files').length;
-	return '<input old-name="'+old_name+'" class="posted-files" name="posted_files['+count+']['+base_type+'][name]" type="hidden" value="'+name+'"/>';
+	return '<input old-name="'+old_name+'" class="posted-files" name="posted_files[999'+count+']['+base_type+'][name]" type="hidden" value="'+name+'"/>';
+}
+function create_remove_input(name) {
+	var count = $(document).find('.remove-files').length;
+	return '<input class="remove-files" name="remove-files['+count+'][name]" type="hidden" value="'+name+'"/>';
 }
 
 function getContent(timestamp)

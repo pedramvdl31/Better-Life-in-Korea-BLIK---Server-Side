@@ -10,19 +10,43 @@
 | and give it the controller to call when that URI is requested.
 |
 */
+Route::get('/', function() {
+    // this doesn't do anything other than to
+    // tell you to go to /fire
+    return "go to /fire";
+});
+
+Route::get('fire', function () {
+    // this fires the event
+    event(new App\Events\EventName());
+    return "event fired";
+});
+
+Route::get('test', function () {
+    // this checks for the event
+    return view('test');
+});
+
+
+Route::post('sendmessage', ['as'=>'sendmessage', 'uses' => 'HomeController@sendMessage']);
+Route::get('writemessage', 'HomeController@writemessage');
+
+
+
 
 Route::group(['middleware' => 'beforeFilter'], function () {
+	Route::get('/update-messages', ['as'=>'chat', 'uses' => 'HomeController@getUpdateMessages']);	
+	Route::post('/search-01', ['as'=>'search-01', 'uses' => 'AdsController@postSearchByText']);
 
 	Route::group(['middleware' => 'only.auth'], function () {
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
-
+		Route::post('/store-wishlist', ['as'=>'store_wishlist','uses'=>'AdsController@postStoreAd']);
 		//Dashboard
 		Route::get('/dashboard', ['as'=>'users_dash', 'uses' => 'DashboardsController@getIndex']);
 		Route::get('/dashboard/all-posts', ['as'=>'dash_view_posts', 'uses' => 'DashboardsController@getPostsIndex']);
 		Route::get('/dashboard/posts-edit/{id}',  ['as' => 'edit-post','uses' => 'AdsController@getPostsEdit', function ($id) {}]);
 		Route::post('/dashboard/posts-edit',  ['as' => 'posts-edit','uses' => 'AdsController@postPostsEdit']);
 		Route::get('/dashboard/posts-remove/{id}',  ['as' => 'remove-post','uses' => 'AdsController@getPostsRemove', function ($id) {}]);
-
 		// Post AD
 		Route::post('/upload-ads-tmp', ['as'=>'post-ads-image','uses'=>'AdsController@postAdsImageTmp']);
 	});
@@ -47,6 +71,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('users/return-users',  ['uses' => 'UsersController@postReturnUsers', 'middleware' => ['acl:admins/acl/view']]);
 	Route::post('users/invoice-users',  ['uses' => 'UsersController@postInvoiceUsers', 'middleware' => ['acl:admins/acl/view']]);
 	Route::post('users/user-info',  ['uses' => 'UsersController@postUserInfo', 'middleware' => ['acl:admins/acl/view']]);
+	Route::post('/prepare-ad',  ['uses' => 'AdsController@postPrepareAds']);
 	Route::get('/verify-email/{id}',  ['as'=>'verify_mail', 'uses' => 'UsersController@getEmailVerify']);
 
 	Route::group(['prefix' => 'users'], function () {

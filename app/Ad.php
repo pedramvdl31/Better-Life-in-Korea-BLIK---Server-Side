@@ -8,8 +8,28 @@ use Auth;
 class Ad extends Model
 {
     
+    public static $rules_edit = array(
+        'cat'=>'required',
+        'subcat'=>'required',
+        'city'=>'required',
+        'title'=>'required',
+        'description'=>'required'
+    );
+    static public function PrepareAdsSearchTxt($txtd) {
+        $output = null;
+        if (isset($txtd)) {
+            $ads = Ad::where('status',1)->where('title', 'like', $txtd)
+                ->get();
 
+            if (isset($ads)) {
+                $output = Ad::PrepareAdsForHome($ads);
+            }
+        }
+
+        return $output;
+    }
     static public function PrepareAdsForHome($data) {
+
         $data_a = array();
         $data_a['html'] = '';
         $data_a['data'] = $data;
@@ -49,19 +69,16 @@ class Ad extends Model
                                             </div>
                                             <h2>'.$new_t.'</h2>
                                             <p>'.$new_des.'</p>
-                                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-eye"></i>View</a>
+                                            <a class="btn btn-default view-ad add-to-cart" data="'.$dv->id.'"><i class="fa fa-eye"></i>View</a>
                                         </div>
                                         <div class="product-overlay">
-                                            <div class="overlay-content">
-                                                <h2>$56</h2>
-                                                <p>Easy Polo Black Edition</p>
-                                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>View</a>
-                                            </div>
+
                                         </div>
                                 </div>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
-                                        <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+
+                                        <li><a data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                                     </ul>
                                 </div>
                             </div>
@@ -69,26 +86,93 @@ class Ad extends Model
                 ';
             }
         }
+        
         return $data_a;
     }
     static public function PrepareForEdit($data) {
+
         if (isset($data)) {
-                if (isset($data['cat_id'])) {
-                   $data['subcats_select'] =  Job::perpare_subcat($data['cat_id']);
-                }
-                if (isset($data['description'])) {
-                   $data['des'] =  json_decode($data['description']);
-                }
-                if (isset($data['file_srcs'])) {
-                    $files = json_decode($data['file_srcs'],true);
-                    $base_path = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.Auth::id().DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR;
-                    $data['decoded_files'] = $files;
-                    $data['base-path'] = $base_path;
-                    unset($data['file_srcs']);
-                }
+            if (isset($data['cat_id'])) {
+               $data['subcats_select'] =  Job::perpare_subcat($data['cat_id']);
+            }
+            if (isset($data['description'])) {
+               $data['des'] =  json_decode($data['description']);
+            }
+            if (isset($data['file_srcs'])) {
+                $files = json_decode($data['file_srcs'],true);
+                $base_path = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.Auth::id().DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR;
+                $data['decoded_files'] = $files;
+                $data['base-path'] = $base_path;
+                unset($data['file_srcs']);
+            }
         }
+
         return $data;
     }
 
+
+
+    static public function PrepareForView($data) {
+        $html = "";
+        if (isset($data)) {
+            if (isset($data['description'])) {
+               $des =  json_decode($data['description']);
+            }
+            $username = '';
+            if ($data['user_id']) {
+                $this_user_id = $data['user_id'];
+                if (isset($this_user_id)) {
+                    $user = User::find($this_user_id);
+                    if (isset($user)) {
+                        $username = $user->email;
+                    }
+                }
+            }
+            $html .= "  <dl>
+                          <dt>By:</dt>
+                          <dd>".$username."</dd>
+                          <dt>Title</dt>
+                          <dd>".$data->title."</dd>
+                          <dt>Description</dt>
+                          <dd>".json_decode($data['description'])."</dd>
+                        </dl>
+                        <hr>
+                        ";
+            if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
+                $files = json_decode($data['file_srcs'],true);
+                $base_path = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$data['user_id'].DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR;
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="image") {
+                            $html .= '
+                              <div class="col-xs-12 col-md-12 thumb-wrap">
+                                <div href="#" class="thumbnail">
+                                  <img src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" alt="...">
+                                </div>
+                              </div>
+                            ';
+                        } elseif ($fvk=="video") {
+
+                            $html .= '
+                              <div class="col-xs-12 col-md-12 thumb-wrap">
+                                <div href="#" class="thumbnail">
+                                    <div class="flex-video widescreen ">
+                                        <video class="" frameborder="0" controls>
+                                            <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
+                                        </video>
+                                    </div>   
+                                </div>
+                              </div>
+                            ';
+
+
+
+                        }
+                    }
+                }
+            }
+        }
+        return $html;
+    }
 
 }

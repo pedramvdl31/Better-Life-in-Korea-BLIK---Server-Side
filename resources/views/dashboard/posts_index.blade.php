@@ -6,9 +6,7 @@
 @stop
 
 @section('content')
-
-
-
+<input type="hidden" id="cities-autocomplete"></input>
 <div class="jumbotron">
 	<h1>Posts</h1>
 	<ol class="breadcrumb">

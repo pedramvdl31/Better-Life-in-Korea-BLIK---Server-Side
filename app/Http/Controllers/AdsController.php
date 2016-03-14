@@ -23,6 +23,7 @@ use App\User;
 use App\Page;
 use App\WebsiteBrand;
 use App\Ad;
+use App\Wishlist;
 
 class AdsController extends Controller
 {
@@ -157,7 +158,6 @@ class AdsController extends Controller
 
     public function getPostsEdit($id = null)
     {
-
         if (isset($id)) {
             $ps = Ad::PrepareForEdit(Ad::find($id));
             if (isset($ps)) {
@@ -171,12 +171,114 @@ class AdsController extends Controller
         Flash::error('Oops somthing went wrong!');
         return Redirect::route('dash_view_posts');
     }
+
+
+    public function postPostsEdit()
+    {
+
+        $validator = Validator::make(Input::all(), Ad::$rules_edit);
+        if ($validator->passes()) {
+            //-------------------
+            $posted_files = Input::get('posted_files');
+            $remove_files = Input::get('remove-files');
+            $ThisUserId = Auth::user()->id;
+            $ThisAdId = Input::get('ad_id');
+            //ELSE
+            $ads = Ad::findOrFail($ThisAdId);
+            if (isset($ads)) {
+
+                $files_ins = json_decode($ads->file_srcs,true);
+                if (isset($remove_files) && !empty($remove_files)) {
+                    foreach ($files_ins as $fik => $fiv) {
+                        foreach ($fiv as $fivk => $fivv) {
+                            foreach ($remove_files as $rfk => $rfv) {
+                                if ($rfv['name'] == $fivv['name']) {
+                                    unset($files_ins[$fik]);
+                                    $prm_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$fivk.DIRECTORY_SEPARATOR;
+                                    if (file_exists($prm_path.$fivv['name'])) {
+                                        unlink($prm_path.$fivv['name']);
+                                    } 
+                                }
+                            }
+                        }
+                    }
+                }
+                if (isset($posted_files) && !empty($posted_files)) {
+                    $posted_merge = array_merge($files_ins, $posted_files);
+                    foreach ($posted_files as $pk => $pv) {
+                        foreach ($pv as $pvkey => $pvval) {
+                            if ($pvkey == 'image' || $pvkey == 'video') {
+                                $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                if (!file_exists($tmp_path)) {
+                                    mkdir($tmp_path, 0777, true);
+                                }               
+                                if (!file_exists($new_path)) {
+                                    mkdir($new_path, 0777, true);
+                                } 
+                                $oldpath = public_path($tmp_path.$pvval['name']);
+                                $newpath = public_path($new_path.$pvval['name']);
+                                if (file_exists($tmp_path.$pvval['name'])) {
+                                    rename($oldpath, $newpath);
+                                }  
+                            }
+                        }
+                    }
+                    $p_name = array('image','video');
+                    foreach ($p_name as $pn => $pnv) {
+                        $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
+                        $files = glob($t_path.'*'); // get all file names
+                        foreach($files as $file){ // iterate files
+                          if(is_file($file))
+                            unlink($file); // delete file
+                        }
+                    }
+                }
+
+                $ads->user_id = $ThisUserId;
+                $ads->cat_id = Input::get('cat');
+                $ads->subcat_id = Input::get('subcat');
+                $ads->city = Input::get('city');
+                $ads->title = Input::get('title');
+                $ads->description = json_encode(Input::get('description'));
+                $ads->file_srcs = isset($posted_merge)?json_encode($posted_merge):json_encode($files_ins);
+                if ($ads->save()) {
+                    Flash::Success('Successfully Edited.');
+                    return Redirect::route('dash_view_posts');
+                } else {
+                    Flash::error('Oops somthing went wrong!');
+                    return Redirect::route('dash_view_posts');
+                }
+            }
+
+        }   else {
+        // validation has failed, display error messages    
+            return Redirect::back()
+            ->with('message', 'The following errors occurred')
+            ->with('alert_type','alert-danger')
+            ->withErrors($validator)
+            ->withInput();          
+        }
+        
+    }
+
+
     public function getPostsRemove($id = null)
     {
 
         if (isset($id)) {
             $ps = Ad::find($id);
             if (isset($ps)) {
+                $files_ins = json_decode($ps->file_srcs,true);
+                foreach ($files_ins as $fik => $fiv) {
+                    foreach ($fiv as $fivk => $fivv) {
+                        $prm_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.Auth::id().DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$fivk.DIRECTORY_SEPARATOR;
+                        if (file_exists($prm_path.$fivv['name'])) {
+                            unlink($prm_path.$fivv['name']);
+                        } 
+                    }
+                }
+
                 if ($ps->delete()) {
                     Flash::success('Successfully Removed');
                     return Redirect::route('dash_view_posts');
@@ -187,4 +289,58 @@ class AdsController extends Controller
         return Redirect::route('dash_view_posts');
     }
 
+
+
+    public function postPrepareAds()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $ads = Ad::PrepareForView(Ad::findOrFail(Input::get('data_id')));
+            if (isset($ads)) {
+                return Response::json(array(
+                    'status' => 200,
+                    'ad' => $ads
+                    ));
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+        }
+    }
+    
+    public function postStoreAd()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $wl = new Wishlist();
+            $wl->user_id=Auth::id();
+            $wl->ad_id=Input::get('data_id');
+            $wl->status=1;
+            if ($wl->save()) {
+                $status = 200;
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+        }
+    }
+
+        public function postSearchByText()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $ttxt = Input::get('ttxt');
+            if (isset($ttxt)) {
+                $ads = Ad::PrepareAdsSearchTxt($ttxt);
+                $status = 200;
+                return Response::json(array(
+                    'status' => $status,
+                    'ads' => $ads['html']
+                ));
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+        }
+    }
 }

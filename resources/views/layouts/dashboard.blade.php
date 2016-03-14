@@ -71,7 +71,7 @@
               <img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="pull-left info">
-              <p>{!! $this_username !!}</p>
+              <p>{!! Auth::user()->email !!}</p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>

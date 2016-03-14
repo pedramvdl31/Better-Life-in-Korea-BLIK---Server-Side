@@ -16,7 +16,10 @@ mainf = {
 		$('.body-wrapp').slimScroll({
         	height: '100%'
     	});
-
+        // var es = new EventSource("/update-messages");
+        // es.addEventListener("message", function(e) {
+        // 	console.log(e.data['time']);
+        // }, false);
 		Dropzone.autoDiscover = false;
 		  $('#post_upload_zone_image').dropzone({ 
 		    url: "/upload-ads-tmp",
@@ -83,7 +86,7 @@ mainf = {
 
 	var options = {
 
-	    url: "/assets/cities.json",
+	    url: "/assets/cities2.json",
 
 	    categories: [{
 	        listLocation: "Korea",
@@ -163,6 +166,11 @@ mainf = {
         $(document).on('click','.reg-btn',function(){
 			$('#register-modal').modal('show');
         });
+        $(document).on('click','.view-ad',function(){
+			var this_id = $(this).attr('data');
+			$('#atwl-btn').attr('data',this_id);
+			findAndViewAd(this_id);
+        });
         $(document).on('click','.qkpost',function(){
         	var _auth = parseInt($('#_auth').attr('data'));
         	if (_auth == 1) {
@@ -171,6 +179,23 @@ mainf = {
         		$('#login-modal').modal('show');
         	}
         });
+        $(document).on('click','.remove-ad-wl',function(){
+        	$('#warning-modal').modal('show');
+        });
+        $(document).on('click','.view-ad-wl',function(){
+			var this_id = $(this).attr('data');
+			findAndViewAd2(this_id);
+        });
+
+		$('#searchbar').keypress(function(event){
+		    var keycode = (event.keyCode ? event.keyCode : event.which);
+		    if(keycode == '13'){
+		    	$tval = $(this).val();
+    			if (!$.isBlank($tval)) {
+    				requestm.s_func_txt($tval);
+            	}
+		    }
+		});
         $('#submit-btn').click(function(){
 			var reg_form = $('#reg-form').serialize();
 			requestm.form_validate(reg_form);
@@ -179,12 +204,139 @@ mainf = {
 			var _form = $('#pkpost-form').serialize();
 			requestm.process_qkpost(_form);
 		});
+        $('#back-to-wl').click(function(){
+        	$(this).parents('.modal-footer').addClass('hide');
+        	$('#wishlist-ad-content').addClass('hide');
+        	$('.vwad-loading').addClass('hide');
+        	$('.wl_modal_body').removeClass('hide');
+		});
+        $('.add-to-wishlist').click(function(e){
+        	e.preventDefault();
+        	var _auth = parseInt($('#_auth').attr('data'));
+        	if (_auth == 1) {
+				var _data = $(this).attr('data');
+				$(this).css('color','green');
+				requestm.add_to_wishlist(_data);
+        	} else {
+        		$('.modal').modal('hide');
+        		$('#login-modal').modal('show');
+        	}
+
+		});
+        $('#view_wl').click(function(e){
+        	e.preventDefault();
+        	$('#wishlist-modal').modal('show');
+		});
+
+
     }
 }
 requestm = {
+	s_func_txt: function(ttxt) {
+		$('.search-loading').removeClass('hide');
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/search-01',
+			{
+				"_token": token,
+				"ttxt":ttxt
+			},
+			function(result){
+				$('.search-loading').addClass('hide');
+				var status = result.status;
+				var ads = result.ads;
+				switch(status){					
+		 			case 200:
+		 				$('#ads-wrapper').html(ads);
+		 			break;
+
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	},
+	add_to_wishlist: function(data_id) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/store-wishlist',
+			{
+				"_token": token,
+				"data_id":data_id
+			},
+			function(result){
+				var status = result.status;
+				switch(status){					
+		 			case 200:
+
+		 			break;
+
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	},
+	vwad2: function(data_id) {
+		$('.postview_modal_body').addClass('hide');
+		$('.vwad-loading').removeClass('hide');
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/prepare-ad',
+			{
+				"_token": token,
+				"data_id":data_id
+			},
+			function(result){
+				var status = result.status;
+				var ad = result.ad;
+				switch(status){					
+		 			case 200:
+		 				$('#wishlist-ad-content').removeClass('hide');
+		 				$('#wishlist-ad-content').html(ad);
+						$('.vwad-loading').addClass('hide');
+		 			break;
+
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	},
+	vwad: function(data_id) {
+		$('.postview_modal_body').addClass('hide');
+		$('.vwad-loading').removeClass('hide');
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/prepare-ad',
+			{
+				"_token": token,
+				"data_id":data_id
+			},
+			function(result){
+				var status = result.status;
+				var ad = result.ad;
+				switch(status){					
+		 			case 200:
+						$('.postview_modal_body').removeClass('hide');
+						$('.postview_modal_body').html(ad);
+						$('.vwad-loading').addClass('hide');
+		 			break;
+
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	},
 	process_qkpost: function(_form) {
 		$('._required').css('color','inherit');
 		$('#validating').removeClass('hide');
+		$('#pos-gif').removeClass('hide');
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/process-qkpost',
@@ -193,6 +345,7 @@ requestm = {
 				"_form":_form
 			},
 			function(result){
+				$('#pos-gif').addClass('hide');
 				var status = result.status;
 				switch(status){					
 		 			case 200:
@@ -246,6 +399,20 @@ function reset_errors()
 	$('.error-feedback').addClass('hide');
 	$('.form-group').removeClass('has-error');
 }
+
+function findAndViewAd(this_id)
+{
+	$('#postview-modal').modal('show');
+	requestm.vwad(this_id);
+}
+function findAndViewAd2(this_id)
+{
+	$('.wl_modal_body').addClass('hide');
+	$('.vwad-loading').removeClass('hide');
+	$('.wl-footer').removeClass('hide');
+	requestm.vwad2(this_id);
+}
+
 
 function view_errors(data)
 {
@@ -393,6 +560,4 @@ function clear_qp_modal() {
 	Dropzone.forElement("#post_upload_zone_video").removeAllFiles(true);
 	$('#file-div').html('');
 }
-
-
 

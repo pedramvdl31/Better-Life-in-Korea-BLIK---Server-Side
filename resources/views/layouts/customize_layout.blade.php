@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>Home | E-Shopper</title>
+    <title>Home | Kora</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <!-- Optional theme -->
@@ -42,6 +42,9 @@
     .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
     outline: none;
     }
+    .pr-img img{
+        width: 100%;
+    }
 </style>
 <body>
 
@@ -77,8 +80,8 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-4">
-                        <div class="logo pull-left">
-
+                       <div class="companyinfo" style="margin-top: 0;">
+                            <h2 style="margin:0;text-align: left"><span>K</span>ora</h2>
                         </div>
                     </div>
                     <div class="col-sm-8">
@@ -86,7 +89,7 @@
                             <ul class="nav navbar-nav">
                             <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Dashboard</a></li>
                                 @if(Auth::check())
-                                
+                                <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
                                 <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
                                 @else
                                 <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
@@ -119,8 +122,11 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
+                        <div class="text-center search-loading hide" style="float: left;line-height: 32px;">
+                            <img src="/assets/images/icons/gif/loading1.gif" width="25px;">
+                        </div>
                         <div class="search_box pull-right">
-                            <input type="text" placeholder="Search"/>
+                            <input id="searchbar" type="text" placeholder="Search"/>
                         </div>
                     </div>
                 </div>
@@ -175,7 +181,6 @@
                                     </div>
                                 </div>
                             </div>
-                            
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
@@ -224,7 +229,7 @@
                 <div class="row">
                     <div class="col-sm-2">
                         <div class="companyinfo">
-                            <h2><span>e</span>-shopper</h2>
+                            <h2><span>K</span>ora</h2>
                             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
                         </div>
                     </div>
@@ -343,8 +348,8 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
-                    <p class="pull-left">Copyright © 2013 E-SHOPPER Inc. All rights reserved.</p>
-                    <p class="pull-right">Designed by <span><a target="_blank" href="http://www.themeum.com">Themeum</a></span></p>
+                    <p class="pull-left">Copyright © 2016 Webprinciples.</p>
+                    <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
                 </div>
             </div>
         </div>
@@ -854,12 +859,17 @@
     <!-- --------------------------------------------- -->
     <!-- -------------------------------------------- -->
     {!! View::make('partials.login_modal') !!}    
+    {!! View::make('partials.postview_modal') !!}    
     {!! View::make('partials.register_modal') !!}    
-    {!! View::make('partials.success_modal') !!}    
+    {!! View::make('partials.success_modal') !!}
+    {!! View::make('partials.warning_modal') !!}      
     @if(Auth::check())
         {!! View::make('partials.qkpost_modal')
         ->with('cats',$cats)
         ->__toString()!!}   
+        {!! View::make('partials.wishlist_modal')
+        ->with('wishlist',$wishlist)
+        ->__toString() !!}
     @endif
   
     <!-- Load js libs only when the page is loaded. -->

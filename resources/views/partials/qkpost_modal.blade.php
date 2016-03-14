@@ -126,7 +126,11 @@
 
 	      </div>
 	      <div class="modal-footer clearfix">
-	        <a id="qk-post-btn" class="btn btn-warning pull-right" disabled="disabled">Post</a>
+	           <a id="qk-post-btn" class="btn btn-warning pull-right" disabled="disabled">Post</a>
+              <div id="pos-gif" class="pull-right hide" style="line-height: 32px;
+                margin-right: 10px;">
+                <img src="/assets/images/icons/gif/loading1.gif" width="20px;">
+              </div>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
