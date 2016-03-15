@@ -74,6 +74,9 @@
 
 	  <div class="modal-dialog qkpost_dialog" style="width: 44%;margin-top: 10px;">
 	    <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
 	      <div class="modal-body" style="overflow: auto;">
             <div class="postview_modal_body" style="max-height: 450px;
             overflow: auto;">

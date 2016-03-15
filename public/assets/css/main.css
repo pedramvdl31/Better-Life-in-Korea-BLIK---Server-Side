@@ -225,10 +225,6 @@ a#scrollUp i{
   padding-top: 30px;
 }
 
-.navbar-collapse.collapse{
-  padding-left: 0;
-}
-
 .mainmenu ul li{
   padding-right: 15px;
   padding-left: 15px;
@@ -655,8 +651,8 @@ ul.sub-menu {
 
 .category-products {
   /*border: 1px solid #F7F7F0;*/
-  margin-bottom: 35px;
-  padding-bottom: 20px;
+  margin-bottom:0;
+  padding-bottom:0;
   padding-top: 15px;
 }
 .left-sidebar h2, .brands_products h2 {
@@ -2394,8 +2390,7 @@ h2.title {
 .btn.btn-primary {
   background:#FE980F;
   border: 0 none;
-/*  border-radius: 0;
-  margin-top: 16px;*/
+  margin-bottom: 10px;
 }
 
 .blank-arrow {
@@ -2581,13 +2576,14 @@ h2.title {
         padding-left: 20px;
       }
       .my-navbar-left{
-        padding-left: 21px;
-        padding-right: 8px;   
         border-top: none;
         margin-top: 0;   
       }
       .ads-warps{
         padding: 0;
+      }
+      .features_items {
+        margin-top: 22px;
       }
     }
 
@@ -2609,8 +2605,6 @@ h2.title {
         padding-left: 20px;
       }
       .my-navbar-left{
-        padding-left: 21px;
-        padding-right: 8px;   
         border-top: none;
         margin-top: 0;   
       }
@@ -2620,6 +2614,10 @@ h2.title {
       .ads-warps{
         padding: 0;
       }
+      .features_items {
+        margin-top: 22px;
+      }
+
     }
 
     /* Custom, iPhone Retina */ 
@@ -2637,8 +2635,6 @@ h2.title {
         display: none !important;
       }
       .my-navbar-left{
-        padding-left: 21px;
-        padding-right: 8px; 
         border-top: none;
         margin-top: 0;   
 
@@ -2649,5 +2645,9 @@ h2.title {
       .ads-warps{
         padding: 0;
       }
+      .features_items {
+        margin-top: 22px;
+      }
+
     }
 

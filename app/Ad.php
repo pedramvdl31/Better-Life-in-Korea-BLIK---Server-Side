@@ -60,7 +60,7 @@ class Ad extends Model
                 }
                 
                 $data_a['html'] .= '
-                        <div class="col-sm-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="product-image-wrapper">
                                 <div class="single-products">
                                         <div class="productinfo text-center">

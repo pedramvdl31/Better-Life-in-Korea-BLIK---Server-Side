@@ -17,6 +17,7 @@ use Laracasts\Flash\Flash;
 use View;
 use Redis;
 use File;
+use DB;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -42,7 +43,21 @@ class HomeController extends Controller
 
         public function getHomePage()
     {   
-
+      // for ($i=1;$i<=11;$i++) { 
+      //   DB::table('ads')->insert([
+      //     [
+      //         'id' => $i,
+      //         'user_id' => '1',
+      //         'cat_id' => '1',
+      //         'subcat_id' => '1',
+      //         'title' => 'Lorem ipsum dolor',
+      //         'city' => 'seoul',
+      //         'description' => '"Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, "',
+      //         'file_srcs' => '[{"image":{"name":"fMFws_1458051477.jpeg"}}]',
+      //         'status' => 1
+      //     ]
+      //  ]);
+      // }
       // $after_array =array();
 
       // $names['name'] = array();
@@ -65,7 +80,7 @@ class HomeController extends Controller
             $cats = Job::cat_select();
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
         }
-        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->paginate(10));
+        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->paginate(9));
 
         
         $layout_title = 'layouts.customize_layout';
