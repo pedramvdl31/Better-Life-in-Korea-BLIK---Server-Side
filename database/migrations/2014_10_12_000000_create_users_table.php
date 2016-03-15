@@ -16,8 +16,9 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('username');
             $table->string('email')->unique();
-            $table->string('firstname', 25)->nullable();
-            $table->string('lastname', 25)->nullable();
+            $table->string('first_name', 25)->nullable();
+            $table->string('last_name', 25)->nullable();
+            $table->string('facebook_id')->nullable();
             $table->tinyInteger('age')->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('country', 3)->nullable();
@@ -27,7 +28,7 @@ class CreateUsersTable extends Migration
             $table->integer('payment_id')->nullable();
             $table->string('company', 25)->nullable();
             $table->tinyInteger('status')->nullable();
-            $table->text('profile_image')->nullable();
+            $table->text('avatar')->nullable();
             $table->tinyInteger('roles');
             $table->string('password', 60);
             $table->string('verification_token')->nullable();

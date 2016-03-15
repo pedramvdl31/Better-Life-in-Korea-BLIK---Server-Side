@@ -174,7 +174,6 @@ chat = {
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
 		    if(keycode == '13'){
 		        $('.tstbox').text('dsds');
-
 				var x = new EmbedJS({
 				  input: document.getElementById('cta1')
 				});
@@ -185,21 +184,16 @@ chat = {
 		
 
 		$('.conv-wrapper').click(function(){
+			var tab_id = check_tabs();
 			var cu = $('#ufh').val();
 			var fu = $(this).attr('tf');
 			if (typeof(cu) != "undefined" && cu !== null) {
 		    	var _ar = $(window["cdata_"+cu+"_"+fu]);
-		    	$.each(_ar, function( index, value ) {
-		    		if (index != 0) {
-		    			alert(value);
-		    		}
-				});
+		    	var msgs_html = prepare_html(_ar,cu,fu);
+		    	$('._ctb'+tab_id).html(msgs_html);
 			}
-			if ($('.dc1').hasClass('hide')) {
-				$('.dc1').removeClass('hide');
-			} else if ($('.dc2').hasClass('hide')){
-				$('.dc2').removeClass('hide');
-			}
+			
+			$('.dc'+tab_id).removeClass('hide');
 		});
 		$('.nb-lb').click(function(){
 			var parent = $(this).parents('.dock_wrapper:first');
@@ -221,3 +215,45 @@ chat = {
 request_c = {
 
 };
+function prepare_html(_ar,tu,tf) {
+	var html = '';
+	console.log(_ar);
+	$.each(_ar, function(index,value) {
+		if (index != 0) {
+			var sdr = value['sdr'];
+			if (tu == sdr) {
+				html += '<div class="_mrcv _msgsr">'+
+							'<div class="_mavr">'+
+								'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+							'</div>'+
+							'<div class="_mtwpr">'+
+								'<div class="_mb _rcvb">'+
+								'<span class="_mtxt embd" >'+
+									'<span class="_plin">'+
+										value['msg']+
+									'</span>'+
+									'<div class="_mtime" style="width: 100%">'+
+										'<small>'+value['ago']+'</small>'+
+									'</div>'+
+									'</span>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+			} else {
+
+			}
+		}
+	});
+	return html;
+}
+function check_tabs() {
+	var data = null;
+	if ($('.dc1').hasClass('hide')) {
+		data = 1;
+	} else if ($('.dc2').hasClass('hide')){
+		data = 2;
+	}
+	return data;
+}
+
+

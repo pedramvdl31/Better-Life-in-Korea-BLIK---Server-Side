@@ -13,7 +13,7 @@
 .pr-img {
     height: 236px;
     max-height: 236px;
-    background: #F3F3F3;
+    background: white;
     overflow: hidden;
 }
 .single-products {
@@ -23,7 +23,7 @@
 }
 </style>
 	<div class="features_items"><!--features_items-->
-		<h2 class="title text-center">Features Items</h2>
+		<h2 class="title text-center">Posts</h2>
         <div id="ads-wrapper">
             {!!$ads['html']!!}
         </div>

@@ -196,6 +196,15 @@ mainf = {
             	}
 		    }
 		});
+
+		$('#search-for-ad').click(function(event){
+			$tval = $('#searchbar').val();
+			if (!$.isBlank($tval)) {
+				requestm.s_func_txt($tval);
+        	}
+		});
+
+		
         $('#submit-btn').click(function(){
 			var reg_form = $('#reg-form').serialize();
 			requestm.form_validate(reg_form);

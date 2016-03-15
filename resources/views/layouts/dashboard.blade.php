@@ -68,10 +68,15 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              <img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circle profile_img">
+              @if(isset(Auth::user()->avatar))
+                <img src="{!!Auth::user()->avatar!!}" alt="..." class="img-circle profile_img">
+              @else
+                <img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circle profile_img">
+              @endif
+
             </div>
             <div class="pull-left info">
-              <p>{!! Auth::user()->email !!}</p>
+              <p>{!! Auth::user()->first_name !!}</p>
               <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
           </div>

@@ -20,8 +20,6 @@ use App\ConversationMessage;
 
 class BeforeFilter
 {
-   
-
     /**
      * Create a new filter instance.
      *

@@ -105,11 +105,23 @@ class AuthController extends Controller
         } catch (Exception $e) {
             return redirect('auth/facebook');
         }
- 
+        $_flag = 0;
+        if (User::where('email', '=', $user['email'])->exists()) {
+            Flash::success('Welcome back '.$user['first_name'].'!');
+        } else {
+            $_flag = 1;
+            Flash::success('You have been successfully registered as '.$user['email'].'!');
+        }
         $authUser = $this->findOrCreateUser($user);
- 
+        $authUser->avatar =  $user->avatar;
+        $authUser->save();
+        if ($_flag==1) {
+            $authUser->first_name =  $user['first_name'];
+            $authUser->last_name =  $user['last_name'];
+            $authUser->save();
+        }
+        
         Auth::login($authUser, true);
- 
         return redirect()->route('home_index');
     }
  

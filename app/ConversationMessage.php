@@ -41,6 +41,7 @@ class ConversationMessage extends Model
 	    		}
     		}
     	}
+
     	return $html;
     }
     static private function mks($_lm,$_tu,$_fid) {
@@ -49,13 +50,18 @@ class ConversationMessage extends Model
 			$js_array = '[';
 			foreach ($_lm as $lmk => $lmv) {
 				$ago =Job::formatTimeAgo(Job::humanTiming($lmv['created_at']));
-				$js_array .= ',{"msg":"'.$lmv['message'].'", "ago":"'.$ago.'"}';
+				$js_array .= ',{
+								"msg":"'.$lmv['message'].'",
+								"ago":"'.$ago.'",
+								"sdr":"'.$lmv['user_id'].'"
+							}';
 			}
 			$js_array .= ']';
 			$html .= '	<script>
 						window.cdata_'.$_tu.'_'.$_fid.' = '.$js_array.';
 						</script>';
 		}
+
 		return $html;
     }
     static private function fd($fid) {
@@ -64,13 +70,13 @@ class ConversationMessage extends Model
     	if (isset($fd)) {
     		$new_email = strlen($fd->email) > 15 ? substr($fd->email,0,15)."..." : $fd->email;
     		$ntt = strlen($fd->email) > 15 ? true : false;
-    		$html .= '<div class="conv-wrapper pointer" tf="'.$fid.'"';
+    		$html .= '<div class="fwrapper conv-wrapper pointer" init="" tf="'.$fid.'"';
     		if ($ntt==true) {
     		 	$html .= 'data-toggle="tooltip" data-placement="top" title="'.$fd->email.'"';
     		 }
     		//this is right
     		$html .= '>
-							<i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
+							<i class="on-sign-'.$fid.' hide lfloat _4xia img sp_P9ChxUVwaFx sx_74fd99"></i>
 						    <img src="/assets/images/home/product4.jpg" alt="" />
 						    <span>'.$new_email.'</span>
 						    <span class="label label-success conv-c">2</span>

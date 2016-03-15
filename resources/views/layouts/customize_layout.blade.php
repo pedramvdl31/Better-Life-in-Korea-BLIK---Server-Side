@@ -49,89 +49,57 @@
 <body>
 
     <header id="header"><!--header-->
-        <div class="header_top"><!--header_top-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="contactinfo">
-                            <ul class="nav nav-pills">
-                                <li><a href="#"><i class="fa fa-phone"></i> +82 000 0000 0000</a></li>
-                                <li><a href="#"><i class="fa fa-envelope"></i> info@kora.com</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="social-icons pull-right">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                <li><a href="#"><i class="fa fa-dribbble"></i></a></li>
-                                <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+    <!-- -------- NAVBAR ----------- -->
+
+        <nav class="navbar navbar-default my-nav">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><span style="color: #FE980F;">K</span>ora</a>
             </div>
-        </div><!--/header_top-->
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+              <div class="navbar-form navbar-left my-navbar-left" role="search">
+                <div class="form-group">
+                  <input id="searchbar" type="text" class="form-control" placeholder="Search for ads">
+                </div>
+                <a id="search-for-ad" class="btn btn-default">Search</a>
+                <div class="text-center search-loading hide" style="line-height: 34px;
+                    float: right;
+                    margin-left: 10px;">
+                        <img src="/assets/images/icons/gif/loading1.gif" width="20px;">
+                </div>
+              </div>
+              <ul class="nav navbar-nav navbar-right my-navbar-right">
+                <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Dashboard</a></li>
+                    @if(Auth::check())
+                    <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
+                    <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
+                    @else
+                    <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
+                    <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
+                    @endif
+                    <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
+              </ul>
+            </div><!-- /.navbar-collapse -->
+          </div><!-- /.container-fluid -->
+        </nav>
+
+
+    <!-- ---------- NAVBAR END ---------- -->
         @include('flash::message')
+        <div style="padding: 10px">
+            <a class="btn btn-primary btn-block qkpost sm-forms"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</a>   
+        </div>
+
         <input type="hidden" id="_auth" data={!!Auth::check()?1:0!!}></input>
-        <div class="header-middle"><!--header-middle-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-4">
-                       <div class="companyinfo" style="margin-top: 0;">
-                            <h2 style="margin:0;text-align: left"><span>K</span>ora</h2>
-                        </div>
-                    </div>
-                    <div class="col-sm-8">
-                        <div class="shop-menu pull-right">
-                            <ul class="nav navbar-nav">
-                            <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Dashboard</a></li>
-                                @if(Auth::check())
-                                <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
-                                <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
-                                @else
-                                <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
-                                <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
-                                @endif
-                                <li><button href="" class="btn btn-primary btn-lg qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--/header-middle-->
-    
-        <div class="header-bottom"><!--header-bottom-->
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-9">
-                        <div class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        </div>
-                        <div class="mainmenu pull-left">
-                            <ul class="nav navbar-nav collapse navbar-collapse">
-                                <li><a href="index.html" class="active">Home</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="text-center search-loading hide" style="float: left;line-height: 32px;">
-                            <img src="/assets/images/icons/gif/loading1.gif" width="25px;">
-                        </div>
-                        <div class="search_box pull-right">
-                            <input id="searchbar" type="text" placeholder="Search"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><!--/header-bottom-->
     </header><!--/header-->
     
 
@@ -212,11 +180,31 @@
                                     <h4 class="panel-title"><a href="#">Events</a></h4>
                                 </div>
                             </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#res">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Restaurant
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="res" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li><a href="#">Asian </a></li>
+                                            <li><a href="#">Italian </a></li>
+                                            <li><a href="#">Wesetern </a></li>
+                                            <li><a href="#">Mexican </a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div><!--/category-products-->
                     </div>
                 </div>
                 
-                <div class="col-sm-9 padding-right">
+                <div class="col-sm-9 ads-warps">
                     @yield('content')
                 </div>
             </div>
@@ -564,6 +552,7 @@
 }
 
 .inner-wrapper-child{
+    width: 100%
     height: 100%;
     background-color: #f6f7f8;;
     border-top: 1px solid rgba(29, 49, 91, .3); 
@@ -690,6 +679,21 @@
     padding: 0 5px;
 }
 
+.sp_P9ChxUVwaFx {
+    background-image: url("/assets/images/icons/on.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+}
+.sp_P9ChxUVwaFx.sx_74fd99 {
+    background-position: -300px -5px;
+}
+._cbnm{
+    float: left;
+    padding-left: 10px;
+}
 </style>
 
 @if(Auth::check())
@@ -740,26 +744,12 @@
                     <div class="_56ox ">
                         <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                             <div class="wpNubButton-max">
-                                <span class="label nb-lb lb-m pointer "><span class="_cbnm">Pedram</span> <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
-                                <div class="inner-wrapper-child">
-                                    <div class="_mrcv _msgsr"> 
-                                        <div class="_mavr">
-                                            <img src="/assets/images/profile-images/perm/blank_male.png" width="35px">
-                                        </div>  
-                                        <div class="_mtwpr">
-                                            <div class="_mb _rcvb">
-                                                <span class="_mtxt embd" >
-                                                    <span class="_plin">
-                                                        :smile:
-                                                        Default
-                                                    </span>
-                                                    <div class="_mtime" style="width: 100%">
-                                                        <small>1 hour ago</small>
-                                                    </div>
-                                                </span>
-                                            </div>  
-                                        </div>
-                                    </div>
+                                <span class="label nb-lb lb-m pointer ">
+                                    <span class="_cbnm">Pedram</span> 
+                                    <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
+                                </span>
+                                <div class="inner-wrapper-child _ctb1">
+
                                     <div class="_msnd _msgss"> 
                                         <div class="_mavs">
                                             <img src="/assets/images/profile-images/perm/blank_male.png" width="35px">
@@ -778,7 +768,6 @@
                                             </div>  
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="inputBar">
 
@@ -799,49 +788,8 @@
                         <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                             <div class="wpNubButton-max">
                                 <span class="label nb-lb lb-m pointer ">Chat <span class="cc2 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
-                                <div class="inner-wrapper-child">
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
-                                    <div class="conv-wrapper pointer">
-                                        <i class="lfloat _4xia img sp_BNtOXyg0vlE sx_78fc23"></i>
-                                        <img src="/assets/images/home/product4.jpg" alt="" />
-                                        <span>Pedram</span>
-                                        <span class="label label-success conv-c">2</span>
-                                    </div>
+                                <div class="_ctb2 inner-wrapper-child">
+
                                 </div>
                                 <div class="inputBar">
                                     <textarea class="ChatTextArea" id="cta2"></textarea>
@@ -854,6 +802,29 @@
         </div>
     </div>
 </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    @if(Auth::check())
+        <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+        <script>
+            //var socket = io('http://localhost:3000');
+            var socket = io('http://192.168.10.10:3000');
+            socket.emit("_init", { data: "{!!Auth::id()!!}" });
+            // var socket = io.connect('http://192.168.10.10:3000');
+            socket.on('_forward', function(data) {
+                alert(data['msg']);
+            });
+            socket.on('on_not', function(data) {
+                $('.on-sign-'+data['data']).removeClass('hide');
+            });
+            $('#sendm').click(function(){
+                socket.emit("trans", { 
+                    recip: 2,
+                    msg: "hello man!"
+                     });
+            });
+        </script>
+    @endif
 
 
     <!-- --------------------------------------------- -->
@@ -873,7 +844,7 @@
     @endif
   
     <!-- Load js libs only when the page is loaded. -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
     <script src="/packages/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
@@ -893,6 +864,7 @@
     <script src="/packages/embed/src/embed.js"></script>
     <script src="/packages/dropzone/dropzone.js"></script>
     <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
+
 
     
 </body>
