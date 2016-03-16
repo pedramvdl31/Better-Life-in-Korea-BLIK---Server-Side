@@ -770,7 +770,7 @@
 </div>
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    @if(Auth::check())
+<!--     @if(Auth::check())
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
             //var socket = io('http://localhost:3000');
@@ -790,7 +790,7 @@
                      });
             });
         </script>
-    @endif
+    @endif -->
 
 
     <!-- --------------------------------------------- -->

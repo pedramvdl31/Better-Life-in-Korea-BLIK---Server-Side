@@ -127,16 +127,21 @@ mainf = {
 		$("#cats").change(function(){
 			var t_v = $("option:selected", this).val();
 			if (t_v != '0') {
-				renew_subcat(t_v);
+				$('.subcats').addClass('hide');
+				$('#subcat-select-'+t_v).removeClass('hide');
 				$('#subcat-wrap').removeClass('hide');
 				setTimeout(function(){
 					$('#subcat-wrap').css('visibility','visible').css('opacity',1);
 				}, 50);
 			} else {
+
+				$('.subcats').addClass('hide');
 				$('.2t-wrap').css('visibility','hidden').css('opacity',0);
+				$('#subcat-wrap').css('visibility','hidden').css('opacity',0);
 				$('#qk-post-btn').attr('disabled','disabled');
 				setTimeout(function(){
 					$('.2t-wrap').addClass('hide');
+					$('#subcat-wrap').addClass('hide');
 				}, 500);
 			}
 		});
