@@ -146,7 +146,7 @@ mainf = {
 			}
 		});
 
-		$("#subcat-select").change(function(){
+		$(".subcats").change(function(){
 			var t_v = $("option:selected", this).val();
 			if (t_v != '0') {
 				$('.2t-wrap').removeClass('hide');
