@@ -45,6 +45,9 @@
     .pr-img img{
         width: 100%;
     }
+    .links{
+        cursor: pointer;
+    }
 </style>
 <body>
 
@@ -68,7 +71,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#"><span style="color: #FE980F;">K</span>ora</a>
+              <a class="navbar-brand" href="#"><span style="color: #759CD8;">K</span>ora</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -130,8 +133,13 @@
                                 <div id="sportswear" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a class="links" cat-id="1" subcat-id="1">Agencies </a></li>
-                                            <li><a class="links" cat-id="1" subcat-id="2">Private </a></li>
+                                            <li><a class="links" cat-id="1" subcat-id="1">Agencies 
+                                            <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                            </a></li>
+                                            <li><a class="links" cat-id="1" subcat-id="2">Private 
+                                            <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+
+                                            </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -148,11 +156,16 @@
                                 <div id="res" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a class="links" cat-id="2" subcat-id="1">Asian </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="2">Italian </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="3">Western </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="4">Mexican </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="5">Other </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="1">Asian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="2">Italian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="3">Western                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="4">Mexican                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="5">Other                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -169,9 +182,12 @@
                                 <div id="mens" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a class="links" cat-id="3" subcat-id="1">Dealership </a></li>
-                                            <li><a class="links" cat-id="3" subcat-id="2">Private</a></li>
-                                            <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee </a></li>
+                                            <li><a class="links" cat-id="3" subcat-id="1">Dealership                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="3" subcat-id="2">Private                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -188,10 +204,14 @@
                                 <div id="womens" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a class="links" cat-id="4" subcat-id="1">Cleaning</a></li>
-                                            <li><a class="links" cat-id="4" subcat-id="2">Services</a></li>
-                                            <li><a class="links" cat-id="4" subcat-id="3">Moving Company</a></li>
-                                            <li><a class="links" cat-id="4" subcat-id="4">Cellphone</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="1">Cleaning                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="2">Services                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="3">Moving Company                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="4">Cellphone                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -199,17 +219,20 @@
 
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market</a></h4>
+                                    <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events</a></h4>
+                                    <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun</a></h4>
+                                    <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+</a></h4>
                                 </div>
                             </div>
 
@@ -235,7 +258,7 @@
                         </div>
                     </div>
                     <div class="col-sm-7">
-                        <div class="col-sm-3">
+                        <div class="col-md-3 col-sm-3 col-xs-6">
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
@@ -250,7 +273,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-sm-3">
+                        <div class="col-md-3 col-sm-3 col-xs-6">
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
@@ -265,7 +288,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-sm-3">
+                        <div class="col-md-3 col-sm-3 col-xs-6">
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
@@ -280,7 +303,7 @@
                             </div>
                         </div>
                         
-                        <div class="col-sm-3">
+                        <div class="col-md-3 col-sm-3 col-xs-6">
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
@@ -293,12 +316,6 @@
                                 <p>Circle of Hands</p>
                                 <h2>24 DEC 2014</h2>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3">
-                        <div class="address">
-                            <img src="/assets/images/home/map.png" alt="" />
-                            <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
                         </div>
                     </div>
                 </div>
@@ -808,6 +825,7 @@
     @if(Auth::check())
         {!! View::make('partials.qkpost_modal')
         ->with('cats',$cats)
+        ->with('cities',$cities)
         ->__toString()!!}   
         {!! View::make('partials.wishlist_modal')
         ->with('wishlist',$wishlist)

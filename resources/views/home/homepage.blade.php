@@ -28,8 +28,8 @@
             {!!$ads['html']!!}
         </div>
 	</div><!--features_items-->
-	<div class="text-center">
-		<?php echo $ads['data']->render(); ?>
+	<div class="text-center" id="pagi">
+		{!!$ads['data']->render()!!}
 	</div>
 	
 @stop

@@ -353,9 +353,12 @@ class AdsController extends Controller
             if (isset($cat_id,$subcat_id)) {
                 $ads = Ad::PrepareAdsSearchCategory($cat_id,$subcat_id);
                 $status = 200;
+                $render = $ads['data']->render();
                 return Response::json(array(
                     'status' => $status,
-                    'ads' => $ads['html']
+                    'ads' => $ads,
+                    'render' => $render,
+
                 ));
             }
             return Response::json(array(

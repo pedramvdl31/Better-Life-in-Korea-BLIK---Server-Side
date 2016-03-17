@@ -8,6 +8,7 @@ mainf = {
 		if ( (location.hash == "#_=_" || location.href.slice(-1) == "#_=_") ) {
 		    removeHash();
 		}
+		
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
@@ -24,9 +25,9 @@ mainf = {
 		  $('#post_upload_zone_image').dropzone({ 
 		    url: "/upload-ads-tmp",
 		    paramName: "file",
-		    maxFilesize: 10,
+		    maxFilesize: 5,
 		    acceptedFiles: "image/*",
-		    maxFiles: 100,
+		    maxFiles: 10,
 		    addRemoveLinks: true,
 		    init: function() {
 				 this.on('success', function(file, json) {
@@ -54,9 +55,9 @@ mainf = {
 		  $('#post_upload_zone_video').dropzone({ 
 		    url: "/upload-ads-tmp",
 		    paramName: "file",
-		    maxFilesize: 10,
+		    maxFilesize: 30,
 		    acceptedFiles: "video/*",
-		    maxFiles: 100,
+		    maxFiles: 3,
 		    addRemoveLinks: true,
 		    init: function() {
 				 this.on('success', function(file, json) {
@@ -125,10 +126,12 @@ mainf = {
 	},
 	events: function() {
 		$("#cats").change(function(){
-			var t_v = $("option:selected", this).val();
+			var t_v = $("#cats option:selected").val();
 			if (t_v != '0') {
 				$('.subcats').addClass('hide');
+				$('.subcats').attr('name','');
 				$('#subcat-select-'+t_v).removeClass('hide');
+				$('#subcat-select-'+t_v).attr('name','subcat');
 				$('#subcat-wrap').removeClass('hide');
 				setTimeout(function(){
 					$('#subcat-wrap').css('visibility','visible').css('opacity',1);
@@ -218,7 +221,8 @@ mainf = {
         $('.links').click(function(){
 			var cat_id = $(this).attr('cat-id');
 			var subcat_id = $(this).attr('subcat-id');
-			requestm.refresh_ads(cat_id,subcat_id);
+			var _this = $(this);
+			requestm.refresh_ads(cat_id,subcat_id,_this);
 		});
         $('#qk-post-btn').click(function(){
 			var _form = $('#pkpost-form').serialize();
@@ -230,7 +234,7 @@ mainf = {
         	$('.vwad-loading').addClass('hide');
         	$('.wl_modal_body').removeClass('hide');
 		});
-        $('.add-to-wishlist').click(function(e){
+		 $(document).on('click','.add-to-wishlist',function(e){
         	e.preventDefault();
         	var _auth = parseInt($('#_auth').attr('data'));
         	if (_auth == 1) {
@@ -241,8 +245,7 @@ mainf = {
         		$('.modal').modal('hide');
         		$('#login-modal').modal('show');
         	}
-
-		});
+        });
         $('#view_wl').click(function(e){
         	e.preventDefault();
         	$('#wishlist-modal').modal('show');
@@ -252,8 +255,8 @@ mainf = {
     }
 }
 requestm = {
-	refresh_ads: function(cat_id,subcat_id) {
-		$('.search-loading').removeClass('hide');
+	refresh_ads: function(cat_id,subcat_id,_this) {
+		_this.find('img').removeClass('hide');
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/search-02',
@@ -263,12 +266,14 @@ requestm = {
 				"subcat_id": subcat_id
 			},
 			function(result){
-				$('.search-loading').addClass('hide');
+				_this.find('img').addClass('hide');
 				var status = result.status;
 				var ads = result.ads;
+				var render = result.render;
 				switch(status){					
 		 			case 200:
-		 				$('#ads-wrapper').html(ads);
+		 				$('#ads-wrapper').html(ads['html']);
+		 				$('#pagi').html('');
 		 			break;
 
 		 			case 400:
@@ -294,6 +299,7 @@ requestm = {
 				switch(status){					
 		 			case 200:
 		 				$('#ads-wrapper').html(ads);
+		 				$('#pagi').html('');
 		 			break;
 
 		 			case 400:

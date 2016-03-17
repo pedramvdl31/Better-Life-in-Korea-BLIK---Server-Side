@@ -64,23 +64,22 @@ class HomeController extends Controller
 
       // $names['name'] = array();
 
-
+      // $html = '';
       // $file = File::get('assets/all_cities.json');
       // $new_file = json_decode($file,true);
       // foreach ($new_file as $k => $v) {
       //   if ($k == "Republic of Korea") {
       //     foreach ($v as $vk => $vv) {
-      //       $names['name']=$vv;
-      //       $names['realName']='-';
-      //       $after_array['Korea'][$vk] = $names;
+      //       $html .= '<option value="'.$vk.'">'.$vv.'</option>';
       //     }
       //   }
       // }
-      // Job::dump(json_encode($after_array));
+      // echo $html;
 
         if (Auth::check()) {
             $cats = Job::cat_select();
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
+            $cities = Job::korean_cities();
         }
         $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->paginate(9));
 
@@ -90,6 +89,7 @@ class HomeController extends Controller
             ->with('cats',isset($cats)?$cats:null)
             ->with('wishlist',isset($wishlist)?$wishlist:null)
             ->with('ads',$ads)
+            ->with('cities',isset($cities)?$cities:null)
             ->with('layout',$layout_title);
     }
 

@@ -70,12 +70,12 @@
                 </div>
                 <div class="form-group hide anim" id="subcat-wrap" style="visibility:hidden;opacity:0">
                     <label>Select Sub Category:</label>
-                    <select class="form-control qp-selects subcats " id="subcat-select-1" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-1" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-2" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-2" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Asian</option>
                         <option value="2">Italian</option>
@@ -83,25 +83,25 @@
                         <option value="4">Mexican</option>
                         <option value="5">Other</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-3" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-3" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Dealership</option>
                         <option value="2">Private</option>
                         <option value="3">Sofa Document Fee</option>
                     </select>
-                    <select class="form-control qp-selects subcats" id="subcat-select-4" name="subcat">
+                    <select class="form-control qp-selects subcats" id="subcat-select-4" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Cleaning</option>
                         <option value="2">Services</option>
                         <option value="3">Moving Company</option>
                         <option value="5">CellPhone</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-5" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-5" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-6" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-6" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>
@@ -117,7 +117,9 @@
                         }
                     </style>
                     <label>Select City:</label>
-                    <input name="city" class="form-control pk-form" id="cities-autocomplete" placeholder="Search Your City" style="width: 100%"  aria-describedby="sizing-addon2" />
+                    <select class="form-control" name="city">
+                        {!!$cities!!}
+                    </select>
                 </div>
 
                 <div class="form-group hide anim 2t-wrap" id="title-wrap" style="visibility: hidden;
@@ -125,7 +127,11 @@
                     <label>Title: <span class="_required">*required</span></label>
                     <input type="text" class="form-control  pk-form" name="title" id="email" placeholder="Title" aria-describedby="sizing-addon2">
                 </div>
-
+                <style type="text/css">
+                .dropzone{
+                    margin: 2px;
+                }
+                </style>
 
                 <div class="form-group 2t-wrap hide anim" id="des-wrap" style="visibility: hidden;
                     opacity: 0;">
@@ -134,23 +140,23 @@
                 </div>
                 <div id="file-div"></div>
                 {!! Form::close() !!}
-                <div id="dropzone" class="hide anim 2t-wrap col-md-6 col-no-padding" style="visibility: hidden;
+                <div id="dropzone" class="zones hide anim 2t-wrap col-md-6 col-no-padding" style="visibility: hidden;
                     opacity: 0;
                     margin-bottom: 10px;
                     ">
                     <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_image">
                       <div class="dz-message needsclick">
-                        Drop images and videos here or click to upload.<br>
-                        <span class="note needsclick">(Images and Videos max size <strong>30000000mb</strong>.)</span>
+                        Upload Images<br>
+                        <span class="note needsclick">(Images and Videos max size <strong>5mb</strong>.)</span>
                       </div>
                     </form>
                 </div>            
-                <div id="dropzone" class="hide anim 2t-wrap col-md-6 col-no-padding" style="visibility: hidden;
+                <div id="dropzone" class="zones hide anim 2t-wrap col-md-6 col-no-padding" style="visibility: hidden;
                     opacity: 0;">
                     <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_video">
                       <div class="dz-message needsclick">
-                        Drop images and videos here or click to upload.<br>
-                        <span class="note needsclick">(Images and Videos max size <strong>30000000mb</strong>.)</span>
+                        Upload Videos<br>
+                        <span class="note needsclick">(Images and Videos max size <strong>30mb</strong>.)</span>
                       </div>
                     </form>
                 </div>            

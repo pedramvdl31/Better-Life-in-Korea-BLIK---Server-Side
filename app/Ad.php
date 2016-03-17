@@ -19,7 +19,7 @@ class Ad extends Model
         $output = null;
         if (isset($txtd)) {
             $ads = Ad::where('status',1)->where('title', 'like', $txtd)
-                ->get();
+                ->paginate(9);
 
             if (isset($ads)) {
                 $output = Ad::PrepareAdsForHome($ads);
@@ -30,7 +30,7 @@ class Ad extends Model
     }
     static public function PrepareAdsSearchCategory($cat_id,$subcat_id) {
         $output = null;
-        $ads = Ad::where('status',1)->where('cat_id',$cat_id)->where('subcat_id',$subcat_id)->get();
+        $ads = Ad::where('status',1)->where('cat_id',$cat_id)->where('subcat_id',$subcat_id)->paginate(9);
         if (isset($ads)) {
             $output = Ad::PrepareAdsForHome($ads);
         }
@@ -76,7 +76,6 @@ class Ad extends Model
                                         </div>
                                         <h2>'.$new_t.'</h2>
                                         <p>'.$new_des.'</p>
-                                        <a class="btn btn-default view-ad add-to-cart" data="'.$dv->id.'"><i class="fa fa-eye"></i>View</a>
                                     </div>
                                     <div class="product-overlay">
                                     </div>
