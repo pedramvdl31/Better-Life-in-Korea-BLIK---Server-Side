@@ -28,6 +28,14 @@ class Ad extends Model
 
         return $output;
     }
+    static public function PrepareAdsSearchCategory($cat_id,$subcat_id) {
+        $output = null;
+        $ads = Ad::where('status',1)->where('cat_id',$cat_id)->where('subcat_id',$subcat_id)->get();
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForHome($ads);
+        }
+        return $output;
+    }
     static public function PrepareAdsForHome($data) {
 
         $data_a = array();
@@ -58,26 +66,23 @@ class Ad extends Model
                         }    
                     }
                 }
-                
                 $data_a['html'] .= '
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
                             <div class="product-image-wrapper">
-                                <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <div class="pr-img">
-                                                <img src="'.$f_image.'" alt="" />
-                                            </div>
-                                            <h2>'.$new_t.'</h2>
-                                            <p>'.$new_des.'</p>
-                                            <a class="btn btn-default view-ad add-to-cart" data="'.$dv->id.'"><i class="fa fa-eye"></i>View</a>
+                                <div class="single-products view-ad pointer" data="'.$dv->id.'">
+                                    <div class="productinfo text-center">
+                                        <div class="pr-img">
+                                            <img src="'.$f_image.'" alt="" />
                                         </div>
-                                        <div class="product-overlay">
-
-                                        </div>
+                                        <h2>'.$new_t.'</h2>
+                                        <p>'.$new_des.'</p>
+                                        <a class="btn btn-default view-ad add-to-cart" data="'.$dv->id.'"><i class="fa fa-eye"></i>View</a>
+                                    </div>
+                                    <div class="product-overlay">
+                                    </div>
                                 </div>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
-
                                         <li><a data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                                     </ul>
                                 </div>
@@ -86,7 +91,6 @@ class Ad extends Model
                 ';
             }
         }
-        
         return $data_a;
     }
     static public function PrepareForEdit($data) {

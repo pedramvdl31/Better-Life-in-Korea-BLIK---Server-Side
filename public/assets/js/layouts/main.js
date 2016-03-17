@@ -214,6 +214,12 @@ mainf = {
 			var reg_form = $('#reg-form').serialize();
 			requestm.form_validate(reg_form);
 		});
+		//menus
+        $('.links').click(function(){
+			var cat_id = $(this).attr('cat-id');
+			var subcat_id = $(this).attr('subcat-id');
+			requestm.refresh_ads(cat_id,subcat_id);
+		});
         $('#qk-post-btn').click(function(){
 			var _form = $('#pkpost-form').serialize();
 			requestm.process_qkpost(_form);
@@ -246,6 +252,32 @@ mainf = {
     }
 }
 requestm = {
+	refresh_ads: function(cat_id,subcat_id) {
+		$('.search-loading').removeClass('hide');
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/search-02',
+			{
+				"_token": token,
+				"cat_id":cat_id,
+				"subcat_id": subcat_id
+			},
+			function(result){
+				$('.search-loading').addClass('hide');
+				var status = result.status;
+				var ads = result.ads;
+				switch(status){					
+		 			case 200:
+		 				$('#ads-wrapper').html(ads);
+		 			break;
+
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	},
 	s_func_txt: function(ttxt) {
 		$('.search-loading').removeClass('hide');
 		var token = $('meta[name=csrf-token]').attr('content');

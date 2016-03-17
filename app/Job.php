@@ -694,12 +694,14 @@ class Job extends Model
 
 	public static function cat_select() {
             return array(
-                '0'          => 'Select Category',
-                '1'        => 'Real Estate',
-                '2'      => 'Used Car',
-                '3'  => 'Moving In/Out',
-                '4'     => 'Flea Market',
-                '5'      => 'Events'
+                '0'         => 'Select Category',
+                '1'        	=> 'Real Estate',
+                '2'        	=> 'Restaurant',
+                '3'     	=> 'Used Car',
+                '4'  		=> 'Moving In/Out',
+                '5'     	=> 'Flea Market',
+                '6'      	=> 'Events',
+                '7'      	=> 'Fun',
                 );
         }
 	public static function perpare_subcat($cat_id) {
@@ -715,13 +717,22 @@ class Job extends Model
 			case '2':
 				$tarray =	array(
 			                '0'      => 'Select SubCategory',
-			                '1'      => 'Dealership',
-			                '2'      => 'Private',
-			                '3'      => 'Sofa Document Fee',
-			                '4'      => 'Insurance',
+			                '1'      => 'Asian',
+			                '2'      => 'Italian',
+			                '3'      => 'Western',
+			                '4'      => 'Mexican',
+			                '5'      => 'Other',
 			                );
 				break;
 			case '3':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Agencies',
+			                '2'      => 'Private',
+			                '3'      => 'Sofa Document Fee'
+			                );
+				break;
+			case '4':
 				$tarray =	array(
 			                '0'      => 'Select SubCategory',
 			                '1'      => 'Cleaning',
@@ -730,14 +741,14 @@ class Job extends Model
 			                '4'      => 'CellPhone',
 			                );
 				break;
-			case '4':
+			case '5':
 				$tarray =	array(
 			                '0'      => 'Select SubCategory',
 			                '1'      => 'Agencies',
 			                '2'      => 'Private',
 			                );
 				break;
-			case '5':
+			case '6':
 				$tarray =	array(
 			                '0'      => 'Select SubCategory',
 			                '1'      => 'Agencies',

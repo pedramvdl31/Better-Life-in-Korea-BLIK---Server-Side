@@ -42,16 +42,28 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
+  <style type="text/css">
+    .content-wrapper, .right-side {
+        background-color: white !important;
+    }
+    dd{
+      margin-bottom: 20px;
+    }
+    ._required{
+        font-weight: 300;
+        font-size: 12px;        
+    }
+  </style>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
 
       <header class="main-header">
         <!-- Logo -->
-        <a href="/admins" class="logo">
+        <a href="/" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>K</b>SYS</span>
+          <span class="logo-mini"><b>K</b>SYS <i class="fa fa-home"></i></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Kora</b>Systems</span>
+          <span class="logo-lg"><b>Kora</b>Systems <i class="fa fa-home"></i></span>
         </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
@@ -93,6 +105,14 @@
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-paper-plane-o"></i> <span>Profile </span> <i class="fa fa-angle-left pull-right"></i>
+              </a>
+              <ul class="treeview-menu">
+                <li class="active"><a href="{!!route('dash_view_profile')!!}"><i class="fa fa-circle-o"></i> View Profile</a></li>
+              </ul>
+            </li>
             <li class="treeview">
               <a href="#">
                 <i class="fa fa-paper-plane-o"></i> <span>Posts </span> <i class="fa fa-angle-left pull-right"></i>

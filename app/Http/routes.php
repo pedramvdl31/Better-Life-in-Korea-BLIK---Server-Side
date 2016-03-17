@@ -37,12 +37,21 @@ Route::get('writemessage', 'HomeController@writemessage');
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('/update-messages', ['as'=>'chat', 'uses' => 'HomeController@getUpdateMessages']);	
 	Route::post('/search-01', ['as'=>'search-01', 'uses' => 'AdsController@postSearchByText']);
+	Route::post('/search-02', ['as'=>'search-02', 'uses' => 'AdsController@postSearchByCategory']);
 
+	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
 		Route::post('/store-wishlist', ['as'=>'store_wishlist','uses'=>'AdsController@postStoreAd']);
 		//Dashboard
 		Route::get('/dashboard', ['as'=>'users_dash', 'uses' => 'DashboardsController@getIndex']);
+		//PROFILE
+		Route::get('/dashboard/profile', ['as'=>'dash_view_profile', 'uses' => 'DashboardsController@getViewProfile']);
+		Route::get('/dashboard/profile-edit/{id}',  ['as' => 'edit-profile','uses' => 'DashboardsController@getProfileEdit', function ($id) {}]);
+		Route::post('/dashboard/profile-edit',  ['as' => 'profile-edit-post','uses' => 'DashboardsController@postProfileEdit']);
+		Route::post('/users/send-file', ['uses'=>'UsersController@postSendFile']);
+
+		//POSTS
 		Route::get('/dashboard/all-posts', ['as'=>'dash_view_posts', 'uses' => 'DashboardsController@getPostsIndex']);
 		Route::get('/dashboard/posts-edit/{id}',  ['as' => 'edit-post','uses' => 'AdsController@getPostsEdit', function ($id) {}]);
 		Route::post('/dashboard/posts-edit',  ['as' => 'posts-edit','uses' => 'AdsController@postPostsEdit']);

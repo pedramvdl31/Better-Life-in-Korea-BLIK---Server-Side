@@ -77,25 +77,31 @@
                     </select>
                     <select class="form-control qp-selects subcats " id="subcat-select-2" name="subcat">
                         <option value="0">Select Sub Category</option>
+                        <option value="1">Asian</option>
+                        <option value="2">Italian</option>
+                        <option value="3">Western</option>
+                        <option value="4">Mexican</option>
+                        <option value="5">Other</option>
+                    </select>
+                    <select class="form-control qp-selects subcats " id="subcat-select-3" name="subcat">
+                        <option value="0">Select Sub Category</option>
                         <option value="1">Dealership</option>
                         <option value="2">Private</option>
                         <option value="3">Sofa Document Fee</option>
-                        <option value="4">Insurance</option>
                     </select>
-                    <select class="form-control qp-selects subcats" id="subcat-select-3" name="subcat">
+                    <select class="form-control qp-selects subcats" id="subcat-select-4" name="subcat">
                         <option value="0">Select Sub Category</option>
                         <option value="1">Cleaning</option>
                         <option value="2">Services</option>
                         <option value="3">Moving Company</option>
-                        <option value="4">Medical</option>
                         <option value="5">CellPhone</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-4" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-5" name="subcat">
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-5" name="subcat">
+                    <select class="form-control qp-selects subcats " id="subcat-select-6" name="subcat">
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>

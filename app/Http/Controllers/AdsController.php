@@ -342,5 +342,25 @@ class AdsController extends Controller
                 'status' => $status
                 ));
         }
+    }    
+
+    public function postSearchByCategory()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $cat_id = Input::get('cat_id');
+            $subcat_id = Input::get('subcat_id');
+            if (isset($cat_id,$subcat_id)) {
+                $ads = Ad::PrepareAdsSearchCategory($cat_id,$subcat_id);
+                $status = 200;
+                return Response::json(array(
+                    'status' => $status,
+                    'ads' => $ads['html']
+                ));
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+        }
     }
 }

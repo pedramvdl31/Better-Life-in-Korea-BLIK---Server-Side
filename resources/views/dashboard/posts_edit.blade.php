@@ -21,10 +21,7 @@
     .anim {
         transition: all 0.5s ease !important;
     }
-    ._required{
-        font-weight: 300;
-        font-size: 12px;        
-    }
+
 	.col-no-padding{
     	padding-left: 0;
     	padding-right: 0;

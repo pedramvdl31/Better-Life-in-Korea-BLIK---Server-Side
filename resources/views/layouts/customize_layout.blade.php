@@ -85,7 +85,7 @@
                 </div>
               </div>
               <ul class="nav navbar-nav navbar-right my-navbar-right">
-                <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Dashboard</a></li>
+                <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Profile</a></li>
                     @if(Auth::check())
                     <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
                     <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
@@ -130,49 +130,8 @@
                                 <div id="sportswear" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Agencies </a></li>
-                                            <li><a href="#">Private </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Used Car
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="mens" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a href="#">Dealership </a></li>
-                                            <li><a href="#">C-C </a></li>
-                                            <li><a href="#">Sofa Document Fee </a></li>
-                                            <li><a href="#">Insurance </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Move In/Out
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="womens" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a href="#">Cleaning</a></li>
-                                            <li><a href="#">Services</a></li>
-                                            <li><a href="#">Moving Company</a></li>
-                                            <li><a href="#">Medical</a></li>
-                                            <li><a href="#">Cellphone</a></li>
+                                            <li><a class="links" cat-id="1" subcat-id="1">Agencies </a></li>
+                                            <li><a class="links" cat-id="1" subcat-id="2">Private </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -189,22 +148,68 @@
                                 <div id="res" class="panel-collapse collapse">
                                     <div class="panel-body">
                                         <ul>
-                                            <li><a href="#">Asian </a></li>
-                                            <li><a href="#">Italian </a></li>
-                                            <li><a href="#">Western </a></li>
-                                            <li><a href="#">Mexican </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="1">Asian </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="2">Italian </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="3">Western </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="4">Mexican </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="5">Other </a></li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Flea Market</a></h4>
+                                    <h4 class="panel-title">
+                                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Used Car
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="mens" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li><a class="links" cat-id="3" subcat-id="1">Dealership </a></li>
+                                            <li><a class="links" cat-id="3" subcat-id="2">Private</a></li>
+                                            <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee </a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title"><a href="#">Events</a></h4>
+                                    <h4 class="panel-title">
+                                        <a  data-toggle="collapse" data-parent="#accordian" href="#womens">
+                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                            Move In/Out
+                                        </a>
+                                    </h4>
+                                </div>
+                                <div id="womens" class="panel-collapse collapse">
+                                    <div class="panel-body">
+                                        <ul>
+                                            <li><a class="links" cat-id="4" subcat-id="1">Cleaning</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="2">Services</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="3">Moving Company</a></li>
+                                            <li><a class="links" cat-id="4" subcat-id="4">Cellphone</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events</a></h4>
+                                </div>
+                            </div>
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun</a></h4>
                                 </div>
                             </div>
 

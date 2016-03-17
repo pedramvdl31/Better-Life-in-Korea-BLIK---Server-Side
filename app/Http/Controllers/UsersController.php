@@ -273,61 +273,42 @@ public function postSendFile()
 {
     if(Request::ajax()){
         $status = 400;
-        $imagePath = public_path("assets/images/profile-images/perm/");
+        $imagePath = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."profile-images".DIRECTORY_SEPARATOR."perm".DIRECTORY_SEPARATOR;
         $imagename = $_FILES[0]['name'];
         $imagetemp = $_FILES[0]['tmp_name'];
-        $image_ex = explode('.', $imagename);
-        $image_type = $image_ex[1];
-        $now_time = time();
-        $new_imagename = $now_time . '-' . $imagename[0];
+        $image_types = $_FILES[0]['type'];
+        $type_array = explode('/', $image_types);
+        $type = $type_array[1];
+
+        $rand = Job::generateRandomString(5);
+        $time = time();
+        $final_path = $rand.'_'.$time.'.'.$type;
+
             // check if $folder is a directory
         if( ! \File::isDirectory($imagePath) ) {
-                // Params:
-                // $dir = name of new directory
-                //
-                // 493 = $mode of mkdir() function that is used file File::makeDirectory (493 is used by default in \File::makeDirectory
-                //
-                // true -> this says, that folders are created recursively here! Example:
-                // you want to create a directory in company_img/username and the folder company_img does not
-                // exist. This function will fail without setting the 3rd param to true
-                // http://php.net/mkdir  is used by this function
-
             \File::makeDirectory($imagePath, 493, true);
         }
         if (!is_writable(dirname($imagePath))) {
-            Job::dump('DIRECTORY IS NOT WRITEABLE');
             $status = 401;
             return Response::json(array(
                 "error" => 'Destination Unwritable'
                 ));
+        }
+        $newpath = $imagePath.$final_path;
+        if (move_uploaded_file($imagetemp,$newpath)) {
+            $viewpath = DIRECTORY_SEPARATOR.$newpath;
+            $_user = User::find(Auth::id());
+            $_user->avatar = $viewpath;
+            if ($_user->save()) {
+                return Response::json(array(
+                    'status' => 200,
+                    'newpath' => $viewpath
+                    ));
+            }
         } else {
+            $status = 402;
+        }
 
-            $final_path = preg_replace('#[ -]+#', '-', $new_imagename);
-
-            if (move_uploaded_file($imagetemp, $imagePath . $final_path.'.'.$image_type)) {
-                $status = 200;
-                    //SAVE THE NEW IMAGE NAME INTO USERS TABLE
-                $user = User::find(Auth::user()->id);
-                    //DELETE USERS PREVIOUS IMAGE
-                if ($user->profile_image != 'blank_male.png') {
-                    $old_image = public_path("assets/images/profile-images/perm/".$user->profile_image);
-                    if (file_exists($old_image)) {
-                        unlink($old_image);
-                    }
-                }
-
-                $user->profile_image = $final_path.'.'.$image_type;
-                $db_imagepath = null;
-                if ($user->save()) {
-                 $db_imagepath = $user->profile_image;
-             }
-             return Response::json(array(
-                'status' => 'success',
-                "image_name" => $new_imagename,
-                "image_type" => $image_type
-                ));
-         }
-     }
      return Response::json(array(
         'error' => 'error'
         ));
