@@ -81,7 +81,7 @@ class HomeController extends Controller
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
             $cities = Job::korean_cities();
         }
-        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->paginate(9));
+        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->paginate(9));
 
         
         $layout_title = 'layouts.customize_layout';
