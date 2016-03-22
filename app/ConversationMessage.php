@@ -15,7 +15,6 @@ class ConversationMessage extends Model
 
 
     static public function PrepareChatHtml($relations,$convs) {
-
     	$html = '';
     	if(isset($convs,$relations)) {
     		$t_user = Auth::user()->id;
@@ -33,8 +32,8 @@ class ConversationMessage extends Model
 	    			foreach ($convs as $ck => $cv) {
 	    				if ($cv['user_one'] == $friend_id || $cv['user_two'] == $friend_id) {
 	    					//get last messages
-	    					$last_messages = ConversationMessage::where('conv_id',$cv['id'])
-	    					->take(6)->get();
+	    					$last_messages = ConversationMessage::where('conv_id',$cv['id'])->orderBy('id', 'desc')
+	    					->take(6)->get()->reverse();
 	    					$html .= ConversationMessage::mks($last_messages,$t_user,$friend_id);
 	    				}
 	    			}
@@ -64,6 +63,8 @@ class ConversationMessage extends Model
 
 		return $html;
     }
+
+
     static private function fd($fid) {
     	$html = '';
 	    $fd = User::find($fid);
@@ -78,7 +79,7 @@ class ConversationMessage extends Model
     		$html .= '>
 							<i class="on-sign-'.$fid.' hide lfloat _4xia img sp_P9ChxUVwaFx sx_74fd99"></i>
 						    <img src="/assets/images/home/product4.jpg" alt="" />
-						    <span>'.$new_email.'</span>
+						    <span class="_femail">'.$new_email.'</span>
 						    <span class="label label-success conv-c">2</span>
 						</div>';
 		}

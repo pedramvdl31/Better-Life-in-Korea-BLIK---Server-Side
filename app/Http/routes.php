@@ -10,17 +10,18 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-Route::get('/', function() {
-    // this doesn't do anything other than to
-    // tell you to go to /fire
-    return "go to /fire";
-});
+// Route::get('/', function() {
+//     // this doesn't do anything other than to
+//     // tell you to go to /fire
+//     return "go to /fire";
+// });
 
-Route::get('fire', function () {
-    // this fires the event
-    event(new App\Events\EventName());
-    return "event fired";
-});
+// Route::get('fire', function () {
+//     // this fires the event
+//     event(new App\Events\EventName());
+//     return "event fired";
+// });
+
 
 Route::get('test', function () {
     // this checks for the event
@@ -32,8 +33,6 @@ Route::post('sendmessage', ['as'=>'sendmessage', 'uses' => 'HomeController@sendM
 Route::get('writemessage', 'HomeController@writemessage');
 
 
-
-
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('/update-messages', ['as'=>'chat', 'uses' => 'HomeController@getUpdateMessages']);	
 	Route::post('/search-01', ['as'=>'search-01', 'uses' => 'AdsController@postSearchByText']);
@@ -41,8 +40,13 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 
 	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {
+		//CHAT ROUTES
+		Route::post('/data-update', ['as'=>'chat-send','uses'=>'ConversationsController@postSaveChatMessage']);
+		//CHAT ROUTES END
+
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
 		Route::post('/store-wishlist', ['as'=>'store_wishlist','uses'=>'AdsController@postStoreAd']);
+		Route::post('/remove-wishlist',  ['as'=>'remove-wishlist', 'uses' => 'AdsController@postRemoveWishlist']);
 		//Dashboard
 		Route::get('/dashboard', ['as'=>'users_dash', 'uses' => 'DashboardsController@getIndex']);
 		//PROFILE

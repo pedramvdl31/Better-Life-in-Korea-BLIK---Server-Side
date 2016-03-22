@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -53,8 +53,15 @@
 
     <header id="header"><!--header-->
     <!-- -------- NAVBAR ----------- -->
-
-        <nav class="navbar navbar-default my-nav">
+        <style type="text/css">
+            #nav.affix {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 9999;
+        }
+        </style>
+        <nav class="navbar navbar-default my-nav" data-spy="affix" id="nav">
           <div class="container-fluid">
             <span style="
                 position: absolute;
@@ -104,7 +111,11 @@
 
 
     <!-- ---------- NAVBAR END ---------- -->
-        @include('flash::message')
+
+        <div class="flash-notification">
+            @include('flash::message')
+        </div>
+        
         <div style="padding: 10px">
             <a class="btn btn-primary btn-block qkpost sm-forms"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</a>   
         </div>
@@ -115,7 +126,7 @@
 
     
     <section>
-        <div class="container" style="margin-bottom: 30px;">
+        <div class="container main-container" style="margin-bottom: 30px;">
             <div class="row">
                 <div class="col-sm-3">
                     <div class="left-sidebar">
@@ -258,65 +269,7 @@
                         </div>
                     </div>
                     <div class="col-sm-7">
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                        <img src="/assets/images/home/iframe1.png" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Circle of Hands</p>
-                                <h2>24 DEC 2014</h2>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                        <img src="/assets/images/home/iframe2.png" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Circle of Hands</p>
-                                <h2>24 DEC 2014</h2>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                        <img src="/assets/images/home/iframe3.png" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Circle of Hands</p>
-                                <h2>24 DEC 2014</h2>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-3 col-sm-3 col-xs-6">
-                            <div class="video-gallery text-center">
-                                <a href="#">
-                                    <div class="iframe-img">
-                                        <img src="/assets/images/home/iframe4.png" alt="" />
-                                    </div>
-                                    <div class="overlay-icon">
-                                        <i class="fa fa-play-circle-o"></i>
-                                    </div>
-                                </a>
-                                <p>Circle of Hands</p>
-                                <h2>24 DEC 2014</h2>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -324,7 +277,7 @@
         <div class="footer-bottom">
             <div class="container">
                 <div class="row">
-                    <p class="pull-left">Copyright © 2016 Webprinciples.</p>
+                    <p class="pull-left">Copyright © 2016 Kora.</p>
                     <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
                 </div>
             </div>
@@ -636,6 +589,7 @@
         border-top-left-radius: 0;
     }
     ._msgss{
+        /*MESSAGES SEND*/
         float: right;
         width: 100%;
     }
@@ -648,6 +602,7 @@
         width: 85%;
     }
     ._msgsr{
+        /*MESSAGES RECVED*/
         float: left;
         width: 100%;
     }
@@ -687,7 +642,9 @@
 @if(Auth::check())
  <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
 @endif
-<div class="chat_dock hide">
+
+@if(Auth::check())
+<div class="chat_dock">
     <div class="dock_wrapper dock-min dockWrapperRight" type="0">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
@@ -725,7 +682,7 @@
 
 </div>
 <div class="chat_dockChilds">
-    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" type="1">
+    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" dock-no="1" type="1" uid="">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
@@ -733,10 +690,10 @@
                         <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                             <div class="wpNubButton-max">
                                 <span class="label nb-lb lb-m pointer ">
-                                    <span class="_cbnm">Pedram</span> 
+                                    <span class="_cbnm _cbnm1"></span> 
                                     <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
                                 </span>
-                                <div class="inner-wrapper-child _ctb1">
+                                <div class="inner-wrapper-child _ctb1" id="ctb1">
 
                                     <div class="_msnd _msgss"> 
                                         <div class="_mavs">
@@ -758,7 +715,6 @@
                                     </div>
                                 </div>
                                 <div class="inputBar">
-
                                     <textarea class="ChatTextArea" id="cta1"></textarea>
                                 </div>
                             </div>
@@ -768,15 +724,18 @@
             </div>
         </div>
     </div>
-    <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide" type="1">
+    <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide" dock-no="2" type="1" uid="">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
                     <div class="_56ox ">
                         <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                             <div class="wpNubButton-max">
-                                <span class="label nb-lb lb-m pointer ">Chat <span class="cc2 ChatClose pull-right"><i class="fa fa-times"></i></span></span>
-                                <div class="_ctb2 inner-wrapper-child">
+                                <span class="label nb-lb lb-m pointer ">
+                                    <span class="_cbnm _cbnm2"></span> 
+                                    <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
+                                </span>
+                                <div class="_ctb2 inner-wrapper-child" id="ctb1">
 
                                 </div>
                                 <div class="inputBar">
@@ -790,29 +749,31 @@
         </div>
     </div>
 </div>
+@endif
 
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!--     @if(Auth::check())
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    @if(Auth::check())
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
             //var socket = io('http://localhost:3000');
-            var socket = io('http://192.168.10.10:3000');
+            window.socket = io('http://192.168.10.10:3000');
             socket.emit("_init", { data: "{!!Auth::id()!!}" });
             // var socket = io.connect('http://192.168.10.10:3000');
             socket.on('_forward', function(data) {
                 alert(data['msg']);
             });
-            socket.on('on_not', function(data) {
-                $('.on-sign-'+data['data']).removeClass('hide');
-            });
-            $('#sendm').click(function(){
-                socket.emit("trans", { 
-                    recip: 2,
-                    msg: "hello man!"
-                     });
-            });
+            // socket.on('on_not', function(data) {
+            //     $('.on-sign-'+data['data']).removeClass('hide');
+            // });
+            // $('#sendm').click(function(){
+            //     socket.emit("trans", { 
+            //         recip: 2,
+            //         msg: "hello man!"
+            //          });
+            // });
         </script>
-    @endif -->
+    @endif
 
 
     <!-- --------------------------------------------- -->

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Auth;
-
+use App\Wishlist;
 class Ad extends Model
 {
     
@@ -43,6 +43,9 @@ class Ad extends Model
         $data_a['data'] = $data;
         if (isset($data)) {
             foreach ($data as $dk => $dv) {
+                $isinwl = count(Wishlist::where('ad_id',$dv->id)->first());
+                $_wlcolor = $isinwl>0?"rgb(0, 128, 0)":"#B3AFA8";
+
                 $new_t = '';
                 $new_des = '';
                 if (isset($dv['title'])) {
@@ -82,7 +85,10 @@ class Ad extends Model
                                 </div>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
-                                        <li><a data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                        <li>
+                                        <a style="color:'.$_wlcolor.'" data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>Add to wishlist</a>
+
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

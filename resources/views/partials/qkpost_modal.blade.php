@@ -117,7 +117,7 @@
                         }
                     </style>
                     <label>Select City:</label>
-                    <select class="form-control" name="city">
+                    <select class="form-control" name="city" id="city-select">
                         {!!$cities!!}
                     </select>
                 </div>

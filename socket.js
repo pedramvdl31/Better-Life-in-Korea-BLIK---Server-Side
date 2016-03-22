@@ -7,6 +7,7 @@ users = [];
 
 io.on('connection', function (socket) {
   socket.on( '_init', function( data ) {
+    console.log('init')
   	if (data['data'] in users) {
   		console.log('user-exits;')
   	} else {
@@ -21,9 +22,10 @@ io.on('connection', function (socket) {
   socket.on( 'trans', function( data ) {
   	var recip = data['recip'];
   	if (recip in users) {
+      var msg = data['msg'];
   		users[recip].emit( 
   			'_forward', { 
-    			msg: "thankyou"
+    			msg: msg
 			}
     	);
   	}

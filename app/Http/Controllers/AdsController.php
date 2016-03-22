@@ -312,6 +312,14 @@ class AdsController extends Controller
     {
         if(Request::ajax()){
             $status = 400;
+            $data_id = Input::get('data_id');
+            $isinwl = count(Wishlist::where('ad_id',$data_id)->first());
+            if ($isinwl>0) {
+                return Response::json(array(
+                    'status' => 201
+                    ));
+            }
+
             $wl = new Wishlist();
             $wl->user_id=Auth::id();
             $wl->ad_id=Input::get('data_id');
@@ -343,6 +351,25 @@ class AdsController extends Controller
                 ));
         }
     }    
+
+    public function postRemoveWishlist()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $data_id = Input::get('ad_id');
+            $isinwl = count(Wishlist::where('ad_id',$data_id)->first());
+            if ($isinwl>0) {
+                $status = 200;
+                $wishlist = Wishlist::where('ad_id',$data_id)->first();
+                $wishlist->delete();
+            }
+            $wl_html = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
+            return Response::json(array(
+                'status' => $status,
+                'wl_html' => $wl_html
+                ));
+        }
+    }
 
     public function postSearchByCategory()
     {

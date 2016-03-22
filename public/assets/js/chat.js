@@ -10,7 +10,7 @@ chat = {
 		$('.inner-wrapper-child').slimScroll({
         	height: '218px'
     	});
-    		
+    	
 
 	    EmbedJS.setOptions({
 		  	//An option when set to true will use marked.js to parse markdown and convert it to HTML.
@@ -120,26 +120,6 @@ chat = {
 	        }
 	    });
 
-
-	    var x = new EmbedJS({
-	        input: $('.embd'),
-	    });
-	    x.render().then(function(data) {
-	        console.log(data);
-	    });
-
-	    x.text(function(data) {
-	        console.log(data)
-	    });
-	    EmbedJS.applyEmbedJS(".embd").then(function(data) {
-	        console.log(data)
-	    })
-
-
-
-
-
-
 	},
 	events: function() {
 		$('#cta1, #cta2').bind('input propertychange', function() {
@@ -160,6 +140,7 @@ chat = {
 		});
 
 		$('.cc1').click(function(){
+			$('.dc1').attr('uid','');
 			if ($('.dc2').hasClass('hide')) {
 				$('.dc1').addClass('hide');
 			} else {
@@ -167,18 +148,25 @@ chat = {
 			}
 		});
 		$('.cc2').click(function(){
+			$('.dc2').attr('uid','');
 			$('.dc2').addClass('hide');
 		});
 
 		$('.ChatTextArea').keypress(function(event){
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
 		    if(keycode == '13'){
-		        $('.tstbox').text('dsds');
-				var x = new EmbedJS({
-				  input: document.getElementById('cta1')
-				});
-				console.log(x.render());
+		    	var tinput = $(this).val();
+		    	if (!$.isBlank(tinput)) {
+		    		$(this).val('');
+		    		var randtxt = randomString();
+		       		var input_bubble = make_bubble(tinput,randtxt);
+		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
+		       		$('._ctb'+dock_no).append(input_bubble);
+		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
+		       		var fid = $(this).parents('.dockChild').attr('uid');
+		       		request_c.snddata(tinput,fid,randtxt);
 
+        		}
 		    }
 		});
 		
@@ -187,14 +175,23 @@ chat = {
 			var tab_id = check_tabs();
 			var cu = $('#ufh').val();
 			var fu = $(this).attr('tf');
-			if (typeof(cu) != "undefined" && cu !== null) {
-		    	var _ar = $(window["cdata_"+cu+"_"+fu]);
-		    	var msgs_html = prepare_html(_ar,cu,fu);
-		    	$('._ctb'+tab_id).html(msgs_html);
+			var fe = $(this).find('._femail').text();
+			var duplength = $(".dockChild[uid='"+fu+"']").length;
+			if (duplength==0) {
+				if (typeof(cu) != "undefined" && cu !== null) {
+			    	var _ar = $(window["cdata_"+cu+"_"+fu]);
+			    	var msgs_html = prepare_html(_ar,cu,fu);
+			    	$('._ctb'+tab_id).html(msgs_html);
+			    	$('._ctb'+tab_id).scrollTop($('._ctb'+tab_id).scrollHeight);
+			    	$('._cbnm'+tab_id).text(fe);
+			    	$('.dc'+tab_id).attr('uid',fu);
+				}
+				$('.dc'+tab_id).removeClass('hide');
 			}
-			
-			$('.dc'+tab_id).removeClass('hide');
+			document.getElementById('ctb'+tab_id).scrollTop = 10000;
+
 		});
+
 		$('.nb-lb').click(function(){
 			var parent = $(this).parents('.dock_wrapper:first');
 			var type = parseInt(parent.attr('type'));
@@ -213,7 +210,34 @@ chat = {
 	}
 }
 request_c = {
+	snddata: function(tdata,fi,randtxt) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/data-update',
+			{
+				"_token": token,
+				"tdata":tdata,
+				"fi":fi
+			},
+			function(result){
+				var status = result.status;
+				var wl_html = result.wl_html;
+				switch(status){					
+		 			case 200:
+		 				$('.plane-'+randtxt).css('color','#5cb85c');
+		                socket.emit("trans", { 
+	                    	recip: fi,
+	                    	msg: tdata
+	                     });            
 
+		 			break;
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	}
 };
 function prepare_html(_ar,tu,tf) {
 	var html = '';
@@ -222,6 +246,25 @@ function prepare_html(_ar,tu,tf) {
 		if (index != 0) {
 			var sdr = value['sdr'];
 			if (tu == sdr) {
+				html += '<div class="_msnd _msgss">'+
+							'<div class="_mavs">'+
+								'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+							'</div>'+
+							'<div class="_mtwps">'+
+								'<div class="_mb _sndb">'+
+								'<span class="_mtxt embd" >'+
+									'<span class="_plin">'+
+										value['msg']+
+									'</span>'+
+									'<br>'+
+									'<div class="_mtime" style="width: 100%">'+
+										'<small>'+value['ago']+'</small>'+
+									'</div>'+
+									'</span>'+
+								'</div>'+
+							'</div>'+
+						'</div>';
+			} else {
 				html += '<div class="_mrcv _msgsr">'+
 							'<div class="_mavr">'+
 								'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
@@ -232,6 +275,7 @@ function prepare_html(_ar,tu,tf) {
 									'<span class="_plin">'+
 										value['msg']+
 									'</span>'+
+									'<br>'+
 									'<div class="_mtime" style="width: 100%">'+
 										'<small>'+value['ago']+'</small>'+
 									'</div>'+
@@ -239,8 +283,6 @@ function prepare_html(_ar,tu,tf) {
 								'</div>'+
 							'</div>'+
 						'</div>';
-			} else {
-
 			}
 		}
 	});
@@ -256,4 +298,37 @@ function check_tabs() {
 	return data;
 }
 
-
+function make_bubble(tinput,rtxt) {
+	var escapedtxt = escapeHTML(tinput);
+	html = '<div class="_msnd _msgss" this-id="'+rtxt+'">'+
+				'<div class="_mavs">'+
+					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+				'</div>'+
+				'<div class="_mtwps">'+
+					'<div class="_mb _sndb">'+
+					'<span class="_mtxt embd" >'+
+						'<span class="_plin">'+
+							escapedtxt+
+						'</span>'+
+						'<br>'+
+						'<div class="_mtime" style="width: 100%">'+
+							'<small>Now</small>&nbsp'+
+							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
+						'</div>'+
+						'</span>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}
+function randomString() {
+    var result = '';
+    var length = 4;
+    var dt = $.now();
+    var chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return dt+result;
+}
+function escapeHTML(txt) {
+    return txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
