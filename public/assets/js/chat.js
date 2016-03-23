@@ -1,9 +1,11 @@
 $(document).ready(function(){
 	chat.pageLoad();
 	chat.events();
+	chat.socket_io();
 });
 chat = {
 	pageLoad: function() {
+
 		$('#inner-chat-wrapper').slimScroll({
         	height: '285px'
     	});
@@ -120,6 +122,24 @@ chat = {
 	        }
 	    });
 
+	},	
+	socket_io: function() {
+        socket.on('_forward', function(data) {
+        	if (!$('.main-list-dock').hasClass('hide')) {
+        		$('.main-list-dock').find('.have-msg').removeClass('hide');
+        	}
+        	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
+	    		var randtxt = randomString();
+	       		var input_bubble = make_bubble_rc(data['msg'],randtxt);
+	       		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
+	       		$('._ctb'+dock_no).append(input_bubble);
+	       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
+        	} else {
+        		if ($('.conv-wrapper[tf="'+data['aid']+'"]').length == 1) {
+        			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
+        		}
+        	}
+        });
 	},
 	events: function() {
 		$('#cta1, #cta2').bind('input propertychange', function() {
@@ -177,6 +197,7 @@ chat = {
 			var fu = $(this).attr('tf');
 			var fe = $(this).find('._femail').text();
 			var duplength = $(".dockChild[uid='"+fu+"']").length;
+			$(this).find('.conv-c').addClass('hide');
 			if (duplength==0) {
 				if (typeof(cu) != "undefined" && cu !== null) {
 			    	var _ar = $(window["cdata_"+cu+"_"+fu]);
@@ -193,6 +214,7 @@ chat = {
 		});
 
 		$('.nb-lb').click(function(){
+			$(this).parents('.wpNubButton').find('.have-msg').addClass('hide');
 			var parent = $(this).parents('.dock_wrapper:first');
 			var type = parseInt(parent.attr('type'));
 			parent.addClass('hide');
@@ -222,12 +244,14 @@ request_c = {
 			function(result){
 				var status = result.status;
 				var wl_html = result.wl_html;
+				var aid = result.aid;
 				switch(status){					
 		 			case 200:
 		 				$('.plane-'+randtxt).css('color','#5cb85c');
 		                socket.emit("trans", { 
 	                    	recip: fi,
-	                    	msg: tdata
+	                    	msg: tdata,
+	                    	aid:aid
 	                     });            
 
 		 			break;
@@ -314,6 +338,28 @@ function make_bubble(tinput,rtxt) {
 						'<div class="_mtime" style="width: 100%">'+
 							'<small>Now</small>&nbsp'+
 							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
+						'</div>'+
+						'</span>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}
+function make_bubble_rc(tinput,rtxt) {
+	var escapedtxt = escapeHTML(tinput);
+	html = '<div class="_mrcv _msgsr" this-id="'+rtxt+'">'+
+				'<div class="_mavr">'+
+					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+				'</div>'+
+				'<div class="_mtwpr">'+
+					'<div class="_mb _rcvb">'+
+					'<span class="_mtxt embd" >'+
+						'<span class="_plin">'+
+							escapedtxt+
+						'</span>'+
+						'<br>'+
+						'<div class="_mtime" style="width: 100%">'+
+							'<small>Now</small>&nbsp'+
 						'</div>'+
 						'</span>'+
 					'</div>'+

@@ -148,30 +148,30 @@ class Ad extends Model
                         <hr>
                         ";
             if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
+                 
                 $files = json_decode($data['file_srcs'],true);
+                $html .= "<h4>Images and Videos (".count($files).")</h4>";
                 $base_path = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$data['user_id'].DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR;
+                $html .= "<div class='my-container'>";
                 foreach ($files as $fk => $fv) {
                     foreach ($fv as $fvk => $fvv) {
                         if ($fvk=="image") {
                             $html .= '
-                              <div class="col-xs-12 col-md-12 thumb-wrap">
-                                <div href="#" class="thumbnail">
-                                  <img src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" alt="...">
-                                </div>
-                              </div>
+                               <div class="my-item"><img style="max-width:100px" src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" alt="..."></div>
                             ';
-                        } elseif ($fvk=="video") {
-
+                        }
+                    }
+                }
+                 $html .= "</div>";
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="video") {
                             $html .= '
-                              <div class="col-xs-12 col-md-12 thumb-wrap">
-                                <div href="#" class="thumbnail">
-                                    <div class="flex-video widescreen ">
-                                        <video class="" frameborder="0" controls>
-                                            <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
-                                        </video>
-                                    </div>   
-                                </div>
-                              </div>
+                                <div class="" style="width:100%">
+                                    <video style="width:100%" class="" frameborder="0" controls>
+                                        <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
+                                    </video>
+                                </div>   
                             ';
 
 
@@ -179,6 +179,7 @@ class Ad extends Model
                         }
                     }
                 }
+
             }
         }
         return $html;

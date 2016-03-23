@@ -92,7 +92,8 @@ class ConversationsController extends Controller
             
 
             return Response::json(array(
-                'status' => $status
+                'status' => $status,
+                'aid' => Auth::id()
                 ));
         }
     }

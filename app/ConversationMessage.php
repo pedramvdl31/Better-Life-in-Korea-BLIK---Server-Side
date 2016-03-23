@@ -80,7 +80,7 @@ class ConversationMessage extends Model
 							<i class="on-sign-'.$fid.' hide lfloat _4xia img sp_P9ChxUVwaFx sx_74fd99"></i>
 						    <img src="/assets/images/home/product4.jpg" alt="" />
 						    <span class="_femail">'.$new_email.'</span>
-						    <span class="label label-success conv-c">2</span>
+						    <span class="conv-c hide"><i class="fa fa-envelope-o"></i><i class="fa fa-exclamation"></i></span>
 						</div>';
 		}
 		return $html;

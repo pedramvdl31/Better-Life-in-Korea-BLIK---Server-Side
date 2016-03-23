@@ -527,9 +527,14 @@
         background-position: -75px -471px;
     }
     .conv-c{
-        color: white !important;
         float: right;
         margin-top: 5px;
+        font-size: 19px;
+        color: #337AB7 !important;
+    }
+    .have-msg{
+        float: right;
+        color: #337AB7 !important;
     }
     .ChatClose{
         margin-right: 8px;
@@ -645,7 +650,7 @@
 
 @if(Auth::check())
 <div class="chat_dock">
-    <div class="dock_wrapper dock-min dockWrapperRight" type="0">
+    <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
         <div class="_dock m_clearfix">
             <div class="m_clearfix nubContainer rNubContainer">
                 <div id="BuddylistPagelet">
@@ -653,6 +658,7 @@
                         <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                             <div class="wpNubButton">
                                 <span class="label nb-lb pointer">Chat</span>
+                                <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i>&nbsp<i class="fa fa-exclamation"></i></span>
                             </div>
                         </div>
                     </div>
@@ -760,9 +766,9 @@
             window.socket = io('http://192.168.10.10:3000');
             socket.emit("_init", { data: "{!!Auth::id()!!}" });
             // var socket = io.connect('http://192.168.10.10:3000');
-            socket.on('_forward', function(data) {
-                alert(data['msg']);
-            });
+            // socket.on('_forward', function(data) {
+            //     alert(data['msg']);
+            // });
             // socket.on('on_not', function(data) {
             //     $('.on-sign-'+data['data']).removeClass('hide');
             // });
@@ -804,6 +810,8 @@
     <script src="/assets/js/chat.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
+    
+    <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>

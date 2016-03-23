@@ -427,6 +427,11 @@ requestm = {
 						$('.postview_modal_body').removeClass('hide');
 						$('.postview_modal_body').html(ad);
 						$('.vwad-loading').addClass('hide');
+						$('.my-container').sortablePhotos({
+						  selector: '> .my-item',
+						  sortable: 0,
+						  padding: 1
+						});
 		 			break;
 
 		 			case 400:

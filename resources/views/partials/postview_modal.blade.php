@@ -72,7 +72,7 @@
 </style>
 <div class="modal fade" id="postview-modal">
 
-	  <div class="modal-dialog qkpost_dialog" style="width: 44%;margin-top: 10px;">
+	  <div class="modal-dialog qkpost_dialog" style="width: 50%;margin-top: 10px;">
 	    <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

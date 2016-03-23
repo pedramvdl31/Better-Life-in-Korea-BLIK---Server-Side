@@ -3,16 +3,18 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var Redis = require('ioredis');
 var redis = new Redis();
-users = [];
+
+var usernames={};
+var sockets = {};
+var users= {};
+
 
 io.on('connection', function (socket) {
   socket.on( '_init', function( data ) {
-    console.log('init')
-  	if (data['data'] in users) {
-  		console.log('user-exits;')
-  	} else {
-  		users[data['data']] = socket;
-  	}
+    console.log('init '+data['data'])
+    sockets[socket.id] = data['data'];
+    socket.user_id= data['data'];
+    users[data['data']]=socket.id;
 		socket.broadcast.emit( 
 			'on_not', { 
 				data: data['data']
@@ -23,12 +25,18 @@ io.on('connection', function (socket) {
   	var recip = data['recip'];
   	if (recip in users) {
       var msg = data['msg'];
-  		users[recip].emit( 
+  		io.to(users[recip]).emit( 
   			'_forward', { 
-    			msg: msg
+    			msg: msg,
+          aid: data['aid']
 			}
     	);
   	}
+  });
+  socket.on('disconnect', function () {
+      console.log('disconnect user '+socket.user_id)
+      delete sockets[socket.id];
+      delete users[socket.user_id];
   });
 
   socket.on( 'end', function( data ) {
