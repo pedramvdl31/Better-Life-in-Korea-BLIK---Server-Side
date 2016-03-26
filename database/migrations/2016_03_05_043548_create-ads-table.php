@@ -19,9 +19,11 @@ class CreateAdsTable extends Migration
             $table->integer('subcat_id');
             $table->string('title');
             $table->string('city');
+            $table->decimal('lat', 9, 6)->nullable();
+            $table->decimal('long', 9, 6)->nullable();
             $table->text('description');
-            $table->text('file_srcs');
-            $table->integer('views');
+            $table->text('file_srcs')->nullable();
+            $table->integer('views')->nullable();
             $table->tinyInteger('status')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -37,6 +37,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('/update-messages', ['as'=>'chat', 'uses' => 'HomeController@getUpdateMessages']);	
 	Route::post('/search-01', ['as'=>'search-01', 'uses' => 'AdsController@postSearchByText']);
 	Route::post('/search-02', ['as'=>'search-02', 'uses' => 'AdsController@postSearchByCategory']);
+	Route::post('/search-03', ['as'=>'search-03', 'uses' => 'AdsController@postSearchByCity']);
 
 	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {

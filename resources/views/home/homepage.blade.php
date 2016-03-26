@@ -8,7 +8,11 @@
 @section('content')
 <style type="text/css">
 .product-image-wrapper {
-    height: 425px;
+    height: 453px;
+    border-radius: 10px;
+    background: white;
+    border: 1px solid #E2E1E1;
+    box-shadow: 0px 0px 1px #C7C7C7;
 }
 .pr-img {
     height: 236px;
@@ -18,8 +22,19 @@
 }
 .single-products {
     position: relative;
-    height: 385px;
+    height: 410px;
     overflow: hidden;
+}
+.ad-image {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    height: 236px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+.infoholder{
+    word-break: break-all;
 }
 </style>
 	<div class="features_items"><!--features_items-->

@@ -63,13 +63,13 @@
         </style>
         <nav class="navbar navbar-default my-nav" data-spy="affix" id="nav">
           <div class="container-fluid">
-            <span style="
+<!--             <span style="
                 position: absolute;
                 right: 71px;
                 top: 15px;
                 font-weight: 900;
-                color: #757575
-                ">Menu</span>
+                color: white
+                ">Menu</span> -->
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
               <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -78,7 +78,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#"><span style="color: #759CD8;">K</span>ora</a>
+              <a class="navbar-brand" href="#">Kora</a>
+              <br>
+              <div id="tab-holder" class="text-center col-md-12 col-xs-12" style="padding: 0">
+                  <div class="pointer col-md-6 col-xs-6 tab-c tab-home" style="padding: 0;border-bottom:1px solid white">Home</div>
+                  <div class="pointer col-md-6 col-xs-6 tab-c tab-cat" style="padding: 0;">Category</div>
+              </div>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -111,27 +116,29 @@
 
 
     <!-- ---------- NAVBAR END ---------- -->
-
-        <div class="flash-notification">
-            @include('flash::message')
-        </div>
-        
-        <div style="padding: 10px">
-            <a class="btn btn-primary btn-block qkpost sm-forms"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</a>   
+        <div style="">
+            <a class="btn btn-primary btn-block qkpost sm-forms qkpost-btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</a>   
         </div>
 
         <input type="hidden" id="_auth" data={!!Auth::check()?1:0!!}></input>
     </header><!--/header-->
-    
-
+    <div class="flash-notification">
+        @include('flash::message')
+    </div>
     
     <section>
         <div class="container main-container" style="margin-bottom: 30px;">
+
+<style type="text/css">
+
+</style>
+ <!-- <div class="mmcontainer"></div> -->
+
             <div class="row">
-                <div class="col-sm-3">
+<!--                 <div class="col-sm-3">
                     <div class="left-sidebar">
                         <h2>Category</h2>
-                        <div class="panel-group category-products" id="accordian"><!--category-productsr-->
+                        <div class="panel-group category-products" id="accordian">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
@@ -168,15 +175,16 @@
                                     <div class="panel-body">
                                         <ul>
                                             <li><a class="links" cat-id="2" subcat-id="1">Asian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="2">Italian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
+                                            <li><a class="links" cat-id="2" subcat-id="2">Italian
+                                            <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                            </a></li>
                                             <li><a class="links" cat-id="2" subcat-id="3">Western                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="2" subcat-id="4">Mexican                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="2" subcat-id="5">Other                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -194,11 +202,11 @@
                                     <div class="panel-body">
                                         <ul>
                                             <li><a class="links" cat-id="3" subcat-id="1">Dealership                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="3" subcat-id="2">Private                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -216,13 +224,13 @@
                                     <div class="panel-body">
                                         <ul>
                                             <li><a class="links" cat-id="4" subcat-id="1">Cleaning                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="4" subcat-id="2">Services                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="4" subcat-id="3">Moving Company                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                             <li><a class="links" cat-id="4" subcat-id="4">Cellphone                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></li>
+                                            </a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -231,28 +239,40 @@
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></h4>
+                                    </a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></h4>
+                                    </a></h4>
                                 </div>
                             </div>
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-</a></h4>
+                                    </a></h4>
                                 </div>
                             </div>
 
-                        </div><!--/category-products-->
+                        </div>
+                        <div class="text-center" id="city-search" style="">
+                            <h2>Search by City</h2>
+                            <select class="form-control" name="city" id="city-select-home">
+                                {!!$cities!!}
+                            </select>
+                            <img id="img-city" class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                            
+                        </div>
+                        
                     </div>
-                </div>
+                </div> -->
                 
-                <div class="col-sm-9 ads-warps">
+                <div class="col-sm-12 ads-warps home-tab all-tabs">
                     @yield('content')
+                </div>
+                <div class="col-sm-12 col-md-12 col-xs-12 ads-warps cat-tab all-tabs hide">
+                    {!!$all_categories!!}
                 </div>
             </div>
         </div>
@@ -762,22 +782,22 @@
     @if(Auth::check())
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
-            //var socket = io('http://localhost:3000');
-            window.socket = io('http://192.168.10.10:3000');
-            socket.emit("_init", { data: "{!!Auth::id()!!}" });
-            // var socket = io.connect('http://192.168.10.10:3000');
-            // socket.on('_forward', function(data) {
-            //     alert(data['msg']);
-            // });
-            // socket.on('on_not', function(data) {
-            //     $('.on-sign-'+data['data']).removeClass('hide');
-            // });
-            // $('#sendm').click(function(){
-            //     socket.emit("trans", { 
-            //         recip: 2,
-            //         msg: "hello man!"
-            //          });
-            // });
+            // //var socket = io('http://localhost:3000');
+            // window.socket = io('http://192.168.10.10:3000');
+            // socket.emit("_init", { data: "{!!Auth::id()!!}" });
+            // // var socket = io.connect('http://192.168.10.10:3000');
+            // // socket.on('_forward', function(data) {
+            // //     alert(data['msg']);
+            // // });
+            // // socket.on('on_not', function(data) {
+            // //     $('.on-sign-'+data['data']).removeClass('hide');
+            // // });
+            // // $('#sendm').click(function(){
+            // //     socket.emit("trans", { 
+            // //         recip: 2,
+            // //         msg: "hello man!"
+            // //          });
+            // // });
         </script>
     @endif
 
@@ -812,6 +832,10 @@
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
     
     <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
+    <!-- LOCATION PICKER -->
+    <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+    <script src="/packages/location-picker/locationpicker.jquery.js"></script>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>

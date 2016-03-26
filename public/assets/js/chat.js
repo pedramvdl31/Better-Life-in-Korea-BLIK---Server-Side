@@ -124,22 +124,22 @@ chat = {
 
 	},	
 	socket_io: function() {
-        socket.on('_forward', function(data) {
-        	if (!$('.main-list-dock').hasClass('hide')) {
-        		$('.main-list-dock').find('.have-msg').removeClass('hide');
-        	}
-        	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
-	    		var randtxt = randomString();
-	       		var input_bubble = make_bubble_rc(data['msg'],randtxt);
-	       		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
-	       		$('._ctb'+dock_no).append(input_bubble);
-	       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
-        	} else {
-        		if ($('.conv-wrapper[tf="'+data['aid']+'"]').length == 1) {
-        			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
-        		}
-        	}
-        });
+       //  socket.on('_forward', function(data) {
+       //  	if (!$('.main-list-dock').hasClass('hide')) {
+       //  		$('.main-list-dock').find('.have-msg').removeClass('hide');
+       //  	}
+       //  	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
+	    		// var randtxt = randomString();
+	      //  		var input_bubble = make_bubble_rc(data['msg'],randtxt);
+	      //  		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
+	      //  		$('._ctb'+dock_no).append(input_bubble);
+	      //  		document.getElementById('ctb'+dock_no).scrollTop = 10000;
+       //  	} else {
+       //  		if ($('.conv-wrapper[tf="'+data['aid']+'"]').length == 1) {
+       //  			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
+       //  		}
+       //  	}
+       //  });
 	},
 	events: function() {
 		$('#cta1, #cta2').bind('input propertychange', function() {

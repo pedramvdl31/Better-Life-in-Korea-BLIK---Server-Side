@@ -38,8 +38,10 @@ class AdsController extends Controller
             $subcat = $_form['subcat'];
             $title = $_form['title'];
             $city = $_form['city'];
+            $_long = isset($_form['long'])?$_form['long']:null;
+            $_lat = isset($_form['lat'])?$_form['lat']:null;
             $description = $_form['description'];
-            $posted_files = isset($_form['posted_files'])?$_form['posted_files']:null;
+            $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
 
             if (empty($cat) || empty($subcat) || empty($title) || empty($description)) {
                 return Response::json(array(
@@ -53,6 +55,8 @@ class AdsController extends Controller
             $ads->cat_id = $cat;
             $ads->subcat_id = $subcat;
             $ads->city = $city;
+            $ads->long = $_long;
+            $ads->lat = $_lat;
             $ads->title = $title;
             $ads->description = json_encode($description);
             $ads->status = 1;
@@ -295,11 +299,13 @@ class AdsController extends Controller
     {
         if(Request::ajax()){
             $status = 400;
-            $ads = Ad::PrepareForView(Ad::findOrFail(Input::get('data_id')));
+            $ads = Ad::PrepareForView(Ad::find(Input::get('data_id')));
+            $lat_long = Ad::PrepareLatLong(Ad::find(Input::get('data_id')));
             if (isset($ads)) {
                 return Response::json(array(
                     'status' => 200,
-                    'ad' => $ads
+                    'ad' => $ads,
+                    'lat_long' => $lat_long,
                     ));
             }
             return Response::json(array(
@@ -386,6 +392,26 @@ class AdsController extends Controller
                     'ads' => $ads,
                     'render' => $render,
 
+                ));
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+        }
+    }
+    public function postSearchByCity()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $city_id = Input::get('city_id');
+            if (isset($city_id)) {
+                $ads = Ad::PrepareAdsSearchCity($city_id);
+                $status = 200;
+                $render = $ads['data']->render();
+                return Response::json(array(
+                    'status' => $status,
+                    'ads' => $ads,
+                    'render' => $render,
                 ));
             }
             return Response::json(array(

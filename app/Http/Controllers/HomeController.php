@@ -70,7 +70,10 @@ class HomeController extends Controller
       // foreach ($new_file as $k => $v) {
       //   if ($k == "Republic of Korea") {
       //     foreach ($v as $vk => $vv) {
-      //       $html .= '<option value="'.$vk.'">'.$vv.'</option>';
+      //       $nvv = str_replace("'","",$vv);
+      //       $html .= "case '".$vk."':<br>";
+      //       $html .= "cttxt = '".$nvv."';<br>";
+      //       $html .= "break;<br>";
       //     }
       //   }
       // }
@@ -79,16 +82,16 @@ class HomeController extends Controller
         if (Auth::check()) {
             $cats = Job::cat_select();
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
-            $cities = Job::korean_cities();
         }
         $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->paginate(9));
-
-        
+        $cities = Job::korean_cities();
+        $all_categories = Ad::PrepareCategoriesHtml();
         $layout_title = 'layouts.customize_layout';
             return view('home.homepage')
             ->with('cats',isset($cats)?$cats:null)
             ->with('wishlist',isset($wishlist)?$wishlist:null)
             ->with('ads',$ads)
+            ->with('all_categories',$all_categories)
             ->with('cities',isset($cities)?$cities:null)
             ->with('layout',$layout_title);
     }
