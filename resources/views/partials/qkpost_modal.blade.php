@@ -163,7 +163,7 @@
                     ">
                     <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_image">
                       <div class="dz-message needsclick">
-                        Upload Images<br>
+                        Upload Images&nbsp<i class="glyphicon glyphicon-plus"></i><br>
                         <span class="note needsclick">(Images and Videos max size <strong>5mb</strong>.)</span>
                       </div>
                     </form>
@@ -172,7 +172,7 @@
                     opacity: 0;">
                     <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_video">
                       <div class="dz-message needsclick">
-                        Upload Videos<br>
+                        Upload Videos&nbsp<i class="glyphicon glyphicon-plus"></i><br>
                         <span class="note needsclick">(Images and Videos max size <strong>30mb</strong>.)</span>
                       </div>
                     </form>

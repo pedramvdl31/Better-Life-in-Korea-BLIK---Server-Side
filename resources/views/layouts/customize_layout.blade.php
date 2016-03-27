@@ -269,7 +269,13 @@
                 </div> -->
                 
                 <div class="col-sm-12 ads-warps home-tab all-tabs">
-                    @yield('content')
+                    <div class="text-center post-loading" style="margin-top: 15px;">
+                    
+                    </div>
+
+                    <div id="post-list">
+                        @yield('content')
+                    </div>
                 </div>
                 <div class="col-sm-12 col-md-12 col-xs-12 ads-warps cat-tab all-tabs hide">
                     {!!$all_categories!!}

@@ -13,7 +13,10 @@ mainf = {
 
 	});
 
-	  //       $('#somecomponent').locationpicker(
+
+
+
+	  //$('#somecomponent').locationpicker(
 			// {
 			//     location: {latitude: 37.5551069, longitude: 126.97069110000007},
 			//     locationName: "",
@@ -62,10 +65,6 @@ mainf = {
 		$('.body-wrapp').slimScroll({
         	height: '100%'
     	});
-        // var es = new EventSource("/update-messages");
-        // es.addEventListener("message", function(e) {
-        // 	console.log(e.data['time']);
-        // }, false);
 		Dropzone.autoDiscover = false;
 		  $('#post_upload_zone_image').dropzone({ 
 		    url: "/upload-ads-tmp",
@@ -311,6 +310,9 @@ mainf = {
         	$('.cat-tab').addClass('hide');
         	$('.home-tab').removeClass('hide');
 
+        	$('#post-list').addClass('hide');
+
+
 			var _this = $(this);
 			requestm.refresh_ads(cat_id,subcat_id,_this);
 		});
@@ -375,7 +377,8 @@ requestm = {
 			);
 	},
 	refresh_ads: function(cat_id,subcat_id,_this) {
-		_this.find('img').removeClass('hide');
+		$loading_in = create_loading_input();
+		$('.post-loading').html($loading_in);
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/search-02',
@@ -385,14 +388,16 @@ requestm = {
 				"subcat_id": subcat_id
 			},
 			function(result){
-				_this.find('img').addClass('hide');
+				$('#search-gif').addClass('hide');
 				var status = result.status;
 				var ads = result.ads;
 				var render = result.render;
 				switch(status){					
 		 			case 200:
+		 				$('.post-loading').html('');
 		 				$('#ads-wrapper').html(ads['html']);
 		 				$('#pagi').html('');
+		 				$('#post-list').removeClass('hide');
 		 			break;
 
 		 			case 400:
@@ -801,3 +806,12 @@ function clear_qp_modal() {
 	$('#file-div').html('');
 }
 
+function create_loading_input() {
+	var loading_html = 	'<div class="cssload-loader">'+
+							'<div class="cssload-flipper">'+
+							'<div class="cssload-front"></div>'+
+							'<div class="cssload-back"></div>'+
+							'</div>'+
+						'</div>';
+	return loading_html;
+}
