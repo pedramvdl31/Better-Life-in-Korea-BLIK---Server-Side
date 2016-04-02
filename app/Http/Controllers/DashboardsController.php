@@ -63,6 +63,7 @@ class DashboardsController extends Controller
         $_user = User::find(Auth::id());
         $_user->first_name = Input::get('first_name');
         $_user->last_name = Input::get('last_name');
+        $_user->description = Input::get('description');
         if ($_user->save()) {
             Flash::success('Successfully Updated!');
             return Redirect::route('users_dash');

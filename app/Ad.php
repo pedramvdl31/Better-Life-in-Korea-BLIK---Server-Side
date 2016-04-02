@@ -19,7 +19,7 @@ class Ad extends Model
         $output = null;
         if (isset($txtd)) {
             $ads = Ad::where('status',1)->where('title', 'like', $txtd)
-                ->paginate(9);
+                ->paginate(8);
 
             if (isset($ads)) {
                 $output = Ad::PrepareAdsForHome($ads);
@@ -30,7 +30,7 @@ class Ad extends Model
     }
     static public function PrepareAdsSearchCategory($cat_id,$subcat_id) {
         $output = null;
-        $ads = Ad::where('status',1)->where('cat_id',$cat_id)->paginate(9);
+        $ads = Ad::where('status',1)->where('cat_id',$cat_id)->paginate(8);
         if (isset($ads)) {
             $output = Ad::PrepareAdsForHome($ads);
         }
@@ -38,7 +38,7 @@ class Ad extends Model
     }
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
-        $ads = Ad::where('status',1)->where('city',$city_id)->paginate(9);
+        $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);
         if (isset($ads)) {
             $output = Ad::PrepareAdsForHome($ads);
         }
@@ -49,7 +49,7 @@ class Ad extends Model
         $html = '<div class="cats-holder">';
         $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'categories'.DIRECTORY_SEPARATOR.'category';
         for ($i=1; $i <= 7; $i++) { 
-            $html .= '<div class="col-md-6 col-md-6 col-sm-6 col-xs-6 cats-wrap-main">';
+            $html .= '<div class="col-md-3 col-sm-6 col-xs-6 cats-wrap-main">';
                 $html .= ' <div class="cat-image links" cat-id="'.$i.'" subcat-id="1" style="background-image: url(';
                 $html .= $f_image.'-'.$i.'.jpg';
                 $html .= ');">';                    
@@ -91,9 +91,12 @@ class Ad extends Model
     static public function PrepareAdsForHome($data) {
 
         $data_a = array();
-        $data_a['html'] = '';
+        $data_a['html'] = '<div class="text-center"><h3 id="no-data">No results found, Try looking into other categories!</h3></div>';
         $data_a['data'] = $data;
         if (isset($data)) {
+            if (count($data)>0) {
+                $data_a['html'] = '';
+            }
             foreach ($data as $dk => $dv) {
 
                 $cat_text = Ad::TranslateCat($dv->cat_id);
@@ -112,7 +115,7 @@ class Ad extends Model
                 }
                 if (isset($dv['description'])) {
                     $des_temp = json_decode($dv['description']);
-                    $new_des = strlen($des_temp)>50?substr($des_temp,0,50)."...":$des_temp;
+                    $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."...":$des_temp;
                 }
 
                 $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'product1.jpg';
@@ -137,7 +140,7 @@ class Ad extends Model
                 }
 
                 $data_a['html'] .= '
-                        <div class="col-md-4 col-sm-6 col-xs-6 my-col">
+                        <div class="col-md-3 col-sm-6 col-xs-6 my-col">
                             <div class="product-image-wrapper">
                                 <div class="single-products view-ad pointer" data="'.$dv->id.'">
                                     <div class="productinfo text-center infoholder">
@@ -216,6 +219,10 @@ class Ad extends Model
                     if (isset($user)) {
                         $fname = $user->first_name;
                         $lname = $user->last_name;
+                        $full_name = $user->email;
+                        if (isset($fname,$lname)) {
+                            $full_name = $fname.'&nbsp'.$lname;
+                        }
                         if(isset($user->avatar)){
                             $img_src = $user->avatar;
                         } else {
@@ -226,17 +233,24 @@ class Ad extends Model
             }
             $html .= '
                         <div class="form-group">
-                            <div class="media"> <div class="media-left"> <a href="#"> <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="'.$img_src.'" data-holder-rendered="true" style="width: 64px; height: 64px;"> </a> </div> <div class="media-body"> <h4 class="media-heading">Media heading</h4> Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus. </div> </div>
+                            <div class="media">
+                            <div class="media-left">
+                            <a href="#"> <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="'.$img_src.'" data-holder-rendered="true" style="width: 64px; height: 64px;"> </a> </div> <div class="media-body"> 
+                        <h4 class="media-heading">'.$full_name.'</h4> 
+
+                            '.$user->description.'
+
+                        </div> </div>
                             <div class="image-holder-pv pull-right">
                             ';
                 
 
                 $html .= "</div></div>
-                        <div class='form-group'>
+                        <div class='form-group break_all'>
                             <label>Title</label>
                             <p>".$data->title."</p>
                         </div>
-                        <div class='form-group'>
+                        <div class='form-group break_all'>
                             <label>Description</label>
                             <p>".json_decode($data['description'])."</p>
                         </div>

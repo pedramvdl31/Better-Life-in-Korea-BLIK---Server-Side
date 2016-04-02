@@ -60,6 +60,13 @@
 			<span class='help-block'>{!! $message !!}</span>
 			@endforeach
 		</div>
+		<div class="form-group {!! $errors->has('description') ? 'has-error' : false !!}">
+		    <label>Short Description:</label>
+		    <input type="text" class="form-control  pk-form" name="description" value="{!!$user->description!!}" aria-describedby="sizing-addon2">
+	    	@foreach($errors->get('description') as $message)
+			<span class='help-block'>{!! $message !!}</span>
+			@endforeach
+		</div>
 		<div class="form-group {!! $errors->has('first_name') ? 'has-error' : false !!}">
 		    <label>Firstname:</label>
 		    <input type="text" class="form-control  pk-form" name="first_name" value="{!!$user->first_name!!}" aria-describedby="sizing-addon2">

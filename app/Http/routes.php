@@ -21,7 +21,7 @@
 //     event(new App\Events\EventName());
 //     return "event fired";
 // });
-
+Route::post('/g-m', ['as'=>'g_m','uses'=>'ConversationsController@postRtrnMsgs']);
 
 Route::get('test', function () {
     // this checks for the event
@@ -41,6 +41,8 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 
 	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {
+		//CHAT ROUTES
+		
 		//CHAT ROUTES
 		Route::post('/data-update', ['as'=>'chat-send','uses'=>'ConversationsController@postSaveChatMessage']);
 		//CHAT ROUTES END

@@ -78,14 +78,14 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
 	      <div class="modal-body" style="overflow: auto;">
-            <div class="postview_modal_body" style="max-height: 450px;
-            overflow: auto;">
+            <div class="postview_modal_body">
                 
             </div>
             <div class="text-center vwad-loading">
                 <img src="/assets/images/icons/gif/loading1.gif" width="35px;">
                 Please Wait...
             </div>
+            <div class="fbc"></div>
 	      </div>
 	      <div class="modal-footer clearfix">
 	        <a id="atwl-btn" class="btn btn-warning pull-right add-to-wishlist" data="">Add to Wishlist</a>

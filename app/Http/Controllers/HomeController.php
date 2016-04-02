@@ -43,7 +43,7 @@ class HomeController extends Controller
 
         public function getHomePage()
     {   
-      // for ($i=1;$i<=11;$i++) { 
+      // for ($i=2;$i<=11;$i++) { 
       //   DB::table('ads')->insert([
       //     [
       //         'id' => $i,
@@ -51,7 +51,7 @@ class HomeController extends Controller
       //         'cat_id' => '1',
       //         'subcat_id' => '1',
       //         'title' => 'Lorem ipsum dolor',
-      //         'city' => 'seoul',
+      //         'city' => '4',
       //         'description' => '"Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, "',
       //         'file_srcs' => '[{"image":{"name":"fMFws_1458051477.jpeg"}}]',
       //         'status' => 1
@@ -83,8 +83,9 @@ class HomeController extends Controller
             $cats = Job::cat_select();
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
         }
-        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->paginate(9));
+        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->paginate(8));
         $cities = Job::korean_cities();
+        $cities = Job::korean_cities_search();
         $all_categories = Ad::PrepareCategoriesHtml();
         $layout_title = 'layouts.customize_layout';
             return view('home.homepage')

@@ -31,27 +31,43 @@ use App\ConversationMessage;
 class ConversationsController extends Controller
 {
     public function __construct() {
-      // Define layout
 
-       if (Auth::user()) {
-            switch (Auth::user()->roles) {
-                case 1:
-                    $this->layout = 'layouts.admins';
-                    break;
-                case 2:
-                    $this->layout = 'layouts.admins';
-                    break;
-                case 3:
-                    $this->layout = 'layouts.admins_simple';
-                    break;
-                
-                default:
-                    # code...
-                    break;
+
+    }
+    
+    public function postRtrnMsgs()
+    {
+        $cu = Auth::id();
+        $fi = Input::get('fi');
+        $convs = Conversation::
+            where(function ($query) use ($cu) {
+                $query->where('user_one',$cu)
+                      ->orWhere('user_two',$cu);
+            })
+            ->where(function ($query) use ($fi) {
+                $query->where('user_one',$fi)
+                      ->orWhere('user_two',$fi);
+            })
+            ->first();
+        if (isset($convs)) {
+            $l_mgs = ConversationMessage::
+                                where('conv_id',$convs['id'])
+                                ->orderBy('id', 'desc')
+                                ->take(15)
+                                ->get()
+                                ->reverse();
+            foreach ($l_mgs as $k => $v) {
+                $v['ago'] =Job::formatTimeAgo(Job::humanTiming($v['created_at']));
             }
-        } 
 
-
+            return Response::json(array(
+            'status' => 200,
+            'l_mgs' => $l_mgs
+            ));
+        }
+        return Response::json(array(
+            'status' => 400
+            ));
     }
 
     public function postSaveChatMessage()

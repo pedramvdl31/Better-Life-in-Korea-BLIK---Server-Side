@@ -1,4 +1,10 @@
-﻿.cssload-loader {
+﻿.modal{
+  z-index: 9999;
+}
+.break_all{
+  word-break: break-all;
+}
+.cssload-loader {
   width: 28px;
   height: 28px;
   position: absolute;
@@ -123,9 +129,20 @@
   z-index: 99999;
 
 }
-#city-search{
-  margin-top: 25px;
+
+#no-data{
 }
+#city-search{
+  background-color: #00AEFF;
+  padding: 10px 10px 10px 10px;
+  border-top: 1px dotted #039BE2;
+}
+.my-form-control{
+  height: 24px !important;
+  padding: 0px 11px !important;
+  font-size: 12px !important;
+}
+
 .label-holder{
     padding: 0;
     bottom: 0;
@@ -544,11 +561,6 @@ ul.sub-menu {
   border-bottom: 1px solid #E0E0DA;
   padding-bottom: 20px;
 }
-
-.companyinfo {
-  margin-top: 57px;
-}
-
 .companyinfo h2 {
   color: #B4B1AB;
   font-family: abel;
@@ -1029,7 +1041,7 @@ h2.title {
   font-weight: 700;
   margin: 0 15px;
   text-transform: uppercase;
-  margin-bottom: 30px;
+  margin-bottom: 22px;
   position: relative;
 }
 
@@ -2713,6 +2725,7 @@ h2.title {
 .flash-notification .alert {
     margin-top: -20px;
 }
+
 /*==================================================
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
@@ -2751,18 +2764,31 @@ h2.title {
 
     /* Large Devices, Wide Screens */
     @media only screen and (max-width : 1200px) {
-
+      #city-search{
+        margin-bottom: 20px;
+      }
+      .my-form-control {
+        width: 20%;
+      }
     }
 
     /* Medium Devices, Desktops */
     @media only screen and (max-width : 992px) {
-
+      #city-search{
+        margin-bottom: 20px;
+      }
+      .my-form-control {
+        width: 20%;
+      }
     }
 
     /* Small Devices, Tablets */
     @media only screen and (max-width : 768px) {
-      #city-select-home{
-        margin-top: 15px;
+      #city-search{
+        margin-bottom: 0;
+      }
+      .my-form-control {
+        width: 100%;
       }
       .left-sidebar h2, .brands_products h2 {
         margin-bottom: 0;
@@ -2790,8 +2816,11 @@ h2.title {
 
     /* Extra Small Devices, Phones */ 
     @media only screen and (max-width : 480px) {
-      #city-select-home{
-        margin-top: 15px;
+      .my-form-control {
+        width: 100%;
+      }
+      #city-search{
+        margin-bottom: 0;
       }
       .left-sidebar h2, .brands_products h2 {
         margin-bottom: 0;
@@ -2830,8 +2859,11 @@ h2.title {
 
     /* Custom, iPhone Retina */ 
     @media only screen and (max-width : 320px) {
-      #city-select-home{
-        margin-top: 15px;
+      .my-form-control {
+        width: 100%;
+      }
+      #city-search{
+        margin-bottom: 0;
       }
       .left-sidebar h2, .brands_products h2 {
         margin-bottom: 0;

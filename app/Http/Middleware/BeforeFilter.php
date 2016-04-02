@@ -35,12 +35,8 @@ class BeforeFilter
                 ->orWhere('user_two',Auth::user()->id)
                 ->get();
             //Get Convs
-            $convs = Conversation::where('status',1)
-                ->where('user_one',Auth::user()->id)
-                ->orWhere('user_two',Auth::user()->id)
-                ->get();
 
-            $chat_html = ConversationMessage::PrepareChatHtml($relations,$convs);
+            $chat_html = ConversationMessage::PrepareChatHtml($relations);
 
         }
         view::share('friends_list',isset($chat_html)?$chat_html:null);

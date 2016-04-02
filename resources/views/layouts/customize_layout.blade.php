@@ -1,6 +1,6 @@
     <!DOCTYPE html>
-<html lang="en">
-<head>
+    <html lang="en">
+    <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -37,774 +37,769 @@
     <![endif]-->       
 
     <link rel="apple-touch-icon-precomposed" href="/assets/images/ico/apple-touch-icon-57-precomposed.png">
-</head><!--/head-->
-<style type="text/css">
+    </head><!--/head-->
+    <style type="text/css">
     .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
     outline: none;
     }
     .pr-img img{
-        width: 100%;
+    width: 100%;
     }
     .links{
-        cursor: pointer;
+    cursor: pointer;
     }
-</style>
-<body>
+    </style>
+    <body>
 
+
+<div id="locations" data-locations='[{"name":"Bath","url":"/location/bath","img":"/thumb.jpg"},{"name":"Berkhamsted","url":"/location/berkhamsted","img":"/thumb.jpg"}]'>
+
+    
     <header id="header"><!--header-->
     <!-- -------- NAVBAR ----------- -->
-        <style type="text/css">
-            #nav.affix {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 9999;
-        }
-        </style>
-        <nav class="navbar navbar-default my-nav" data-spy="affix" id="nav">
-          <div class="container-fluid">
-<!--             <span style="
-                position: absolute;
-                right: 71px;
-                top: 15px;
-                font-weight: 900;
-                color: white
-                ">Menu</span> -->
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="#">Kora</a>
-              <br>
-              <div id="tab-holder" class="text-center col-md-12 col-xs-12" style="padding: 0">
-                  <div class="pointer col-md-6 col-xs-6 tab-c tab-home" style="padding: 0;border-bottom:1px solid white">Home</div>
-                  <div class="pointer col-md-6 col-xs-6 tab-c tab-cat" style="padding: 0;">Category</div>
-              </div>
-            </div>
+    <style type="text/css">
+    #nav.affix {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+    }
+    </style>
+    <nav class="navbar navbar-default my-nav" data-spy="affix" id="nav" style="margin-bottom: 0">
+    <div class="container-fluid">
+    <!--             <span style="
+    position: absolute;
+    right: 71px;
+    top: 15px;
+    font-weight: 900;
+    color: white
+    ">Menu</span> -->
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="#">Kora</a>
+    <br>
+    <div id="tab-holder" class="text-center col-md-12 col-xs-12" style="padding: 0">
+      <div class="pointer col-md-6 col-xs-6 tab-c tab-home" style="padding: 0;border-bottom:1px solid white">Home</div>
+      <div class="pointer col-md-6 col-xs-6 tab-c tab-cat" style="padding: 0;">Category</div>
+    </div>
+    </div>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <div class="navbar-form navbar-left my-navbar-left" role="search">
-                <div class="form-group">
-                  <input id="searchbar" type="text" class="form-control" placeholder="Search for ads">
-                </div>
-                <a id="search-for-ad" class="btn btn-default">Search</a>
-                <div class="text-center search-loading hide" style="line-height: 34px;
-                    float: right;
-                    margin-left: 10px;">
-                        <img src="/assets/images/icons/gif/loading1.gif" width="20px;">
-                </div>
-              </div>
-              <ul class="nav navbar-nav navbar-right my-navbar-right">
-                <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Profile</a></li>
-                    @if(Auth::check())
-                    <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
-                    <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
-                    @else
-                    <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
-                    <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
-                    @endif
-                    <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
-              </ul>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+    <div class="navbar-form navbar-left my-navbar-left" role="search">
+    <div class="form-group">
+      <input id="searchbar" type="text" class="form-control" placeholder="Search for ads">
+    </div>
+    <a id="search-for-ad" class="btn btn-default">Search</a>
+    <div class="text-center search-loading hide" style="line-height: 34px;
+        float: right;
+        margin-left: 10px;">
+            <img src="/assets/images/icons/gif/loading1.gif" width="20px;">
+    </div>
+    </div>
+    <ul class="nav navbar-nav navbar-right my-navbar-right">
+    <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Profile</a></li>
+        @if(Auth::check())
+        <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
+        <li><a href="{!!route('users_logout')!!}"><i class="fa fa-lock"></i> Logout</a></li>
+        @else
+        <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
+        <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
+        @endif
+        <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
+    </ul>
+    </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+    </nav>
 
 
     <!-- ---------- NAVBAR END ---------- -->
-        <div style="">
-            <a class="btn btn-primary btn-block qkpost sm-forms qkpost-btn-sm"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</a>   
-        </div>
+    <div>
+        <a style="margin-bottom: 0;" class="btn btn-primary btn-block qkpost sm-forms qkpost-btn-sm"><i class="glyphicon glyphicon-plus">     
+        </i>&nbspQuick Post</a>   
+    </div>
+    <div class="text-center" id="city-search" style="">
+        <select class="form-control my-form-control" name="city" id="city-select-home">
+            {!!$cities!!}
+        </select>
+    </div>
 
-        <input type="hidden" id="_auth" data={!!Auth::check()?1:0!!}></input>
+    <input type="hidden" id="_auth" data={!!Auth::check()?1:0!!}></input>
     </header><!--/header-->
     <div class="flash-notification">
-        @include('flash::message')
+    @include('flash::message')
     </div>
-    
+
     <section>
-        <div class="container main-container" style="margin-bottom: 30px;">
+    <div class="container main-container" style="margin-bottom: 30px;">
 
-<style type="text/css">
+    <style type="text/css">
 
-</style>
- <!-- <div class="mmcontainer"></div> -->
+    </style>
+    <!-- <div class="mmcontainer"></div> -->
 
-            <div class="row">
-<!--                 <div class="col-sm-3">
-                    <div class="left-sidebar">
-                        <h2>Category</h2>
-                        <div class="panel-group category-products" id="accordian">
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Real Estate 
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="sportswear" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a class="links" cat-id="1" subcat-id="1">Agencies 
-                                            <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="1" subcat-id="2">Private 
-                                            <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-
-                                            </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="#res">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Restaurant
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="res" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a class="links" cat-id="2" subcat-id="1">Asian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="2">Italian
-                                            <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="3">Western                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="4">Mexican                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="2" subcat-id="5">Other                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Used Car
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="mens" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a class="links" cat-id="3" subcat-id="1">Dealership                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="3" subcat-id="2">Private                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title">
-                                        <a  data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                            <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                            Move In/Out
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div id="womens" class="panel-collapse collapse">
-                                    <div class="panel-body">
-                                        <ul>
-                                            <li><a class="links" cat-id="4" subcat-id="1">Cleaning                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="4" subcat-id="2">Services                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="4" subcat-id="3">Moving Company                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                            <li><a class="links" cat-id="4" subcat-id="4">Cellphone                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                            </a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                    </a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                    </a></h4>
-                                </div>
-                            </div>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                    </a></h4>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="text-center" id="city-search" style="">
-                            <h2>Search by City</h2>
-                            <select class="form-control" name="city" id="city-select-home">
-                                {!!$cities!!}
-                            </select>
-                            <img id="img-city" class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                            
-                        </div>
-                        
+    <div class="row">
+    <!--                 <div class="col-sm-3">
+        <div class="left-sidebar">
+            <h2>Category</h2>
+            <div class="panel-group category-products" id="accordian">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
+                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                Real Estate 
+                            </a>
+                        </h4>
                     </div>
-                </div> -->
+                    <div id="sportswear" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                <li><a class="links" cat-id="1" subcat-id="1">Agencies 
+                                <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="1" subcat-id="2">Private 
+                                <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordian" href="#res">
+                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                Restaurant
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="res" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                <li><a class="links" cat-id="2" subcat-id="1">Asian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="2" subcat-id="2">Italian
+                                <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="2" subcat-id="3">Western                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="2" subcat-id="4">Mexican                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="2" subcat-id="5">Other                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
+                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                Used Car
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="mens" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                <li><a class="links" cat-id="3" subcat-id="1">Dealership                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="3" subcat-id="2">Private                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a  data-toggle="collapse" data-parent="#accordian" href="#womens">
+                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                                Move In/Out
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="womens" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                <li><a class="links" cat-id="4" subcat-id="1">Cleaning                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="4" subcat-id="2">Services                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="4" subcat-id="3">Moving Company                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                                <li><a class="links" cat-id="4" subcat-id="4">Cellphone                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                                </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                        </a></h4>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                        </a></h4>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
+                        </a></h4>
+                    </div>
+                </div>
+
+            </div>
+            <div class="text-center" id="city-search" style="">
+                <h2>Search by City</h2>
+                <select class="form-control" name="city" id="city-select-home">
+                    {!!$cities!!}
+                </select>
+                <img id="img-city" class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
                 
-                <div class="col-sm-12 ads-warps home-tab all-tabs">
-                    <div class="text-center post-loading" style="margin-top: 15px;">
-                    
-                    </div>
+            </div>
+            
+        </div>
+    </div> -->
 
-                    <div id="post-list">
-                        @yield('content')
-                    </div>
-                </div>
-                <div class="col-sm-12 col-md-12 col-xs-12 ads-warps cat-tab all-tabs hide">
-                    {!!$all_categories!!}
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <footer id="footer"><!--Footer-->
-        <div class="footer-top">
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <div class="companyinfo">
-                            <h2><span>K</span>ora</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
-                        </div>
-                    </div>
-                    <div class="col-sm-7">
-
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <p class="pull-left">Copyright © 2016 Kora.</p>
-                    <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
-                </div>
-            </div>
-        </div>
+    <div class="col-sm-12 ads-warps home-tab all-tabs">
+        <div class="text-center post-loading" style="margin-top: 15px;">
         
+        </div>
+
+        <div id="post-list">
+            @yield('content')
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-xs-12 ads-warps cat-tab all-tabs hide">
+        {!!$all_categories!!}
+    </div>
+    </div>
+    </div>
+    </section>
+
+    <footer id="footer"><!--Footer-->
+    <div class="footer-top">
+    <div class="container">
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="companyinfo">
+                <h2><span>K</span>ora</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,sed do eiusmod tempor</p>
+            </div>
+        </div>
+        <div class="col-sm-7">
+
+        </div>
+    </div>
+    </div>
+    </div>
+    <div class="footer-bottom">
+    <div class="container">
+    <div class="row">
+        <p class="pull-left">Copyright © 2016 Kora.</p>
+        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
+    </div>
+    </div>
+    </div>
+
     </footer><!--/Footer-->
 
 
-<!-- ------------------------------------------- -->
-<!-- ----------------------------------- -->
+    <!-- ------------------------------------------- -->
+    <!-- ----------------------------------- -->
 
-<style type="text/css">
+    <style type="text/css">
     .chrome .dock_wrapper {
-        transform: translateZ(0);
+    transform: translateZ(0);
     }
     .dockWrapperRight,.dockWrapperRightChilds {
-        left: auto;
+    left: auto;
     }
     .dock-min {
-        bottom: 4px;
-        direction: ltr;
-        height: 28px;
-        left: 0;
-        position: fixed;
-        right: 0;
-        z-index: 300;
+    bottom: 4px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 300;
     }
     .dock-max {
-        bottom: 295px;
-        direction: ltr;
-        height: 28px;
-        left: 0;
-        position: fixed;
-        right: 0;
-        z-index: 300;
+    bottom: 295px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 300;
     }
     .dock-max-1 {
-        bottom: 280px;
-        direction: ltr;
-        height: 28px;
-        left: 0;
-        position: fixed;
-        right: 285px;
-        z-index: 300;
+    bottom: 280px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 285px;
+    z-index: 300;
     }
     .dock-max-2 {
-        bottom: 280px;
-        direction: ltr;
-        height: 28px;
-        left: 0;
-        position: fixed;
-        right: 570px;
-        z-index: 300;
+    bottom: 280px;
+    direction: ltr;
+    height: 28px;
+    left: 0;
+    position: fixed;
+    right: 570px;
+    z-index: 300;
     }
 
     ._dock {
-        margin: 0 15px 0 0;
+    margin: 0 15px 0 0;
     }
 
     .m_clearfix {
-        zoom: 1;
+    zoom: 1;
     }
     .m_clearfix:after {
-        clear: both;
-        content: ".";
-        display: block;
-        font-size: 0;
-        height: 0;
-        line-height: 0;
-        visibility: hidden;
+    clear: both;
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    line-height: 0;
+    visibility: hidden;
     }
     ._dock .rNubContainer {
-        float: right;
+    float: right;
     }
 
 
     .nubContainer>div, ._dock {
-        float: right;
-        position: relative;
+    float: right;
+    position: relative;
     }
     .rNubContainer ._50-v {
-        margin-left: 12px;
+    margin-left: 12px;
     }
 
     ._4mq3.wpNub, ._4mq3.wpNub.openToggler {
-        margin-left: 12px;
-        margin-right: 1px;
+    margin-left: 12px;
+    margin-right: 1px;
     }
     ._50-v, .wpNubGroup, .wpDock .nubContainer>div, .wpDock .wpNubGroup>div {
-        float: left;
-        position: relative;
+    float: left;
+    position: relative;
     }
     ._4mq3 {
-        height: 25px;
-        min-width: 201px;
-        width: 276px;
+    height: 25px;
+    min-width: 201px;
+    width: 276px;
     }
     ._4mq3 .wpNubButton {
-        background-color: #f6f7f8;
-        border: 1px solid rgba(29, 49, 91, .3);
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        box-shadow: none;
-        padding-left: 12px;
-        padding-right: 12px;
+    background-color: #f6f7f8;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: none;
+    padding-left: 12px;
+    padding-right: 12px;
     }
     ._4mq3 .wpNubButton-max {
-        background-color: #f6f7f8;
-        border: 1px solid rgba(29, 49, 91, .3);
-        border-top-left-radius: 3px;
-        border-top-right-radius: 3px;
-        box-shadow: none;
-        padding-left: 0;
-        padding-right: 0;
-        padding-top: 2px;
+    background-color: #f6f7f8;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    box-shadow: none;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 2px;
     }
     .wpNubButton, .wpNubButton:hover,.wpNubButton-max, ._50-v.openToggler .wpNubButton, .wpNubFlyout, .wpNubFlyout .flyoutInner, .wpNubFlyoutTitlebar, .wpNubFlyoutHeader, .wpNubFlyoutBody, .wpNubFlyoutFooter {
-        background-clip: padding-box;
+    background-clip: padding-box;
     }
     .wpNubButton {
-        border: 1px solid rgba(29, 49, 91, .3);
-        border-width: 1px 0 0;
-        color: #333;
-        display: block;
-        font-weight: bold;
-        height: 69px;
-        outline: none;
-        padding: 6px 4px 5px;
-        position: relative;
-        z-index: 1;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-width: 1px 0 0;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    height: 69px;
+    outline: none;
+    padding: 6px 4px 5px;
+    position: relative;
+    z-index: 1;
     }
     .wpNubButton-max {
-        border: 1px solid rgba(29, 49, 91, .3);
-        border-width: 1px 0 0;
-        color: #333;
-        display: block;
-        font-weight: bold;
-        min-height: 311px;
-        height: 311px;
-        outline: none;
-        padding: 6px 4px 5px;
-        position: relative;
-        z-index: 1;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-width: 1px 0 0;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    min-height: 311px;
+    height: 311px;
+    outline: none;
+    padding: 6px 4px 5px;
+    position: relative;
+    z-index: 1;
     }
     .wpNubButton-max-main {
-        border: 1px solid rgba(29, 49, 91, .3);
-        border-width: 1px 0 0;
-        color: #333;
-        display: block;
-        font-weight: bold;
-        min-height: 311px;
-        height: 325px;
-        outline: none;
-        padding: 6px 4px 5px;
-        position: relative;
-        z-index: 1;
+    border: 1px solid rgba(29, 49, 91, .3);
+    border-width: 1px 0 0;
+    color: #333;
+    display: block;
+    font-weight: bold;
+    min-height: 311px;
+    height: 325px;
+    outline: none;
+    padding: 6px 4px 5px;
+    position: relative;
+    z-index: 1;
     }
     .wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
-        content: '';
-        height: 28px;
-        position: absolute;
-        top: -1px;
-        width: 4px;
+    content: '';
+    height: 28px;
+    position: absolute;
+    top: -1px;
+    width: 4px;
     }
     ._4mq3 .wpNubButton:before, ._4mq3 .wpNubButton:after,._4mq3 .wpNubButton-max:before, ._4mq3 .wpNubButton-max:after, {
-        background-image: none;
+    background-image: none;
     }
     .wpNubButton:after,.wpNubButton-max:after {
-        background-repeat: no-repeat;
-        background-size: auto;
-        background-position: -15px -40px;
-        right: -4px;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: -15px -40px;
+    right: -4px;
     }
     .wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
-        content: '';
-        height: 28px;
-        position: absolute;
-        top: -1px;
-        width: 4px;
+    content: '';
+    height: 28px;
+    position: absolute;
+    top: -1px;
+    width: 4px;
     }
     ._4mq3 .wpNubButton .label {
-        color: black;
-        font-size: 14px;
-        line-height: 16px;
-        margin-right: 4px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    color: black;
+    font-size: 14px;
+    line-height: 16px;
+    margin-right: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     }
     ._4mq3 .wpNubButton-max .label {
-        color: black;
-        font-size: 14px;
-        line-height: 16px;
-        margin-right: 4px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    color: black;
+    font-size: 14px;
+    line-height: 16px;
+    margin-right: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     }
     .lb-m{
-       padding-left: 20px;
-       line-height: 35px !important;
+    padding-left: 20px;
+    line-height: 35px !important;
     }
 
 
 
     #inner-chat-wrapper{
-        height: 100%;
-        background-color: #f6f7f8;;
-        border-top: 1px solid rgba(29, 49, 91, .3); 
-        padding: 5px 10px;
-        max-height: 285px;
-        overflow-y: scroll;
+    height: 100%;
+    background-color: #f6f7f8;;
+    border-top: 1px solid rgba(29, 49, 91, .3); 
+    padding: 5px 10px;
+    max-height: 285px;
+    overflow-y: scroll;
     }
 
     .inner-wrapper-child{
-        width: 100%
-        height: 100%;
-        background-color: #f6f7f8;;
-        border-top: 1px solid rgba(29, 49, 91, .3); 
-        padding: 5px 10px;
-        max-height: 257px;
-        overflow-y: scroll;
+    width: 100%
+    height: 100%;
+    background-color: #f6f7f8;;
+    border-top: 1px solid rgba(29, 49, 91, .3); 
+    padding: 5px 10px;
+    max-height: 257px;
+    overflow-y: scroll;
     }
 
     .conv-wrapper {
-        height: 40px;
-        margin-bottom: 2px;
+    height: 40px;
+    margin-bottom: 2px;
     }
     .conv-wrapper img {
-        width: 39px;
+    width: 39px;
     }
     .sp_BNtOXyg0vlE {
-        background-size: auto;
-        background-repeat: no-repeat;
-        display: inline-block;
-        height: 12px;
-        width: 16px;
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 12px;
+    width: 16px;
     }
     ._4mq3 .wpNubButton ._4xia {
-        float: left;
-        height: 12px;
-        margin: 2px 4px 0 0;
-        width: 12px;
+    float: left;
+    height: 12px;
+    margin: 2px 4px 0 0;
+    width: 12px;
     }
     .sp_BNtOXyg0vlE.sx_78fc23 {
-        width: 12px;
-        background-position: -75px -471px;
+    width: 12px;
+    background-position: -75px -471px;
     }
     .conv-c{
-        float: right;
-        margin-top: 5px;
-        font-size: 19px;
-        color: #337AB7 !important;
+    float: right;
+    margin-top: 5px;
+    font-size: 19px;
+    color: #337AB7 !important;
     }
     .have-msg{
-        float: right;
-        color: #337AB7 !important;
+    float: right;
+    color: #337AB7 !important;
     }
     .ChatClose{
-        margin-right: 8px;
+    margin-right: 8px;
     }
     .ChatTextArea{
-        background: white;
-        border-top: 1px solid #C7C7C7;
+    background: white;
+    border-top: 1px solid #C7C7C7;
     }
     #cta1{
-        height: 52px;
+    height: 52px;
     }
     #cta2{
-        height: 52px;
+    height: 52px;
     }
     .tooltip {
-        position: fixed;
+    position: fixed;
     }
 
 
 
 
     ._mb {
-        position: relative;
-        display: inline-block;
-        margin: .5em .75em;
-        padding: 6px 15px 6px 15px;
-        border-radius: 1.5em;
-        text-shadow: 0 1px 1px white;
-        background-color: #fff;
-        border: 1px solid #CDCDCA;
-        box-shadow: 0 1px 1px 0 #CDCDCA;
-        overflow: hidden;
+    position: relative;
+    display: inline-block;
+    margin: .5em .75em;
+    padding: 6px 15px 6px 15px;
+    border-radius: 1.5em;
+    text-shadow: 0 1px 1px white;
+    background-color: #fff;
+    border: 1px solid #CDCDCA;
+    box-shadow: 0 1px 1px 0 #CDCDCA;
+    overflow: hidden;
 
     }
 
     ._msnd{
-        text-align: right;   
-        width: 100%;
+    text-align: right;   
+    width: 100%;
     }
     ._mrcv{
-        text-align: left;
-        width: 100%;
+    text-align: left;
+    width: 100%;
     }
     ._mtxt{
-        color: #373e4d;
-        text-shadow: rgba(255, 255, 255, .5) 0 1px 0;
-        line-height: 1.28;
-        font-size: 12px;
-        word-break: break-word;
+    color: #373e4d;
+    text-shadow: rgba(255, 255, 255, .5) 0 1px 0;
+    line-height: 1.28;
+    font-size: 12px;
+    word-break: break-word;
     }
     ._sndb {
-        background-color: #e0edff !important;
-        border: 1px solid #bcc7d6 !important;
-        border-top-right-radius: 0;
+    background-color: #e0edff !important;
+    border: 1px solid #bcc7d6 !important;
+    border-top-right-radius: 0;
     }
     ._rcvb {
-        border-top-left-radius: 0;
+    border-top-left-radius: 0;
     }
     ._msgss{
-        /*MESSAGES SEND*/
-        float: right;
-        width: 100%;
+    /*MESSAGES SEND*/
+    float: right;
+    width: 100%;
     }
     ._mavs{
-        float: right;
-        width: 15%;
+    float: right;
+    width: 15%;
     }
     ._mtwps{
-        float: right;
-        width: 85%;
+    float: right;
+    width: 85%;
     }
     ._msgsr{
-        /*MESSAGES RECVED*/
-        float: left;
-        width: 100%;
+    /*MESSAGES RECVED*/
+    float: left;
+    width: 100%;
     }
     ._mavr{
-        float: left;
-        width: 15%;
+    float: left;
+    width: 15%;
     }
     ._mtwpr{
-        float: left;
-        width: 85%;
+    float: left;
+    width: 85%;
     }
     ._mtime{
-        color: #9197a3;
-        display: inline-block;
-        font-size: 10px;
-        font-weight: bold;
-        padding: 0 5px;
+    color: #9197a3;
+    display: inline-block;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 0 5px;
     }
 
     .sp_P9ChxUVwaFx {
-        background-image: url("/assets/images/icons/on.png");
-        background-size: auto;
-        background-repeat: no-repeat;
-        display: inline-block;
-        height: 12px;
-        width: 12px;
+    background-image: url("/assets/images/icons/on.png");
+    background-size: auto;
+    background-repeat: no-repeat;
+    display: inline-block;
+    height: 12px;
+    width: 12px;
     }
     .sp_P9ChxUVwaFx.sx_74fd99 {
-        background-position: -300px -5px;
+    background-position: -300px -5px;
     }
     ._cbnm{
-        float: left;
-        padding-left: 10px;
+    float: left;
+    padding-left: 10px;
     }
-</style>
+    </style>
 
-@if(Auth::check())
- <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
-@endif
-
-@if(Auth::check())
-<div class="chat_dock">
+    @if(Auth::check())
+    <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
+    @endif
+    
+    @if(Auth::check())
+    <div id="msgs_tmp"></div>
+    <div class="chat_dock">
     <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
-        <div class="_dock m_clearfix">
-            <div class="m_clearfix nubContainer rNubContainer">
-                <div id="BuddylistPagelet">
-                    <div class="_56ox ">
-                        <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                            <div class="wpNubButton">
-                                <span class="label nb-lb pointer">Chat</span>
-                                <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i>&nbsp<i class="fa fa-exclamation"></i></span>
-                            </div>
-                        </div>
-                    </div>
+    <div class="_dock m_clearfix">
+    <div class="m_clearfix nubContainer rNubContainer">
+    <div id="BuddylistPagelet">
+        <div class="_56ox ">
+            <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                <div class="wpNubButton">
+                    <span class="label nb-lb pointer">Chat</span>
+                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i>&nbsp<i class="fa fa-exclamation"></i></span>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
 
     <div class="dock_wrapper dock-max dockWrapperRight hide" type="1">
-        <div class="_dock m_clearfix">
-            <div class="m_clearfix nubContainer rNubContainer">
-                <div id="BuddylistPagelet">
-                    <div class="_56ox ">
-                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                            <div class="wpNubButton-max wpNubButton-max-main">
-                                <span class="label nb-lb lb-m pointer ">Chat</span>
-                                <div id="inner-chat-wrapper">
-                                    {!!$friends_list!!}
-                                </div>
-                            </div>
-                        </div>
+    <div class="_dock m_clearfix">
+    <div class="m_clearfix nubContainer rNubContainer">
+    <div id="BuddylistPagelet">
+        <div class="_56ox ">
+            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                <div class="wpNubButton-max wpNubButton-max-main">
+                    <span class="label nb-lb lb-m pointer ">Chat</span>
+                    <div id="inner-chat-wrapper">
+                        {!!$friends_list!!}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
+    </div>
+    </div>
 
-</div>
-<div class="chat_dockChilds">
+    </div>
+    <div class="chat_dockChilds">
     <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" dock-no="1" type="1" uid="">
-        <div class="_dock m_clearfix">
-            <div class="m_clearfix nubContainer rNubContainer">
-                <div id="BuddylistPagelet">
-                    <div class="_56ox ">
-                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                            <div class="wpNubButton-max">
-                                <span class="label nb-lb lb-m pointer ">
-                                    <span class="_cbnm _cbnm1"></span> 
-                                    <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
-                                </span>
-                                <div class="inner-wrapper-child _ctb1" id="ctb1">
+    <div class="_dock m_clearfix">
+    <div class="m_clearfix nubContainer rNubContainer">
+    <div id="BuddylistPagelet">
+        <div class="_56ox ">
+            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                <div class="wpNubButton-max">
+                    <span class="label nb-lb lb-m pointer ">
+                        <span class="_cbnm _cbnm1"></span> 
+                        <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
+                    </span>
+                    <div class="inner-wrapper-child _ctb1" id="ctb1">
 
-                                    <div class="_msnd _msgss"> 
-                                        <div class="_mavs">
-                                            <img src="/assets/images/profile-images/perm/blank_male.png" width="35px">
-                                        </div>  
-                                        <div class="_mtwps">
-                                            <div class="_mb _sndb">
-                                             <span class="_mtxt tstbox">
-                                                <span class="_plin">
-                                                    :smile:
-                                                    Default
-                                                </span>
-                                                <div class="_mtime" style="width: 100%">
-                                                    <small>1 hour ago</small>
-                                                </div>
-                                             </span>
-                                            </div>  
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="inputBar">
-                                    <textarea class="ChatTextArea" id="cta1"></textarea>
-                                </div>
-                            </div>
-                        </div>
+
+                    </div>
+                    <div class="inputBar">
+                        <textarea class="ChatTextArea" id="cta1"></textarea>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    </div>
     </div>
     <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide" dock-no="2" type="1" uid="">
-        <div class="_dock m_clearfix">
-            <div class="m_clearfix nubContainer rNubContainer">
-                <div id="BuddylistPagelet">
-                    <div class="_56ox ">
-                        <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                            <div class="wpNubButton-max">
-                                <span class="label nb-lb lb-m pointer ">
-                                    <span class="_cbnm _cbnm2"></span> 
-                                    <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
-                                </span>
-                                <div class="_ctb2 inner-wrapper-child" id="ctb1">
+    <div class="_dock m_clearfix">
+    <div class="m_clearfix nubContainer rNubContainer">
+    <div id="BuddylistPagelet">
+        <div class="_56ox ">
+            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                <div class="wpNubButton-max">
+                    <span class="label nb-lb lb-m pointer ">
+                        <span class="_cbnm _cbnm2"></span> 
+                        <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
+                    </span>
+                    <div class="_ctb2 inner-wrapper-child" id="ctb1">
 
-                                </div>
-                                <div class="inputBar">
-                                    <textarea class="ChatTextArea" id="cta2"></textarea>
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="inputBar">
+                        <textarea class="ChatTextArea" id="cta2"></textarea>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-@endif
+    </div>
+    </div>
+    </div>
+    </div>
+    @endif
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     @if(Auth::check())
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
-            // //var socket = io('http://localhost:3000');
-            // window.socket = io('http://192.168.10.10:3000');
-            // socket.emit("_init", { data: "{!!Auth::id()!!}" });
-            // // var socket = io.connect('http://192.168.10.10:3000');
-            // // socket.on('_forward', function(data) {
-            // //     alert(data['msg']);
-            // // });
-            // // socket.on('on_not', function(data) {
-            // //     $('.on-sign-'+data['data']).removeClass('hide');
-            // // });
-            // // $('#sendm').click(function(){
-            // //     socket.emit("trans", { 
-            // //         recip: 2,
-            // //         msg: "hello man!"
-            // //          });
-            // // });
+            //var socket = io('http://localhost:3000');
+            window.socket = io('http://192.168.10.10:3000');
+            socket.emit("_init", { data: "{!!Auth::id()!!}" });
+            // var socket = io.connect('http://192.168.10.10:3000');
+            // socket.on('_forward', function(data) {
+            //     alert(data['msg']);
+            // });
+            // socket.on('on_not', function(data) {
+            //     $('.on-sign-'+data['data']).removeClass('hide');
+            // });
+            // $('#sendm').click(function(){
+            //     socket.emit("trans", { 
+            //         recip: 2,
+            //         msg: "hello man!"
+            //          });
+            // });
         </script>
+        <script src="/assets/js/chat.js"></script>
     @endif
 
 
@@ -816,15 +811,15 @@
     {!! View::make('partials.success_modal') !!}
     {!! View::make('partials.warning_modal') !!}      
     @if(Auth::check())
-        {!! View::make('partials.qkpost_modal')
-        ->with('cats',$cats)
-        ->with('cities',$cities)
-        ->__toString()!!}   
-        {!! View::make('partials.wishlist_modal')
-        ->with('wishlist',$wishlist)
-        ->__toString() !!}
+    {!! View::make('partials.qkpost_modal')
+    ->with('cats',$cats)
+    ->with('cities',$cities)
+    ->__toString()!!}   
+    {!! View::make('partials.wishlist_modal')
+    ->with('wishlist',$wishlist)
+    ->__toString() !!}
     @endif
-  
+
     <!-- Load js libs only when the page is loaded. -->
 
     <script src="/packages/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
@@ -833,10 +828,9 @@
     <!-- <script src="/assets/js/jquery.scrollUp.min.js"></script> -->
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
     <script src="/assets/js/main.js"></script>
-    <script src="/assets/js/chat.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
-    
+
     <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
     <!-- LOCATION PICKER -->
     <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
@@ -854,6 +848,6 @@
     <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
 
 
-    
-</body>
-</html>
+
+    </body>
+    </html>

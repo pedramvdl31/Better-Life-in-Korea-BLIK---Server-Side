@@ -13,9 +13,6 @@ mainf = {
 
 	});
 
-
-
-
 	  //$('#somecomponent').locationpicker(
 			// {
 			//     location: {latitude: 37.5551069, longitude: 126.97069110000007},
@@ -50,7 +47,7 @@ mainf = {
 		  	}
 		});
 		$("#nav").on('affix.bs.affix', function(){
-	    	$('.main-container').css('margin-top','50px');
+	    	$('.main-container').css('margin-top','80px');
 	    });
 
 	    $("#nav").on('affix-top.bs.affix', function(){
@@ -220,6 +217,7 @@ mainf = {
         $(document).on('click','.view-ad',function(){
 			var this_id = $(this).attr('data');
 			$('#atwl-btn').attr('data',this_id);
+			$('.fbc').html('');
 			findAndViewAd(this_id);
         });
         $(document).on('click','.qkpost',function(){
@@ -319,6 +317,7 @@ mainf = {
 		$("#city-select-home").change(function(){
 			var t_v = $("#city-select-home option:selected").val();
 			if (t_v != '') {
+				$('#post-list').addClass('hide');
 				requestm.refresh_ads_city(t_v);
 			}
 		});
@@ -379,6 +378,8 @@ requestm = {
 	refresh_ads: function(cat_id,subcat_id,_this) {
 		$loading_in = create_loading_input();
 		$('.post-loading').html($loading_in);
+		$('.post-loading').removeClass('hide');
+		$('#footer').css('margin-top','150px');
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/search-02',
@@ -388,13 +389,14 @@ requestm = {
 				"subcat_id": subcat_id
 			},
 			function(result){
-				$('#search-gif').addClass('hide');
+				$('.post-loading').addClass('hide');
+				$('.post-loading').html('');
+				$('#footer').css('margin-top','0');
 				var status = result.status;
 				var ads = result.ads;
 				var render = result.render;
 				switch(status){					
 		 			case 200:
-		 				$('.post-loading').html('');
 		 				$('#ads-wrapper').html(ads['html']);
 		 				$('#pagi').html('');
 		 				$('#post-list').removeClass('hide');
@@ -408,7 +410,10 @@ requestm = {
 			);
 	},
 	refresh_ads_city: function(city_id) {
-		$('#img-city').removeClass('hide');
+		$loading_in = create_loading_input();
+		$('.post-loading').html($loading_in);
+		$('.post-loading').removeClass('hide');
+		$('#footer').css('margin-top','150px');
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/search-03',
@@ -417,7 +422,9 @@ requestm = {
 				"city_id":city_id
 			},
 			function(result){
-				$('#img-city').addClass('hide');
+				$('.post-loading').addClass('hide');
+				$('.post-loading').html('');
+				$('#footer').css('margin-top','0');
 				var status = result.status;
 				var ads = result.ads;
 				var render = result.render;
@@ -425,6 +432,7 @@ requestm = {
 		 			case 200:
 		 				$('#ads-wrapper').html(ads['html']);
 		 				$('#pagi').html('');
+		 				$('#post-list').removeClass('hide');
 		 			break;
 
 		 			case 400:
@@ -533,18 +541,28 @@ requestm = {
 						  sortable: 0,
 						  padding: 1
 						});
-						$('#us2-view').locationpicker({
-					    location: {latitude: lat_long['lat'], longitude: lat_long['long']},   
-					    radius: 0,
-					    inputBinding: {
-					        latitudeInput: $('#us2-lat-view'),
-					        longitudeInput: $('#us2-lon-view'),
-					        locationNameInput: $('#us2-address-view')
-					    }
-					    });
-					    lastCenter=_map.getCenter(); 
-						google.maps.event.trigger(_map, "resize");
-						_map.setCenter(lastCenter);
+						if (lat_long['lat']!=0 && lat_long['long']!=0) {
+			    			$('#us2-view').locationpicker({
+						    location: {latitude: lat_long['lat'], longitude: lat_long['long']},   
+						    radius: 0,
+						    inputBinding: {
+						        latitudeInput: $('#us2-lat-view'),
+						        longitudeInput: $('#us2-lon-view'),
+						        locationNameInput: $('#us2-address-view')
+						    }
+						    });
+						    lastCenter=_map.getCenter(); 
+							google.maps.event.trigger(_map, "resize");
+							_map.setCenter(lastCenter);	
+		            	}
+
+
+						var c_div = '<div class="fb-comments modalfc" '+
+									'data-href="http://kora.app/comments/'+data_id+'"'+
+									'data-width="100%" data-numposts="5"></div>';
+
+						$('.fbc').html(c_div);
+						FB.XFBML.parse();
 		 			break;
 
 		 			case 400:

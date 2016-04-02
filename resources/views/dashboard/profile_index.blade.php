@@ -29,6 +29,12 @@
 	  </dd>
 	  <dt>Email</dt>
 	  <dd>{!!$user->email!!}</dd>
+	  <dt>Short Description</dt>
+	  @if(isset($user->description))
+	  	<dd>{!!$user->description!!}</dd>
+	  @else
+	  	<dd>-</dd>
+	  @endif	  
 	  <dt>Firstname</dt>
 	  @if(isset($user->first_name))
 	  	<dd>{!!$user->first_name!!}</dd>

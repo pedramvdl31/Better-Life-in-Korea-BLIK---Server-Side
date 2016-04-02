@@ -1,6 +1,6 @@
 @extends($layout)
 @section('stylesheets')
-      {!! Html::style('/assets/css/home/homepage.css') !!}
+    {!! Html::style('/assets/css/home/homepage.css') !!}
 @stop
 @section('scripts')
 @stop
