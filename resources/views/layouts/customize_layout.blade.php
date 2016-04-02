@@ -683,10 +683,10 @@
     @if(Auth::check())
     <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
     @endif
-    
+
     @if(Auth::check())
     <div id="msgs_tmp"></div>
-    <div class="chat_dock">
+    <div class="chat_dock hide">
     <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
     <div class="_dock m_clearfix">
     <div class="m_clearfix nubContainer rNubContainer">
@@ -782,22 +782,22 @@
     @if(Auth::check())
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
-            //var socket = io('http://localhost:3000');
-            window.socket = io('http://192.168.10.10:3000');
-            socket.emit("_init", { data: "{!!Auth::id()!!}" });
-            // var socket = io.connect('http://192.168.10.10:3000');
-            // socket.on('_forward', function(data) {
-            //     alert(data['msg']);
-            // });
-            // socket.on('on_not', function(data) {
-            //     $('.on-sign-'+data['data']).removeClass('hide');
-            // });
-            // $('#sendm').click(function(){
-            //     socket.emit("trans", { 
-            //         recip: 2,
-            //         msg: "hello man!"
-            //          });
-            // });
+            // //var socket = io('http://localhost:3000');
+            // window.socket = io('http://192.168.10.10:3000');
+            // socket.emit("_init", { data: "{!!Auth::id()!!}" });
+            // // var socket = io.connect('http://192.168.10.10:3000');
+            // // socket.on('_forward', function(data) {
+            // //     alert(data['msg']);
+            // // });
+            // // socket.on('on_not', function(data) {
+            // //     $('.on-sign-'+data['data']).removeClass('hide');
+            // // });
+            // // $('#sendm').click(function(){
+            // //     socket.emit("trans", { 
+            // //         recip: 2,
+            // //         msg: "hello man!"
+            // //          });
+            // // });
         </script>
         <script src="/assets/js/chat.js"></script>
     @endif
@@ -840,14 +840,20 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    <script src="//platform.twitter.com/widgets.js"></script>
     <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
     <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
     <script src="/packages/embed/src/embed.js"></script>
     <script src="/packages/dropzone/dropzone.js"></script>
     <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
 
-
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1728054614082756";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
 
     </body>
     </html>
