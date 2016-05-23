@@ -4,6 +4,9 @@ $(document).ready(function(){
 });
 mainf = {
 	pageLoad: function() {
+
+
+
 		// getContent();
 		if ( (location.hash == "#_=_" || location.href.slice(-1) == "#_=_") ) {
 		    removeHash();

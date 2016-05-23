@@ -112,7 +112,7 @@
         <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
         <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
         @endif
-        <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
+        <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbsp글</button></li>
     </ul>
     </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -310,13 +310,11 @@
     </div>
     </div>
     </div>
-    <div class="footer-bottom">
-    <div class="container">
-    <div class="row">
-        <p class="pull-left">Copyright © 2016 Kora.</p>
-        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
-    </div>
-    </div>
+    <div class="footer-bottom clearfix">
+        <div class="col-md-12">
+            <p class="pull-left">Copyright © 2016 Kora.</p>
+            <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
+        </div>
     </div>
 
     </footer><!--/Footer-->
@@ -681,12 +679,13 @@
     </style>
 
     @if(Auth::check())
+    <input type="hidden" id="crnt_dt" value="{!!$cdt!!}"></input>
     <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
     @endif
 
     @if(Auth::check())
     <div id="msgs_tmp"></div>
-    <div class="chat_dock hide">
+    <div class="chat_dock">
     <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
     <div class="_dock m_clearfix">
     <div class="m_clearfix nubContainer rNubContainer">
@@ -695,7 +694,7 @@
             <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                 <div class="wpNubButton">
                     <span class="label nb-lb pointer">Chat</span>
-                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i>&nbsp<i class="fa fa-exclamation"></i></span>
+                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i></span>
                 </div>
             </div>
         </div>
@@ -782,22 +781,22 @@
     @if(Auth::check())
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
-            // //var socket = io('http://localhost:3000');
-            // window.socket = io('http://192.168.10.10:3000');
-            // socket.emit("_init", { data: "{!!Auth::id()!!}" });
-            // // var socket = io.connect('http://192.168.10.10:3000');
-            // // socket.on('_forward', function(data) {
-            // //     alert(data['msg']);
-            // // });
-            // // socket.on('on_not', function(data) {
-            // //     $('.on-sign-'+data['data']).removeClass('hide');
-            // // });
-            // // $('#sendm').click(function(){
-            // //     socket.emit("trans", { 
-            // //         recip: 2,
-            // //         msg: "hello man!"
-            // //          });
-            // // });
+            //var socket = io('http://localhost:3000');
+            window.socket = io('http://192.168.10.10:3000');
+            socket.emit("_init", { data: "{!!Auth::id()!!}" });
+            // var socket = io.connect('http://192.168.10.10:3000');
+            // socket.on('_forward', function(data) {
+            //     alert(data['msg']);
+            // });
+            // socket.on('on_not', function(data) {
+            //     $('.on-sign-'+data['data']).removeClass('hide');
+            // });
+            // $('#sendm').click(function(){
+            //     socket.emit("trans", { 
+            //         recip: 2,
+            //         msg: "hello man!"
+            //          });
+            // });
         </script>
         <script src="/assets/js/chat.js"></script>
     @endif
@@ -827,10 +826,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <!-- <script src="/assets/js/jquery.scrollUp.min.js"></script> -->
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
-    <script src="/assets/js/main.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
-
     <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
     <!-- LOCATION PICKER -->
     <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
@@ -844,6 +841,7 @@
     <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
     <script src="/packages/embed/src/embed.js"></script>
     <script src="/packages/dropzone/dropzone.js"></script>
+    <script src="/packages/moment/moment.js"></script>
     <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
 
     <div id="fb-root"></div>

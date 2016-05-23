@@ -5,6 +5,7 @@ $(document).ready(function(){
 });
 chat = {
 	pageLoad: function() {
+		rqst_server_time();
 		$('#inner-chat-wrapper').slimScroll({
         	height: '285px'
     	});
@@ -121,25 +122,25 @@ chat = {
 
 	},	
 	socket_io: function() {
-       //  socket.on('_forward', function(data) {
-       //  	var cu = $('#ufh').val();
-       //  	push_msgs_to_array(cu,data['aid'],data['msg']);
-       //  	if (!$('.main-list-dock').hasClass('hide')) {
-       //  		$('.main-list-dock').find('.have-msg').removeClass('hide');
-       //  	}
-       //  	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
-	    		// var randtxt = randomString();
-	      //  		var input_bubble = make_bubble_rc(data['msg'],randtxt);
-	      //  		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
-	      //  		$('._ctb'+dock_no).append(input_bubble);
-	      //  		document.getElementById('ctb'+dock_no).scrollTop = 10000;
-       //  	} else {
-       //  		if ($('.conv-wrapper[tf="'+data['aid']+'"]').length == 1) {
-       //  			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
-       //  		}
-       //  	}
+        socket.on('_forward', function(data) {
+        	var cu = $('#ufh').val();
+        	pmtoa(cu,data['aid'],data['msg']);
+        	if (!$('.main-list-dock').hasClass('hide')) {
+        		$('.main-list-dock').find('.have-msg').removeClass('hide');
+        	}
+        	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
+	    		var randtxt = randomString();
+	       		var input_bubble = make_bubble_rc(data['msg'],randtxt);
+	       		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
+	       		$('._ctb'+dock_no).append(input_bubble);
+	       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
+        	} else {
+        		if ($('.conv-wrapper[tf="'+data['aid']+'"]').length == 1) {
+        			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
+        		}
+        	}
 
-       //  });
+        });
 	},
 	events: function() {
 		$('#cta1, #cta2').bind('input propertychange', function() {
@@ -179,13 +180,14 @@ chat = {
 		    	if (!$.isBlank(tinput)) {
 		    		$(this).val('');
 		    		var randtxt = randomString();
-		       		var input_bubble = make_bubble(tinput,randtxt);
+		       		var input_bubble = make_bubble_lst(tinput,randtxt);
 		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
 		       		$('._ctb'+dock_no).append(input_bubble);
 		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
 		       		var fid = $(this).parents('.dockChild').attr('uid');
 		       		request_c.snddata(tinput,fid,randtxt);
-
+		       		var cu = $('#ufh').val();
+		       		pmtoa_sndr(cu,fid,tinput);
         		}
 		    }
 		});
@@ -246,17 +248,15 @@ request_c = {
 			},
 			function(result){
 				var status = result.status;
-				var wl_html = result.wl_html;
-				var aid = result.aid;
+				$(".bbl[this-id='"+randtxt+"']").attr('tdt',result.tcat);
 				switch(status){					
 		 			case 200:
 		 				$('.plane-'+randtxt).css('color','#5cb85c');
 		                socket.emit("trans", { 
 	                    	recip: fi,
 	                    	msg: tdata,
-	                    	aid:aid
+	                    	aid:result.aid
 	                     });            
-
 		 			break;
 		 			case 400:
 		 			break;
@@ -316,7 +316,7 @@ function prepare_html(_ar,tu,tf) {
 	$.each(_ar, function(index,value) {
 		var sdr = value['user_id'];
 		if (tu == sdr) {
-			html += '<div class="_msnd _msgss">'+
+			html += '<div class="_msnd _msgss bbl">'+
 						'<div class="_mavs">'+
 							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 						'</div>'+
@@ -328,14 +328,14 @@ function prepare_html(_ar,tu,tf) {
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
-									'<small>'+value['ago']+'</small>'+
+									'<small><span class="_tago">'+value['ago']+'</span></small>'+
 								'</div>'+
 								'</span>'+
 							'</div>'+
 						'</div>'+
 					'</div>';
 		} else {
-			html += '<div class="_mrcv _msgsr">'+
+			html += '<div class="_mrcv _msgsr bbl">'+
 						'<div class="_mavr">'+
 							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 						'</div>'+
@@ -347,7 +347,7 @@ function prepare_html(_ar,tu,tf) {
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
-									'<small>'+value['ago']+'</small>'+
+									'<small><span class="_tago">'+value['ago']+'</span></small>'+
 								'</div>'+
 								'</span>'+
 							'</div>'+
@@ -362,8 +362,14 @@ function prepare_html_tmp(_ar,tu,tf) {
 	// console.log(_ar);
 	$.each(_ar, function(index,value) {
 		var sdr = $(this).attr('user_id');
+
+
+
+		var frm_now = gago($(this).attr('ago'));
+		// 
+
 		if (tu == sdr) {
-			html += '<div class="_msnd _msgss">'+
+			html += '<div class="_msnd _msgss bbl">'+
 						'<div class="_mavs">'+
 							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 						'</div>'+
@@ -375,14 +381,14 @@ function prepare_html_tmp(_ar,tu,tf) {
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
-									'<small>'+$(this).attr('ago')+'</small>'+
+									'<small><span class="_tago">'+frm_now+'</span></small>'+
 								'</div>'+
 								'</span>'+
 							'</div>'+
 						'</div>'+
 					'</div>';
 		} else {
-			html += '<div class="_mrcv _msgsr">'+
+			html += '<div class="_mrcv _msgsr bbl">'+
 						'<div class="_mavr">'+
 							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 						'</div>'+
@@ -394,7 +400,7 @@ function prepare_html_tmp(_ar,tu,tf) {
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
-									'<small>'+$(this).attr('ago')+'</small>'+
+									'<small><span class="_tago">'+frm_now+'</span></small>'+
 								'</div>'+
 								'</span>'+
 							'</div>'+
@@ -406,11 +412,11 @@ function prepare_html_tmp(_ar,tu,tf) {
 }
 
 function inject_tmp(_ar,tu,tf) {
-	$html = '';
+	var html = '';
 	$.each(_ar, function(index,value) {
-		$html += '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+index+']" user_id="'+value['user_id']+'" ago="'+value['ago']+'" message="'+value['message']+'"></input>';
+		html += '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+index+']" user_id="'+value['user_id']+'" ago="'+value['created_at']+'" message="'+value['message']+'"></input>';
 	});
-	$('#msgs_tmp').append($html);
+	$('#msgs_tmp').append(html);
 }
 
 function check_tabs() {
@@ -423,9 +429,9 @@ function check_tabs() {
 	return data;
 }
 
-function make_bubble(tinput,rtxt) {
+function make_bubble_lst(tinput,rtxt) {
 	var escapedtxt = escapeHTML(tinput);
-	html = '<div class="_msnd _msgss" this-id="'+rtxt+'">'+
+	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'" data="last">'+
 				'<div class="_mavs">'+
 					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 				'</div>'+
@@ -437,7 +443,7 @@ function make_bubble(tinput,rtxt) {
 						'</span>'+
 						'<br>'+
 						'<div class="_mtime" style="width: 100%">'+
-							'<small>Now</small>&nbsp'+
+							'<small><span class="_tago">Now</span></small>&nbsp'+
 							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
 						'</div>'+
 						'</span>'+
@@ -446,9 +452,35 @@ function make_bubble(tinput,rtxt) {
 			'</div>';
 	return html;
 }
+
+function make_bubble(tinput,rtxt) {
+	var escapedtxt = escapeHTML(tinput);
+	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'">'+
+				'<div class="_mavs">'+
+					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+				'</div>'+
+				'<div class="_mtwps">'+
+					'<div class="_mb _sndb">'+
+					'<span class="_mtxt embd" >'+
+						'<span class="_plin">'+
+							escapedtxt+
+						'</span>'+
+						'<br>'+
+						'<div class="_mtime" style="width: 100%">'+
+							'<small><span class="_tago">Now</span></small>&nbsp'+
+							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
+						'</div>'+
+						'</span>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}
+
+
 function make_bubble_rc(tinput,rtxt) {
 	var escapedtxt = escapeHTML(tinput);
-	html = '<div class="_mrcv _msgsr" this-id="'+rtxt+'">'+
+	html = '<div class="_mrcv _msgsr bbl" this-id="'+rtxt+'">'+
 				'<div class="_mavr">'+
 					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 				'</div>'+
@@ -460,7 +492,7 @@ function make_bubble_rc(tinput,rtxt) {
 						'</span>'+
 						'<br>'+
 						'<div class="_mtime" style="width: 100%">'+
-							'<small>Now</small>&nbsp'+
+							'<small><span class="_tago">Now</span></small>&nbsp'+
 						'</div>'+
 						'</span>'+
 					'</div>'+
@@ -468,6 +500,15 @@ function make_bubble_rc(tinput,rtxt) {
 			'</div>';
 	return html;
 }
+
+function gago(ttgo){
+	var s_t = $('#crnt_dt').val();
+	var ago_f = moment(ttgo, "YYYY-MM-DD hh:mm:ss");
+	var server_f = moment(s_t, "YYYY-MM-DD hh:mm:ss");
+	var duration = moment.utc(server_f.diff(ago_f)).format("HH:mm:ss");
+	return moment.duration(duration, "days").humanize();
+}
+
 function randomString() {
     var result = '';
     var length = 4;
@@ -477,12 +518,41 @@ function randomString() {
     return dt+result;
 }
 function escapeHTML(txt) {
+
     return txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-function push_msgs_to_array(cu,fi,msg){
-	console.log(cu);
-	console.log(fi);
-	console.log(msg);
-	var _ar = $(window["cdata_"+cu+"_"+fu]);
+function pmtoa(tu,tf,msg){
+	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
+	var nc = count + 1;
+	var c_time = $('#crnt_dt').val();
+	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tf+'" ago="'+c_time+'" message="'+msg+'"></input>';
+	$('#msgs_tmp').append(html);
 }
+
+function pmtoa_sndr(tu,tf,msg){
+	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
+	var nc = count + 1;
+	var c_time = $('#crnt_dt').val();
+	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tu+'" ago="'+c_time+'" message="'+msg+'"></input>';
+	$('#msgs_tmp').append(html);
+}
+
+function rqst_server_time(){
+	setInterval(function(){ 
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/rqst-s-time',
+			{
+				"_token": token
+			},
+			function(result){
+				var s_time = result.rst;
+				if (!$.isBlank(s_time)) {
+					$('#crnt_dt').val(s_time);
+				}
+			}
+			);
+	}, 180000);
+}
+
