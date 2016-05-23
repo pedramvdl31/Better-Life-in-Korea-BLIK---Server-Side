@@ -88,12 +88,14 @@ class HomeController extends Controller
         $cities = Job::korean_cities_search();
         $all_categories = Ad::PrepareCategoriesHtml();
         $layout_title = 'layouts.customize_layout';
+
             return view('home.homepage')
             ->with('cats',isset($cats)?$cats:null)
             ->with('wishlist',isset($wishlist)?$wishlist:null)
             ->with('ads',$ads)
             ->with('all_categories',$all_categories)
             ->with('cities',isset($cities)?$cities:null)
+            ->with('cdt',date('Y-m-d H:i:s'))
             ->with('layout',$layout_title);
     }
 
@@ -118,6 +120,15 @@ class HomeController extends Controller
       $redis = Redis::connection();
       $redis->publish('message', Request::input('message'));
       return redirect('writemessage');
+    }
+
+
+    
+    public function postRtrnSrvrTime()
+    {
+      return Response::json(array(
+          'rst' => date('Y-m-d H:i:s')
+          ));
     }
 
 

@@ -21,7 +21,13 @@
 //     event(new App\Events\EventName());
 //     return "event fired";
 // });
+
+//CHAT ROUTES
 Route::post('/g-m', ['as'=>'g_m','uses'=>'ConversationsController@postRtrnMsgs']);
+Route::post('/rqst-s-time', ['as'=>'r_st','uses'=>'HomeController@postRtrnSrvrTime']);
+Route::post('/data-update', ['as'=>'chat-send','uses'=>'ConversationsController@postSaveChatMessage']);
+//CHAT ROUTES END
+
 
 Route::get('test', function () {
     // this checks for the event
@@ -43,9 +49,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::group(['middleware' => 'only.auth'], function () {
 		//CHAT ROUTES
 		
-		//CHAT ROUTES
-		Route::post('/data-update', ['as'=>'chat-send','uses'=>'ConversationsController@postSaveChatMessage']);
-		//CHAT ROUTES END
+
 
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
 		Route::post('/store-wishlist', ['as'=>'store_wishlist','uses'=>'AdsController@postStoreAd']);

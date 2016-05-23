@@ -23,7 +23,9 @@ io.on('connection', function (socket) {
   });
   socket.on( 'trans', function( data ) {
   	var recip = data['recip'];
+    console.log('to user '+recip);
   	if (recip in users) {
+      console.log('have user');
       var msg = data['msg'];
   		io.to(users[recip]).emit( 
   			'_forward', { 

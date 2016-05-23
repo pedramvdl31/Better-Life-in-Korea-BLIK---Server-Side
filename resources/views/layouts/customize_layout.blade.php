@@ -112,7 +112,7 @@
         <li><a class="login-btn pointer"><i class="fa fa-lock"></i> Login</a></li>
         <li><a class="reg-btn pointer"><i class="fa fa-crosshairs"></i> Register</a></li>
         @endif
-        <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbspQuick Post</button></li>
+        <li class="lg-forms"><button style="margin-top: 8px;" href="" class="btn btn-primary qkpost"><i class="glyphicon glyphicon-plus"></i>&nbsp글</button></li>
     </ul>
     </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -310,494 +310,559 @@
     </div>
     </div>
     </div>
-    <div class="footer-bottom">
-    <div class="container">
-    <div class="row">
-        <p class="pull-left">Copyright © 2016 Kora.</p>
-        <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
-    </div>
-    </div>
+    <div class="footer-bottom clearfix">
+        <div class="col-md-12">
+            <p class="pull-left">Copyright © 2016 Kora.</p>
+            <p class="pull-right">Designed by <span><a target="_blank" href="http://www.Webprinciples.com">Webprinciples</a></span></p>
+        </div>
     </div>
 
     </footer><!--/Footer-->
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 
     <!-- ------------------------------------------- -->
     <!-- ----------------------------------- -->
 
     <style type="text/css">
-    .chrome .dock_wrapper {
-    transform: translateZ(0);
-    }
-    .dockWrapperRight,.dockWrapperRightChilds {
-    left: auto;
-    }
-    .dock-min {
-    bottom: 4px;
-    direction: ltr;
-    height: 28px;
-    left: 0;
-    position: fixed;
-    right: 0;
-    z-index: 300;
-    }
-    .dock-max {
-    bottom: 295px;
-    direction: ltr;
-    height: 28px;
-    left: 0;
-    position: fixed;
-    right: 0;
-    z-index: 300;
-    }
-    .dock-max-1 {
-    bottom: 280px;
-    direction: ltr;
-    height: 28px;
-    left: 0;
-    position: fixed;
-    right: 285px;
-    z-index: 300;
-    }
-    .dock-max-2 {
-    bottom: 280px;
-    direction: ltr;
-    height: 28px;
-    left: 0;
-    position: fixed;
-    right: 570px;
-    z-index: 300;
-    }
+        .chrome .dock_wrapper {
+        transform: translateZ(0);
+        }
+        .dockWrapperRight,.dockWrapperRightChilds {
+        left: auto;
+        }
+        .dock-min {
+        bottom: 4px;
+        direction: ltr;
+        height: 28px;
+        left: 0;
+        position: fixed;
+        right: 0;
+        z-index: 300;
+        }
+        .dock-max {
+        bottom: 295px;
+        direction: ltr;
+        height: 28px;
+        left: 0;
+        position: fixed;
+        right: 0;
+        z-index: 300;
+        }
+        .dock-max-1 {
+        bottom: 280px;
+        direction: ltr;
+        height: 28px;
+        left: 0;
+        position: fixed;
+        right: 285px;
+        z-index: 300;
+        }
+        .dock-max-2 {
+        bottom: 280px;
+        direction: ltr;
+        height: 28px;
+        left: 0;
+        position: fixed;
+        right: 570px;
+        z-index: 300;
+        }
 
-    ._dock {
-    margin: 0 15px 0 0;
-    }
+        ._dock {
+        margin: 0 15px 0 0;
+        }
 
-    .m_clearfix {
-    zoom: 1;
-    }
-    .m_clearfix:after {
-    clear: both;
-    content: ".";
-    display: block;
-    font-size: 0;
-    height: 0;
-    line-height: 0;
-    visibility: hidden;
-    }
-    ._dock .rNubContainer {
-    float: right;
-    }
-
-
-    .nubContainer>div, ._dock {
-    float: right;
-    position: relative;
-    }
-    .rNubContainer ._50-v {
-    margin-left: 12px;
-    }
-
-    ._4mq3.wpNub, ._4mq3.wpNub.openToggler {
-    margin-left: 12px;
-    margin-right: 1px;
-    }
-    ._50-v, .wpNubGroup, .wpDock .nubContainer>div, .wpDock .wpNubGroup>div {
-    float: left;
-    position: relative;
-    }
-    ._4mq3 {
-    height: 25px;
-    min-width: 201px;
-    width: 276px;
-    }
-    ._4mq3 .wpNubButton {
-    background-color: #f6f7f8;
-    border: 1px solid rgba(29, 49, 91, .3);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    box-shadow: none;
-    padding-left: 12px;
-    padding-right: 12px;
-    }
-    ._4mq3 .wpNubButton-max {
-    background-color: #f6f7f8;
-    border: 1px solid rgba(29, 49, 91, .3);
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    box-shadow: none;
-    padding-left: 0;
-    padding-right: 0;
-    padding-top: 2px;
-    }
-    .wpNubButton, .wpNubButton:hover,.wpNubButton-max, ._50-v.openToggler .wpNubButton, .wpNubFlyout, .wpNubFlyout .flyoutInner, .wpNubFlyoutTitlebar, .wpNubFlyoutHeader, .wpNubFlyoutBody, .wpNubFlyoutFooter {
-    background-clip: padding-box;
-    }
-    .wpNubButton {
-    border: 1px solid rgba(29, 49, 91, .3);
-    border-width: 1px 0 0;
-    color: #333;
-    display: block;
-    font-weight: bold;
-    height: 69px;
-    outline: none;
-    padding: 6px 4px 5px;
-    position: relative;
-    z-index: 1;
-    }
-    .wpNubButton-max {
-    border: 1px solid rgba(29, 49, 91, .3);
-    border-width: 1px 0 0;
-    color: #333;
-    display: block;
-    font-weight: bold;
-    min-height: 311px;
-    height: 311px;
-    outline: none;
-    padding: 6px 4px 5px;
-    position: relative;
-    z-index: 1;
-    }
-    .wpNubButton-max-main {
-    border: 1px solid rgba(29, 49, 91, .3);
-    border-width: 1px 0 0;
-    color: #333;
-    display: block;
-    font-weight: bold;
-    min-height: 311px;
-    height: 325px;
-    outline: none;
-    padding: 6px 4px 5px;
-    position: relative;
-    z-index: 1;
-    }
-    .wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
-    content: '';
-    height: 28px;
-    position: absolute;
-    top: -1px;
-    width: 4px;
-    }
-    ._4mq3 .wpNubButton:before, ._4mq3 .wpNubButton:after,._4mq3 .wpNubButton-max:before, ._4mq3 .wpNubButton-max:after, {
-    background-image: none;
-    }
-    .wpNubButton:after,.wpNubButton-max:after {
-    background-repeat: no-repeat;
-    background-size: auto;
-    background-position: -15px -40px;
-    right: -4px;
-    }
-    .wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
-    content: '';
-    height: 28px;
-    position: absolute;
-    top: -1px;
-    width: 4px;
-    }
-    ._4mq3 .wpNubButton .label {
-    color: black;
-    font-size: 14px;
-    line-height: 16px;
-    margin-right: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    }
-    ._4mq3 .wpNubButton-max .label {
-    color: black;
-    font-size: 14px;
-    line-height: 16px;
-    margin-right: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    }
-    .lb-m{
-    padding-left: 20px;
-    line-height: 35px !important;
-    }
+        .m_clearfix {
+        zoom: 1;
+        }
+        .m_clearfix:after {
+        clear: both;
+        content: ".";
+        display: block;
+        font-size: 0;
+        height: 0;
+        line-height: 0;
+        visibility: hidden;
+        }
+        ._dock .rNubContainer {
+        float: right;
+        }
 
 
+        .nubContainer>div, ._dock {
+        float: right;
+        position: relative;
+        }
+        .rNubContainer ._50-v {
+        margin-left: 12px;
+        }
 
-    #inner-chat-wrapper{
-    height: 100%;
-    background-color: #f6f7f8;;
-    border-top: 1px solid rgba(29, 49, 91, .3); 
-    padding: 5px 10px;
-    max-height: 285px;
-    overflow-y: scroll;
-    }
-
-    .inner-wrapper-child{
-    width: 100%
-    height: 100%;
-    background-color: #f6f7f8;;
-    border-top: 1px solid rgba(29, 49, 91, .3); 
-    padding: 5px 10px;
-    max-height: 257px;
-    overflow-y: scroll;
-    }
-
-    .conv-wrapper {
-    height: 40px;
-    margin-bottom: 2px;
-    }
-    .conv-wrapper img {
-    width: 39px;
-    }
-    .sp_BNtOXyg0vlE {
-    background-size: auto;
-    background-repeat: no-repeat;
-    display: inline-block;
-    height: 12px;
-    width: 16px;
-    }
-    ._4mq3 .wpNubButton ._4xia {
-    float: left;
-    height: 12px;
-    margin: 2px 4px 0 0;
-    width: 12px;
-    }
-    .sp_BNtOXyg0vlE.sx_78fc23 {
-    width: 12px;
-    background-position: -75px -471px;
-    }
-    .conv-c{
-    float: right;
-    margin-top: 5px;
-    font-size: 19px;
-    color: #337AB7 !important;
-    }
-    .have-msg{
-    float: right;
-    color: #337AB7 !important;
-    }
-    .ChatClose{
-    margin-right: 8px;
-    }
-    .ChatTextArea{
-    background: white;
-    border-top: 1px solid #C7C7C7;
-    }
-    #cta1{
-    height: 52px;
-    }
-    #cta2{
-    height: 52px;
-    }
-    .tooltip {
-    position: fixed;
-    }
+        ._4mq3.wpNub, ._4mq3.wpNub.openToggler {
+        margin-left: 12px;
+        margin-right: 1px;
+        }
+        ._50-v, .wpNubGroup, .wpDock .nubContainer>div, .wpDock .wpNubGroup>div {
+        float: left;
+        position: relative;
+        }
+        ._4mq3 {
+        height: 25px;
+        min-width: 201px;
+        width: 276px;
+        }
+        ._4mq3 .wpNubButton {
+        background-color: #f6f7f8;
+        border: 1px solid rgba(29, 49, 91, .3);
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        box-shadow: none;
+        padding-left: 12px;
+        padding-right: 12px;
+        }
+        ._4mq3 .wpNubButton-max {
+        background-color: #f6f7f8;
+        border: 1px solid rgba(29, 49, 91, .3);
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        box-shadow: none;
+        padding-left: 0;
+        padding-right: 0;
+        padding-top: 2px;
+        }
+        .wpNubButton, .wpNubButton:hover,.wpNubButton-max, ._50-v.openToggler .wpNubButton, .wpNubFlyout, .wpNubFlyout .flyoutInner, .wpNubFlyoutTitlebar, .wpNubFlyoutHeader, .wpNubFlyoutBody, .wpNubFlyoutFooter {
+        background-clip: padding-box;
+        }
+        .wpNubButton {
+        border: 1px solid rgba(29, 49, 91, .3);
+        border-width: 1px 0 0;
+        color: #333;
+        display: block;
+        font-weight: bold;
+        height: 69px;
+        outline: none;
+        padding: 6px 4px 5px;
+        position: relative;
+        z-index: 1;
+        }
+        .wpNubButton-max {
+        border: 1px solid rgba(29, 49, 91, .3);
+        border-width: 1px 0 0;
+        color: #333;
+        display: block;
+        font-weight: bold;
+        min-height: 311px;
+        height: 311px;
+        outline: none;
+        padding: 6px 4px 5px;
+        position: relative;
+        z-index: 1;
+        }
+        .wpNubButton-max-main {
+        border: 1px solid rgba(29, 49, 91, .3);
+        border-width: 1px 0 0;
+        color: #333;
+        display: block;
+        font-weight: bold;
+        min-height: 311px;
+        height: 325px;
+        outline: none;
+        padding: 6px 4px 5px;
+        position: relative;
+        z-index: 1;
+        }
+        .wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
+        content: '';
+        height: 28px;
+        position: absolute;
+        top: -1px;
+        width: 4px;
+        }
+        ._4mq3 .wpNubButton:before, ._4mq3 .wpNubButton:after,._4mq3 .wpNubButton-max:before, ._4mq3 .wpNubButton-max:after, {
+        background-image: none;
+        }
+        .wpNubButton:after,.wpNubButton-max:after {
+        background-repeat: no-repeat;
+        background-size: auto;
+        background-position: -15px -40px;
+        right: -4px;
+        }
+        .wpNubButton:before, .wpNubButton:after,.wpNubButton-max:before, .wpNubButton-max:after {
+        content: '';
+        height: 28px;
+        position: absolute;
+        top: -1px;
+        width: 4px;
+        }
+        ._4mq3 .wpNubButton .label {
+        color: black;
+        font-size: 14px;
+        line-height: 16px;
+        margin-right: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        }
+        ._4mq3 .wpNubButton-max .label {
+        color: black;
+        font-size: 14px;
+        line-height: 16px;
+        margin-right: 4px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        }
+        .lb-m{
+        padding-left: 20px;
+        line-height: 35px !important;
+        }
 
 
 
+        #inner-chat-wrapper{
+        height: 100%;
+        background-color: #f6f7f8;;
+        border-top: 1px solid rgba(29, 49, 91, .3); 
+        padding: 5px 10px;
+        max-height: 285px;
+        overflow-y: scroll;
+        }
 
-    ._mb {
-    position: relative;
-    display: inline-block;
-    margin: .5em .75em;
-    padding: 6px 15px 6px 15px;
-    border-radius: 1.5em;
-    text-shadow: 0 1px 1px white;
-    background-color: #fff;
-    border: 1px solid #CDCDCA;
-    box-shadow: 0 1px 1px 0 #CDCDCA;
-    overflow: hidden;
+        .inner-wrapper-child{
+        width: 100%
+        height: 100%;
+        background-color: #f6f7f8;;
+        border-top: 1px solid rgba(29, 49, 91, .3); 
+        padding: 5px 10px;
+        max-height: 257px;
+        }
 
-    }
+        .conv-wrapper {
+        height: 40px;
+        margin-bottom: 2px;
+        }
+        .conv-wrapper img {
+        width: 39px;
+        }
+        .sp_BNtOXyg0vlE {
+        background-size: auto;
+        background-repeat: no-repeat;
+        display: inline-block;
+        height: 12px;
+        width: 16px;
+        }
+        ._4mq3 .wpNubButton ._4xia {
+        float: left;
+        height: 12px;
+        margin: 2px 4px 0 0;
+        width: 12px;
+        }
+        .sp_BNtOXyg0vlE.sx_78fc23 {
+        width: 12px;
+        background-position: -75px -471px;
+        }
+        .conv-c{
+        float: right;
+        margin-top: 5px;
+        font-size: 19px;
+        color: #337AB7 !important;
+        }
+        .have-msg{
+        float: right;
+        color: #337AB7 !important;
+        }
+        .ChatClose{
+        margin-right: 8px;
+        }
+        .ChatTextArea{
+        background: white;
+        border-top: 1px solid #C7C7C7;
+        }
+        #cta1{
+        height: 52px;
+        }
+        #cta2{
+        height: 52px;
+        }
+        .tooltip {
+        position: fixed;
+        }
+        ._mb {
+        position: relative;
+        display: inline-block;
+        margin: .5em .75em;
+        padding: 6px 15px 6px 15px;
+        border-radius: 1.5em;
+        text-shadow: 0 1px 1px white;
+        background-color: #fff;
+        border: 1px solid #CDCDCA;
+        box-shadow: 0 1px 1px 0 #CDCDCA;
+        overflow: hidden;
+        }
+        ._msnd{
+        text-align: right;   
+        width: 100%;
+        }
+        ._mrcv{
+        text-align: left;
+        width: 100%;
+        }
+        ._mtxt{
+        color: #373e4d;
+        text-shadow: rgba(255, 255, 255, .5) 0 1px 0;
+        line-height: 1.28;
+        font-size: 12px;
+        word-break: break-word;
+        }
+        ._sndb {
+        background-color: #e0edff !important;
+        border: 1px solid #bcc7d6 !important;
+        border-top-right-radius: 0;
+        }
+        ._rcvb {
+        border-top-left-radius: 0;
+        }
+        ._msgss{
+        /*MESSAGES SEND*/
+        float: right;
+        width: 100%;
+        }
+        ._mavs{
+        float: right;
+        width: 15%;
+        }
+        ._mtwps{
+        float: right;
+        width: 85%;
+        }
+        ._msgsr{
+        /*MESSAGES RECVED*/
+        float: left;
+        width: 100%;
+        }
+        ._mavr{
+        float: left;
+        width: 15%;
+        }
+        ._mtwpr{
+        float: left;
+        width: 85%;
+        }
+        ._mtime{
+        color: #9197a3;
+        display: inline-block;
+        font-size: 10px;
+        font-weight: bold;
+        padding: 0 5px;
+        }
 
-    ._msnd{
-    text-align: right;   
-    width: 100%;
-    }
-    ._mrcv{
-    text-align: left;
-    width: 100%;
-    }
-    ._mtxt{
-    color: #373e4d;
-    text-shadow: rgba(255, 255, 255, .5) 0 1px 0;
-    line-height: 1.28;
-    font-size: 12px;
-    word-break: break-word;
-    }
-    ._sndb {
-    background-color: #e0edff !important;
-    border: 1px solid #bcc7d6 !important;
-    border-top-right-radius: 0;
-    }
-    ._rcvb {
-    border-top-left-radius: 0;
-    }
-    ._msgss{
-    /*MESSAGES SEND*/
-    float: right;
-    width: 100%;
-    }
-    ._mavs{
-    float: right;
-    width: 15%;
-    }
-    ._mtwps{
-    float: right;
-    width: 85%;
-    }
-    ._msgsr{
-    /*MESSAGES RECVED*/
-    float: left;
-    width: 100%;
-    }
-    ._mavr{
-    float: left;
-    width: 15%;
-    }
-    ._mtwpr{
-    float: left;
-    width: 85%;
-    }
-    ._mtime{
-    color: #9197a3;
-    display: inline-block;
-    font-size: 10px;
-    font-weight: bold;
-    padding: 0 5px;
-    }
+        .sp_P9ChxUVwaFx {
+        background-image: url("/assets/images/icons/on.png");
+        background-size: auto;
+        background-repeat: no-repeat;
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        }
+        .sp_P9ChxUVwaFx.sx_74fd99 {
+        background-position: -300px -5px;
+        }
+        ._cbnm{
+        float: left;
+        padding-left: 10px;
+        }
+        /*==========  Non-Mobile First Method  ==========*/
 
-    .sp_P9ChxUVwaFx {
-    background-image: url("/assets/images/icons/on.png");
-    background-size: auto;
-    background-repeat: no-repeat;
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-    }
-    .sp_P9ChxUVwaFx.sx_74fd99 {
-    background-position: -300px -5px;
-    }
-    ._cbnm{
-    float: left;
-    padding-left: 10px;
-    }
+        /* Large Devices, Wide Screens */
+        @media only screen and (max-width : 1200px) {
+
+        }
+
+        /* Medium Devices, Desktops */
+        @media only screen and (max-width : 992px) {
+
+        }
+
+        /* CUS */
+        @media only screen and (max-width : 870px) {
+            .dock-max-2 {
+                bottom: 319px;
+                direction: ltr;
+                height: 28px;
+                left: 0;
+                position: fixed;
+                right: 285px;
+                opacity: 0.5;
+                z-index: 299;
+            }
+        }
+
+        /* Small Devices, Tablets */
+        @media only screen and (max-width : 768px) {
+
+        }
+
+        /* Extra Small Devices, Phones */ 
+        @media only screen and (max-width : 586px) {
+            .dock-max-1 {
+                bottom: 280px;
+                direction: ltr;
+                height: 28px;
+                left: 0;
+                position: fixed;
+                right: 0;
+                z-index: 300;
+            }
+            .dock-max-2 {
+                bottom: 319px;
+                direction: ltr;
+                height: 28px;
+                left: 0;
+                position: fixed;
+                right: 0;
+                opacity: 0.9;
+                z-index: 299;
+            }
+            .dock-max {
+                bottom: 358px;
+                direction: ltr;
+                height: 28px;
+                left: 0;
+                position: fixed;
+                right: 0;
+                z-index: 298;
+                opacity: 0.5;
+            }
+            ._dock {
+                margin: 0;
+            }
+            ._4mq3.wpNub, ._4mq3.wpNub.openToggler {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            ._4mq3 {
+                width: 100%;
+            }
+            .nubContainer>div, ._dock {
+                width: 100%;
+            }
+            ._dock .rNubContainer {
+                width: 100%;
+            }
+            .wpNubButton-max-main {
+                height: 386px;
+            }
+            ._4mq3 .wpNubButton-max {
+                border-left: none;
+                border-radius: 0;
+                border-right: none;
+            }
+        }
+
+        /* Extra Small Devices, Phones */ 
+        @media only screen and (max-width : 480px) {
+
+        }
+
+        /* Custom, iPhone Retina */ 
+        @media only screen and (max-width : 320px) {
+            
+        }
     </style>
 
     @if(Auth::check())
+    <input type="hidden" id="crnt_dt" value="{!!$cdt!!}"></input>
     <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
-    @endif
-
-    @if(Auth::check())
     <div id="msgs_tmp"></div>
-    <div class="chat_dock hide">
-    <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
-    <div class="_dock m_clearfix">
-    <div class="m_clearfix nubContainer rNubContainer">
-    <div id="BuddylistPagelet">
-        <div class="_56ox ">
-            <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                <div class="wpNubButton">
-                    <span class="label nb-lb pointer">Chat</span>
-                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i>&nbsp<i class="fa fa-exclamation"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
-
-    <div class="dock_wrapper dock-max dockWrapperRight hide" type="1">
-    <div class="_dock m_clearfix">
-    <div class="m_clearfix nubContainer rNubContainer">
-    <div id="BuddylistPagelet">
-        <div class="_56ox ">
-            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                <div class="wpNubButton-max wpNubButton-max-main">
-                    <span class="label nb-lb lb-m pointer ">Chat</span>
-                    <div id="inner-chat-wrapper">
-                        {!!$friends_list!!}
+    <div class="chat_dock">
+        <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
+            <div class="_dock m_clearfix">
+                <div class="m_clearfix nubContainer rNubContainer">
+                    <div id="BuddylistPagelet">
+                        <div class="_56ox ">
+                            <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                                <div class="wpNubButton">
+                                    <span class="label nb-lb pointer">Chat</span>
+                                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i></span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
-    </div>
-    </div>
 
+        <div class="dock_wrapper dock-max dockWrapperRight hide dtabs" type="1">
+            <div class="_dock m_clearfix">
+                <div class="m_clearfix nubContainer rNubContainer">
+                    <div id="BuddylistPagelet">
+                        <div class="_56ox ">
+                            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                                <div class="wpNubButton-max wpNubButton-max-main">
+                                    <span class="label nb-lb lb-m pointer ">Chat</span>
+                                    <div id="inner-chat-wrapper">
+                                        {!!$friends_list!!}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="chat_dockChilds">
-    <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" dock-no="1" type="1" uid="">
-    <div class="_dock m_clearfix">
-    <div class="m_clearfix nubContainer rNubContainer">
-    <div id="BuddylistPagelet">
-        <div class="_56ox ">
-            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                <div class="wpNubButton-max">
-                    <span class="label nb-lb lb-m pointer ">
-                        <span class="_cbnm _cbnm1"></span> 
-                        <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
-                    </span>
-                    <div class="inner-wrapper-child _ctb1" id="ctb1">
-
-
+        <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide dtabs" dock-no="1" type="1" uid="">
+            <div class="_dock m_clearfix">
+                <div class="m_clearfix nubContainer rNubContainer">
+                    <div id="BuddylistPagelet">
+                        <div class="_56ox ">
+                            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                                <div class="wpNubButton-max">
+                                    <span class="label nb-lb lb-m pointer ">
+                                        <span class="_cbnm _cbnm1"></span> 
+                                        <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
+                                    </span>
+                                    <div class="sc-wrapper sc-wrapper-1"></div>
+                                    <div class="inputBar">
+                                        <textarea class="ChatTextArea" id="cta1"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="inputBar">
-                        <textarea class="ChatTextArea" id="cta1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide dtabs" dock-no="2" type="1" uid="">
+            <div class="_dock m_clearfix">
+                <div class="m_clearfix nubContainer rNubContainer">
+                    <div id="BuddylistPagelet">
+                        <div class="_56ox ">
+                            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
+                                <div class="wpNubButton-max">
+                                    <span class="label nb-lb lb-m pointer ">
+                                        <span class="_cbnm _cbnm2"></span> 
+                                        <span class="cc2 ChatClose pull-right"><i class="fa fa-times"></i></span>
+                                    </span>
+                                    <div class="sc-wrapper sc-wrapper-2"></div>
+                                    <div class="inputBar">
+                                        <textarea class="ChatTextArea" id="cta2"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </div>
-    <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide" dock-no="2" type="1" uid="">
-    <div class="_dock m_clearfix">
-    <div class="m_clearfix nubContainer rNubContainer">
-    <div id="BuddylistPagelet">
-        <div class="_56ox ">
-            <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                <div class="wpNubButton-max">
-                    <span class="label nb-lb lb-m pointer ">
-                        <span class="_cbnm _cbnm2"></span> 
-                        <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
-                    </span>
-                    <div class="_ctb2 inner-wrapper-child" id="ctb1">
-
-                    </div>
-                    <div class="inputBar">
-                        <textarea class="ChatTextArea" id="cta2"></textarea>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
-    @endif
-
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    @if(Auth::check())
+    
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
         <script>
-            // //var socket = io('http://localhost:3000');
-            // window.socket = io('http://192.168.10.10:3000');
-            // socket.emit("_init", { data: "{!!Auth::id()!!}" });
-            // // var socket = io.connect('http://192.168.10.10:3000');
-            // // socket.on('_forward', function(data) {
-            // //     alert(data['msg']);
-            // // });
-            // // socket.on('on_not', function(data) {
-            // //     $('.on-sign-'+data['data']).removeClass('hide');
-            // // });
-            // // $('#sendm').click(function(){
-            // //     socket.emit("trans", { 
-            // //         recip: 2,
-            // //         msg: "hello man!"
-            // //          });
-            // // });
+            //var socket = io('http://localhost:3000');
+            window.socket = io('http://192.168.10.10:3000');
+            socket.emit("_init", { data: "{!!Auth::id()!!}" });
         </script>
         <script src="/assets/js/chat.js"></script>
     @endif
@@ -811,39 +876,33 @@
     {!! View::make('partials.success_modal') !!}
     {!! View::make('partials.warning_modal') !!}      
     @if(Auth::check())
-    {!! View::make('partials.qkpost_modal')
-    ->with('cats',$cats)
-    ->with('cities',$cities)
-    ->__toString()!!}   
-    {!! View::make('partials.wishlist_modal')
-    ->with('wishlist',$wishlist)
-    ->__toString() !!}
+        {!! View::make('partials.qkpost_modal')
+        ->with('cats',$cats)
+        ->with('cities',$cities)
+        ->__toString()!!}   
+        {!! View::make('partials.wishlist_modal')
+        ->with('wishlist',$wishlist)
+        ->__toString() !!}
     @endif
-
-    <!-- Load js libs only when the page is loaded. -->
 
     <script src="/packages/jquery-ui-1.11.4.custom/jquery-ui.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <!-- <script src="/assets/js/jquery.scrollUp.min.js"></script> -->
     <script src="/assets/js/jquery.prettyPhoto.js"></script>
-    <script src="/assets/js/main.js"></script>
     <script src="/assets/js/layouts/main.js"></script>
     <script src="/packages/scroll_style/jquery.slimscroll.min.js"></script>
-
     <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
     <!-- LOCATION PICKER -->
     <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
     <script src="/packages/location-picker/locationpicker.jquery.js"></script>
-
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
     <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
     <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
     <script src="/packages/embed/src/embed.js"></script>
     <script src="/packages/dropzone/dropzone.js"></script>
+    <script src="/packages/moment/moment.js"></script>
     <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
 
     <div id="fb-root"></div>

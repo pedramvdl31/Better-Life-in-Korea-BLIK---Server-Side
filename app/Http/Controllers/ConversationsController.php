@@ -99,17 +99,19 @@ class ConversationsController extends Controller
                 $new_message->conv_id = $convs->id;
                 $new_message->message = e(trim($tdata));
                 $new_message->status = 1;
+                 
                 if ($new_message->save()) {
                     $status = 200;
+                    return Response::json(array(
+                        'status' => $status,
+                        'aid' => $thisuser,
+                        'tcat' => date ( 'Y-m-d H:i:s',  strtotime($new_message->created_at) )
+                        ));
                 }
             }
 
-
-            
-
             return Response::json(array(
-                'status' => $status,
-                'aid' => Auth::id()
+                'status' => 400
                 ));
         }
     }

@@ -15,5 +15,13 @@ class ConvsTableSeeder extends Seeder
 		        'status' => '1',
 		    ]
 		 ]);
+    	DB::table('convs')->insert([
+		    [
+		        'id' => '2',
+		        'user_one' => '1',
+		        'user_two' => '3',
+		        'status' => '1',
+		    ]
+		 ]);
     }
 }

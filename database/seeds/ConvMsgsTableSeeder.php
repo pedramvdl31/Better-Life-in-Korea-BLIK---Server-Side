@@ -57,7 +57,7 @@ class ConvMsgsTableSeeder extends Seeder
 		        'id' => '6',
 		        'user_id' => '2',
 		        'conv_id' => '1',
-		        'message' => 'how about coop? how about coop? how about coop? haha i typed it many tiems blah blah what else can i say i dont know... all i know is what are we gonna do hahhahahahahhahah????',
+		        'message' => 'how about you coop?',
 		        'status' => '1',
 		    ]
 		 ]);
@@ -66,7 +66,25 @@ class ConvMsgsTableSeeder extends Seeder
 		        'id' => '7',
 		        'user_id' => '1',
 		        'conv_id' => '1',
-		        'message' => 'what??????????????????????????????????????????????????????????????????????????????????????????????????????????!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! LOL ',
+		        'message' => 'what???LOL ',
+		        'status' => '1',
+		    ]
+		 ]);
+    	DB::table('conv_msgs')->insert([
+		    [
+		        'id' => '8',
+		        'user_id' => '1',
+		        'conv_id' => '2',
+		        'message' => 'Hello Example 2...',
+		        'status' => '1',
+		    ]
+		 ]);
+    	DB::table('conv_msgs')->insert([
+		    [
+		        'id' => '9',
+		        'user_id' => '3',
+		        'conv_id' => '2',
+		        'message' => 'Hello Pedram',
 		        'status' => '1',
 		    ]
 		 ]);
