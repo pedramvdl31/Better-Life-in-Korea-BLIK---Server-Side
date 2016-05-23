@@ -1,5 +1,5 @@
 /*
- * embed-js - v3.7.4
+ * embed-js - v4.0.4
  * A JavaScript plugin that analyses the string and embeds emojis, media, tweets, code and services.
  * http://riteshkr.com/embed.js
  *
@@ -114,7 +114,7 @@
      */
     function deepExtend(destination, source) {
         for (var property in source) {
-            if (source[property] && source[property].constructor === Object) {
+            if (source.hasOwnProperty(property) && source[property] && source[property].constructor === Object) {
                 destination[property] = destination[property] || {};
                 deepExtend(destination[property], source[property]);
             } else {
@@ -125,7 +125,7 @@
     }
 
     function escapeRegExp(str) {
-        return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+        return str.replace(/[\-\[\]\/\{}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
     }
 
     /**
@@ -240,319 +240,352 @@
     }
 
     var Renderer = function () {
-    	function Renderer(options) {
-    		babelHelpers.classCallCheck(this, Renderer);
+      function Renderer(options) {
+        babelHelpers.classCallCheck(this, Renderer);
 
-    		this.options = options || {};
-    	}
+        this.options = options || {};
+      }
 
-    	babelHelpers.createClass(Renderer, [{
-    		key: 'url',
-    		value: function url(match, options) {
-    			var config = options.linkOptions;
-    			return '<a href="' + toUrl(match) + '" rel="' + config.rel + '" target="' + config.target + '">' + match + '</a>';
-    		}
-    	}, {
-    		key: 'smiley',
-    		value: function smiley(text, code) {
-    			return ' <span class="icon-emoticon" title="' + text + '">' + code + '</span> ';
-    		}
-    	}, {
-    		key: 'emoji',
-    		value: function emoji(text) {
-    			return '<span class="emoticon emoticon-' + text + '" title=":' + text + ':"></span>';
-    		}
-    	}, {
-    		key: 'audio',
-    		value: function audio(match) {
-    			return '<div class="ejs-audio ejs-embed"><audio src="' + match + '" controls class="video-js ejs-video-js"></audio></div>';
-    		}
-    	}, {
-    		key: 'soundcloud',
-    		value: function soundcloud(match, options) {
-    			var config = options.soundCloudOptions;
-    			return '<div class="ejs-embed">\n\t\t<iframe height="160" scrolling="no" src="https://w.soundcloud.com/player/?url=' + match + '\n\t\t&auto_play     = ' + config.autoPlay + '\n\t\t&hide_related  = ' + config.hideRelated + '\n\t\t&show_comments = ' + config.showComments + '\n\t\t&show_user     = ' + config.showUser + '\n\t\t&show_reposts  = ' + config.showReposts + '\n\t\t&visual        = ' + config.visual + '\n\t\t&download      = ' + config.download + '\n\t\t&color         = ' + config.themeColor + '\n\t\t&theme_color   = ' + config.themeColor + '"></iframe>\n\t\t</div>';
-    		}
-    	}, {
-    		key: 'spotify',
-    		value: function spotify(match) {
-    			var id = lastElement(match.split('/'));
-    			return '<div class="ejs-embed"><iframe src="https://embed.spotify.com/?uri=spotify:track:' + id + '" height="80"></iframe></div>';
-    		}
-    	}, {
-    		key: 'codepen',
-    		value: function codepen(id, options) {
-    			return '<div class="ejs-embed ejs-codepen"><iframe scrolling="no" height="' + options.codeEmbedHeight + '" src="' + id.replace(/\/pen\//, '/embed/') + '/?height=' + options.codeEmbedHeight + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'ideone',
-    		value: function ideone(match, options) {
-    			return '<div class="ejs-ideone ejs-embed"><iframe src="http://ideone.com/embed/' + match.split('/')[1] + '" frameborder="0" height="' + options.codeEmbedHeight + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'jsbin',
-    		value: function jsbin(id, options) {
-    			return '<div class="ejs-jsbin ejs-embed"><iframe height="' + options.codeEmbedHeight + '" class="jsbin-embed foo" src="http://' + id + '/embed?html,js,output"></iframe></div>';
-    		}
-    	}, {
-    		key: 'jsfiddle',
-    		value: function jsfiddle(id, options) {
-    			id = lastElement(id) == '/' ? id.slice(0, -1) : id;
-    			id = id.indexOf('//') !== -1 ? id : '//' + id;
-    			return '<div class="ejs-embed ejs-jsfiddle"><iframe height="' + options.codeEmbedHeight + '" src="' + id + '/embedded"></iframe></div>';
-    		}
-    	}, {
-    		key: 'plunker',
-    		value: function plunker(id, options) {
-    			return '<div class="ejs-embed ejs-plunker"><iframe class="ne-plunker" src="http://embed.plnkr.co/' + id + '" height="' + options.codeEmbedHeight + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'image',
-    		value: function image(match) {
-    			return '<div class="ejs-image ejs-embed"><div class="ne-image-wrapper"><img src="' + match + '"/></div></div>';
-    		}
-    	}, {
-    		key: 'flickr',
-    		value: function flickr(match, options) {
-    			return '<div class="ejs-embed"><div class="ne-image-wrapper"><iframe src="' + toUrl(match.split('/?')[0]) + '/player/" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div></div>';
-    		}
-    	}, {
-    		key: 'instagram',
-    		value: function instagram(match, options) {
-    			return '<div class="ejs-embed ejs-instagram"><iframe src="' + toUrl(match.split('/?')[0]) + '/embed/" height="' + options.videoHeight + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'slideShare',
-    		value: function slideShare(html) {
-    			return '<div class="ejs-embed ejs-slideshare">' + html + '</div>';
-    		}
-    	}, {
-    		key: 'video',
-    		value: function video(match) {
-    			return '<div class="ejs-video ejs-embed"><div class="ejs-video-player"><div class="ejs-player"><video src="' + match + '" class="ejs-video-js video-js" controls></video></div></div></div>';
-    		}
-    	}, {
-    		key: 'dailymotion',
-    		value: function dailymotion(match, options) {
-    			var id = lastElement(match.split('/'));
-    			return '<div class="ejs-video ejs-embed"><iframe src="http://www.dailymotion.com/embed/video/' + id + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'liveleak',
-    		value: function liveleak(match, options) {
-    			return '<div class="ejs-video ejs-embed"><iframe src="http://www.liveleak.com/e/' + match.split('=')[1] + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'ted',
-    		value: function ted(match, options) {
-    			var a = match.split('/');
-    			var id = a[a.length - 1];
-    			return '<div class="ejs-embed ejs-ted"><iframe src="http://embed.ted.com/talks/' + id + '.html" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'ustream',
-    		value: function ustream(match, options) {
-    			var id = match.split('/');
-    			id.splice(1, 0, 'embed');
-    			return '<div class="ejs-embed ejs-ustream"><iframe src="//www.' + id.join('/') + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'detailsVimeo',
-    		value: function detailsVimeo(data, fullData, embedUrl) {
-    			return '<div class="ejs-video ejs-embed"><div class="ejs-video-preview"><div class="ejs-video-thumb" data-ejs-url="' + embedUrl + '"><div class="ejs-thumb" style="background-image:url(' + data.thumbnail + ')"></div><i class="fa fa-play-circle-o"></i></div><div class="ejs-video-detail"><div class="ejs-video-title"><a href="' + data.url + '">' + data.title + '</a></div><div class="ejs-video-desc">' + data.description + '</div><div class="ejs-video-stats"><span><i class="fa fa-eye"></i>' + data.views + '</span><span><i class="fa fa-heart"></i>' + data.likes + '</span></div></div></div></div>';
-    		}
-    	}, {
-    		key: 'detailsYoutube',
-    		value: function detailsYoutube(data, fullData, embedUrl) {
-    			return '<div class="ejs-video ejs-embed"><div class="ejs-video-preview"><div class="ejs-video-thumb" data-ejs-url="' + embedUrl + '"><div class="ejs-thumb" style="background-image:url(' + data.thumbnail + ')"></div><i class="fa fa-play-circle-o"></i></div><div class="ejs-video-detail"><div class="ejs-video-title"><a href="' + data.url + '">' + data.title + '</a></div><div class="ejs-video-desc">' + data.description + '</div><div class="ejs-video-stats"><span><i class="fa fa-eye"></i>' + data.views + '</span><span><i class="fa fa-heart"></i>' + data.likes + '</span></div></div></div></div>';
-    		}
-    	}, {
-    		key: 'vine',
-    		value: function vine(match, options) {
-    			var id = lastElement(match.split('/'));
-    			var config = options.vineOptions;
-    			return '<div class="ejs-vine"><iframe class="ejs-vine-iframe" src="https://vine.co/v/' + id + '/embed/' + config.type + '" height="' + config.height + '" width="' + config.width + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'vimeo',
-    		value: function vimeo(url, options) {
-    			return '<div class="ejs-video-player ejs-embed"><iframe src="' + url + '" frameBorder="0" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'youtube',
-    		value: function youtube(url, options) {
-    			return '<div class="ejs-video-player ejs-embed"><iframe src="' + url + '" frameBorder="0" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div>';
-    		}
-    	}, {
-    		key: 'openGraph',
-    		value: function openGraph(data, options) {
-    			return '<div class="ejs-embed ejs-ogp"><div class="ejs-ogp-thumb" style="background-image:url(' + data.image + ')"></div><div class="ejs-ogp-details"><div class="ejs-ogp-title"><a href="' + data.url + '" target="' + options.linkOptions.target + '">' + data.title + '</a></div><div class="ejs-ogb-details">' + data.description + '</div></div></div>';
-    		}
-    	}, {
-    		key: 'github',
-    		value: function github(data, options) {
-    			return '<div class="ejs-embed ejs-github"><div class="ejs-ogp-thumb" style="background-image:url(' + data.owner.avatar_url + ')"></div><div class="ejs-ogp-details"><div class="ejs-ogp-title"><a href="' + data.html_url + '" target="' + options.linkOptions.target + '">' + data.full_name + '</a></div><div class="ejs-ogb-details">' + data.description + '</div><div class="ejs-github-stats"><span><i class="fa fa-star"></i>' + data.stargazers_count + '</span><span><i class="fa fa-code-fork"></i>' + data.network_count + '</span></div></div></div>';
-    		}
-    	}]);
-    	return Renderer;
+      babelHelpers.createClass(Renderer, [{
+        key: 'url',
+        value: function url(match, options) {
+          var config = options.linkOptions;
+          return '<a href="' + toUrl(match) + '" rel="' + config.rel + '" target="' + config.target + '">' + match + '</a>';
+        }
+      }, {
+        key: 'smiley',
+        value: function smiley(text, pre, code) {
+          return '<span class="icon-emoticon" title="' + text + '">' + pre + code + '</span>';
+        }
+      }, {
+        key: 'emoji',
+        value: function emoji(text) {
+          return '<span class="emoticon emoticon-' + text + '" title=":' + text + ':"></span>';
+        }
+      }, {
+        key: 'audio',
+        value: function audio(match) {
+          return '<div class="ejs-audio ejs-embed"><audio src="' + match + '" controls class="video-js ejs-video-js"></audio></div>';
+        }
+      }, {
+        key: 'soundcloud',
+        value: function soundcloud(match, options) {
+          var config = options.soundCloudOptions;
+          return '<div class="ejs-embed">\n\t\t<iframe height="160" scrolling="no" src="https://w.soundcloud.com/player/?url=' + match + '\n\t\t&auto_play     = ' + config.autoPlay + '\n\t\t&hide_related  = ' + config.hideRelated + '\n\t\t&show_comments = ' + config.showComments + '\n\t\t&show_user     = ' + config.showUser + '\n\t\t&show_reposts  = ' + config.showReposts + '\n\t\t&visual        = ' + config.visual + '\n\t\t&download      = ' + config.download + '\n\t\t&color         = ' + config.themeColor + '\n\t\t&theme_color   = ' + config.themeColor + '"></iframe>\n\t\t</div>';
+        }
+      }, {
+        key: 'spotify',
+        value: function spotify(match) {
+          var id = lastElement(match.split('/'));
+          return '<div class="ejs-embed"><iframe src="https://embed.spotify.com/?uri=spotify:track:' + id + '" height="80"></iframe></div>';
+        }
+      }, {
+        key: 'codepen',
+        value: function codepen(id, options) {
+          return '<div class="ejs-embed ejs-codepen"><iframe scrolling="no" height="' + options.codeEmbedHeight + '" src="' + id.replace(/\/pen\//, '/embed/') + '/?height=' + options.codeEmbedHeight + '"></iframe></div>';
+        }
+      }, {
+        key: 'ideone',
+        value: function ideone(match, options) {
+          return '<div class="ejs-ideone ejs-embed"><iframe src="http://ideone.com/embed/' + match.split('/')[1] + '" frameborder="0" height="' + options.codeEmbedHeight + '"></iframe></div>';
+        }
+      }, {
+        key: 'jsbin',
+        value: function jsbin(id, options) {
+          return '<div class="ejs-jsbin ejs-embed"><iframe height="' + options.codeEmbedHeight + '" class="jsbin-embed foo" src="http://' + id + '/embed?html,js,output"></iframe></div>';
+        }
+      }, {
+        key: 'jsfiddle',
+        value: function jsfiddle(id, options) {
+          id = lastElement(id) == '/' ? id.slice(0, -1) : id;
+          id = id.indexOf('//') !== -1 ? id : '//' + id;
+          return '<div class="ejs-embed ejs-jsfiddle"><iframe height="' + options.codeEmbedHeight + '" src="' + id + '/embedded"></iframe></div>';
+        }
+      }, {
+        key: 'plunker',
+        value: function plunker(id, options) {
+          return '<div class="ejs-embed ejs-plunker"><iframe class="ne-plunker" src="http://embed.plnkr.co/' + id + '" height="' + options.codeEmbedHeight + '"></iframe></div>';
+        }
+      }, {
+        key: 'image',
+        value: function image(match) {
+          return '<div class="ejs-image ejs-embed"><div class="ne-image-wrapper"><img src="' + match + '"/></div></div>';
+        }
+      }, {
+        key: 'flickr',
+        value: function flickr(match, options) {
+          return '<div class="ejs-embed"><div class="ne-image-wrapper"><iframe src="' + toUrl(match.split('/?')[0]) + '/player/" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div></div>';
+        }
+      }, {
+        key: 'instagram',
+        value: function instagram(match, options) {
+          return '<div class="ejs-embed ejs-instagram"><iframe src="' + toUrl(match.split('/?')[0]) + '/embed/" height="' + options.videoHeight + '"></iframe></div>';
+        }
+      }, {
+        key: 'slideShare',
+        value: function slideShare(html) {
+          return '<div class="ejs-embed ejs-slideshare">' + html + '</div>';
+        }
+      }, {
+        key: 'video',
+        value: function video(match) {
+          return '<div class="ejs-video ejs-embed"><div class="ejs-video-player"><div class="ejs-player"><video src="' + match + '" class="ejs-video-js video-js" controls></video></div></div></div>';
+        }
+      }, {
+        key: 'dailymotion',
+        value: function dailymotion(match, options) {
+          var id = lastElement(match.split('/'));
+          return '<div class="ejs-video ejs-embed"><iframe src="http://www.dailymotion.com/embed/video/' + id + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+        }
+      }, {
+        key: 'liveleak',
+        value: function liveleak(match, options) {
+          return '<div class="ejs-video ejs-embed"><iframe src="http://www.liveleak.com/e/' + match.split('=')[1] + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+        }
+      }, {
+        key: 'ted',
+        value: function ted(match, options) {
+          var a = match.split('/');
+          var id = a[a.length - 1];
+          return '<div class="ejs-embed ejs-ted"><iframe src="http://embed.ted.com/talks/' + id + '.html" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+        }
+      }, {
+        key: 'ustream',
+        value: function ustream(match, options) {
+          var id = match.split('/');
+          id.splice(1, 0, 'embed');
+          return '<div class="ejs-embed ejs-ustream"><iframe src="//www.' + id.join('/') + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+        }
+      }, {
+        key: 'detailsVimeo',
+        value: function detailsVimeo(data, fullData, embedUrl) {
+          return '<div class="ejs-video ejs-embed"><div class="ejs-video-preview"><div class="ejs-video-thumb" data-ejs-url="' + embedUrl + '"><div class="ejs-thumb" style="background-image:url(' + data.thumbnail + ')"></div><i class="fa fa-play-circle-o"></i></div><div class="ejs-video-detail"><div class="ejs-video-title"><a href="' + data.url + '">' + data.title + '</a></div><div class="ejs-video-desc">' + data.description + '</div><div class="ejs-video-stats"><span><i class="fa fa-eye"></i>' + data.views + '</span><span><i class="fa fa-heart"></i>' + data.likes + '</span></div></div></div></div>';
+        }
+      }, {
+        key: 'detailsYoutube',
+        value: function detailsYoutube(data, fullData, embedUrl) {
+          return '<div class="ejs-video ejs-embed"><div class="ejs-video-preview"><div class="ejs-video-thumb" data-ejs-url="' + embedUrl + '"><div class="ejs-thumb" style="background-image:url(' + data.thumbnail + ')"></div><i class="fa fa-play-circle-o"></i></div><div class="ejs-video-detail"><div class="ejs-video-title"><a href="' + data.url + '">' + data.title + '</a></div><div class="ejs-video-desc">' + data.description + '</div><div class="ejs-video-stats"><span><i class="fa fa-eye"></i>' + data.views + '</span><span><i class="fa fa-heart"></i>' + data.likes + '</span></div></div></div></div>';
+        }
+      }, {
+        key: 'vine',
+        value: function vine(match, options) {
+          var id = lastElement(match.split('/'));
+          var config = options.vineOptions;
+          return '<div class="ejs-vine"><iframe class="ejs-vine-iframe" src="https://vine.co/v/' + id + '/embed/' + config.type + '" height="' + config.height + '" width="' + config.width + '"></iframe></div>';
+        }
+      }, {
+        key: 'vimeo',
+        value: function vimeo(url, options) {
+          return '<div class="ejs-video-player ejs-embed"><iframe src="' + url + '" frameBorder="0" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div>';
+        }
+      }, {
+        key: 'youtube',
+        value: function youtube(url, options) {
+          return '<div class="ejs-video-player ejs-embed"><iframe src="' + url + '" frameBorder="0" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div>';
+        }
+      }, {
+        key: 'openGraph',
+        value: function openGraph(data, options) {
+          return '<div class="ejs-embed ejs-ogp"><div class="ejs-ogp-thumb" style="background-image:url(' + data.image + ')"></div><div class="ejs-ogp-details"><div class="ejs-ogp-title"><a href="' + data.url + '" target="' + options.linkOptions.target + '">' + data.title + '</a></div><div class="ejs-ogb-details">' + data.description + '</div></div></div>';
+        }
+      }, {
+        key: 'github',
+        value: function github(data, options) {
+          return '<div class="ejs-embed ejs-github"><div class="ejs-ogp-thumb" style="background-image:url(' + data.owner.avatar_url + ')"></div><div class="ejs-ogp-details"><div class="ejs-ogp-title"><a href="' + data.html_url + '" target="' + options.linkOptions.target + '">' + data.full_name + '</a></div><div class="ejs-ogb-details">' + data.description + '</div><div class="ejs-github-stats"><span><i class="fa fa-star"></i>' + data.stargazers_count + '</span><span><i class="fa fa-code-fork"></i>' + data.network_count + '</span></div></div></div>';
+        }
+      }]);
+      return Renderer;
     }();
 
+    var regex = {
+      basicAudio: /((?:https?):\/\/\S*\.(?:wav|mp3|ogg))/gi,
+      soundCloud: /(soundcloud.com)\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/gi,
+      spotify: /spotify.com\/track\/[a-zA-Z0-9_]+/gi,
+      codepen: /http:\/\/codepen.io\/([A-Za-z0-9_]+)\/pen\/([A-Za-z0-9_]+)/gi,
+      gist: /gist.github.com\/[a-zA-Z0-9_-]+\/([a-zA-Z0-9]+)/gi,
+      highlightCode: /(`{3})(\s|[a-z]+)\s*([\s\S]*?[^`])\s*\1(?!`)/gm,
+      inlineCode: /(`)\s*([\s\S]*?[^`])\s*\1(?!`)/gm,
+      ideone: /ideone.com\/[a-zA-Z0-9]{6}/gi,
+      jsbin: /jsbin.com\/[a-zA-Z0-9_]+\/[0-9_]+/gi,
+      jsfiddle: /jsfiddle.net\/[a-zA-Z0-9_]+\/[a-zA-Z0-9_\/]+/gi,
+      plunker: /plnkr.co\/edit\/[a-zA-Z0-9\?=]+/gi,
+      basicImage: /((?:https?):\/\/\S*\.(?:gif|jpg|jpeg|tiff|png|svg|webp))/gi,
+      flickr: /flickr.com\/[a-z]+\/[a-zA-Z@_$!\d\-\]+\/[\d]+/gi,
+      instagram: /instagram.com\/p\/[a-zA-Z0-9_\/\?\-\=]+/gi,
+      slideShare: /slideshare.net\/[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*/gi,
+      github: /[^\.]github.com\/([\w\.\-]+)\/([\w\.\-]+)/gi,
+      basicVideo: /(?:https?):\/\/\S*\.(?:ogv|webm|mp4)/gi,
+      dailymotion: /dailymotion.com\/video\/[a-zA-Z0-9-_]+/gi,
+      liveleak: /liveleak.com\/view\?i=[a-zA-Z0-9_]+/gi,
+      ted: /ted.com\/talks\/[a-zA-Z0-9_]+/gi,
+      ustream: /ustream.tv\/[a-z\/0-9]*/gi,
+      vimeo: /https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)*/gi,
+      vine: /vine.co\/v\/[a-zA-Z0-9]+/gi,
+      youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[?=&+%\w-]*/gi,
+      gmap: /@\((.+)\)/gi,
+      twitter: /https:\/\/twitter\.com\/\w+\/\w+\/\d+/gi,
+      smileys: /(\:[\+\-\w]+\:|\<[\/\\]?3|[\(\)\\\D|\*\$][\-\^]?[\:\;\=]|[\:\;\=B8][\-\^]?[3DOPp\@\$\*\\\)\(\/\|])(?=\s|[\!\.\?]|$)/gi
+    };
+
     var Emoji = function () {
-        function Emoji(output, options) {
-            babelHelpers.classCallCheck(this, Emoji);
+      function Emoji(output, options) {
+        babelHelpers.classCallCheck(this, Emoji);
 
-            this.output = output;
-            this.options = options;
+        this.output = output;
+        this.options = options;
 
-            this.emojiList = ['bowtie', 'smile', 'laughing', 'blush', 'smiley', 'relaxed', 'smirk', 'heart_eyes', 'kissing_heart', 'kissing_closed_eyes', 'flushed', 'relieved', 'satisfied', 'grin', 'wink', 'stuck_out_tongue_winking_eye', 'stuck_out_tongue_closed_eyes', 'grinning', 'kissing', 'winky_face', 'kissing_smiling_eyes', 'stuck_out_tongue', 'sleeping', 'worried', 'frowning', 'anguished', 'open_mouth', 'grimacing', 'confused', 'hushed', 'expressionless', 'unamused', 'sweat_smile', 'sweat', 'wow', 'disappointed_relieved', 'weary', 'pensive', 'disappointed', 'confounded', 'fearful', 'cold_sweat', 'persevere', 'cry', 'sob', 'joy', 'astonished', 'scream', 'neckbeard', 'tired_face', 'angry', 'rage', 'triumph', 'sleepy', 'yum', 'mask', 'sunglasses', 'dizzy_face', 'imp', 'smiling_imp', 'neutral_face', 'no_mouth', 'innocent', 'alien', 'yellow_heart', 'blue_heart', 'purple_heart', 'heart', 'green_heart', 'broken_heart', 'heartbeat', 'heartpulse', 'two_hearts', 'revolving_hearts', 'cupid', 'sparkling_heart', 'sparkles', 'star', 'star2', 'dizzy', 'boom', 'collision', 'anger', 'exclamation', 'question', 'grey_exclamation', 'grey_question', 'zzz', 'dash', 'sweat_drops', 'notes', 'musical_note', 'fire', 'hankey', 'poop', 'shit', '\\+1', 'thumbsup', '-1', 'thumbsdown', 'ok_hand', 'punch', 'facepunch', 'fist', 'v', 'wave', 'hand', 'raised_hand', 'open_hands', 'point_up', 'point_down', 'point_left', 'point_right', 'raised_hands', 'pray', 'point_up_2', 'clap', 'muscle', 'metal', 'fu', 'walking', 'runner', 'running', 'couple', 'family', 'two_men_holding_hands', 'two_women_holding_hands', 'dancer', 'dancers', 'ok_woman', 'no_good', 'information_desk_person', 'raising_hand', 'bride_with_veil', 'person_with_pouting_face', 'person_frowning', 'bow', 'couplekiss', 'couple_with_heart', 'massage', 'haircut', 'nail_care', 'boy', 'girl', 'woman', 'man', 'baby', 'older_woman', 'older_man', 'person_with_blond_hair', 'man_with_gua_pi_mao', 'man_with_turban', 'construction_worker', 'cop', 'angel', 'princess', 'smiley_cat', 'smile_cat', 'heart_eyes_cat', 'kissing_cat', 'smirk_cat', 'scream_cat', 'crying_cat_face', 'joy_cat', 'pouting_cat', 'japanese_ogre', 'japanese_goblin', 'see_no_evil', 'hear_no_evil', 'speak_no_evil', 'guardsman', 'skull', 'feet', 'lips', 'kiss', 'droplet', 'ear', 'eyes', 'nose', 'tongue', 'love_letter', 'bust_in_silhouette', 'busts_in_silhouette', 'speech_balloon', 'thought_balloon', 'feelsgood', 'finnadie', 'goberserk', 'godmode', 'hurtrealbad', 'rage1', 'rage2', 'rage3', 'rage4', 'suspect', 'trollface', 'sunny', 'umbrella', 'cloud', 'snowflake', 'snowman', 'zap', 'cyclone', 'foggy', 'ocean', 'cat', 'dog', 'mouse', 'hamster', 'rabbit', 'wolf', 'frog', 'tiger', 'koala', 'bear', 'pig', 'pig_nose', 'cow', 'boar', 'monkey_face', 'monkey', 'horse', 'racehorse', 'camel', 'sheep', 'elephant', 'panda_face', 'snake', 'bird', 'baby_chick', 'hatched_chick', 'hatching_chick', 'chicken', 'penguin', 'turtle', 'bug', 'honeybee', 'ant', 'beetle', 'snail', 'octopus', 'tropical_fish', 'fish', 'whale', 'whale2', 'dolphin', 'cow2', 'ram', 'rat', 'water_buffalo', 'tiger2', 'rabbit2', 'dragon', 'goat', 'rooster', 'dog2', 'pig2', 'mouse2', 'ox', 'dragon_face', 'blowfish', 'crocodile', 'dromedary_camel', 'leopard', 'cat2', 'poodle', 'paw_prints', 'bouquet', 'cherry_blossom', 'tulip', 'four_leaf_clover', 'rose', 'sunflower', 'hibiscus', 'maple_leaf', 'leaves', 'fallen_leaf', 'herb', 'mushroom', 'cactus', 'palm_tree', 'evergreen_tree', 'deciduous_tree', 'chestnut', 'seedling', 'blossom', 'ear_of_rice', 'shell', 'globe_with_meridians', 'sun_with_face', 'full_moon_with_face', 'new_moon_with_face', 'new_moon', 'waxing_crescent_moon', 'first_quarter_moon', 'waxing_gibbous_moon', 'full_moon', 'waning_gibbous_moon', 'last_quarter_moon', 'waning_crescent_moon', 'last_quarter_moon_with_face', 'first_quarter_moon_with_face', 'moon', 'earth_africa', 'earth_americas', 'earth_asia', 'volcano', 'milky_way', 'partly_sunny', 'octocat', 'squirrel', 'bamboo', 'gift_heart', 'dolls', 'school_satchel', 'mortar_board', 'flags', 'fireworks', 'sparkler', 'wind_chime', 'rice_scene', 'jack_o_lantern', 'ghost', 'santa', 'christmas_tree', 'gift', 'bell', 'no_bell', 'tanabata_tree', 'tada', 'confetti_ball', 'balloon', 'crystal_ball', 'cd', 'dvd', 'floppy_disk', 'camera', 'video_camera', 'movie_camera', 'computer', 'tv', 'iphone', 'phone', 'telephone', 'telephone_receiver', 'pager', 'fax', 'minidisc', 'vhs', 'sound', 'speaker', 'mute', 'loudspeaker', 'mega', 'hourglass', 'hourglass_flowing_sand', 'alarm_clock', 'watch', 'radio', 'satellite', 'loop', 'mag', 'mag_right', 'unlock', 'lock', 'lock_with_ink_pen', 'closed_lock_with_key', 'key', 'bulb', 'flashlight', 'high_brightness', 'low_brightness', 'electric_plug', 'battery', 'calling', 'email', 'mailbox', 'postbox', 'bath', 'bathtub', 'shower', 'toilet', 'wrench', 'nut_and_bolt', 'hammer', 'seat', 'moneybag', 'yen', 'dollar', 'pound', 'euro', 'credit_card', 'money_with_wings', 'e-mail', 'inbox_tray', 'outbox_tray', 'envelope', 'incoming_envelope', 'postal_horn', 'mailbox_closed', 'mailbox_with_mail', 'mailbox_with_no_mail', 'door', 'smoking', 'bomb', 'gun', 'hocho', 'pill', 'syringe', 'page_facing_up', 'page_with_curl', 'bookmark_tabs', 'bar_chart', 'chart_with_upwards_trend', 'chart_with_downwards_trend', 'scroll', 'clipboard', 'calendar', 'date', 'card_index', 'file_folder', 'open_file_folder', 'scissors', 'pushpin', 'paperclip', 'black_nib', 'pencil2', 'straight_ruler', 'triangular_ruler', 'closed_book', 'green_book', 'blue_book', 'orange_book', 'notebook', 'notebook_with_decorative_cover', 'ledger', 'books', 'bookmark', 'name_badge', 'microscope', 'telescope', 'newspaper', 'football', 'basketball', 'soccer', 'baseball', 'tennis', '8ball', 'rugby_football', 'bowling', 'golf', 'mountain_bicyclist', 'bicyclist', 'horse_racing', 'snowboarder', 'swimmer', 'surfer', 'ski', 'spades', 'hearts', 'clubs', 'diamonds', 'gem', 'ring', 'trophy', 'musical_score', 'musical_keyboard', 'violin', 'space_invader', 'video_game', 'black_joker', 'flower_playing_cards', 'game_die', 'dart', 'mahjong', 'clapper', 'memo', 'pencil', 'book', 'art', 'microphone', 'headphones', 'trumpet', 'saxophone', 'guitar', 'shoe', 'sandal', 'high_heel', 'lipstick', 'boot', 'shirt', 'tshirt', 'necktie', 'womans_clothes', 'dress', 'running_shirt_with_sash', 'jeans', 'kimono', 'bikini', 'ribbon', 'tophat', 'crown', 'womans_hat', 'mans_shoe', 'closed_umbrella', 'briefcase', 'handbag', 'pouch', 'purse', 'eyeglasses', 'fishing_pole_and_fish', 'coffee', 'tea', 'sake', 'baby_bottle', 'beer', 'beers', 'cocktail', 'tropical_drink', 'wine_glass', 'fork_and_knife', 'pizza', 'hamburger', 'fries', 'poultry_leg', 'meat_on_bone', 'spaghetti', 'curry', 'fried_shrimp', 'bento', 'sushi', 'fish_cake', 'rice_ball', 'rice_cracker', 'rice', 'ramen', 'stew', 'oden', 'dango', 'egg', 'bread', 'doughnut', 'custard', 'icecream', 'ice_cream', 'shaved_ice', 'birthday', 'cake', 'cookie', 'chocolate_bar', 'candy', 'lollipop', 'honey_pot', 'apple', 'green_apple', 'tangerine', 'lemon', 'cherries', 'grapes', 'watermelon', 'strawberry', 'peach', 'melon', 'banana', 'pear', 'pineapple', 'sweet_potato', 'eggplant', 'tomato', 'corn', 'house', 'house_with_garden', 'school', 'office', 'post_office', 'hospital', 'bank', 'convenience_store', 'love_hotel', 'hotel', 'wedding', 'church', 'department_store', 'european_post_office', 'city_sunrise', 'city_sunset', 'japanese_castle', 'european_castle', 'tent', 'factory', 'tokyo_tower', 'japan', 'mount_fuji', 'sunrise_over_mountains', 'sunrise', 'stars', 'themoreyouknow', 'tmyk', 'statue_of_liberty', 'bridge_at_night', 'carousel_horse', 'rainbow', 'ferris_wheel', 'fountain', 'roller_coaster', 'ship', 'speedboat', 'boat', 'sailboat', 'rowboat', 'anchor', 'rocket', 'airplane', 'helicopter', 'steam_locomotive', 'tram', 'mountain_railway', 'bike', 'aerial_tramway', 'suspension_railway', 'mountain_cableway', 'tractor', 'blue_car', 'oncoming_automobile', 'car', 'red_car', 'taxi', 'oncoming_taxi', 'articulated_lorry', 'bus', 'oncoming_bus', 'rotating_light', 'police_car', 'oncoming_police_car', 'fire_engine', 'ambulance', 'minibus', 'truck', 'train', 'station', 'train2', 'bullettrain_front', 'bullettrain_side', 'light_rail', 'monorail', 'railway_car', 'trolleybus', 'ticket', 'fuelpump', 'vertical_traffic_light', 'traffic_light', 'warning', 'construction', 'beginner', 'atm', 'slot_machine', 'busstop', 'barber', 'hotsprings', 'checkered_flag', 'crossed_flags', 'izakaya_lantern', 'moyai', 'circus_tent', 'performing_arts', 'round_pushpin', 'triangular_flag_on_post', 'jp', 'kr', 'cn', 'us', 'fr', 'es', 'it', 'ru', 'gb', 'uk', 'de', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'keycap_ten', '1234', 'zero', 'hash', 'symbols', 'arrow_backward', 'arrow_down', 'arrow_forward', 'arrow_left', 'capital_abcd', 'abcd', 'abc', 'arrow_lower_left', 'arrow_lower_right', 'arrow_right', 'arrow_up', 'arrow_upper_left', 'arrow_upper_right', 'arrow_double_down', 'arrow_double_up', 'arrow_down_small', 'arrow_heading_down', 'arrow_heading_up', 'leftwards_arrow_with_hook', 'arrow_right_hook', 'left_right_arrow', 'arrow_up_down', 'arrow_up_small', 'arrows_clockwise', 'arrows_counterclockwise', 'rewind', 'fast_forward', 'information_source', 'ok', 'twisted_rightwards_arrows', 'repeat', 'repeat_one', 'new', 'top', 'up', 'cool', 'free', 'ng', 'cinema', 'koko', 'signal_strength', 'u5272', 'u5408', 'u55b6', 'u6307', 'u6708', 'u6709', 'u6e80', 'u7121', 'u7533', 'u7a7a', 'u7981', 'sa', 'restroom', 'mens', 'womens', 'baby_symbol', 'no_smoking', 'parking', 'wheelchair', 'metro', 'baggage_claim', 'accept', 'wc', 'potable_water', 'put_litter_in_its_place', 'secret', 'congratulations', 'm', 'passport_control', 'left_luggage', 'customs', 'ideograph_advantage', 'cl', 'sos', 'id', 'no_entry_sign', 'underage', 'no_mobile_phones', 'do_not_litter', 'non-potable_water', 'no_bicycles', 'no_pedestrians', 'children_crossing', 'no_entry', 'eight_spoked_asterisk', 'eight_pointed_black_star', 'heart_decoration', 'vs', 'vibration_mode', 'mobile_phone_off', 'chart', 'currency_exchange', 'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpius', 'sagittarius', 'capricorn', 'aquarius', 'pisces', 'ophiuchus', 'six_pointed_star', 'negative_squared_cross_mark', 'a', 'b', 'ab', 'o2', 'diamond_shape_with_a_dot_inside', 'recycle', 'end', 'on', 'soon', 'clock1', 'clock130', 'clock10', 'clock1030', 'clock11', 'clock1130', 'clock12', 'clock1230', 'clock2', 'clock230', 'clock3', 'clock330', 'clock4', 'clock430', 'clock5', 'clock530', 'clock6', 'clock630', 'clock7', 'clock730', 'clock8', 'clock830', 'clock9', 'clock930', 'heavy_dollar_sign', 'copyright', 'registered', 'tm', 'x', 'heavy_exclamation_mark', 'bangbang', 'interrobang', 'o', 'heavy_multiplication_x', 'heavy_plus_sign', 'heavy_minus_sign', 'heavy_division_sign', 'white_flower', '100', 'heavy_check_mark', 'ballot_box_with_check', 'radio_button', 'link', 'curly_loop', 'wavy_dash', 'part_alternation_mark', 'trident', 'black_square', 'white_square', 'white_check_mark', 'black_square_button', 'white_square_button', 'black_circle', 'white_circle', 'red_circle', 'large_blue_circle', 'large_blue_diamond', 'large_orange_diamond', 'small_blue_diamond', 'small_orange_diamond', 'small_red_triangle', 'small_red_triangle_down', 'shipit'];
+        this.emojiRegex = regex.smileys;
+      }
 
-            this.allEmojiList = this.emojiList.concat(this.options.customEmoji);
+      babelHelpers.createClass(Emoji, [{
+        key: 'process',
+        value: function process() {
+          var _this = this;
 
-            this.emojiRegex = new RegExp(':(' + this.allEmojiList.join('|') + '):', 'g');
-        }
-
-        babelHelpers.createClass(Emoji, [{
-            key: 'process',
-            value: function process() {
-                var _this = this;
-
-                return this.output.replace(this.emojiRegex, function (match, text) {
-                    return _this.options.template.emoji(text, _this.options);
-                });
+          return this.output.replace(this.emojiRegex, function (match) {
+            var emoji = Emoji.getEmoji(match);
+            if (emoji) {
+              return _this.options.template.emoji(emoji, _this.options);
             }
-        }]);
-        return Emoji;
+            return match;
+          });
+        }
+      }], [{
+        key: 'getEmoji',
+        value: function getEmoji(match) {
+          return match[0] === ':' && match[match.length - 1] === ':' && match.substring(1, match.length - 1);
+        }
+      }]);
+      return Emoji;
     }();
 
     var Smiley = function () {
-        function Smiley(input, options) {
-            babelHelpers.classCallCheck(this, Smiley);
+      function Smiley(input, options) {
+        babelHelpers.classCallCheck(this, Smiley);
 
-            this.input = ' ' + input + ' '; //hack to consider the first and last element
-            this.options = options;
+        this.input = input;
+        this.options = options;
 
-            var defaultIcons = [{
-                'text': ' :) ',
-                'code': '&#xe60a'
-            }, {
-                'text': ' :D ',
-                'code': '&#xe608'
-            }, {
-                'text': ' :d ',
-                'code': '&#xe608'
-            }, {
-                'text': ' :( ',
-                'code': '&#xe60e'
-            }, {
-                'text': ' :/ ',
-                'code': '&#xe620'
+        var defaultIcons = [{
+          'text': ':)',
+          'code': '&#xe60a'
+        }, {
+          'text': ':D',
+          'code': '&#xe608'
+        }, {
+          'text': ':d',
+          'code': '&#xe608'
+        }, {
+          'text': ':(',
+          'code': '&#xe60e'
+        }, {
+          'text': ':/',
+          'code': '&#xe620'
 
-            }, {
-                'text': ' :P ',
-                'code': '&#xe60c'
-            }, {
-                'text': ' :p ',
-                'code': '&#xe60c'
-            }, {
-                'text': ' 3:) ',
-                'code': '&#xe618'
-            }, {
-                'text': ' (^) ',
-                'code': '&#xe607'
-            }, {
-                'text': ' ;) ',
-                'code': '&#xe610'
-            }, {
-                'text': ' :o ',
-                'code': '&#xe61a'
-            }, {
-                'text': ' -_- ',
-                'code': '&#xe61e'
-            }, {
-                'text': ' (y) ',
-                'code': '&#xe606'
-            }, {
-                'text': ' :* ',
-                'code': '&#xe604'
-            }, {
-                'text': ' &lt;3 ',
-                'code': '&#xe604'
-            }, {
-                'text': ' <3 ',
-                'code': '&#xe604'
-            }, {
-                'text': ' &lt;/3 ',
-                'code': '&#xe605'
-            }, {
-                'text': ' </3 ',
-                'code': '&#xe605'
-            }, {
-                'text': ' ^_^ ',
-                'code': '&#xe612'
-            }, {
-                'text': ' 8-) ',
-                'code': '&#xe614'
-            }, {
-                'text': ' 8| ',
-                'code': '&#xe614'
-            }, {
-                'text': ' :S ',
-                'code': '&#xe61c'
-            }, {
-                'text': ' :s ',
-                'code': '&#xe61c'
-            }];
+        }, {
+          'text': ':P',
+          'code': '&#xe60c'
+        }, {
+          'text': ':p',
+          'code': '&#xe60c'
+        }, {
+          'text': '3:)',
+          'code': '&#xe618'
+        }, {
+          'text': '(^)',
+          'code': '&#xe607'
+        }, {
+          'text': ';)',
+          'code': '&#xe610'
+        }, {
+          'text': ':o',
+          'code': '&#xe61a'
+        }, {
+          'text': '-_-',
+          'code': '&#xe61e'
+        }, {
+          'text': '(y)',
+          'code': '&#xe606'
+        }, {
+          'text': ':*',
+          'code': '&#xe604'
+        }, {
+          'text': '&lt;3',
+          'code': '&#xe604'
+        }, {
+          'text': '<3',
+          'code': '&#xe604'
+        }, {
+          'text': '&lt;/3',
+          'code': '&#xe605'
+        }, {
+          'text': '</3',
+          'code': '&#xe605'
+        }, {
+          'text': '^_^',
+          'code': '&#xe612'
+        }, {
+          'text': '8-)',
+          'code': '&#xe614'
+        }, {
+          'text': '8|',
+          'code': '&#xe614'
+        }, {
+          'text': ':S',
+          'code': '&#xe61c'
+        }, {
+          'text': ':s',
+          'code': '&#xe61c'
+        }];
 
-            this.icons = options.customFontIcons.length ? options.customFontIcons : defaultIcons;
+        this.icons = options.customFontIcons.length ? options.customFontIcons : defaultIcons;
 
-            this.escapedSymbols = this.icons.map(function (val) {
-                return escapeRegExp(val.text);
-            });
+        this.escapedSymbols = this.icons.map(function (val) {
+          return escapeRegExp(val.text);
+        });
 
-            this.smileyRegex = new RegExp('(' + this.escapedSymbols.join('|') + ')', 'g');
+        this.smileyRegex = new RegExp('(^|\\s)(' + this.escapedSymbols.join('|') + ')(?=\\s|$)', 'gi');
+      }
+
+      babelHelpers.createClass(Smiley, [{
+        key: 'process',
+        value: function process() {
+          var _this = this;
+
+          return this.input.replace(this.smileyRegex, function (match, pre, text) {
+            var index = _this.escapedSymbols.indexOf(escapeRegExp(text));
+            var code = _this.icons[index].code;
+            return _this.options.template.smiley(text, pre, code, _this.options);
+          });
         }
-
-        babelHelpers.createClass(Smiley, [{
-            key: 'process',
-            value: function process() {
-                var _this = this;
-
-                var processedString = this.input.replace(this.smileyRegex, function (match, text) {
-                    var index = _this.escapedSymbols.indexOf(escapeRegExp(text));
-                    var code = _this.icons[index].code;
-                    return _this.options.template.smiley(text, code, _this.options);
-                });
-
-                return processedString.substring(1, processedString.length - 1);
-            }
-        }]);
-        return Smiley;
+      }]);
+      return Smiley;
     }();
 
     var Url = function () {
-    	function Url(input, options) {
-    		babelHelpers.classCallCheck(this, Url);
+      function Url(input, options) {
+        babelHelpers.classCallCheck(this, Url);
 
-    		this.input = input;
-    		this.options = options;
-    		this.urlRegex = urlRegex();
-    	}
+        this.input = input;
+        this.options = options;
+        this.urlRegex = urlRegex();
+      }
 
-    	babelHelpers.createClass(Url, [{
-    		key: 'process',
-    		value: function process() {
-    			var _this = this;
+      babelHelpers.createClass(Url, [{
+        key: 'process',
+        value: function process() {
+          var _this = this;
 
-    			var config = this.options.linkOptions;
-    			return this.input.replace(this.urlRegex, function (match) {
-    				var extension = lastElement(match.split('.'));
-    				if (lastElement(match) === '/') match = match.slice(0, -1);
-    				if (config.exclude.indexOf(extension) === -1) return _this.options.template.url(match, _this.options);
-    				return match;
-    			});
-    		}
-    	}]);
-    	return Url;
+          var config = this.options.linkOptions;
+          return this.input.replace(this.urlRegex, function (match) {
+            var extension = lastElement(match.split('.'));
+            if (lastElement(match) === '/') match = match.slice(0, -1);
+            if (config.exclude.indexOf(extension) === -1) return _this.options.template.url(match, _this.options);
+            return match;
+          });
+        }
+      }]);
+      return Url;
     }();
 
     var fetchJsonp = __commonjs(function (module, exports, global) {
@@ -681,25 +714,25 @@
      * @return {null}
      */
     function playVideo(options) {
-    	/** Execute the customVideoClickHandler if the user wants to handle it on his own. */
-    	if (options.customVideoClickHandler) return options.videoClickHandler(options, template);
+      /** Execute the customVideoClickHandler if the user wants to handle it on his own. */
+      if (options.customVideoClickHandler) return options.videoClickHandler(options, template);
 
-    	var classes = document.getElementsByClassName(options.videoClickClass);
-    	for (var i = 0; i < classes.length; i++) {
-    		classes[i].onclick = function () {
-    			options.onVideoShow();
-    			var url = this.getAttribute('data-ejs-url') + "?autoplay=true";
-    			this.parentNode.parentNode.innerHTML = template(url, options);
-    		};
-    	}
+      var classes = document.getElementsByClassName(options.videoClickClass);
+      for (var i = 0; i < classes.length; i++) {
+        classes[i].onclick = function () {
+          options.onVideoShow();
+          var url = this.getAttribute('data-ejs-url') + "?autoplay=true";
+          this.parentNode.parentNode.innerHTML = template(url, options);
+        };
+      }
     }
 
     function getDetailsTemplate(data, fullData, embedUrl, options) {
-    	if (data.host === 'vimeo') {
-    		return options.template.detailsVimeo(data, fullData, embedUrl, options);
-    	} else if (data.host === 'youtube') {
-    		return options.template.detailsYoutube(data, fullData, embedUrl, options);
-    	}
+      if (data.host === 'vimeo') {
+        return options.template.detailsVimeo(data, fullData, embedUrl, options);
+      } else if (data.host === 'youtube') {
+        return options.template.detailsYoutube(data, fullData, embedUrl, options);
+      }
     }
 
     /**
@@ -708,18 +741,18 @@
      * @return {null}
      */
     function applyVideoJS(options) {
-    	options.videojsOptions.width = options.videoWidth;
-    	options.videojsOptions.height = options.videoHeight;
-    	if (options.videoJS) {
-    		if (!options.plugins.videojs) throw new ReferenceError("You have enabled videojs but you haven't loaded the library.Find it at http://videojs.com/");
-    		var VideoJS = options.plugins.videojs;
-    		var elements = options.input.getElementsByClassName('ejs-video-js');
-    		for (var i = 0; i < elements.length; i++) {
-    			VideoJS(elements[i], options.videojsOptions, function () {
-    				return options.videojsCallback();
-    			});
-    		}
-    	}
+      options.videojsOptions.width = options.videoWidth;
+      options.videojsOptions.height = options.videoHeight;
+      if (options.videoJS) {
+        if (!options.plugins.videojs) throw new ReferenceError("You have enabled videojs but you haven't loaded the library.Find it at http://videojs.com/");
+        var VideoJS = options.plugins.videojs;
+        var elements = options.input.getElementsByClassName('ejs-video-js');
+        for (var i = 0; i < elements.length; i++) {
+          VideoJS(elements[i], options.videojsOptions, function () {
+            return options.videojsCallback();
+          });
+        }
+      }
     }
 
     /**
@@ -735,70 +768,70 @@
     }
 
     function inlineEmbed(_) {
-    	var regexInline = _.options.link ? new RegExp('([^>]*' + _.regex.source + ')</a>', 'gm') : new RegExp('([^\\s]*' + _.regex.source + ')', 'gm');
-    	_.output = _.output.replace(regexInline, function (match) {
-    		var url = _.options.link ? match.slice(0, -4) : match;
-    		if (_.options.served.indexOf(url) === -1) {
-    			_.options.served.push(url);
-    			if (_.options.link) {
-    				return !_.options.inlineText ? _.template(match.slice(0, -4)) + '</a>' : match + _.template(match.slice(0, -4));
-    			} else {
-    				return !_.options.inlineText ? _.template(match) : match + _.template(match);
-    			}
-    		} else {
-    			return match; //TODO : check whether this should be `match`
-    		}
-    	});
-    	return [_.output, _.embeds];
+      var regexInline = _.options.link ? new RegExp('([^>]*' + _.regex.source + ')</a>', 'gm') : new RegExp('([^\\s]*' + _.regex.source + ')', 'gm');
+      _.output = _.output.replace(regexInline, function (match) {
+        var url = _.options.link ? match.slice(0, -4) : match;
+        if (_.options.served.indexOf(url) === -1) {
+          _.options.served.push(url);
+          if (_.options.link) {
+            return !_.options.inlineText ? _.template(match.slice(0, -4)) + '</a>' : match + _.template(match.slice(0, -4));
+          } else {
+            return !_.options.inlineText ? _.template(match) : match + _.template(match);
+          }
+        } else {
+          return match; //TODO : check whether this should be `match`
+        }
+      });
+      return [_.output, _.embeds];
     }
 
     function normalEmbed(_) {
-    	var match = undefined;
-    	while ((match = matches(_.regex, _.input)) !== null) {
-    		var url = match[0];
-    		if (!(_.options.served.indexOf(url) === -1) || _.options.served.length && _.options.singleEmbed) continue;
-    		_.options.served.push(url);
-    		var text = _.template(url);
-    		_.embeds.push({
-    			text: text,
-    			index: match.index
-    		});
-    	}
-    	return [_.output, _.embeds];
+      var match = void 0;
+      while ((match = matches(_.regex, _.input)) !== null) {
+        var url = match[0];
+        if (!(_.options.served.indexOf(url) === -1) || _.options.served.length && _.options.singleEmbed) continue;
+        _.options.served.push(url);
+        var text = _.template(url);
+        _.embeds.push({
+          text: text,
+          index: match.index
+        });
+      }
+      return [_.output, _.embeds];
     }
 
     function embed(_) {
-    	return ifInline(_.options, _.service) ? inlineEmbed(_) : normalEmbed(_);
+      return ifInline(_.options, _.service) ? inlineEmbed(_) : normalEmbed(_);
     }
 
     var Base = function () {
-    	function Base(input, output, embeds, options, regex, service) {
-    		babelHelpers.classCallCheck(this, Base);
+      function Base(input, output, embeds, options, regex, service) {
+        babelHelpers.classCallCheck(this, Base);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.regex = regex;
-    		this.service = service;
-    	}
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.regex = regex;
+        this.service = service;
+      }
 
-    	babelHelpers.createClass(Base, [{
-    		key: 'template',
-    		value: function template(match) {
-    			return this.options.template[this.service](match, this.options);
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			return embed(this);
-    		}
-    	}]);
-    	return Base;
+      babelHelpers.createClass(Base, [{
+        key: 'template',
+        value: function template(match) {
+          return this.options.template[this.service](match, this.options);
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          return embed(this);
+        }
+      }]);
+      return Base;
     }();
 
     function baseEmbed(input, output, embeds, options, regex, service, flag) {
-    	return ifEmbed(options, service) || ifEmbed(options, service) && flag ? new Base(input, output, embeds, options, regex, service).process() : [output, embeds];
+      return ifEmbed(options, service) || ifEmbed(options, service) && flag ? new Base(input, output, embeds, options, regex, service).process() : [output, embeds];
     }
 
     /**
@@ -810,16 +843,16 @@
      * @return {Promise}           resolves to the text
      */
     function getInlineData(_, urlToText, match) {
-    	var url = (_.options.link ? match[0].slice(0, -4) : match[0]) || match[1];
-    	if (_.options.served.indexOf(url) >= 0) return Promise.resolve(null);
+      var url = (_.options.link ? match[0].slice(0, -4) : match[0]) || match[1];
+      if (_.options.served.indexOf(url) >= 0) return Promise.resolve(null);
 
-    	return new Promise(function (resolve) {
-    		urlToText(_, match, url).then(function (text) {
-    			if (!text) return resolve();
-    			_.options.served.push(url);
-    			resolve(text);
-    		});
-    	});
+      return new Promise(function (resolve) {
+        urlToText(_, match, url).then(function (text) {
+          if (!text) return resolve();
+          _.options.served.push(url);
+          resolve(text);
+        });
+      });
     }
 
     /**
@@ -829,38 +862,38 @@
      * @returns Promise
      */
     function inlineAsyncEmbed(_, urlToText) {
-    	var regexInline = _.options.link ? new RegExp('([^>]*' + _.regex.source + ')</a>', 'gi') : new RegExp('([^\\s]*' + _.regex.source + ')', 'gi');
-    	var match = undefined,
-    	    promises = [];
+      var regexInline = _.options.link ? new RegExp('([^>]*' + _.regex.source + ')</a>', 'gi') : new RegExp('([^\\s]*' + _.regex.source + ')', 'gi');
+      var match = void 0,
+          promises = [];
 
-    	while ((match = matches(regexInline, _.output)) !== null) {
-    		promises.push(getInlineData(_, urlToText, match));
-    	}return new Promise(function (resolve) {
-    		if (matches.length) Promise.all(promises).then(function (data) {
-    			var i = 0;
-    			_.output = _.output.replace(regexInline, function (match) {
-    				if (_.options.link) return !_.options.inlineText ? data[i] + '</a>' : match + data[i++];else return !_.options.inlineText ? data[i] : match + data[i++];
-    			});
-    			resolve(_.output);
-    		});else resolve(_.output);
-    	});
+      while ((match = matches(regexInline, _.output)) !== null) {
+        promises.push(getInlineData(_, urlToText, match));
+      }return new Promise(function (resolve) {
+        if (matches.length) Promise.all(promises).then(function (data) {
+          var i = 0;
+          _.output = _.output.replace(regexInline, function (match) {
+            if (_.options.link) return !_.options.inlineText ? data[i] + '</a>' : match + data[i++];else return !_.options.inlineText ? data[i] : match + data[i++];
+          });
+          resolve(_.output);
+        });else resolve(_.output);
+      });
     }
 
     function getNormalData(_, urlToText, match) {
-    	var url = match[0];
-    	if (_.options.served.indexOf(url) >= 0) return;
+      var url = match[0];
+      if (_.options.served.indexOf(url) >= 0) return;
 
-    	return new Promise(function (resolve) {
-    		urlToText(_, match, url, true).then(function (text) {
-    			if (!text) resolve();
-    			_.options.served.push(url);
-    			_.embeds.push({
-    				text: text,
-    				index: match.index
-    			});
-    			resolve();
-    		});
-    	});
+      return new Promise(function (resolve) {
+        urlToText(_, match, url, true).then(function (text) {
+          if (!text) resolve();
+          _.options.served.push(url);
+          _.embeds.push({
+            text: text,
+            index: match.index
+          });
+          resolve();
+        });
+      });
     }
 
     /**
@@ -870,127 +903,101 @@
      * @return {Promise}
      */
     function normalAsyncEmbed(_, urlToText) {
-    	var match = undefined,
-    	    promises = [];
-    	while ((match = matches(_.regex, _.input)) !== null) {
-    		promises.push(getNormalData(_, urlToText, match));
-    	}return new Promise(function (resolve) {
-    		Promise.all(promises).then(function () {
-    			resolve(_.embeds);
-    		});
-    	});
+      var match = void 0,
+          promises = [];
+      while ((match = matches(_.regex, _.input)) !== null) {
+        promises.push(getNormalData(_, urlToText, match));
+      }return new Promise(function (resolve) {
+        Promise.all(promises).then(function () {
+          resolve(_.embeds);
+        });
+      });
     }
 
     function asyncEmbed(_, urlToText) {
-    	return new Promise(function (resolve) {
-    		if (ifInline(_.options, _.service)) inlineAsyncEmbed(_, urlToText).then(function (output) {
-    			return resolve([output, _.embeds]);
-    		});else normalAsyncEmbed(_, urlToText).then(function (embeds) {
-    			return resolve([_.output, embeds]);
-    		});
-    	});
+      return new Promise(function (resolve) {
+        if (ifInline(_.options, _.service)) inlineAsyncEmbed(_, urlToText).then(function (output) {
+          return resolve([output, _.embeds]);
+        });else normalAsyncEmbed(_, urlToText).then(function (embeds) {
+          return resolve([_.output, embeds]);
+        });
+      });
     }
 
-    var regex = {
-    	basicAudio: /((?:https?):\/\/\S*\.(?:wav|mp3|ogg))/gi,
-    	soundCloud: /(soundcloud.com)\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/gi,
-    	spotify: /spotify.com\/track\/[a-zA-Z0-9_]+/gi,
-    	codepen: /http:\/\/codepen.io\/([A-Za-z0-9_]+)\/pen\/([A-Za-z0-9_]+)/gi,
-    	gist: /gist.github.com\/[a-zA-Z0-9_-]+\/([a-zA-Z0-9]+)/gi,
-    	highlightCode: /(`{3})(\s|[a-z]+)\s*([\s\S]*?[^`])\s*\1(?!`)/gm,
-    	inlineCode: /(`)\s*([\s\S]*?[^`])\s*\1(?!`)/gm,
-    	ideone: /ideone.com\/[a-zA-Z0-9]{6}/gi,
-    	jsbin: /jsbin.com\/[a-zA-Z0-9_]+\/[0-9_]+/gi,
-    	jsfiddle: /jsfiddle.net\/[a-zA-Z0-9_]+\/[a-zA-Z0-9_\/]+/gi,
-    	plunker: /plnkr.co\/edit\/[a-zA-Z0-9\?=]+/gi,
-    	basicImage: /((?:https?):\/\/\S*\.(?:gif|jpg|jpeg|tiff|png|svg|webp))/gi,
-    	flickr: /flickr.com\/[a-z]+\/[a-zA-Z@_$!\d\-\]+\/[\d]+/gi,
-    	instagram: /instagram.com\/p\/[a-zA-Z0-9_\/\?\-\=]+/gi,
-    	slideShare: /slideshare.net\/[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*/gi,
-    	github: /[^\.]github.com\/([\w\.\-]+)\/([\w\.\-]+)/gi,
-    	basicVideo: /(?:https?):\/\/\S*\.(?:ogv|webm|mp4)/gi,
-    	dailymotion: /dailymotion.com\/video\/[a-zA-Z0-9-_]+/gi,
-    	liveleak: /liveleak.com\/view\?i=[a-zA-Z0-9_]+/gi,
-    	ted: /ted.com\/talks\/[a-zA-Z0-9_]+/gi,
-    	ustream: /ustream.tv\/[a-z\/0-9]*/gi,
-    	vimeo: /https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)*/gi,
-    	vine: /vine.co\/v\/[a-zA-Z0-9]+/gi,
-    	youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[?=&+%\w-]*/gi,
-    	gmap: /@\((.+)\)/gi,
-    	twitter: /https:\/\/twitter\.com\/\w+\/\w+\/\d+/gi
-    };
-
     var Twitter = function () {
-    	function Twitter(input, output, options, embeds) {
-    		babelHelpers.classCallCheck(this, Twitter);
+      function Twitter(input, output, options, embeds) {
+        babelHelpers.classCallCheck(this, Twitter);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.regex = regex.twitter;
-    		this.service = 'twitter';
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.regex = regex.twitter;
+        this.service = 'twitter';
 
-    		this.load = this.load.bind(this);
-    		this.options.input.addEventListener('rendered', this.load, false);
-    	}
+        this.load = this.load.bind(this);
+        if (typeof this.options.input !== 'string') {
+          this.options.input.addEventListener('rendered', this.load, false);
+        }
+      }
 
-    	/**
+      /**
       * Fetches the data from twitter's oEmbed API
       * @param  {string} url URL of the tweet
       * @return {object}     data containing the tweet info
       */
 
-    	babelHelpers.createClass(Twitter, [{
-    		key: 'tweetData',
-    		value: function tweetData(url) {
-    			var config = this.options.tweetOptions;
-    			var apiUrl = 'https://api.twitter.com/1/statuses/oembed.json?omit_script=true&url=' + url + '&maxwidth=' + config.maxWidth + '&hide_media=' + config.hideMedia + '&hide_thread=' + config.hideThread + '&align=' + config.align + '&lang=' + config.lang;
-    			return new Promise(function (resolve) {
-    				fetchJsonp$1(apiUrl, { credentials: 'include' }).then(function (data) {
-    					return data.json();
-    				}).then(function (json) {
-    					return resolve(json);
-    				});
-    			});
-    		}
 
-    		/**
+      babelHelpers.createClass(Twitter, [{
+        key: 'tweetData',
+        value: function tweetData(url) {
+          var config = this.options.tweetOptions;
+          var apiUrl = 'https://api.twitter.com/1/statuses/oembed.json?omit_script=true&url=' + url + '&maxwidth=' + config.maxWidth + '&hide_media=' + config.hideMedia + '&hide_thread=' + config.hideThread + '&align=' + config.align + '&lang=' + config.lang;
+          return new Promise(function (resolve) {
+            fetchJsonp$1(apiUrl, { credentials: 'include' }).then(function (data) {
+              return data.json();
+            }).then(function (json) {
+              return resolve(json);
+            });
+          });
+        }
+
+        /**
        * Load twitter widgets
        * @return null
        */
 
-    	}, {
-    		key: 'load',
-    		value: function load() {
-    			var twitter = this.options.plugins.twitter;
-    			twitter.widgets.load(this.options.element); //here this refers to the element
+      }, {
+        key: 'load',
+        value: function load() {
+          var twitter = this.options.plugins.twitter;
+          twitter.widgets.load(this.options.element); //here this refers to the element
 
-    			//Execute the function after the widget is loaded
-    			twitter.events.bind('loaded', this.options.onTweetsLoad);
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			var _this2 = this;
+          //Execute the function after the widget is loaded
+          twitter.events.bind('loaded', this.options.onTweetsLoad);
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          var _this2 = this;
 
-    			return new Promise(function (resolve) {
-    				return asyncEmbed(_this2, Twitter.urlToText).then(function (data) {
-    					return resolve(data);
-    				});
-    			});
-    		}
-    	}], [{
-    		key: 'urlToText',
-    		value: function urlToText(_this, match, url) {
-    			return new Promise(function (resolve) {
-    				return _this.tweetData(url).then(function (data) {
-    					return resolve(data.html);
-    				});
-    			});
-    		}
-    	}]);
-    	return Twitter;
+          return new Promise(function (resolve) {
+            return asyncEmbed(_this2, Twitter.urlToText).then(function (data) {
+              return resolve(data);
+            });
+          });
+        }
+      }], [{
+        key: 'urlToText',
+        value: function urlToText(_this, match, url) {
+          return new Promise(function (resolve) {
+            return _this.tweetData(url).then(function (data) {
+              return resolve(data.html);
+            });
+          });
+        }
+      }]);
+      return Twitter;
     }();
 
     (function (self) {
@@ -1400,12 +1407,13 @@
          * @return {array}           Returns an array in the form [latitude, longitude]
          */
 
+
         babelHelpers.createClass(Gmap, [{
             key: 'process',
             value: function process() {
                 var _this = this;
 
-                var match = undefined,
+                var match = void 0,
                     promises = [],
                     allMatches = [];
                 while ((match = matches(this.regex, this.output)) !== null) {
@@ -1499,80 +1507,82 @@
     }();
 
     var Markdown = function () {
-    	function Markdown(output, options) {
-    		babelHelpers.classCallCheck(this, Markdown);
+      function Markdown(output, options) {
+        babelHelpers.classCallCheck(this, Markdown);
 
-    		if (!options.plugins.marked) throw new ReferenceError('marked.js is not loaded.');
-    		this.output = output;
-    		this.options = options;
-    	}
+        if (!options.plugins.marked) throw new ReferenceError('marked.js is not loaded.');
+        this.output = output;
+        this.options = options;
+      }
 
-    	babelHelpers.createClass(Markdown, [{
-    		key: 'process',
-    		value: function process() {
-    			var _this = this;
+      babelHelpers.createClass(Markdown, [{
+        key: 'process',
+        value: function process() {
+          var _this = this;
 
-    			var Marked = this.options.plugins.marked;
-    			var renderer = new Marked.Renderer();
+          var Marked = this.options.plugins.marked;
+          var renderer = new Marked.Renderer();
 
-    			renderer.link = function (href, title, text) {
-    				if (href.indexOf('&lt;/a') === -1) return href;
-    				if (href.match(/&gt;(.+)&lt;\/a/gi)) {
-    					if (!title) title = '';
-    					return '<a href="' + RegExp.$1 + '" rel=' + _this.options.linkOptions.rel + '" target="' + _this.options.linkOptions.target + '" title="' + title + '">' + text + '</a>';
-    				}
-    			};
+          renderer.link = function (href, title, text) {
+            if (href.indexOf('&lt;/a') === -1) return href;
+            if (href.match(/&gt;(.+)&lt;\/a/gi)) {
+              if (!title) title = '';
+              return '<a href="' + RegExp.$1 + '" rel=' + _this.options.linkOptions.rel + '" target="' + _this.options.linkOptions.target + '" title="' + title + '">' + text + '</a>';
+            }
+          };
 
-    			renderer.image = function (href, title, text) {
-    				if (href.indexOf('&lt;/a') === -1) return href;
-    				if (href.match(/&gt;(.+)&lt;\/a/gi)) {
-    					if (!title) title = '';
-    					return '<div class="ejs-image ejs-embed"><div class="ne-image-wrapper"><img src="' + RegExp.$1 + '" title="' + title + '" alt="' + text + '"/></div></div>';
-    				}
-    			};
+          renderer.image = function (href, title, text) {
+            if (href.indexOf('&lt;/a') === -1) return href;
+            if (href.match(/&gt;(.+)&lt;\/a/gi)) {
+              if (!title) title = '';
+              return '<div class="ejs-image ejs-embed"><div class="ne-image-wrapper"><img src="' + RegExp.$1 + '" title="' + title + '" alt="' + text + '"/></div></div>';
+            }
+          };
 
-    			renderer.paragraph = function (text) {
-    				return '<p> ' + text + ' </p>';
-    			}; //for font smiley in end.
+          renderer.paragraph = function (text) {
+            return '<p> ' + text + ' </p>';
+          }; //for font smiley in end.
 
-    			//Fix for heading that should be actually present in marked.js
-    			//if gfm is true the `## Heading` is acceptable but `##Heading` is not
-    			Marked.Lexer.rules.gfm.heading = Marked.Lexer.rules.normal.heading;
-    			Marked.Lexer.rules.tables.heading = Marked.Lexer.rules.normal.heading;
+          //Fix for heading that should be actually present in marked.js
+          //if gfm is true the `## Heading` is acceptable but `##Heading` is not
+          Marked.Lexer.rules.gfm.heading = Marked.Lexer.rules.normal.heading;
+          Marked.Lexer.rules.tables.heading = Marked.Lexer.rules.normal.heading;
 
-    			this.options.markedOptions.renderer = renderer;
-    			this.options.markedOptions.highlight = false;
-    			return Marked(this.output, this.options.markedOptions);
-    		}
-    	}]);
-    	return Markdown;
+          this.options.markedOptions.renderer = renderer;
+          this.options.markedOptions.highlight = false;
+          return Marked(this.output, this.options.markedOptions);
+        }
+      }]);
+      return Markdown;
     }();
 
     var Highlight = function () {
-    	function Highlight(output, options) {
-    		babelHelpers.classCallCheck(this, Highlight);
+      function Highlight(output, options) {
+        babelHelpers.classCallCheck(this, Highlight);
 
-    		if (!options.plugins.highlightjs && !this.isPrism()) {
-    			throw new ReferenceError('\'hljs is not defined. HighlightJS library is needed to highlight code. Visit https://highlightjs.org/\'');
-    		}
+        if (!options.plugins.highlightjs && !this.isPrism()) {
+          throw new ReferenceError('\'hljs is not defined. HighlightJS library is needed to highlight code. Visit https://highlightjs.org/\'');
+        }
 
-    		this.output = output;
-    		this.options = options;
-    		this.regex = regex.highlightCode;
-    		this.inlineCodeRegex = regex.inlineCode;
-    	}
+        this.output = output;
+        this.options = options;
+        this.regex = regex.highlightCode;
+        this.inlineCodeRegex = regex.inlineCode;
+      }
 
-    	/**
+      /**
       * Encodes the characters like <, > and space and replaces them with
       * &lt;, &gt; and &gt; respectively.
       * @param  {string} code The string that has to be encoded.
       * @return {string}      The encoded string
       */
 
-    	babelHelpers.createClass(Highlight, [{
-    		key: 'process',
 
-    		/**
+      babelHelpers.createClass(Highlight, [{
+        key: 'process',
+
+
+        /**
        * Replaces the code block with the pre tags and returns a string having the code
        * formatting using Highlight.js.
        * => Matches the string with the regex and finds the code written in three back-ticks ```
@@ -1588,540 +1598,545 @@
        * => Replaces the code string in the template with the formatted string
        * @return {string} The string in which the code is formatted
        */
-    		value: function process() {
-    			var _this = this;
+        value: function process() {
+          var _this = this;
 
-    			this.output = this.output.replace(this.inlineCodeRegex, function (match, group1, group2) {
-    				return '<code>' + group2 + '</code>';
-    			});
+          this.output = this.output.replace(this.inlineCodeRegex, function (match, group1, group2) {
+            return '<code>' + group2 + '</code>';
+          });
 
-    			return this.output.replace(this.regex, function (match, group1, group2, group3) {
-    				var code = group3;
-    				code = Highlight.trimSpace(code);
-    				code = Highlight.encode(code);
+          return this.output.replace(this.regex, function (match, group1, group2, group3) {
+            var code = group3;
+            code = Highlight.trimSpace(code);
+            code = Highlight.encode(code);
 
-    				// to prevent auto-linking. Not necessary in code
-    				// *blocks*, but in code spans. Will be converted
-    				// back after the auto-linker runs.
-    				code = code.replace(/:\/\//g, '~P');
+            // to prevent auto-linking. Not necessary in code
+            // *blocks*, but in code spans. Will be converted
+            // back after the auto-linker runs.
+            code = code.replace(/:\/\//g, '~P');
 
-    				var language = group2.split('\n')[0];
-    				var highlightedCode = undefined;
+            var language = group2.split('\n')[0];
+            var highlightedCode = void 0;
 
-    				var HighlightJS = _this.options.plugins.highlightjs;
-    				if (language) {
-    					highlightedCode = HighlightJS.highlightAuto(code, [language]);
-    				} else {
-    					highlightedCode = HighlightJS.highlightAuto(code);
-    					language = highlightedCode.language;
-    				}
+            var HighlightJS = _this.options.plugins.highlightjs;
+            if (language) {
+              highlightedCode = HighlightJS.highlightAuto(code, [language]);
+            } else {
+              highlightedCode = HighlightJS.highlightAuto(code);
+              language = highlightedCode.language;
+            }
 
-    				return Highlight.addTemplate(highlightedCode, language);
-    			});
-    		}
-    	}], [{
-    		key: 'encode',
-    		value: function encode(code) {
-    			code = code.replace(/&amp;/gm, '');
-    			code = code.replace(/&lt;/g, '<');
-    			code = code.replace(/&gt;/g, '>');
-    			return code;
-    		}
+            return Highlight.addTemplate(highlightedCode, language);
+          });
+        }
+      }], [{
+        key: 'encode',
+        value: function encode(code) {
+          code = code.replace(/&amp;/gm, '');
+          code = code.replace(/&lt;/g, '<');
+          code = code.replace(/&gt;/g, '>');
+          return code;
+        }
 
-    		/**
+        /**
        * removes whitespace characters
        * @param  {string} code The string from which the whitespace has to be removed
        * @return {string}
        */
 
-    	}, {
-    		key: 'trimSpace',
-    		value: function trimSpace(code) {
-    			code = code.replace(/^([ \t]*)/g, ''); // leading whitespace
-    			code = code.replace(/[ \t]*$/g, ''); // trailing whitespace
-    			return code;
-    		}
+      }, {
+        key: 'trimSpace',
+        value: function trimSpace(code) {
+          code = code.replace(/^([ \t]*)/g, ''); // leading whitespace
+          code = code.replace(/[ \t]*$/g, ''); // trailing whitespace
+          return code;
+        }
 
-    		/**
+        /**
        * Places the code and the language name in the required template
        * @param {string} processedCode
        * @param {string} language
        * @return {string}
        */
 
-    	}, {
-    		key: 'addTemplate',
-    		value: function addTemplate(processedCode, language) {
-    			return '<pre><code class="ejs-code hljs ' + language + '">' + (processedCode.value || processedCode) + '</code></pre>';
-    		}
-    	}]);
-    	return Highlight;
+      }, {
+        key: 'addTemplate',
+        value: function addTemplate(processedCode, language) {
+          return '<pre><code class="ejs-code hljs ' + language + '">' + (processedCode.value || processedCode) + '</code></pre>';
+        }
+      }]);
+      return Highlight;
     }();
 
     var Gist = function () {
-    	function Gist(input, output, options, embeds) {
-    		var _this = this;
+      function Gist(input, output, options, embeds) {
+        var _this = this;
 
-    		babelHelpers.classCallCheck(this, Gist);
+        babelHelpers.classCallCheck(this, Gist);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.regex = regex.gist;
-    		this.service = 'gist';
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.regex = regex.gist;
+        this.service = 'gist';
 
-    		this.options.input.addEventListener('rendered', function () {
-    			_this.load();
-    		});
-    	}
+        if (typeof this.options.input !== 'string') {
+          this.options.input.addEventListener('rendered', function () {
+            _this.load();
+          });
+        }
+      }
 
-    	babelHelpers.createClass(Gist, [{
-    		key: 'template',
-    		value: function template(match) {
-    			return '<div class="ejs-gist" data-src="' + match + '"></div>';
-    		}
-    	}, {
-    		key: 'load',
-    		value: function load() {
-    			var gists = this.options.input.getElementsByClassName('ejs-gist');
-    			for (var i = 0; i < gists.length; i++) {
-    				var gistFrame = document.createElement("iframe");
-    				gistFrame.setAttribute("width", "100%");
-    				gistFrame.id = 'ejs-gist-' + i;
+      babelHelpers.createClass(Gist, [{
+        key: 'template',
+        value: function template(match) {
+          return '<div class="ejs-gist" data-src="' + match + '"></div>';
+        }
+      }, {
+        key: 'load',
+        value: function load() {
+          var gists = this.options.input.getElementsByClassName('ejs-gist');
+          for (var i = 0; i < gists.length; i++) {
+            var gistFrame = document.createElement("iframe");
+            gistFrame.setAttribute("width", "100%");
+            gistFrame.id = 'ejs-gist-' + i;
 
-    				var zone = gists[i];
-    				zone.innerHTML = "";
-    				zone.appendChild(gistFrame);
+            var zone = gists[i];
+            zone.innerHTML = "";
+            zone.appendChild(gistFrame);
 
-    				// Create the iframe's document
-    				var url = gists[i].getAttribute('data-src');
-    				url = url.indexOf('http') === -1 ? 'https://' + url : url;
-    				var gistFrameHTML = '<html><base target="_parent"/><body onload="parent.document.getElementById(\'ejs-gist-' + i + '\').style.height=parseInt(document.body.scrollHeight)+20+\'px\'"><script type="text/javascript" src="' + url + '.js"></script></body></html>';
+            // Create the iframe's document
+            var url = gists[i].getAttribute('data-src');
+            url = url.indexOf('http') === -1 ? 'https://' + url : url;
+            var gistFrameHTML = '<html><base target="_parent"/><body onload="parent.document.getElementById(\'ejs-gist-' + i + '\').style.height=parseInt(document.body.scrollHeight)+20+\'px\'"><script type="text/javascript" src="' + url + '.js"></script></body></html>';
 
-    				// Set iframe's document with a trigger for this document to adjust the height
-    				var gistFrameDoc = gistFrame.document;
+            // Set iframe's document with a trigger for this document to adjust the height
+            var gistFrameDoc = gistFrame.document;
 
-    				if (gistFrame.contentDocument) {
-    					gistFrameDoc = gistFrame.contentDocument;
-    				} else if (gistFrame.contentWindow) {
-    					gistFrameDoc = gistFrame.contentWindow.document;
-    				}
+            if (gistFrame.contentDocument) {
+              gistFrameDoc = gistFrame.contentDocument;
+            } else if (gistFrame.contentWindow) {
+              gistFrameDoc = gistFrame.contentWindow.document;
+            }
 
-    				gistFrameDoc.open();
-    				gistFrameDoc.writeln(gistFrameHTML);
-    				gistFrameDoc.close();
-    			}
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			return embed(this);
-    		}
-    	}]);
-    	return Gist;
+            gistFrameDoc.open();
+            gistFrameDoc.writeln(gistFrameHTML);
+            gistFrameDoc.close();
+          }
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          return embed(this);
+        }
+      }]);
+      return Gist;
     }();
 
     var Youtube = function () {
-    	function Youtube(input, output, options, embeds) {
-    		babelHelpers.classCallCheck(this, Youtube);
+      function Youtube(input, output, options, embeds) {
+        babelHelpers.classCallCheck(this, Youtube);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.regex = regex.youtube;
-    		this.service = 'youtube';
-    	}
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.regex = regex.youtube;
+        this.service = 'youtube';
+      }
 
-    	babelHelpers.createClass(Youtube, [{
-    		key: 'data',
-    		value: function data(id) {
-    			var url = 'https://www.googleapis.com/youtube/v3/videos?id=' + id + '&key=' + this.options.googleAuthKey + '&part=snippet,statistics';
-    			return new Promise(function (resolve) {
-    				fetch(url).then(function (data) {
-    					return data.json();
-    				}).then(function (json) {
-    					return resolve(json.items[0]);
-    				});
-    			});
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			var _this2 = this;
+      babelHelpers.createClass(Youtube, [{
+        key: 'data',
+        value: function data(id) {
+          var url = 'https://www.googleapis.com/youtube/v3/videos?id=' + id + '&key=' + this.options.googleAuthKey + '&part=snippet,statistics';
+          return new Promise(function (resolve) {
+            fetch(url).then(function (data) {
+              return data.json();
+            }).then(function (json) {
+              return resolve(json.items[0]);
+            });
+          });
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          var _this2 = this;
 
-    			return new Promise(function (resolve) {
-    				return asyncEmbed(_this2, Youtube.urlToText).then(function (data) {
-    					return resolve(data);
-    				});
-    			});
-    		}
-    	}], [{
-    		key: 'formatData',
-    		value: function formatData(data, truncate) {
-    			return {
-    				title: data.snippet.title,
-    				thumbnail: data.snippet.thumbnails.medium.url,
-    				rawDescription: data.snippet.description,
-    				views: data.statistics.viewCount,
-    				likes: data.statistics.likeCount,
-    				description: truncate(data.snippet.description, 150),
-    				url: 'https://www.youtube.com/watch?v=' + data.id,
-    				id: data.id,
-    				host: 'youtube'
-    			};
-    		}
-    	}, {
-    		key: 'urlToText',
-    		value: function urlToText(_this, match, url, normalEmbed) {
-    			var id = normalEmbed ? match[1] : match[2];
-    			var embedUrl = 'https://www.youtube.com/embed/' + id;
-    			if (_this.options.videoDetails) {
-    				return new Promise(function (resolve) {
-    					_this.data(id).then(function (data) {
-    						return resolve(getDetailsTemplate(Youtube.formatData(data, truncate), data, embedUrl, _this.options));
-    					});
-    				});
-    			} else {
-    				return new Promise(function (resolve) {
-    					return resolve(template(embedUrl, _this.options));
-    				});
-    			}
-    		}
-    	}]);
-    	return Youtube;
+          return new Promise(function (resolve) {
+            return asyncEmbed(_this2, Youtube.urlToText).then(function (data) {
+              return resolve(data);
+            });
+          });
+        }
+      }], [{
+        key: 'formatData',
+        value: function formatData(data, truncate) {
+          return {
+            title: data.snippet.title,
+            thumbnail: data.snippet.thumbnails.medium.url,
+            rawDescription: data.snippet.description,
+            views: data.statistics.viewCount,
+            likes: data.statistics.likeCount,
+            description: truncate(data.snippet.description, 150),
+            url: 'https://www.youtube.com/watch?v=' + data.id,
+            id: data.id,
+            host: 'youtube'
+          };
+        }
+      }, {
+        key: 'urlToText',
+        value: function urlToText(_this, match, url, normalEmbed) {
+          var id = normalEmbed ? match[1] : match[2];
+          var embedUrl = 'https://www.youtube.com/embed/' + id;
+          if (_this.options.videoDetails) {
+            return new Promise(function (resolve) {
+              _this.data(id).then(function (data) {
+                return resolve(getDetailsTemplate(Youtube.formatData(data, truncate), data, embedUrl, _this.options));
+              });
+            });
+          } else {
+            return new Promise(function (resolve) {
+              return resolve(template(embedUrl, _this.options));
+            });
+          }
+        }
+      }]);
+      return Youtube;
     }();
 
     var Vimeo = function () {
-    	function Vimeo(input, output, options, embeds) {
-    		babelHelpers.classCallCheck(this, Vimeo);
+      function Vimeo(input, output, options, embeds) {
+        babelHelpers.classCallCheck(this, Vimeo);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.regex = regex.vimeo;
-    		this.service = 'vimeo';
-    	}
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.regex = regex.vimeo;
+        this.service = 'vimeo';
+      }
 
-    	babelHelpers.createClass(Vimeo, [{
-    		key: 'data',
-    		value: function data(id) {
-    			var url = 'https://vimeo.com/api/v2/video/' + id + '.json';
-    			return new Promise(function (resolve) {
-    				fetch(url).then(function (data) {
-    					return data.json();
-    				}).then(function (json) {
-    					return resolve(json[0]);
-    				});
-    			});
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			var _this2 = this;
+      babelHelpers.createClass(Vimeo, [{
+        key: 'data',
+        value: function data(id) {
+          var url = 'https://vimeo.com/api/v2/video/' + id + '.json';
+          return new Promise(function (resolve) {
+            fetch(url).then(function (data) {
+              return data.json();
+            }).then(function (json) {
+              return resolve(json[0]);
+            });
+          });
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          var _this2 = this;
 
-    			return new Promise(function (resolve) {
-    				return asyncEmbed(_this2, Vimeo.urlToText).then(function (data) {
-    					return resolve(data);
-    				});
-    			});
-    		}
-    	}], [{
-    		key: 'formatData',
-    		value: function formatData(data, truncate) {
-    			return {
-    				title: data.title,
-    				thumbnail: data.thumbnail_medium,
-    				rawDescription: data.description.replace(/\n/g, '<br/>').replace(/&#10;/g, '<br/>'),
-    				views: data.stats_number_of_plays,
-    				likes: data.stats_number_of_likes,
-    				description: truncate(data.description.replace(/((<|&lt;)br\s*\/*(>|&gt;)\r\n)/g, ' '), 150),
-    				url: data.url,
-    				id: data.id,
-    				host: 'vimeo'
-    			};
-    		}
-    	}, {
-    		key: 'urlToText',
-    		value: function urlToText(_this, match, url, normalEmbed) {
-    			var id = undefined;
-    			if (!normalEmbed) {
-    				id = _this.options.link ? match[0].slice(0, -4).split('/').slice(-1).pop() : match[0].split('/').slice(-1).pop();
-    			} else {
-    				id = match[3];
-    			}
-    			if (!id) return;
-    			var embedUrl = 'https://player.vimeo.com/video/' + id;
-    			if (_this.options.videoDetails) {
-    				return new Promise(function (resolve) {
-    					_this.data(id).then(function (data) {
-    						return resolve(getDetailsTemplate(Vimeo.formatData(data, truncate), data, embedUrl, _this.options));
-    					});
-    				});
-    			} else {
-    				return new Promise(function (resolve) {
-    					return resolve(template(embedUrl, _this.options));
-    				});
-    			}
-    		}
-    	}]);
-    	return Vimeo;
+          return new Promise(function (resolve) {
+            return asyncEmbed(_this2, Vimeo.urlToText).then(function (data) {
+              return resolve(data);
+            });
+          });
+        }
+      }], [{
+        key: 'formatData',
+        value: function formatData(data, truncate) {
+          return {
+            title: data.title,
+            thumbnail: data.thumbnail_medium,
+            rawDescription: data.description.replace(/\n/g, '<br/>').replace(/&#10;/g, '<br/>'),
+            views: data.stats_number_of_plays,
+            likes: data.stats_number_of_likes,
+            description: truncate(data.description.replace(/((<|&lt;)br\s*\/*(>|&gt;)\r\n)/g, ' '), 150),
+            url: data.url,
+            id: data.id,
+            host: 'vimeo'
+          };
+        }
+      }, {
+        key: 'urlToText',
+        value: function urlToText(_this, match, url, normalEmbed) {
+          var id = void 0;
+          if (!normalEmbed) {
+            id = _this.options.link ? match[0].slice(0, -4).split('/').slice(-1).pop() : match[0].split('/').slice(-1).pop();
+          } else {
+            id = match[3];
+          }
+          if (!id) return;
+          var embedUrl = 'https://player.vimeo.com/video/' + id;
+          if (_this.options.videoDetails) {
+            return new Promise(function (resolve) {
+              _this.data(id).then(function (data) {
+                return resolve(getDetailsTemplate(Vimeo.formatData(data, truncate), data, embedUrl, _this.options));
+              });
+            });
+          } else {
+            return new Promise(function (resolve) {
+              return resolve(template(embedUrl, _this.options));
+            });
+          }
+        }
+      }]);
+      return Vimeo;
     }();
 
     var SlideShare = function () {
-    	function SlideShare(input, output, options, embeds) {
-    		babelHelpers.classCallCheck(this, SlideShare);
+      function SlideShare(input, output, options, embeds) {
+        babelHelpers.classCallCheck(this, SlideShare);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.regex = regex.slideShare;
-    		this.service = 'slideshare';
-    	}
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.regex = regex.slideShare;
+        this.service = 'slideshare';
+      }
 
-    	babelHelpers.createClass(SlideShare, [{
-    		key: 'template',
-    		value: function template(html) {
-    			return this.options.template.slideShare(html, this.options);
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			var _this2 = this;
+      babelHelpers.createClass(SlideShare, [{
+        key: 'template',
+        value: function template(html) {
+          return this.options.template.slideShare(html, this.options);
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          var _this2 = this;
 
-    			return new Promise(function (resolve) {
-    				return asyncEmbed(_this2, SlideShare.urlToText).then(function (data) {
-    					return resolve(data);
-    				});
-    			});
-    		}
-    	}], [{
-    		key: 'fetchData',
-    		value: function fetchData(_this, url) {
-    			var api = 'http://www.slideshare.net/api/oembed/2?url=' + url + '&format=jsonp&maxwidth=' + _this.options.videoWidth + '&maxheight=' + _this.options.videoHeight;
-    			return new Promise(function (resolve) {
-    				fetchJsonp$1(api, { credentials: 'include' }).then(function (data) {
-    					return data.json();
-    				}).then(function (json) {
-    					return resolve(json.html);
-    				});
-    			});
-    		}
-    	}, {
-    		key: 'urlToText',
-    		value: function urlToText(_this, match, url) {
-    			return new Promise(function (resolve) {
-    				SlideShare.fetchData(_this, url).then(function (html) {
-    					return resolve(_this.template(html));
-    				});
-    			});
-    		}
-    	}]);
-    	return SlideShare;
+          return new Promise(function (resolve) {
+            return asyncEmbed(_this2, SlideShare.urlToText).then(function (data) {
+              return resolve(data);
+            });
+          });
+        }
+      }], [{
+        key: 'fetchData',
+        value: function fetchData(_this, url) {
+          var api = 'http://www.slideshare.net/api/oembed/2?url=' + url + '&format=jsonp&maxwidth=' + _this.options.videoWidth + '&maxheight=' + _this.options.videoHeight;
+          return new Promise(function (resolve) {
+            fetchJsonp$1(api, { credentials: 'include' }).then(function (data) {
+              return data.json();
+            }).then(function (json) {
+              return resolve(json.html);
+            });
+          });
+        }
+      }, {
+        key: 'urlToText',
+        value: function urlToText(_this, match, url) {
+          return new Promise(function (resolve) {
+            SlideShare.fetchData(_this, url).then(function (html) {
+              return resolve(_this.template(html));
+            });
+          });
+        }
+      }]);
+      return SlideShare;
     }();
 
     var OpenGraph = function () {
-    	function OpenGraph(input, output, options, embeds) {
-    		babelHelpers.classCallCheck(this, OpenGraph);
+      function OpenGraph(input, output, options, embeds) {
+        babelHelpers.classCallCheck(this, OpenGraph);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.service = 'opengraph';
-    		this.regex = urlRegex();
-    		this.excludeRegex = new RegExp(['.mp4|.mp3|.gif|.pdf|.doc|.ppt|.docx|.jpg|.jpeg|.ogg'].concat(options.openGraphExclude).join('|'), 'gi');
-    	}
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.service = 'opengraph';
+        this.regex = urlRegex();
+        this.excludeRegex = new RegExp(['.mp4|.mp3|.gif|.pdf|.doc|.ppt|.docx|.jpg|.jpeg|.ogg'].concat(options.openGraphExclude).join('|'), 'gi');
+      }
 
-    	babelHelpers.createClass(OpenGraph, [{
-    		key: 'template',
-    		value: function template(data) {
-    			return this.options.template.openGraph(data, this.options);
-    		}
-    	}, {
-    		key: 'process',
-    		value: function process() {
-    			return new Promise(function (resolve) {
-    				asyncEmbed(this, OpenGraph.urlToText).then(function (data) {
-    					return resolve(data);
-    				});
-    			});
-    		}
-    	}], [{
-    		key: 'fetchData',
-    		value: function fetchData(url, _) {
-    			url = encodeURIComponent(url);
-    			var api = new Function('url', 'return `' + _.options.openGraphEndpoint + '`')(url);
-    			return new Promise(function (resolve) {
-    				fetch(api).then(function (res) {
-    					return res.json();
-    				}).then(function (json) {
-    					return resolve(_.options.onOpenGraphFetch(json) || json);
-    				});
-    			});
-    		}
-    	}, {
-    		key: 'urlToText',
-    		value: function urlToText(_, match, url) {
-    			if (!url.match(_.excludeRegex)) return;
+      babelHelpers.createClass(OpenGraph, [{
+        key: 'template',
+        value: function template(data) {
+          return this.options.template.openGraph(data, this.options);
+        }
+      }, {
+        key: 'process',
+        value: function process() {
+          var _this = this;
 
-    			return new Promise(function (resolve) {
-    				OpenGraph.fetchData(url, _).then(function (data) {
-    					return resolve(data && data.success ? _.template(data) : null);
-    				});
-    			});
-    		}
-    	}]);
-    	return OpenGraph;
+          return new Promise(function (resolve) {
+            return asyncEmbed(_this, OpenGraph.urlToText).then(function (data) {
+              return resolve(data);
+            });
+          });
+        }
+      }], [{
+        key: 'fetchData',
+        value: function fetchData(url, _) {
+          url = encodeURIComponent(url);
+          var api = new Function('url', 'return `' + _.options.openGraphEndpoint + '`')(url);
+          return new Promise(function (resolve) {
+            fetch(api).then(function (res) {
+              return res.json();
+            }).then(function (json) {
+              return resolve(_.options.onOpenGraphFetch(json) || json);
+            });
+          });
+        }
+      }, {
+        key: 'urlToText',
+        value: function urlToText(_, match, url) {
+          if (url.match(_.excludeRegex)) return Promise.resolve();
+
+          return new Promise(function (resolve) {
+            OpenGraph.fetchData(url, _).then(function (data) {
+              return resolve(data && data.success ? _.template(data) : '');
+            });
+          });
+        }
+      }]);
+      return OpenGraph;
     }();
 
     var Github = function () {
-    	function Github(input, output, options, embeds) {
-    		babelHelpers.classCallCheck(this, Github);
+      function Github(input, output, options, embeds) {
+        babelHelpers.classCallCheck(this, Github);
 
-    		this.input = input;
-    		this.output = output;
-    		this.options = options;
-    		this.embeds = embeds;
-    		this.service = 'github';
-    		this.regex = regex.github;
-    	}
+        this.input = input;
+        this.output = output;
+        this.options = options;
+        this.embeds = embeds;
+        this.service = 'github';
+        this.regex = regex.github;
+      }
 
-    	babelHelpers.createClass(Github, [{
-    		key: 'process',
-    		value: function process() {
-    			var _this2 = this;
+      babelHelpers.createClass(Github, [{
+        key: 'process',
+        value: function process() {
+          var _this2 = this;
 
-    			return new Promise(function (resolve) {
-    				return asyncEmbed(_this2, Github.urlToText).then(function (data) {
-    					return resolve(data);
-    				});
-    			});
-    		}
-    	}], [{
-    		key: 'fetchRepo',
-    		value: function fetchRepo(data) {
-    			var api = 'https://api.github.com/repos/' + data.user + '/' + data.repo;
-    			return new Promise(function (resolve) {
-    				fetch(api).then(function (data) {
-    					return data.json();
-    				}).then(function (json) {
-    					return resolve(json);
-    				});
-    			});
-    		}
-    	}, {
-    		key: 'template',
-    		value: function template(data, options) {
-    			return options.template.github(data, options);
-    		}
-    	}, {
-    		key: 'urlToText',
-    		value: function urlToText(_this, match, url, normalEmbed) {
-    			var data = !normalEmbed ? {
-    				user: match[2],
-    				repo: match[3]
-    			} : {
-    				user: match[1],
-    				repo: match[2]
-    			};
+          return new Promise(function (resolve) {
+            return asyncEmbed(_this2, Github.urlToText).then(function (data) {
+              return resolve(data);
+            });
+          });
+        }
+      }], [{
+        key: 'fetchRepo',
+        value: function fetchRepo(data) {
+          var api = 'https://api.github.com/repos/' + data.user + '/' + data.repo;
+          return new Promise(function (resolve) {
+            fetch(api).then(function (data) {
+              return data.json();
+            }).then(function (json) {
+              return resolve(json);
+            });
+          });
+        }
+      }, {
+        key: 'template',
+        value: function template(data, options) {
+          return options.template.github(data, options);
+        }
+      }, {
+        key: 'urlToText',
+        value: function urlToText(_this, match, url, normalEmbed) {
+          var data = !normalEmbed ? {
+            user: match[2],
+            repo: match[3]
+          } : {
+            user: match[1],
+            repo: match[2]
+          };
 
-    			if (!data.repo) return;
-    			return new Promise(function (resolve) {
-    				Github.fetchRepo(data).then(function (response) {
-    					return resolve(Github.template(response, _this.options));
-    				});
-    			});
-    		}
-    	}]);
-    	return Github;
+          if (!data.repo) return;
+          return new Promise(function (resolve) {
+            Github.fetchRepo(data).then(function (response) {
+              return resolve(Github.template(response, _this.options));
+            });
+          });
+        }
+      }]);
+      return Github;
     }();
 
     var globalOptions = {};
 
     var defaultOptions = {
-    	marked: false,
-    	markedOptions: {},
-    	link: true,
-    	linkOptions: {
-    		target: 'self',
-    		exclude: ['pdf'],
-    		rel: ''
-    	},
-    	emoji: true,
-    	customEmoji: [],
-    	fontIcons: true,
-    	customFontIcons: [],
-    	highlightCode: false,
-    	videoJS: false,
-    	videojsOptions: {
-    		fluid: true,
-    		preload: 'metadata'
-    	},
-    	locationEmbed: true,
-    	mapOptions: {
-    		mode: 'place'
-    	},
-    	tweetsEmbed: false,
-    	tweetOptions: {
-    		maxWidth: 550,
-    		hideMedia: false,
-    		hideThread: false,
-    		align: 'none',
-    		lang: 'en'
-    	},
-    	singleEmbed: false,
-    	openGraphEndpoint: null,
-    	openGraphExclude: [],
-    	videoEmbed: true,
-    	videoHeight: null,
-    	videoWidth: null,
-    	videoDetails: true,
-    	audioEmbed: true,
-    	excludeEmbed: [],
-    	inlineEmbed: [],
-    	inlineText: true,
-    	codeEmbedHeight: 500,
-    	vineOptions: {
-    		maxWidth: null,
-    		type: 'postcard', //'postcard' or 'simple' embedding
-    		responsive: true,
-    		width: 350,
-    		height: 460
-    	},
-    	plugins: {
-    		marked: window.marked,
-    		videojs: window.videojs,
-    		highlightjs: window.hljs,
-    		prismjs: window.Prism,
-    		twitter: window.twttr
-    	},
-    	googleAuthKey: '',
-    	soundCloudOptions: {
-    		height: 160,
-    		themeColor: 'f50000', //Hex Code of the player theme color
-    		autoPlay: false,
-    		hideRelated: false,
-    		showComments: true,
-    		showUser: true,
-    		showReposts: false,
-    		visual: false, //Show/hide the big preview image
-    		download: false //Show/Hide download buttons
-    	},
-    	videoClickClass: 'ejs-video-thumb',
-    	customVideoClickHandler: false,
-    	beforeEmbedJSApply: function beforeEmbedJSApply() {},
-    	afterEmbedJSApply: function afterEmbedJSApply() {},
-    	onVideoShow: function onVideoShow() {},
-    	onTweetsLoad: function onTweetsLoad() {},
-    	videojsCallback: function videojsCallback() {},
-    	onOpenGraphFetch: function onOpenGraphFetch() {},
-    	onOpenGraphFail: function onOpenGraphFail() {},
-    	videoClickHandler: function videoClickHandler() {},
-    	served: [] //Private variable used to store processed urls so that they are not processed multiple times.
+      marked: false,
+      markedOptions: {},
+      link: true,
+      linkOptions: {
+        target: 'self',
+        exclude: ['pdf'],
+        rel: ''
+      },
+      emoji: true,
+      customEmoji: [],
+      fontIcons: true,
+      customFontIcons: [],
+      highlightCode: false,
+      videoJS: false,
+      videojsOptions: {
+        fluid: true,
+        preload: 'metadata'
+      },
+      locationEmbed: true,
+      mapOptions: {
+        mode: 'place'
+      },
+      tweetsEmbed: false,
+      tweetOptions: {
+        maxWidth: 550,
+        hideMedia: false,
+        hideThread: false,
+        align: 'none',
+        lang: 'en'
+      },
+      singleEmbed: false,
+      openGraphEndpoint: null,
+      openGraphExclude: [],
+      videoEmbed: true,
+      videoHeight: null,
+      videoWidth: null,
+      videoDetails: true,
+      audioEmbed: true,
+      imageEmbed: true,
+      excludeEmbed: [],
+      inlineEmbed: [],
+      inlineText: true,
+      codeEmbedHeight: 500,
+      vineOptions: {
+        maxWidth: null,
+        type: 'postcard', //'postcard' or 'simple' embedding
+        responsive: true,
+        width: 350,
+        height: 460
+      },
+      plugins: {
+        marked: window.marked,
+        videojs: window.videojs,
+        highlightjs: window.hljs,
+        prismjs: window.Prism,
+        twitter: window.twttr
+      },
+      googleAuthKey: '',
+      soundCloudOptions: {
+        height: 160,
+        themeColor: 'f50000', //Hex Code of the player theme color
+        autoPlay: false,
+        hideRelated: false,
+        showComments: true,
+        showUser: true,
+        showReposts: false,
+        visual: false, //Show/hide the big preview image
+        download: false //Show/Hide download buttons
+      },
+      videoClickClass: 'ejs-video-thumb',
+      customVideoClickHandler: false,
+      beforeEmbedJSApply: function beforeEmbedJSApply() {},
+      afterEmbedJSApply: function afterEmbedJSApply() {},
+      onVideoShow: function onVideoShow() {},
+      onTweetsLoad: function onTweetsLoad() {},
+      videojsCallback: function videojsCallback() {},
+      onOpenGraphFetch: function onOpenGraphFetch() {},
+      onOpenGraphFail: function onOpenGraphFail() {},
+      videoClickHandler: function videoClickHandler() {},
+      served: [] //Private variable used to store processed urls so that they are not processed multiple times.
     };
 
     var instances = [];
@@ -2129,7 +2144,7 @@
     var promises = [];
 
     var EmbedJS = function () {
-    	/**
+      /**
       * The constructor takes two arguements. The first one is the options object and the second one is the
       * optional string . If the user wants to provide a string directly instead of the element, he can do that.
       * In case the user provides both the input element and the string, the input string will be taken from the element
@@ -2140,267 +2155,269 @@
       * @return {null}
       */
 
-    	function EmbedJS(options, template) {
-    		babelHelpers.classCallCheck(this, EmbedJS);
+      function EmbedJS(options, template) {
+        babelHelpers.classCallCheck(this, EmbedJS);
 
-    		/**
+        /**
        * We have created a clone of the original options to make sure that the original object
        * isn't altered.
        */
-    		var defOpts = cloneObject(defaultOptions);
-    		var globOpts = cloneObject(globalOptions);
+        var defOpts = cloneObject(defaultOptions);
+        var globOpts = cloneObject(globalOptions);
 
-    		//merge global options with the default options
-    		var globOptions = deepExtend(defOpts, globOpts);
+        //merge global options with the default options
+        var globOptions = deepExtend(defOpts, globOpts);
 
-    		//deepExtend global options with the overriding options provided by the user as an options
-    		//object while creating a new instance of embed.js
-    		this.options = deepExtend(globOptions, options);
+        //deepExtend global options with the overriding options provided by the user as an options
+        //object while creating a new instance of embed.js
+        this.options = deepExtend(globOptions, options);
 
-    		this.options.template = template || new Renderer();
+        this.options.template = template || new Renderer();
 
-    		if (!this.options.input || !(typeof this.options.input === 'string' || babelHelpers.typeof(this.options.input) === 'object')) throw ReferenceError("You need to pass an element or the string that needs to be processed");
+        if (!this.options.input || !(typeof this.options.input === 'string' || babelHelpers.typeof(this.options.input) === 'object')) throw ReferenceError("You need to pass an element or the string that needs to be processed");
 
-    		this.input = babelHelpers.typeof(this.options.input) === 'object' ? this.options.input.innerHTML : this.options.input;
-    	}
+        this.input = babelHelpers.typeof(this.options.input) === 'object' ? this.options.input.innerHTML : this.options.input;
+      }
 
-    	/**
+      /**
       * Processes the string and performs all the insertions and manipulations based on
       * the options and the input provided by the user. This returns a promise which is resolved once the result data is ready
       * @return {Promise} The processes resulting string
       */
 
-    	babelHelpers.createClass(EmbedJS, [{
-    		key: 'process',
-    		value: function process() {
-    			var _this = this;
 
-    			var input = this.input;
-    			var options = processOptions(this.options);
-    			var embeds = [];
-    			var output = '';
+      babelHelpers.createClass(EmbedJS, [{
+        key: 'process',
+        value: function process() {
+          var _this = this;
 
-    			this.options.beforeEmbedJSApply();
+          var input = this.input;
+          var options = processOptions(this.options);
+          var embeds = [];
+          var output = input;
 
-    			return new Promise(function (resolve) {
-    				if (options.link) output = new Url(input, options).process();
+          this.options.beforeEmbedJSApply();
 
-    				var openGraphPromise = options.openGraphEndpoint ? new OpenGraph(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
+          return new Promise(function (resolve) {
+            if (options.link) output = new Url(input, options).process();
 
-    				openGraphPromise.then(function (_ref) {
-    					var _ref2 = babelHelpers.slicedToArray(_ref, 2);
+            var openGraphPromise = options.openGraphEndpoint ? new OpenGraph(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
 
-    					var output = _ref2[0];
-    					var embeds = _ref2[1];
+            openGraphPromise.then(function (_ref) {
+              var _ref2 = babelHelpers.slicedToArray(_ref, 2);
 
-    					if (options.highlightCode) {
-    						output = new Highlight(output, options).process();
-    					}
-    					if (options.marked) {
-    						output = new Markdown(output, options).process();
-    					}
-    					if (options.emoji) {
-    						output = new Emoji(output, options).process();
-    					}
-    					if (options.fontIcons) {
-    						output = new Smiley(output, options).process();
-    					}
+              var output = _ref2[0];
+              var embeds = _ref2[1];
 
-    					var _baseEmbed = baseEmbed(input, output, embeds, options, regex.ideone, 'ideone');
+              if (options.highlightCode) {
+                output = new Highlight(output, options).process();
+              }
+              if (options.marked) {
+                output = new Markdown(output, options).process();
+              }
+              if (options.emoji) {
+                output = new Emoji(output, options).process();
+              }
+              if (options.fontIcons) {
+                output = new Smiley(output, options).process();
+              }
 
-    					var _baseEmbed2 = babelHelpers.slicedToArray(_baseEmbed, 2);
+              var _baseEmbed = baseEmbed(input, output, embeds, options, regex.ideone, 'ideone');
 
-    					output = _baseEmbed2[0];
-    					embeds = _baseEmbed2[1];
+              var _baseEmbed2 = babelHelpers.slicedToArray(_baseEmbed, 2);
 
-    					var _baseEmbed3 = baseEmbed(input, output, embeds, options, regex.plunker, 'plunker');
+              output = _baseEmbed2[0];
+              embeds = _baseEmbed2[1];
 
-    					var _baseEmbed4 = babelHelpers.slicedToArray(_baseEmbed3, 2);
+              var _baseEmbed3 = baseEmbed(input, output, embeds, options, regex.plunker, 'plunker');
 
-    					output = _baseEmbed4[0];
-    					embeds = _baseEmbed4[1];
+              var _baseEmbed4 = babelHelpers.slicedToArray(_baseEmbed3, 2);
 
-    					var _baseEmbed5 = baseEmbed(input, output, embeds, options, regex.jsbin, 'jsbin');
+              output = _baseEmbed4[0];
+              embeds = _baseEmbed4[1];
 
-    					var _baseEmbed6 = babelHelpers.slicedToArray(_baseEmbed5, 2);
+              var _baseEmbed5 = baseEmbed(input, output, embeds, options, regex.jsbin, 'jsbin');
 
-    					output = _baseEmbed6[0];
-    					embeds = _baseEmbed6[1];
+              var _baseEmbed6 = babelHelpers.slicedToArray(_baseEmbed5, 2);
 
-    					var _baseEmbed7 = baseEmbed(input, output, embeds, options, regex.codepen, 'codepen');
+              output = _baseEmbed6[0];
+              embeds = _baseEmbed6[1];
 
-    					var _baseEmbed8 = babelHelpers.slicedToArray(_baseEmbed7, 2);
+              var _baseEmbed7 = baseEmbed(input, output, embeds, options, regex.codepen, 'codepen');
 
-    					output = _baseEmbed8[0];
-    					embeds = _baseEmbed8[1];
+              var _baseEmbed8 = babelHelpers.slicedToArray(_baseEmbed7, 2);
 
-    					var _baseEmbed9 = baseEmbed(input, output, embeds, options, regex.jsfiddle, 'jsfiddle');
+              output = _baseEmbed8[0];
+              embeds = _baseEmbed8[1];
 
-    					var _baseEmbed10 = babelHelpers.slicedToArray(_baseEmbed9, 2);
+              var _baseEmbed9 = baseEmbed(input, output, embeds, options, regex.jsfiddle, 'jsfiddle');
 
-    					output = _baseEmbed10[0];
-    					embeds = _baseEmbed10[1];
+              var _baseEmbed10 = babelHelpers.slicedToArray(_baseEmbed9, 2);
 
-    					var _baseEmbed11 = baseEmbed(input, output, embeds, options, regex.ted, 'ted');
+              output = _baseEmbed10[0];
+              embeds = _baseEmbed10[1];
 
-    					var _baseEmbed12 = babelHelpers.slicedToArray(_baseEmbed11, 2);
+              var _baseEmbed11 = baseEmbed(input, output, embeds, options, regex.ted, 'ted');
 
-    					output = _baseEmbed12[0];
-    					embeds = _baseEmbed12[1];
+              var _baseEmbed12 = babelHelpers.slicedToArray(_baseEmbed11, 2);
 
-    					var _baseEmbed13 = baseEmbed(input, output, embeds, options, regex.dailymotion, 'dailymotion');
+              output = _baseEmbed12[0];
+              embeds = _baseEmbed12[1];
 
-    					var _baseEmbed14 = babelHelpers.slicedToArray(_baseEmbed13, 2);
+              var _baseEmbed13 = baseEmbed(input, output, embeds, options, regex.dailymotion, 'dailymotion');
 
-    					output = _baseEmbed14[0];
-    					embeds = _baseEmbed14[1];
+              var _baseEmbed14 = babelHelpers.slicedToArray(_baseEmbed13, 2);
 
-    					var _baseEmbed15 = baseEmbed(input, output, embeds, options, regex.ustream, 'ustream');
+              output = _baseEmbed14[0];
+              embeds = _baseEmbed14[1];
 
-    					var _baseEmbed16 = babelHelpers.slicedToArray(_baseEmbed15, 2);
+              var _baseEmbed15 = baseEmbed(input, output, embeds, options, regex.ustream, 'ustream');
 
-    					output = _baseEmbed16[0];
-    					embeds = _baseEmbed16[1];
+              var _baseEmbed16 = babelHelpers.slicedToArray(_baseEmbed15, 2);
 
-    					var _baseEmbed17 = baseEmbed(input, output, embeds, options, regex.liveleak, 'liveleak');
+              output = _baseEmbed16[0];
+              embeds = _baseEmbed16[1];
 
-    					var _baseEmbed18 = babelHelpers.slicedToArray(_baseEmbed17, 2);
+              var _baseEmbed17 = baseEmbed(input, output, embeds, options, regex.liveleak, 'liveleak');
 
-    					output = _baseEmbed18[0];
-    					embeds = _baseEmbed18[1];
+              var _baseEmbed18 = babelHelpers.slicedToArray(_baseEmbed17, 2);
 
-    					var _baseEmbed19 = baseEmbed(input, output, embeds, options, regex.basicVideo, 'video', options.videoEmbed);
+              output = _baseEmbed18[0];
+              embeds = _baseEmbed18[1];
 
-    					var _baseEmbed20 = babelHelpers.slicedToArray(_baseEmbed19, 2);
+              var _baseEmbed19 = baseEmbed(input, output, embeds, options, regex.basicVideo, 'video', options.videoEmbed);
 
-    					output = _baseEmbed20[0];
-    					embeds = _baseEmbed20[1];
+              var _baseEmbed20 = babelHelpers.slicedToArray(_baseEmbed19, 2);
 
-    					var _baseEmbed21 = baseEmbed(input, output, embeds, options, regex.vine, 'vine');
+              output = _baseEmbed20[0];
+              embeds = _baseEmbed20[1];
 
-    					var _baseEmbed22 = babelHelpers.slicedToArray(_baseEmbed21, 2);
+              var _baseEmbed21 = baseEmbed(input, output, embeds, options, regex.vine, 'vine');
 
-    					output = _baseEmbed22[0];
-    					embeds = _baseEmbed22[1];
+              var _baseEmbed22 = babelHelpers.slicedToArray(_baseEmbed21, 2);
 
-    					var _baseEmbed23 = baseEmbed(input, output, embeds, options, regex.soundCloud, 'soundcloud');
+              output = _baseEmbed22[0];
+              embeds = _baseEmbed22[1];
 
-    					var _baseEmbed24 = babelHelpers.slicedToArray(_baseEmbed23, 2);
+              var _baseEmbed23 = baseEmbed(input, output, embeds, options, regex.soundCloud, 'soundcloud');
 
-    					output = _baseEmbed24[0];
-    					embeds = _baseEmbed24[1];
+              var _baseEmbed24 = babelHelpers.slicedToArray(_baseEmbed23, 2);
 
-    					var _baseEmbed25 = baseEmbed(input, output, embeds, options, regex.spotify, 'spotify');
+              output = _baseEmbed24[0];
+              embeds = _baseEmbed24[1];
 
-    					var _baseEmbed26 = babelHelpers.slicedToArray(_baseEmbed25, 2);
+              var _baseEmbed25 = baseEmbed(input, output, embeds, options, regex.spotify, 'spotify');
 
-    					output = _baseEmbed26[0];
-    					embeds = _baseEmbed26[1];
+              var _baseEmbed26 = babelHelpers.slicedToArray(_baseEmbed25, 2);
 
-    					var _baseEmbed27 = baseEmbed(input, output, embeds, options, regex.basicAudio, 'audio', options.audioEmbed);
+              output = _baseEmbed26[0];
+              embeds = _baseEmbed26[1];
 
-    					var _baseEmbed28 = babelHelpers.slicedToArray(_baseEmbed27, 2);
+              var _baseEmbed27 = baseEmbed(input, output, embeds, options, regex.basicAudio, 'audio', options.audioEmbed);
 
-    					output = _baseEmbed28[0];
-    					embeds = _baseEmbed28[1];
+              var _baseEmbed28 = babelHelpers.slicedToArray(_baseEmbed27, 2);
 
-    					var _baseEmbed29 = baseEmbed(input, output, embeds, options, regex.flickr, 'flickr');
+              output = _baseEmbed28[0];
+              embeds = _baseEmbed28[1];
 
-    					var _baseEmbed30 = babelHelpers.slicedToArray(_baseEmbed29, 2);
+              var _baseEmbed29 = baseEmbed(input, output, embeds, options, regex.flickr, 'flickr');
 
-    					output = _baseEmbed30[0];
-    					embeds = _baseEmbed30[1];
+              var _baseEmbed30 = babelHelpers.slicedToArray(_baseEmbed29, 2);
 
-    					var _baseEmbed31 = baseEmbed(input, output, embeds, options, regex.instagram, 'instagram');
+              output = _baseEmbed30[0];
+              embeds = _baseEmbed30[1];
 
-    					var _baseEmbed32 = babelHelpers.slicedToArray(_baseEmbed31, 2);
+              var _baseEmbed31 = baseEmbed(input, output, embeds, options, regex.instagram, 'instagram');
 
-    					output = _baseEmbed32[0];
-    					embeds = _baseEmbed32[1];
+              var _baseEmbed32 = babelHelpers.slicedToArray(_baseEmbed31, 2);
 
-    					var _baseEmbed33 = baseEmbed(input, output, embeds, options, regex.basicImage, 'image', options.imageEmbed);
+              output = _baseEmbed32[0];
+              embeds = _baseEmbed32[1];
 
-    					var _baseEmbed34 = babelHelpers.slicedToArray(_baseEmbed33, 2);
+              var _baseEmbed33 = baseEmbed(input, output, embeds, options, regex.basicImage, 'image', options.imageEmbed);
 
-    					output = _baseEmbed34[0];
-    					embeds = _baseEmbed34[1];
+              var _baseEmbed34 = babelHelpers.slicedToArray(_baseEmbed33, 2);
 
-    					if (ifEmbed(options, 'gist')) {
-    						var _process = new Gist(input, output, options, embeds).process();
+              output = _baseEmbed34[0];
+              embeds = _baseEmbed34[1];
 
-    						var _process2 = babelHelpers.slicedToArray(_process, 2);
 
-    						output = _process2[0];
-    						embeds = _process2[1];
-    					}
+              if (ifEmbed(options, 'gist')) {
+                var _process = new Gist(input, output, options, embeds).process();
 
-    					return ifEmbed(options, 'youtube') ? new Youtube(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
-    				}).then(function (_ref3) {
-    					var _ref4 = babelHelpers.slicedToArray(_ref3, 2);
+                var _process2 = babelHelpers.slicedToArray(_process, 2);
 
-    					var output = _ref4[0];
-    					var embeds = _ref4[1];
+                output = _process2[0];
+                embeds = _process2[1];
+              }
 
-    					return ifEmbed(options, 'vimeo') ? new Vimeo(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
-    				}).then(function (_ref5) {
-    					var _ref6 = babelHelpers.slicedToArray(_ref5, 2);
+              return ifEmbed(options, 'youtube') ? new Youtube(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
+            }).then(function (_ref3) {
+              var _ref4 = babelHelpers.slicedToArray(_ref3, 2);
 
-    					var output = _ref6[0];
-    					var embeds = _ref6[1];
+              var output = _ref4[0];
+              var embeds = _ref4[1];
 
-    					return ifEmbed(options, 'github') ? new Github(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
-    				}).then(function (_ref7) {
-    					var _ref8 = babelHelpers.slicedToArray(_ref7, 2);
+              return ifEmbed(options, 'vimeo') ? new Vimeo(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
+            }).then(function (_ref5) {
+              var _ref6 = babelHelpers.slicedToArray(_ref5, 2);
 
-    					var output = _ref8[0];
-    					var embeds = _ref8[1];
+              var output = _ref6[0];
+              var embeds = _ref6[1];
 
-    					return options.locationEmbed && ifEmbed(options, 'gmap') ? new Gmap(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
-    				}).then(function (_ref9) {
-    					var _ref10 = babelHelpers.slicedToArray(_ref9, 2);
+              return ifEmbed(options, 'github') ? new Github(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
+            }).then(function (_ref7) {
+              var _ref8 = babelHelpers.slicedToArray(_ref7, 2);
 
-    					var output = _ref10[0];
-    					var embeds = _ref10[1];
+              var output = _ref8[0];
+              var embeds = _ref8[1];
 
-    					return ifEmbed(options, 'slideshare') ? new SlideShare(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
-    				}).then(function (_ref11) {
-    					var _ref12 = babelHelpers.slicedToArray(_ref11, 2);
+              return options.locationEmbed && ifEmbed(options, 'gmap') ? new Gmap(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
+            }).then(function (_ref9) {
+              var _ref10 = babelHelpers.slicedToArray(_ref9, 2);
 
-    					var output = _ref12[0];
-    					var embeds = _ref12[1];
+              var output = _ref10[0];
+              var embeds = _ref10[1];
 
-    					if (options.tweetsEmbed && ifEmbed(options, 'twitter')) {
-    						_this.twitter = new Twitter(input, output, options, embeds);
-    						return _this.twitter.process();
-    					} else {
-    						return Promise.resolve([output, embeds]);
-    					}
-    				}).then(function (_ref13) {
-    					var _ref14 = babelHelpers.slicedToArray(_ref13, 2);
+              return ifEmbed(options, 'slideshare') ? new SlideShare(input, output, options, embeds).process() : Promise.resolve([output, embeds]);
+            }).then(function (_ref11) {
+              var _ref12 = babelHelpers.slicedToArray(_ref11, 2);
 
-    					var output = _ref14[0];
-    					var embeds = _ref14[1];
+              var output = _ref12[0];
+              var embeds = _ref12[1];
 
-    					_this.data = {
-    						input: options.input,
-    						output: output,
-    						options: options,
-    						inputString: _this.input,
-    						/**
-          	 TODO:
+              if (options.tweetsEmbed && ifEmbed(options, 'twitter')) {
+                _this.twitter = new Twitter(input, output, options, embeds);
+                return _this.twitter.process();
+              } else {
+                return Promise.resolve([output, embeds]);
+              }
+            }).then(function (_ref13) {
+              var _ref14 = babelHelpers.slicedToArray(_ref13, 2);
+
+              var output = _ref14[0];
+              var embeds = _ref14[1];
+
+              _this.data = {
+                input: options.input,
+                output: output,
+                options: options,
+                inputString: _this.input,
+                /**
+             TODO:
            - Restructure served urls structure with services name
-          	 */
+             */
 
-    						services: options.served,
-    						template: options.template
-    					};
+                services: options.served,
+                template: options.template
+              };
 
-    					resolve(createText(output, embeds));
-    				});
-    			});
-    		}
+              resolve(createText(output, embeds));
+            });
+          });
+        }
 
-    		/**
+        /**
        * First processes the data by calling the .process() and then renders the data in the div
        * => Loads the twitter widgets
        * => Executes the onTweetsLoad() once all the tweets have been rendered
@@ -2411,103 +2428,103 @@
        * @return Promise
        */
 
-    	}, {
-    		key: 'render',
-    		value: function render() {
-    			var _this2 = this;
+      }, {
+        key: 'render',
+        value: function render() {
+          var _this2 = this;
 
-    			if (typeof this.options.input === 'string') throw new Error('You cannot call render method for a string');
-    			if (!this.options.input) throw new Error('You didn\'t pass an element while creating this instance. render() method can\'t work without an input element');
+          if (typeof this.options.input === 'string') throw new Error('You cannot call render method for a string');
+          if (!this.options.input) throw new Error('You didn\'t pass an element while creating this instance. render() method can\'t work without an input element');
 
-    			return new Promise(function (resolve) {
-    				_this2.process().then(function (data) {
-    					_this2.options.input.innerHTML = data;
-    					_this2.applyListeners();
-    					resolve(_this2.data);
-    				});
-    			});
-    		}
+          return new Promise(function (resolve) {
+            _this2.process().then(function (data) {
+              _this2.options.input.innerHTML = data;
+              _this2.applyListeners();
+              resolve(_this2.data);
+            });
+          });
+        }
 
-    		/**
+        /**
        * This method listens to all the events like click, handle
        * events to be done after an element has been rendered. These
        * include twitter widget rendering, gist embedding, click event listeners .
        */
 
-    	}, {
-    		key: 'applyListeners',
-    		value: function applyListeners() {
-    			applyVideoJS(this.options);
+      }, {
+        key: 'applyListeners',
+        value: function applyListeners() {
+          applyVideoJS(this.options);
 
-    			playVideo(this.options);
+          playVideo(this.options);
 
-    			var event = new Event('rendered');
-    			this.options.input.dispatchEvent(event);
+          var event = new Event('rendered');
+          this.options.input.dispatchEvent(event);
 
-    			this.options.afterEmbedJSApply();
-    		}
+          this.options.afterEmbedJSApply();
+        }
 
-    		/**
+        /**
        * This function updates the parametrs of the current instance
        * @param options   New updated options object. will be extended with the older options
        * @param template  [optional] the new template instance
        */
 
-    	}, {
-    		key: 'update',
-    		value: function update(options, template) {
+      }, {
+        key: 'update',
+        value: function update(options, template) {
 
-    			if (options) this.options = deepExtend(this.options, options);
+          if (options) this.options = deepExtend(this.options, options);
 
-    			if (template) this.options.template = template;
+          if (template) this.options.template = template;
 
-    			if (!this.options.input || !(typeof this.options.input === 'string' || babelHelpers.typeof(this.options.input) === 'object')) throw ReferenceError("You need to pass an element or the string that needs to be processed");
+          if (!this.options.input || !(typeof this.options.input === 'string' || babelHelpers.typeof(this.options.input) === 'object')) throw ReferenceError("You need to pass an element or the string that needs to be processed");
 
-    			this.input = babelHelpers.typeof(this.options.input) === 'object' ? this.options.input.innerHTML : this.options.input;
-    		}
+          this.input = babelHelpers.typeof(this.options.input) === 'object' ? this.options.input.innerHTML : this.options.input;
+        }
 
-    		/**
+        /**
        * returns the resulting string based on the input and the options passed by the user.
        * @return Promise
        */
 
-    	}, {
-    		key: 'text',
-    		value: function text(callback) {
-    			var _this3 = this;
+      }, {
+        key: 'text',
+        value: function text(callback) {
+          var _this3 = this;
 
-    			this.process().then(function (data) {
-    				return callback(data, _this3.input);
-    			});
-    		}
+          this.process().then(function (data) {
+            return callback(data, _this3.input);
+          });
+        }
 
-    		/**
+        /**
        * The destroy method destroys all the listeners and replaces the rih text with the original text in the
        * element.
        * @return {null}
        */
 
-    	}, {
-    		key: 'destroy',
-    		value: function destroy() {
-    			if (!this.element) throw new Error('destroy() method only if an element had been passed in the options object');
-    			destroyVideos('ejs-video-thumb');
-    			this.element.removeEventListener('rendered', this.twitter.load(), false);
-    			this.element.innerHTML = this.input;
-    		}
+      }, {
+        key: 'destroy',
+        value: function destroy() {
+          if (!this.element) throw new Error('destroy() method only if an element had been passed in the options object');
+          destroyVideos('ejs-video-thumb');
+          this.element.removeEventListener('rendered', this.twitter.load(), false);
+          this.element.innerHTML = this.input;
+        }
 
-    		/**
+        /**
        * Sets options globally
        * @param {object} options
        */
 
-    	}], [{
-    		key: 'setOptions',
-    		value: function setOptions(options) {
-    			globalOptions = deepExtend(defaultOptions, options);
-    		}
+      }], [{
+        key: 'setOptions',
+        value: function setOptions(options) {
+          globalOptions = deepExtend(defaultOptions, options);
+        }
 
-    		/**
+        /**
        * Applies embed.js to all the elements with the class name provided as option
        * @return {Promise}
        * @param selectorName
@@ -2515,52 +2532,52 @@
        * @param template
        */
 
-    	}, {
-    		key: 'applyEmbedJS',
-    		value: function applyEmbedJS(selectorName) {
-    			var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-    			var template = arguments.length <= 2 || arguments[2] === undefined ? new Renderer() : arguments[2];
+      }, {
+        key: 'applyEmbedJS',
+        value: function applyEmbedJS(selectorName) {
+          var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+          var template = arguments.length <= 2 || arguments[2] === undefined ? new Renderer() : arguments[2];
 
-    			var elements = document.querySelectorAll(selectorName);
-    			for (var i = 0; i < elements.length; i++) {
-    				options.input = elements[i];
-    				instances[i] = new EmbedJS(options, template);
-    				promises[i] = instances[i].render();
-    			}
-    			return new Promise(function (resolve) {
-    				Promise.all(promises).then(function (val) {
-    					resolve(val);
-    				});
-    			});
-    		}
+          var elements = document.querySelectorAll(selectorName);
+          for (var i = 0; i < elements.length; i++) {
+            options.input = elements[i];
+            instances[i] = new EmbedJS(options, template);
+            promises[i] = instances[i].render();
+          }
+          return new Promise(function (resolve) {
+            Promise.all(promises).then(function (val) {
+              resolve(val);
+            });
+          });
+        }
 
-    		/**
+        /**
        * Destroys all the instances of EmbedJS created by using applyEmbedJS() method.
        * @return {null}
        */
 
-    	}, {
-    		key: 'destroyEmbedJS',
-    		value: function destroyEmbedJS() {
-    			for (var i = 0; i < instances.length; i++) {
-    				instances[i].destroy();
-    			}
-    		}
+      }, {
+        key: 'destroyEmbedJS',
+        value: function destroyEmbedJS() {
+          for (var i = 0; i < instances.length; i++) {
+            instances[i].destroy();
+          }
+        }
 
-    		/**
+        /**
        * Destroys all instances of EmbedJS on the page
        * @return {null}
        */
 
-    	}, {
-    		key: 'destroyAll',
-    		value: function destroyAll() {
-    			for (var i = 0; i < allInstances.length; i++) {
-    				allInstances[i].destroy();
-    			}
-    		}
+      }, {
+        key: 'destroyAll',
+        value: function destroyAll() {
+          for (var i = 0; i < allInstances.length; i++) {
+            allInstances[i].destroy();
+          }
+        }
 
-    		/**
+        /**
        * Creates a new instance of the Template constructor. This has been done so that multiple
        * templates of a single service can be used by creating different instances of the Template.
        *
@@ -2573,23 +2590,23 @@
        * => Now create different templates for different service names.
        *
        *        template.url = function(match, options){
-          * 			return '<a href=" + match + "> + match + </a>'
-          * 		}
+          *       return '<a href=" + match + "> + match + </a>'
+          *     }
        *
        *        template.instagram = function(match, dimensions, options){
-          * 			var config = options.soundCloudOptions;
-          * 			return `<div class="ejs-embed ejs-instagram"><iframe src="${toUrl(match.split('/?')[0])}/embed/" height="${dimensions.height}"></iframe></div>`;
-          * 		}
+          *       var config = options.soundCloudOptions;
+          *       return `<div class="ejs-embed ejs-instagram"><iframe src="${toUrl(match.split('/?')[0])}/embed/" height="${dimensions.height}"></iframe></div>`;
+          *     }
        *
        */
 
-    	}, {
-    		key: 'Template',
-    		value: function Template() {
-    			return new Renderer();
-    		}
-    	}]);
-    	return EmbedJS;
+      }, {
+        key: 'Template',
+        value: function Template() {
+          return new Renderer();
+        }
+      }]);
+      return EmbedJS;
     }();
 
     return EmbedJS;

@@ -33,120 +33,36 @@ chat = {
         	height: '285px'
     	});
 
-
 	    EmbedJS.setOptions({
-		  	//An option when set to true will use marked.js to parse markdown and convert it to HTML.
-		    // Make sure you have loaded marked.js before loading embed.js if this option is set to
-		    // true else the plugin will throw an error.
-		    marked                 : false,
-
-		    // The option takes the marked.js options.
-		    markedOptions          : {},
-
-		    // Instructs the plugin whether or not to embed urls/ convert urls into HTML anchor tags.
-		    link                   : true,
-
-		    linkOptions            : {
-		        // Same as the target attribute in html anchor tag . supports all html supported target values.
-		        target : 'self',
-
-		        // Accept array of extensions to be excluded from converting into HTML anchor links
-		        exclude: ['pdf'],
-
-		        // Same as the rel attribute.
-		        rel    : ''
-		    },
-
-		    // Set to false if you want to disable converting emoji codes into actual emojis.
-		    emoji                  : true,
-
-		    // Include the names of custom emojis. Eg : ['emoji1', 'emoji2']. Now they can be
-		    // used using :emoji1: :emoji2:
-		    customEmoji            : [],
-		    fontIcons              : true,
-		    customFontIcons        : [],
-		    highlightCode          : false,
-		    videoJS                : false,
-		    videojsOptions         : {
-		        fluid  : true,
-		        preload: 'metadata'
-		    },
-		    locationEmbed          : true,
-		    mapOptions             : {
-		        mode: 'place'
-		    },
-		    tweetsEmbed            : false,
-		    tweetOptions           : {
-		        maxWidth  : 550,
-		        hideMedia : false,
-		        hideThread: false,
-		        align     : 'none',
-		        lang      : 'en'
-		    },
-		    singleEmbed            : false,
-
-		    // For using the open graph support (fetching site's meta data) , you will have
-		    // to set up your own server due to cross domain restrictions. This option takes
-		    // the api template as the string where url is a variable.
-		    openGraphEndpoint      : null,
-
-		    // Urls that have the array items in their string won't be processed by the
-		    // openGraph API.
-		    openGraphExclude       : [],
-
-		    // Set to false if you want to disable embedding supported video formats.
-		    videoEmbed             : true,
-		    videoHeight            : null,
-		    videoWidth             : null,
-		    videoDetails           : true,
-		    audioEmbed             : true,
-		    excludeEmbed           : [],
-		    inlineEmbed            : [],
-		    inlineText             : true,
-		    codeEmbedHeight        : 500,
-		    vineOptions            : {
-		        maxWidth  : null,
-		        type      : 'postcard', //'postcard' or 'simple' embedding
-		        responsive: true,
-		        width     : 350,
-		        height    : 460
-		    },
-		    // The google dev auth key needed if the user is using youtube embedding or
-		    // google map embedding feature of the plugin.
-		    googleAuthKey          : '',
-
-		    soundCloudOptions      : {
-		        height      : 160,
-		        themeColor  : 'f50000', //Hex Code of the player theme color
-		        autoPlay    : false,
-		        hideRelated : false,
-		        showComments: true,
-		        showUser    : true,
-		        showReposts : false,
-		        visual      : false, //Show/hide the big preview image
-		        download    : false //Show/Hide download buttons
-		    },
-		    videoClickClass        : 'ejs-video-thumb',
-		    customVideoClickHandler: false,
-		    beforeEmbedJSApply     : function () {},
-		    afterEmbedJSApply      : function () {},
-		    onVideoShow            : function () {},
-		    onTweetsLoad           : function () {},
-		    videojsCallback        : function () {},
-		    onOpenGraphFetch       : function () {},
-		    videoClickHandler      : function () {},
+	        // element: document.getElementById('block'),
+	        videoJS: true,
+	        videoWidth: 720,
+	        videoDetails: true,
+	        excludeEmbed: ['github'],
+	        // openGraphEndpoint:'https://opengraph.io/api/1.0/site/${url}',
+	        openGraphExclude: ['github'],
+	        googleAuthKey: 'AIzaSyCqFouT8h5DKAbxlrTZmjXEmNBjC69f0ts',
+	         // inlineEmbed: 'all',
+	        marked: true,
+	        highlightCode:true,
+	        codeHighlighter:'prismjs',
+	        link: true,
 	        // singleEmbed:true,
 	        onOpenGraphFetch: function(data) {
 	            data.hybridGraph.success = data.error ? false : true;
 	            return data.hybridGraph;
 	        }
 	    });
+	    EmbedJS.applyEmbedJS(".emoji-list");
+
+
 
 	},	
 	socket_io: function() {
         socket.on('_forward', function(data) {
         	var cu = $('#ufh').val();
-        	// pmtoa(cu,data['aid'],data['msg']);
+        	var count = $('.msg-tmp-'+cu+'-'+data['aid']+'').length;
+        	if (count!=0) {pmtoa(cu,data['aid'],data['msg'])}
         	if (!$('.main-list-dock').hasClass('hide')) {
         		$('.main-list-dock').find('.have-msg').removeClass('hide');
         	}
@@ -161,12 +77,12 @@ chat = {
         			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
         		}
         	}
-
         });
 	},
 	events: function() {
+
 		$('#cta1, #cta2').bind('input propertychange', function() {
-		    var len = $(this).val().length;
+		    var len = $(this).text().length;
 		    if (len == 29) {
 		    	var ch = parseInt($(this).css('height'));
 		    	var nh = ch + 25;
@@ -175,17 +91,37 @@ chat = {
 		    	var ss = parseInt(slimsc.css('height'));
 		    	var ns = ss - 25;
 		    	slimsc.css('height',ns);
+		    	$(this).parents('.inputBar:first').find('.chatemoji').css('height',nh);
 		    } else if(len < 29){
 		    	$(this).css('height','52');
-		    	var slimsc = $(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first');
-		    	slimsc.css('height','218');
+		    	$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
+		    	var slimsc = $(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
 		    }
 		});
 
-		$('.dtabs').click(function(){
-			
+		$(document).on('click', '#emoji-list-1>pre>code>.emoticon', function() {
+			togglehs('#emoji-list-1');
+			var t = $(this).attr('title');
+			var nt = t.trim();
+			var tb = $('#cta1').text();
+			var ntb = tb+' '+nt+' ';
+			$('#cta1').text(ntb+" ");
+        });
+
+		$('#emoi-1').click(function(){
+			togglehs('#emoji-list-1');
 		});
-		 
+		$(document).on('click', '#emoji-list-2>pre>code>.emoticon', function() {
+			togglehs('#emoji-list-2');
+			var t = $(this).attr('title');
+			var nt = t.trim();
+			var tb = $('#cta2').text();
+			var ntb = tb+' '+nt+' ';
+			$('#cta2').text(ntb);
+        });
+		$('#emoi-2').click(function(){
+			togglehs('#emoji-list-2');
+		});
 
 		$('.cc1').click(function(){
 			$('.dc1').attr('uid','');
@@ -210,33 +146,35 @@ chat = {
 		    	});
 			}
 		});
-
 		$('.cc2').click(function(){
 			$('.dc2').attr('uid','');
 			$('.dc2').addClass('hide');
 		});
-
-		$('.ChatTextArea').keypress(function(event){
+		$(document).on('keypress', '.ChatTextArea', function() {
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
 		    if(keycode == '13'){
-		    	var tinput = $(this).val();
+		    	var tinput = $(this).text();
 		    	if (!$.isBlank(tinput)) {
-		    		$(this).val('');
+		    		$(this).text('');
 		    		var randtxt = randomString();
 		       		var input_bubble = make_bubble_lst(tinput,randtxt);
 		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
 		       		$('._ctb'+dock_no).append(input_bubble);
+		       		renembd('._ctb'+dock_no);
 		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
 		       		var fid = $(this).parents('.dockChild').attr('uid');
 		       		request_c.snddata(tinput,fid,randtxt);
 		       		var cu = $('#ufh').val();
 		       		pmtoa_sndr(cu,fid,tinput);
+		       		var thisid = $(this).attr('id');
+		       		$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
+		       		$(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
+		       		$(this).replaceWith( '<div class="ChatTextArea" id="'+thisid+'" contenteditable="true"></div>' );
+		       		setTimeout(function(){ $('#'+thisid).focus() }, 100);
         		}
 		    }
 		});
 		$('.conv-wrapper').click(function(){
-
-			
 			var tab_id = check_tabs();
 			satb(tab_id);
 	    	$('.sc-wrapper-'+tab_id).html('');
@@ -258,7 +196,6 @@ chat = {
 				g_m(cu,fu,tab_id);
 			}
 		});
-
 		$('.nb-lb').click(function(){
 			$(this).parents('.wpNubButton').find('.have-msg').addClass('hide');
 			var parent = $(this).parents('.dock_wrapper:first');
@@ -321,12 +258,12 @@ function g_m(cu,fu,tab_id){
 	 			case 200:
 					if (typeof(cu) != "undefined" && cu !== null) {
 				    	var msgs_html = prepare_html(_ar,cu,fu);
-
 				    	$('._ctb'+tab_id).html(msgs_html);
 				    	$('._ctb'+tab_id).slimScroll({
 				        	height: '218px',
 				        	start: 'bottom'
 				    	});
+				    	renembd('._ctb'+tab_id);
 					}
 					inject_tmp(_ar,cu,fu);
 	 			break;
@@ -342,6 +279,7 @@ function t_g_m(tmp_m,cu,fu,tab_id){
 	    	var msgs_html = prepare_html_tmp(tmp_m,cu,fu);
 	    	$('._ctb'+tab_id).html('');
 	    	$('._ctb'+tab_id).html(msgs_html);
+	    	renembd('._ctb'+tab_id);
 	    	$('._ctb'+tab_id).slimScroll({
 	        	height: '218px',
 	        	start: 'bottom'
@@ -580,5 +518,18 @@ function rqst_server_time(){
 }
 //set active tab id
 function satb(tid){
-	$('.dtabs').removeClass();
+	// $('.dtabs').removeClass();
 }
+function renembd(elem){
+	EmbedJS.applyEmbedJS(elem);
+}
+function togglehs(d){
+	if ($(d).hasClass('hide')) {
+		$(d).removeClass('hide');
+	} else {
+		$(d).addClass('hide');
+	}
+}
+
+
+
