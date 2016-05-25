@@ -6,27 +6,30 @@ $(document).ready(function(){
 chat = {
 	pageLoad: function() {
 		var newDate = new Date().getTime(); //convert string date to Date object
-
 		// $('.test-tttttttttttttt').removeClass('act');
 		// $('.t1r').addClass('act');
-
 		// var currentDate = new Date().getTime();
 		// var diff = currentDate-newDate;
 		// console.log(diff);
-
-
 		// var newDate = new Date().getTime(); //convert string date to Date object
-
 		// $('.test-t2').attr('this-act','');
 		// $('.t2r').attr('this-act','1');
-
 		// var currentDate = new Date().getTime();
 		// var diff = currentDate-newDate;
 		// console.log(diff);
 
 
 
-
+		window.ema = {
+			"smile":":)",
+			"frown":":(",
+			"tongue":":p",
+			"wtongue":";p",
+			"wink":";)",
+			"bsmile":":d",
+			"heart":"&lt;3",
+			"smiley":":-)"
+			};
 
 		rqst_server_time();
 		$('#inner-chat-wrapper').slimScroll({
@@ -53,10 +56,6 @@ chat = {
 	            return data.hybridGraph;
 	        }
 	    });
-	    EmbedJS.applyEmbedJS(".emoji-list");
-
-
-
 	},	
 	socket_io: function() {
         socket.on('_forward', function(data) {
@@ -80,6 +79,71 @@ chat = {
         });
 	},
 	events: function() {
+
+		$('.ec').click(function(){
+			var ttxt = $(this).attr('txt');
+			var ttab = $(this).attr('tab');
+			togglehs('#emoji-list-'+ttab);
+			var emh = MakeEmoHtml(ttxt);
+			$('#cta'+ttab).append(emh);
+		});
+		$(document).on('keypress', '.ChatTextArea', function() {
+		    var keycode = (event.keyCode ? event.keyCode : event.which);
+		    var tat = $(this).attr('ttab');
+		    if(keycode == '13'){
+		    	var tinput = $('#ex'+tat).text();
+		    	if (!$.isBlank(tinput)) {
+		    		$('#ex'+tat).text('');
+		    		var randtxt = randomString();
+		       		var input_bubble = make_bubble_lst(tinput,randtxt);
+		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
+		       		$('._ctb'+dock_no).append(input_bubble);
+		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
+		       		var fid = $(this).parents('.dockChild').attr('uid');
+		       		request_c.snddata(tinput,fid,randtxt);
+		       		var cu = $('#ufh').val();
+		       		pmtoa_sndr(cu,fid,tinput);
+		       		var thisid = $(this).attr('id');
+		       		$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
+		       		$(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
+		       		$(this).replaceWith( '<div  ttab="'+tat+'" class="ChatTextArea" id="'+thisid+'" contenteditable="true"></div>' );
+		       		setTimeout(function(){ $('#'+thisid).focus() }, 100);
+        		}
+		    }
+
+		    if (keycode == '32') {
+		    	var tv = $(this).html().trim();
+		    	var tl = tv.length;
+		    		$flag = 0;
+		    		for (var i = 5; i > 0; i--) {
+		    			var l5 = tv.substr(tl - i);
+		    			var l5f = isExist(ema,l5);
+			    		if (l5f!=-1) {
+			    			$flag=1;
+			    			var emh = MakeEmoHtml(l5f);
+			    			var nt = RemoveStr(tv,i);
+			    			var ot = nt+emh;
+			    			$(this).html(ot);
+							placeCaretAtEnd(document.getElementById("cta1"));
+			    		}
+		    		}
+		    }
+
+
+		});
+
+		$(document).on('keypress', '#cta1', function(e) {
+		    e = e || window.event;
+		    var charCode = e.keyCode || e.which;
+		    $('#ex1').append(String.fromCharCode(charCode));
+		});
+		$(document).on('keypress', '#cta2', function(e) {
+		    e = e || window.event;
+		    var charCode = e.keyCode || e.which;
+		    $('#ex2').append(String.fromCharCode(charCode));
+		});
+
+
 
 		$('#cta1, #cta2').bind('input propertychange', function() {
 		    var len = $(this).text().length;
@@ -107,7 +171,6 @@ chat = {
 			var ntb = tb+' '+nt+' ';
 			$('#cta1').text(ntb+" ");
         });
-
 		$('#emoi-1').click(function(){
 			togglehs('#emoji-list-1');
 		});
@@ -150,30 +213,7 @@ chat = {
 			$('.dc2').attr('uid','');
 			$('.dc2').addClass('hide');
 		});
-		$(document).on('keypress', '.ChatTextArea', function() {
-		    var keycode = (event.keyCode ? event.keyCode : event.which);
-		    if(keycode == '13'){
-		    	var tinput = $(this).text();
-		    	if (!$.isBlank(tinput)) {
-		    		$(this).text('');
-		    		var randtxt = randomString();
-		       		var input_bubble = make_bubble_lst(tinput,randtxt);
-		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
-		       		$('._ctb'+dock_no).append(input_bubble);
-		       		renembd('._ctb'+dock_no);
-		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
-		       		var fid = $(this).parents('.dockChild').attr('uid');
-		       		request_c.snddata(tinput,fid,randtxt);
-		       		var cu = $('#ufh').val();
-		       		pmtoa_sndr(cu,fid,tinput);
-		       		var thisid = $(this).attr('id');
-		       		$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
-		       		$(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
-		       		$(this).replaceWith( '<div class="ChatTextArea" id="'+thisid+'" contenteditable="true"></div>' );
-		       		setTimeout(function(){ $('#'+thisid).focus() }, 100);
-        		}
-		    }
-		});
+
 		$('.conv-wrapper').click(function(){
 			var tab_id = check_tabs();
 			satb(tab_id);
@@ -263,7 +303,6 @@ function g_m(cu,fu,tab_id){
 				        	height: '218px',
 				        	start: 'bottom'
 				    	});
-				    	renembd('._ctb'+tab_id);
 					}
 					inject_tmp(_ar,cu,fu);
 	 			break;
@@ -279,7 +318,6 @@ function t_g_m(tmp_m,cu,fu,tab_id){
 	    	var msgs_html = prepare_html_tmp(tmp_m,cu,fu);
 	    	$('._ctb'+tab_id).html('');
 	    	$('._ctb'+tab_id).html(msgs_html);
-	    	renembd('._ctb'+tab_id);
 	    	$('._ctb'+tab_id).slimScroll({
 	        	height: '218px',
 	        	start: 'bottom'
@@ -531,5 +569,39 @@ function togglehs(d){
 	}
 }
 
+function isExist(obj,str) {
+	var o = -1
+	$.each( obj, function(k,v) {
+		if (v==str) {
+			o=k;
+		}
+	});
+	return o;
+}
 
+function MakeEmoHtml(str) {
+	return '<i title=":)" class="emoticon emoticon_'+str+'"></i> ';
+}
 
+function RemoveStr(tt,cutnum) {
+	var tlen = tt.length;
+	var o = tt.slice(0,tlen-cutnum);
+	return o;
+}
+function placeCaretAtEnd(el) {
+    el.focus();
+    if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (typeof document.body.createTextRange != "undefined") {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+    }
+}
