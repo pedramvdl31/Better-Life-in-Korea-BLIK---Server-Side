@@ -894,7 +894,6 @@
     <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
     <div id="msgs_tmp"></div>
     <div class="chat_dock">
-<<<<<<< HEAD
         <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
             <div class="_dock m_clearfix">
                 <div class="m_clearfix nubContainer rNubContainer">
@@ -908,17 +907,6 @@
                             </div>
                         </div>
                     </div>
-=======
-    <div class="dock_wrapper dock-min dockWrapperRight main-list-dock" type="0">
-    <div class="_dock m_clearfix">
-    <div class="m_clearfix nubContainer rNubContainer">
-    <div id="BuddylistPagelet">
-        <div class="_56ox ">
-            <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                <div class="wpNubButton">
-                    <span class="label nb-lb pointer">Chat</span>
-                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i></span>
->>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
                 </div>
             </div>
         </div>
@@ -1025,22 +1013,6 @@
             //var socket = io('http://localhost:3000');
             window.socket = io('http://192.168.10.10:3000');
             socket.emit("_init", { data: "{!!Auth::id()!!}" });
-<<<<<<< HEAD
-=======
-            // var socket = io.connect('http://192.168.10.10:3000');
-            // socket.on('_forward', function(data) {
-            //     alert(data['msg']);
-            // });
-            // socket.on('on_not', function(data) {
-            //     $('.on-sign-'+data['data']).removeClass('hide');
-            // });
-            // $('#sendm').click(function(){
-            //     socket.emit("trans", { 
-            //         recip: 2,
-            //         msg: "hello man!"
-            //          });
-            // });
->>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
