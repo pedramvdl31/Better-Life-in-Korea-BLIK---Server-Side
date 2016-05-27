@@ -240,6 +240,7 @@
     }
 
     var Renderer = function () {
+<<<<<<< HEAD
       function Renderer(options) {
         babelHelpers.classCallCheck(this, Renderer);
 
@@ -560,6 +561,328 @@
         }
       }]);
       return Smiley;
+=======
+    	function Renderer(options) {
+    		babelHelpers.classCallCheck(this, Renderer);
+
+    		this.options = options || {};
+    	}
+
+    	babelHelpers.createClass(Renderer, [{
+    		key: 'url',
+    		value: function url(match, options) {
+    			var config = options.linkOptions;
+    			return '<a href="' + toUrl(match) + '" rel="' + config.rel + '" target="' + config.target + '">' + match + '</a>';
+    		}
+    	}, {
+    		key: 'smiley',
+    		value: function smiley(text, pre, code) {
+    			return '<span class="icon-emoticon" title="' + text + '">' + pre + code + '</span>';
+    		}
+    	}, {
+    		key: 'emoji',
+    		value: function emoji(text) {
+    			return '<span class="emoticon emoticon-' + text + '" title=":' + text + ':"></span>';
+    		}
+    	}, {
+    		key: 'audio',
+    		value: function audio(match) {
+    			return '<div class="ejs-audio ejs-embed"><audio src="' + match + '" controls class="video-js ejs-video-js"></audio></div>';
+    		}
+    	}, {
+    		key: 'soundcloud',
+    		value: function soundcloud(match, options) {
+    			var config = options.soundCloudOptions;
+    			return '<div class="ejs-embed">\n\t\t<iframe height="160" scrolling="no" src="https://w.soundcloud.com/player/?url=' + match + '\n\t\t&auto_play     = ' + config.autoPlay + '\n\t\t&hide_related  = ' + config.hideRelated + '\n\t\t&show_comments = ' + config.showComments + '\n\t\t&show_user     = ' + config.showUser + '\n\t\t&show_reposts  = ' + config.showReposts + '\n\t\t&visual        = ' + config.visual + '\n\t\t&download      = ' + config.download + '\n\t\t&color         = ' + config.themeColor + '\n\t\t&theme_color   = ' + config.themeColor + '"></iframe>\n\t\t</div>';
+    		}
+    	}, {
+    		key: 'spotify',
+    		value: function spotify(match) {
+    			var id = lastElement(match.split('/'));
+    			return '<div class="ejs-embed"><iframe src="https://embed.spotify.com/?uri=spotify:track:' + id + '" height="80"></iframe></div>';
+    		}
+    	}, {
+    		key: 'codepen',
+    		value: function codepen(id, options) {
+    			return '<div class="ejs-embed ejs-codepen"><iframe scrolling="no" height="' + options.codeEmbedHeight + '" src="' + id.replace(/\/pen\//, '/embed/') + '/?height=' + options.codeEmbedHeight + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'ideone',
+    		value: function ideone(match, options) {
+    			return '<div class="ejs-ideone ejs-embed"><iframe src="http://ideone.com/embed/' + match.split('/')[1] + '" frameborder="0" height="' + options.codeEmbedHeight + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'jsbin',
+    		value: function jsbin(id, options) {
+    			return '<div class="ejs-jsbin ejs-embed"><iframe height="' + options.codeEmbedHeight + '" class="jsbin-embed foo" src="http://' + id + '/embed?html,js,output"></iframe></div>';
+    		}
+    	}, {
+    		key: 'jsfiddle',
+    		value: function jsfiddle(id, options) {
+    			id = lastElement(id) == '/' ? id.slice(0, -1) : id;
+    			id = id.indexOf('//') !== -1 ? id : '//' + id;
+    			return '<div class="ejs-embed ejs-jsfiddle"><iframe height="' + options.codeEmbedHeight + '" src="' + id + '/embedded"></iframe></div>';
+    		}
+    	}, {
+    		key: 'plunker',
+    		value: function plunker(id, options) {
+    			return '<div class="ejs-embed ejs-plunker"><iframe class="ne-plunker" src="http://embed.plnkr.co/' + id + '" height="' + options.codeEmbedHeight + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'image',
+    		value: function image(match) {
+    			return '<div class="ejs-image ejs-embed"><div class="ne-image-wrapper"><img src="' + match + '"/></div></div>';
+    		}
+    	}, {
+    		key: 'flickr',
+    		value: function flickr(match, options) {
+    			return '<div class="ejs-embed"><div class="ne-image-wrapper"><iframe src="' + toUrl(match.split('/?')[0]) + '/player/" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div></div>';
+    		}
+    	}, {
+    		key: 'instagram',
+    		value: function instagram(match, options) {
+    			return '<div class="ejs-embed ejs-instagram"><iframe src="' + toUrl(match.split('/?')[0]) + '/embed/" height="' + options.videoHeight + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'slideShare',
+    		value: function slideShare(html) {
+    			return '<div class="ejs-embed ejs-slideshare">' + html + '</div>';
+    		}
+    	}, {
+    		key: 'video',
+    		value: function video(match) {
+    			return '<div class="ejs-video ejs-embed"><div class="ejs-video-player"><div class="ejs-player"><video src="' + match + '" class="ejs-video-js video-js" controls></video></div></div></div>';
+    		}
+    	}, {
+    		key: 'dailymotion',
+    		value: function dailymotion(match, options) {
+    			var id = lastElement(match.split('/'));
+    			return '<div class="ejs-video ejs-embed"><iframe src="http://www.dailymotion.com/embed/video/' + id + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'liveleak',
+    		value: function liveleak(match, options) {
+    			return '<div class="ejs-video ejs-embed"><iframe src="http://www.liveleak.com/e/' + match.split('=')[1] + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'ted',
+    		value: function ted(match, options) {
+    			var a = match.split('/');
+    			var id = a[a.length - 1];
+    			return '<div class="ejs-embed ejs-ted"><iframe src="http://embed.ted.com/talks/' + id + '.html" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'ustream',
+    		value: function ustream(match, options) {
+    			var id = match.split('/');
+    			id.splice(1, 0, 'embed');
+    			return '<div class="ejs-embed ejs-ustream"><iframe src="//www.' + id.join('/') + '" height="' + options.videoHeight + '" width="' + options.videoWidth + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'detailsVimeo',
+    		value: function detailsVimeo(data, fullData, embedUrl) {
+    			return '<div class="ejs-video ejs-embed"><div class="ejs-video-preview"><div class="ejs-video-thumb" data-ejs-url="' + embedUrl + '"><div class="ejs-thumb" style="background-image:url(' + data.thumbnail + ')"></div><i class="fa fa-play-circle-o"></i></div><div class="ejs-video-detail"><div class="ejs-video-title"><a href="' + data.url + '">' + data.title + '</a></div><div class="ejs-video-desc">' + data.description + '</div><div class="ejs-video-stats"><span><i class="fa fa-eye"></i>' + data.views + '</span><span><i class="fa fa-heart"></i>' + data.likes + '</span></div></div></div></div>';
+    		}
+    	}, {
+    		key: 'detailsYoutube',
+    		value: function detailsYoutube(data, fullData, embedUrl) {
+    			return '<div class="ejs-video ejs-embed"><div class="ejs-video-preview"><div class="ejs-video-thumb" data-ejs-url="' + embedUrl + '"><div class="ejs-thumb" style="background-image:url(' + data.thumbnail + ')"></div><i class="fa fa-play-circle-o"></i></div><div class="ejs-video-detail"><div class="ejs-video-title"><a href="' + data.url + '">' + data.title + '</a></div><div class="ejs-video-desc">' + data.description + '</div><div class="ejs-video-stats"><span><i class="fa fa-eye"></i>' + data.views + '</span><span><i class="fa fa-heart"></i>' + data.likes + '</span></div></div></div></div>';
+    		}
+    	}, {
+    		key: 'vine',
+    		value: function vine(match, options) {
+    			var id = lastElement(match.split('/'));
+    			var config = options.vineOptions;
+    			return '<div class="ejs-vine"><iframe class="ejs-vine-iframe" src="https://vine.co/v/' + id + '/embed/' + config.type + '" height="' + config.height + '" width="' + config.width + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'vimeo',
+    		value: function vimeo(url, options) {
+    			return '<div class="ejs-video-player ejs-embed"><iframe src="' + url + '" frameBorder="0" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'youtube',
+    		value: function youtube(url, options) {
+    			return '<div class="ejs-video-player ejs-embed"><iframe src="' + url + '" frameBorder="0" width="' + options.videoWidth + '" height="' + options.videoHeight + '"></iframe></div>';
+    		}
+    	}, {
+    		key: 'openGraph',
+    		value: function openGraph(data, options) {
+    			return '<div class="ejs-embed ejs-ogp"><div class="ejs-ogp-thumb" style="background-image:url(' + data.image + ')"></div><div class="ejs-ogp-details"><div class="ejs-ogp-title"><a href="' + data.url + '" target="' + options.linkOptions.target + '">' + data.title + '</a></div><div class="ejs-ogb-details">' + data.description + '</div></div></div>';
+    		}
+    	}, {
+    		key: 'github',
+    		value: function github(data, options) {
+    			return '<div class="ejs-embed ejs-github"><div class="ejs-ogp-thumb" style="background-image:url(' + data.owner.avatar_url + ')"></div><div class="ejs-ogp-details"><div class="ejs-ogp-title"><a href="' + data.html_url + '" target="' + options.linkOptions.target + '">' + data.full_name + '</a></div><div class="ejs-ogb-details">' + data.description + '</div><div class="ejs-github-stats"><span><i class="fa fa-star"></i>' + data.stargazers_count + '</span><span><i class="fa fa-code-fork"></i>' + data.network_count + '</span></div></div></div>';
+    		}
+    	}]);
+    	return Renderer;
+    }();
+
+    var regex = {
+    	basicAudio: /((?:https?):\/\/\S*\.(?:wav|mp3|ogg))/gi,
+    	soundCloud: /(soundcloud.com)\/[a-zA-Z0-9-_]+\/[a-zA-Z0-9-_]+/gi,
+    	spotify: /spotify.com\/track\/[a-zA-Z0-9_]+/gi,
+    	codepen: /http:\/\/codepen.io\/([A-Za-z0-9_]+)\/pen\/([A-Za-z0-9_]+)/gi,
+    	gist: /gist.github.com\/[a-zA-Z0-9_-]+\/([a-zA-Z0-9]+)/gi,
+    	highlightCode: /(`{3})(\s|[a-z]+)\s*([\s\S]*?[^`])\s*\1(?!`)/gm,
+    	inlineCode: /(`)\s*([\s\S]*?[^`])\s*\1(?!`)/gm,
+    	ideone: /ideone.com\/[a-zA-Z0-9]{6}/gi,
+    	jsbin: /jsbin.com\/[a-zA-Z0-9_]+\/[0-9_]+/gi,
+    	jsfiddle: /jsfiddle.net\/[a-zA-Z0-9_]+\/[a-zA-Z0-9_\/]+/gi,
+    	plunker: /plnkr.co\/edit\/[a-zA-Z0-9\?=]+/gi,
+    	basicImage: /((?:https?):\/\/\S*\.(?:gif|jpg|jpeg|tiff|png|svg|webp))/gi,
+    	flickr: /flickr.com\/[a-z]+\/[a-zA-Z@_$!\d\-\]+\/[\d]+/gi,
+    	instagram: /instagram.com\/p\/[a-zA-Z0-9_\/\?\-\=]+/gi,
+    	slideShare: /slideshare.net\/[a-zA-Z0-9_-]*\/[a-zA-Z0-9_-]*/gi,
+    	github: /[^\.]github.com\/([\w\.\-]+)\/([\w\.\-]+)/gi,
+    	basicVideo: /(?:https?):\/\/\S*\.(?:ogv|webm|mp4)/gi,
+    	dailymotion: /dailymotion.com\/video\/[a-zA-Z0-9-_]+/gi,
+    	liveleak: /liveleak.com\/view\?i=[a-zA-Z0-9_]+/gi,
+    	ted: /ted.com\/talks\/[a-zA-Z0-9_]+/gi,
+    	ustream: /ustream.tv\/[a-z\/0-9]*/gi,
+    	vimeo: /https?:\/\/(?:www\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|)(\d+)(?:$|\/|\?)*/gi,
+    	vine: /vine.co\/v\/[a-zA-Z0-9]+/gi,
+    	youtube: /https?:\/\/(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/ytscreeningroom\?v=|\/feeds\/api\/videos\/|\/user\S*[^\w\-\s]|\S*[^\w\-\s]))([\w\-]{11})[?=&+%\w-]*/gi,
+    	gmap: /@\((.+)\)/gi,
+    	twitter: /https:\/\/twitter\.com\/\w+\/\w+\/\d+/gi,
+    	smileys: /(\:[\+\-\w]+\:|\<[\/\\]?3|[\(\)\\\D|\*\$][\-\^]?[\:\;\=]|[\:\;\=B8][\-\^]?[3DOPp\@\$\*\\\)\(\/\|])(?=\s|[\!\.\?]|$)/gi
+    };
+
+    var Emoji = function () {
+    	function Emoji(output, options) {
+    		babelHelpers.classCallCheck(this, Emoji);
+
+    		this.output = output;
+    		this.options = options;
+
+    		this.emojiRegex = regex.smileys;
+    	}
+
+    	babelHelpers.createClass(Emoji, [{
+    		key: 'process',
+    		value: function process() {
+    			var _this = this;
+
+    			return this.output.replace(this.emojiRegex, function (match) {
+    				var emoji = Emoji.getEmoji(match);
+    				if (emoji) {
+    					return _this.options.template.emoji(emoji, _this.options);
+    				}
+    				return match;
+    			});
+    		}
+    	}], [{
+    		key: 'getEmoji',
+    		value: function getEmoji(match) {
+    			return match[0] === ':' && match[match.length - 1] === ':' && match.substring(1, match.length - 1);
+    		}
+    	}]);
+    	return Emoji;
+    }();
+
+    var Smiley = function () {
+    	function Smiley(input, options) {
+    		babelHelpers.classCallCheck(this, Smiley);
+
+    		this.input = input;
+    		this.options = options;
+
+    		var defaultIcons = [{
+    			'text': ':)',
+    			'code': '&#xe60a'
+    		}, {
+    			'text': ':D',
+    			'code': '&#xe608'
+    		}, {
+    			'text': ':d',
+    			'code': '&#xe608'
+    		}, {
+    			'text': ':(',
+    			'code': '&#xe60e'
+    		}, {
+    			'text': ':/',
+    			'code': '&#xe620'
+
+    		}, {
+    			'text': ':P',
+    			'code': '&#xe60c'
+    		}, {
+    			'text': ':p',
+    			'code': '&#xe60c'
+    		}, {
+    			'text': '3:)',
+    			'code': '&#xe618'
+    		}, {
+    			'text': '(^)',
+    			'code': '&#xe607'
+    		}, {
+    			'text': ';)',
+    			'code': '&#xe610'
+    		}, {
+    			'text': ':o',
+    			'code': '&#xe61a'
+    		}, {
+    			'text': '-_-',
+    			'code': '&#xe61e'
+    		}, {
+    			'text': '(y)',
+    			'code': '&#xe606'
+    		}, {
+    			'text': ':*',
+    			'code': '&#xe604'
+    		}, {
+    			'text': '&lt;3',
+    			'code': '&#xe604'
+    		}, {
+    			'text': '<3',
+    			'code': '&#xe604'
+    		}, {
+    			'text': '&lt;/3',
+    			'code': '&#xe605'
+    		}, {
+    			'text': '</3',
+    			'code': '&#xe605'
+    		}, {
+    			'text': '^_^',
+    			'code': '&#xe612'
+    		}, {
+    			'text': '8-)',
+    			'code': '&#xe614'
+    		}, {
+    			'text': '8|',
+    			'code': '&#xe614'
+    		}, {
+    			'text': ':S',
+    			'code': '&#xe61c'
+    		}, {
+    			'text': ':s',
+    			'code': '&#xe61c'
+    		}];
+
+    		this.icons = options.customFontIcons.length ? options.customFontIcons : defaultIcons;
+
+    		this.escapedSymbols = this.icons.map(function (val) {
+    			return escapeRegExp(val.text);
+    		});
+
+    		this.smileyRegex = new RegExp('(^|\\s)(' + this.escapedSymbols.join('|') + ')(?=\\s|$)', 'gi');
+    	}
+
+    	babelHelpers.createClass(Smiley, [{
+    		key: 'process',
+    		value: function process() {
+    			var _this = this;
+
+    			return this.input.replace(this.smileyRegex, function (match, pre, text) {
+    				var index = _this.escapedSymbols.indexOf(escapeRegExp(text));
+    				var code = _this.icons[index].code;
+    				return _this.options.template.smiley(text, pre, code, _this.options);
+    			});
+    		}
+    	}]);
+    	return Smiley;
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }();
 
     var Url = function () {
@@ -786,6 +1109,7 @@
     }
 
     function normalEmbed(_) {
+<<<<<<< HEAD
       var match = void 0;
       while ((match = matches(_.regex, _.input)) !== null) {
         var url = match[0];
@@ -798,6 +1122,20 @@
         });
       }
       return [_.output, _.embeds];
+=======
+    	var match = void 0;
+    	while ((match = matches(_.regex, _.input)) !== null) {
+    		var url = match[0];
+    		if (!(_.options.served.indexOf(url) === -1) || _.options.served.length && _.options.singleEmbed) continue;
+    		_.options.served.push(url);
+    		var text = _.template(url);
+    		_.embeds.push({
+    			text: text,
+    			index: match.index
+    		});
+    	}
+    	return [_.output, _.embeds];
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }
 
     function embed(_) {
@@ -862,6 +1200,7 @@
      * @returns Promise
      */
     function inlineAsyncEmbed(_, urlToText) {
+<<<<<<< HEAD
       var regexInline = _.options.link ? new RegExp('([^>]*' + _.regex.source + ')</a>', 'gi') : new RegExp('([^\\s]*' + _.regex.source + ')', 'gi');
       var match = void 0,
           promises = [];
@@ -877,6 +1216,23 @@
           resolve(_.output);
         });else resolve(_.output);
       });
+=======
+    	var regexInline = _.options.link ? new RegExp('([^>]*' + _.regex.source + ')</a>', 'gi') : new RegExp('([^\\s]*' + _.regex.source + ')', 'gi');
+    	var match = void 0,
+    	    promises = [];
+
+    	while ((match = matches(regexInline, _.output)) !== null) {
+    		promises.push(getInlineData(_, urlToText, match));
+    	}return new Promise(function (resolve) {
+    		if (matches.length) Promise.all(promises).then(function (data) {
+    			var i = 0;
+    			_.output = _.output.replace(regexInline, function (match) {
+    				if (_.options.link) return !_.options.inlineText ? data[i] + '</a>' : match + data[i++];else return !_.options.inlineText ? data[i] : match + data[i++];
+    			});
+    			resolve(_.output);
+    		});else resolve(_.output);
+    	});
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }
 
     function getNormalData(_, urlToText, match) {
@@ -903,6 +1259,7 @@
      * @return {Promise}
      */
     function normalAsyncEmbed(_, urlToText) {
+<<<<<<< HEAD
       var match = void 0,
           promises = [];
       while ((match = matches(_.regex, _.input)) !== null) {
@@ -912,6 +1269,17 @@
           resolve(_.embeds);
         });
       });
+=======
+    	var match = void 0,
+    	    promises = [];
+    	while ((match = matches(_.regex, _.input)) !== null) {
+    		promises.push(getNormalData(_, urlToText, match));
+    	}return new Promise(function (resolve) {
+    		Promise.all(promises).then(function () {
+    			resolve(_.embeds);
+    		});
+    	});
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }
 
     function asyncEmbed(_, urlToText) {
@@ -925,6 +1293,7 @@
     }
 
     var Twitter = function () {
+<<<<<<< HEAD
       function Twitter(input, output, options, embeds) {
         babelHelpers.classCallCheck(this, Twitter);
 
@@ -940,6 +1309,23 @@
           this.options.input.addEventListener('rendered', this.load, false);
         }
       }
+=======
+    	function Twitter(input, output, options, embeds) {
+    		babelHelpers.classCallCheck(this, Twitter);
+
+    		this.input = input;
+    		this.output = output;
+    		this.options = options;
+    		this.embeds = embeds;
+    		this.regex = regex.twitter;
+    		this.service = 'twitter';
+
+    		this.load = this.load.bind(this);
+    		if (typeof this.options.input !== 'string') {
+    			this.options.input.addEventListener('rendered', this.load, false);
+    		}
+    	}
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 
       /**
       * Fetches the data from twitter's oEmbed API
@@ -948,6 +1334,7 @@
       */
 
 
+<<<<<<< HEAD
       babelHelpers.createClass(Twitter, [{
         key: 'tweetData',
         value: function tweetData(url) {
@@ -963,6 +1350,23 @@
         }
 
         /**
+=======
+    	babelHelpers.createClass(Twitter, [{
+    		key: 'tweetData',
+    		value: function tweetData(url) {
+    			var config = this.options.tweetOptions;
+    			var apiUrl = 'https://api.twitter.com/1/statuses/oembed.json?omit_script=true&url=' + url + '&maxwidth=' + config.maxWidth + '&hide_media=' + config.hideMedia + '&hide_thread=' + config.hideThread + '&align=' + config.align + '&lang=' + config.lang;
+    			return new Promise(function (resolve) {
+    				fetchJsonp$1(apiUrl, { credentials: 'include' }).then(function (data) {
+    					return data.json();
+    				}).then(function (json) {
+    					return resolve(json);
+    				});
+    			});
+    		}
+
+    		/**
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
        * Load twitter widgets
        * @return null
        */
@@ -1577,12 +1981,21 @@
       * @return {string}      The encoded string
       */
 
+<<<<<<< HEAD
 
       babelHelpers.createClass(Highlight, [{
         key: 'process',
 
 
         /**
+=======
+
+    	babelHelpers.createClass(Highlight, [{
+    		key: 'process',
+
+
+    		/**
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
        * Replaces the code block with the pre tags and returns a string having the code
        * formatting using Highlight.js.
        * => Matches the string with the regex and finds the code written in three back-ticks ```
@@ -1598,6 +2011,7 @@
        * => Replaces the code string in the template with the formatted string
        * @return {string} The string in which the code is formatted
        */
+<<<<<<< HEAD
         value: function process() {
           var _this = this;
 
@@ -1639,6 +2053,49 @@
         }
 
         /**
+=======
+    		value: function process() {
+    			var _this = this;
+
+    			this.output = this.output.replace(this.inlineCodeRegex, function (match, group1, group2) {
+    				return '<code>' + group2 + '</code>';
+    			});
+
+    			return this.output.replace(this.regex, function (match, group1, group2, group3) {
+    				var code = group3;
+    				code = Highlight.trimSpace(code);
+    				code = Highlight.encode(code);
+
+    				// to prevent auto-linking. Not necessary in code
+    				// *blocks*, but in code spans. Will be converted
+    				// back after the auto-linker runs.
+    				code = code.replace(/:\/\//g, '~P');
+
+    				var language = group2.split('\n')[0];
+    				var highlightedCode = void 0;
+
+    				var HighlightJS = _this.options.plugins.highlightjs;
+    				if (language) {
+    					highlightedCode = HighlightJS.highlightAuto(code, [language]);
+    				} else {
+    					highlightedCode = HighlightJS.highlightAuto(code);
+    					language = highlightedCode.language;
+    				}
+
+    				return Highlight.addTemplate(highlightedCode, language);
+    			});
+    		}
+    	}], [{
+    		key: 'encode',
+    		value: function encode(code) {
+    			code = code.replace(/&amp;/gm, '');
+    			code = code.replace(/&lt;/g, '<');
+    			code = code.replace(/&gt;/g, '>');
+    			return code;
+    		}
+
+    		/**
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
        * removes whitespace characters
        * @param  {string} code The string from which the whitespace has to be removed
        * @return {string}
@@ -1669,6 +2126,7 @@
     }();
 
     var Gist = function () {
+<<<<<<< HEAD
       function Gist(input, output, options, embeds) {
         var _this = this;
 
@@ -1732,6 +2190,71 @@
         }
       }]);
       return Gist;
+=======
+    	function Gist(input, output, options, embeds) {
+    		var _this = this;
+
+    		babelHelpers.classCallCheck(this, Gist);
+
+    		this.input = input;
+    		this.output = output;
+    		this.options = options;
+    		this.embeds = embeds;
+    		this.regex = regex.gist;
+    		this.service = 'gist';
+
+    		if (typeof this.options.input !== 'string') {
+    			this.options.input.addEventListener('rendered', function () {
+    				_this.load();
+    			});
+    		}
+    	}
+
+    	babelHelpers.createClass(Gist, [{
+    		key: 'template',
+    		value: function template(match) {
+    			return '<div class="ejs-gist" data-src="' + match + '"></div>';
+    		}
+    	}, {
+    		key: 'load',
+    		value: function load() {
+    			var gists = this.options.input.getElementsByClassName('ejs-gist');
+    			for (var i = 0; i < gists.length; i++) {
+    				var gistFrame = document.createElement("iframe");
+    				gistFrame.setAttribute("width", "100%");
+    				gistFrame.id = 'ejs-gist-' + i;
+
+    				var zone = gists[i];
+    				zone.innerHTML = "";
+    				zone.appendChild(gistFrame);
+
+    				// Create the iframe's document
+    				var url = gists[i].getAttribute('data-src');
+    				url = url.indexOf('http') === -1 ? 'https://' + url : url;
+    				var gistFrameHTML = '<html><base target="_parent"/><body onload="parent.document.getElementById(\'ejs-gist-' + i + '\').style.height=parseInt(document.body.scrollHeight)+20+\'px\'"><script type="text/javascript" src="' + url + '.js"></script></body></html>';
+
+    				// Set iframe's document with a trigger for this document to adjust the height
+    				var gistFrameDoc = gistFrame.document;
+
+    				if (gistFrame.contentDocument) {
+    					gistFrameDoc = gistFrame.contentDocument;
+    				} else if (gistFrame.contentWindow) {
+    					gistFrameDoc = gistFrame.contentWindow.document;
+    				}
+
+    				gistFrameDoc.open();
+    				gistFrameDoc.writeln(gistFrameHTML);
+    				gistFrameDoc.close();
+    			}
+    		}
+    	}, {
+    		key: 'process',
+    		value: function process() {
+    			return embed(this);
+    		}
+    	}]);
+    	return Gist;
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }();
 
     var Youtube = function () {
@@ -1806,6 +2329,7 @@
     }();
 
     var Vimeo = function () {
+<<<<<<< HEAD
       function Vimeo(input, output, options, embeds) {
         babelHelpers.classCallCheck(this, Vimeo);
 
@@ -1880,6 +2404,82 @@
         }
       }]);
       return Vimeo;
+=======
+    	function Vimeo(input, output, options, embeds) {
+    		babelHelpers.classCallCheck(this, Vimeo);
+
+    		this.input = input;
+    		this.output = output;
+    		this.options = options;
+    		this.embeds = embeds;
+    		this.regex = regex.vimeo;
+    		this.service = 'vimeo';
+    	}
+
+    	babelHelpers.createClass(Vimeo, [{
+    		key: 'data',
+    		value: function data(id) {
+    			var url = 'https://vimeo.com/api/v2/video/' + id + '.json';
+    			return new Promise(function (resolve) {
+    				fetch(url).then(function (data) {
+    					return data.json();
+    				}).then(function (json) {
+    					return resolve(json[0]);
+    				});
+    			});
+    		}
+    	}, {
+    		key: 'process',
+    		value: function process() {
+    			var _this2 = this;
+
+    			return new Promise(function (resolve) {
+    				return asyncEmbed(_this2, Vimeo.urlToText).then(function (data) {
+    					return resolve(data);
+    				});
+    			});
+    		}
+    	}], [{
+    		key: 'formatData',
+    		value: function formatData(data, truncate) {
+    			return {
+    				title: data.title,
+    				thumbnail: data.thumbnail_medium,
+    				rawDescription: data.description.replace(/\n/g, '<br/>').replace(/&#10;/g, '<br/>'),
+    				views: data.stats_number_of_plays,
+    				likes: data.stats_number_of_likes,
+    				description: truncate(data.description.replace(/((<|&lt;)br\s*\/*(>|&gt;)\r\n)/g, ' '), 150),
+    				url: data.url,
+    				id: data.id,
+    				host: 'vimeo'
+    			};
+    		}
+    	}, {
+    		key: 'urlToText',
+    		value: function urlToText(_this, match, url, normalEmbed) {
+    			var id = void 0;
+    			if (!normalEmbed) {
+    				id = _this.options.link ? match[0].slice(0, -4).split('/').slice(-1).pop() : match[0].split('/').slice(-1).pop();
+    			} else {
+    				id = match[3];
+    			}
+    			if (!id) return;
+    			var embedUrl = 'https://player.vimeo.com/video/' + id;
+    			if (_this.options.videoDetails) {
+    				return new Promise(function (resolve) {
+    					_this.data(id).then(function (data) {
+    						return resolve(getDetailsTemplate(Vimeo.formatData(data, truncate), data, embedUrl, _this.options));
+    					});
+    				});
+    			} else {
+    				return new Promise(function (resolve) {
+    					return resolve(template(embedUrl, _this.options));
+    				});
+    			}
+    		}
+    	}]);
+    	return Vimeo;
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }();
 
     var SlideShare = function () {
@@ -1936,6 +2536,7 @@
     }();
 
     var OpenGraph = function () {
+<<<<<<< HEAD
       function OpenGraph(input, output, options, embeds) {
         babelHelpers.classCallCheck(this, OpenGraph);
 
@@ -1990,6 +2591,62 @@
         }
       }]);
       return OpenGraph;
+=======
+    	function OpenGraph(input, output, options, embeds) {
+    		babelHelpers.classCallCheck(this, OpenGraph);
+
+    		this.input = input;
+    		this.output = output;
+    		this.options = options;
+    		this.embeds = embeds;
+    		this.service = 'opengraph';
+    		this.regex = urlRegex();
+    		this.excludeRegex = new RegExp(['.mp4|.mp3|.gif|.pdf|.doc|.ppt|.docx|.jpg|.jpeg|.ogg'].concat(options.openGraphExclude).join('|'), 'gi');
+    	}
+
+    	babelHelpers.createClass(OpenGraph, [{
+    		key: 'template',
+    		value: function template(data) {
+    			return this.options.template.openGraph(data, this.options);
+    		}
+    	}, {
+    		key: 'process',
+    		value: function process() {
+    			var _this = this;
+
+    			return new Promise(function (resolve) {
+    				return asyncEmbed(_this, OpenGraph.urlToText).then(function (data) {
+    					return resolve(data);
+    				});
+    			});
+    		}
+    	}], [{
+    		key: 'fetchData',
+    		value: function fetchData(url, _) {
+    			url = encodeURIComponent(url);
+    			var api = new Function('url', 'return `' + _.options.openGraphEndpoint + '`')(url);
+    			return new Promise(function (resolve) {
+    				fetch(api).then(function (res) {
+    					return res.json();
+    				}).then(function (json) {
+    					return resolve(_.options.onOpenGraphFetch(json) || json);
+    				});
+    			});
+    		}
+    	}, {
+    		key: 'urlToText',
+    		value: function urlToText(_, match, url) {
+    			if (url.match(_.excludeRegex)) return Promise.resolve();
+
+    			return new Promise(function (resolve) {
+    				OpenGraph.fetchData(url, _).then(function (data) {
+    					return resolve(data && data.success ? _.template(data) : '');
+    				});
+    			});
+    		}
+    	}]);
+    	return OpenGraph;
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     }();
 
     var Github = function () {
@@ -2057,6 +2714,7 @@
     var globalOptions = {};
 
     var defaultOptions = {
+<<<<<<< HEAD
       marked: false,
       markedOptions: {},
       link: true,
@@ -2137,6 +2795,88 @@
       onOpenGraphFail: function onOpenGraphFail() {},
       videoClickHandler: function videoClickHandler() {},
       served: [] //Private variable used to store processed urls so that they are not processed multiple times.
+=======
+    	marked: false,
+    	markedOptions: {},
+    	link: true,
+    	linkOptions: {
+    		target: 'self',
+    		exclude: ['pdf'],
+    		rel: ''
+    	},
+    	emoji: true,
+    	customEmoji: [],
+    	fontIcons: true,
+    	customFontIcons: [],
+    	highlightCode: false,
+    	videoJS: false,
+    	videojsOptions: {
+    		fluid: true,
+    		preload: 'metadata'
+    	},
+    	locationEmbed: true,
+    	mapOptions: {
+    		mode: 'place'
+    	},
+    	tweetsEmbed: false,
+    	tweetOptions: {
+    		maxWidth: 550,
+    		hideMedia: false,
+    		hideThread: false,
+    		align: 'none',
+    		lang: 'en'
+    	},
+    	singleEmbed: false,
+    	openGraphEndpoint: null,
+    	openGraphExclude: [],
+    	videoEmbed: true,
+    	videoHeight: null,
+    	videoWidth: null,
+    	videoDetails: true,
+    	audioEmbed: true,
+    	imageEmbed: true,
+    	excludeEmbed: [],
+    	inlineEmbed: [],
+    	inlineText: true,
+    	codeEmbedHeight: 500,
+    	vineOptions: {
+    		maxWidth: null,
+    		type: 'postcard', //'postcard' or 'simple' embedding
+    		responsive: true,
+    		width: 350,
+    		height: 460
+    	},
+    	plugins: {
+    		marked: window.marked,
+    		videojs: window.videojs,
+    		highlightjs: window.hljs,
+    		prismjs: window.Prism,
+    		twitter: window.twttr
+    	},
+    	googleAuthKey: '',
+    	soundCloudOptions: {
+    		height: 160,
+    		themeColor: 'f50000', //Hex Code of the player theme color
+    		autoPlay: false,
+    		hideRelated: false,
+    		showComments: true,
+    		showUser: true,
+    		showReposts: false,
+    		visual: false, //Show/hide the big preview image
+    		download: false //Show/Hide download buttons
+    	},
+    	videoClickClass: 'ejs-video-thumb',
+    	customVideoClickHandler: false,
+    	beforeEmbedJSApply: function beforeEmbedJSApply() {},
+    	afterEmbedJSApply: function afterEmbedJSApply() {},
+    	onVideoShow: function onVideoShow() {},
+    	onTweetsLoad: function onTweetsLoad() {},
+    	videojsCallback: function videojsCallback() {},
+    	onOpenGraphFetch: function onOpenGraphFetch() {},
+    	onOpenGraphFail: function onOpenGraphFail() {},
+    	videoClickHandler: function videoClickHandler() {},
+    	served: [] //Private variable used to store processed urls so that they are not processed multiple times.
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
     };
 
     var instances = [];
@@ -2185,6 +2925,7 @@
       * @return {Promise} The processes resulting string
       */
 
+<<<<<<< HEAD
 
       babelHelpers.createClass(EmbedJS, [{
         key: 'process',
@@ -2195,6 +2936,18 @@
           var options = processOptions(this.options);
           var embeds = [];
           var output = input;
+=======
+
+    	babelHelpers.createClass(EmbedJS, [{
+    		key: 'process',
+    		value: function process() {
+    			var _this = this;
+
+    			var input = this.input;
+    			var options = processOptions(this.options);
+    			var embeds = [];
+    			var output = input;
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 
           this.options.beforeEmbedJSApply();
 
@@ -2341,6 +3094,12 @@
               output = _baseEmbed34[0];
               embeds = _baseEmbed34[1];
 
+<<<<<<< HEAD
+=======
+
+    					if (ifEmbed(options, 'gist')) {
+    						var _process = new Gist(input, output, options, embeds).process();
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 
               if (ifEmbed(options, 'gist')) {
                 var _process = new Gist(input, output, options, embeds).process();

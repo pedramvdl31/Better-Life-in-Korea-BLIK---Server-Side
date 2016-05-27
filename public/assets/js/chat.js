@@ -5,6 +5,7 @@ $(document).ready(function(){
 });
 chat = {
 	pageLoad: function() {
+<<<<<<< HEAD
 		var newDate = new Date().getTime(); //convert string date to Date object
 		// $('.test-tttttttttttttt').removeClass('act');
 		// $('.t1r').addClass('act');
@@ -17,6 +18,26 @@ chat = {
 		// var currentDate = new Date().getTime();
 		// var diff = currentDate-newDate;
 		// console.log(diff);
+=======
+		rqst_server_time();
+		$('#inner-chat-wrapper').slimScroll({
+        	height: '285px'
+    	});
+		$('.inner-wrapper-child').slimScroll({
+        	height: '218px'
+    	});
+	    EmbedJS.setOptions({
+		  	//An option when set to true will use marked.js to parse markdown and convert it to HTML.
+		    // Make sure you have loaded marked.js before loading embed.js if this option is set to
+		    // true else the plugin will throw an error.
+		    marked                 : false,
+
+		    // The option takes the marked.js options.
+		    markedOptions          : {},
+
+		    // Instructs the plugin whether or not to embed urls/ convert urls into HTML anchor tags.
+		    link                   : true,
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 
 		$( ".resizable" ).resizable({
 		  handles: "n"
@@ -75,6 +96,7 @@ chat = {
 	socket_io: function() {
         socket.on('_forward', function(data) {
         	var cu = $('#ufh').val();
+<<<<<<< HEAD
         	var count = $('.msg-tmp-'+cu+'-'+data['aid']+'').length;
         	if (count!=0) {pmtoa(cu,data['aid'],data['msg'])}
         	if (!$('.main-list-dock').hasClass('hide')) {
@@ -85,6 +107,16 @@ chat = {
 	    		var fin = StrToEmo(data['msg']);
 	       		var input_bubble = make_bubble_rc(fin,randtxt);
 	       		var dock_no = $('.ctabs[uid="'+data['aid']+'"]').attr('dock-no');
+=======
+        	pmtoa(cu,data['aid'],data['msg']);
+        	if (!$('.main-list-dock').hasClass('hide')) {
+        		$('.main-list-dock').find('.have-msg').removeClass('hide');
+        	}
+        	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
+	    		var randtxt = randomString();
+	       		var input_bubble = make_bubble_rc(data['msg'],randtxt);
+	       		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 	       		$('._ctb'+dock_no).append(input_bubble);
 	       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
         	} else {
@@ -92,6 +124,10 @@ chat = {
         			$('.conv-wrapper[tf="'+data['aid']+'"]').find('.conv-c').removeClass('hide');
         		}
         	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
         });
 	},
 	events: function() {
@@ -209,8 +245,30 @@ chat = {
 		$('.cc2').click(function(){
 			$('.dc2').attr('uid','');
 			$('.dc2').addClass('hide');
+<<<<<<< HEAD
 			make_child_active(1);
 			mopac();
+=======
+		});
+
+		$('.ChatTextArea').keypress(function(event){
+		    var keycode = (event.keyCode ? event.keyCode : event.which);
+		    if(keycode == '13'){
+		    	var tinput = $(this).val();
+		    	if (!$.isBlank(tinput)) {
+		    		$(this).val('');
+		    		var randtxt = randomString();
+		       		var input_bubble = make_bubble_lst(tinput,randtxt);
+		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
+		       		$('._ctb'+dock_no).append(input_bubble);
+		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
+		       		var fid = $(this).parents('.dockChild').attr('uid');
+		       		request_c.snddata(tinput,fid,randtxt);
+		       		var cu = $('#ufh').val();
+		       		pmtoa_sndr(cu,fid,tinput);
+        		}
+		    }
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 		});
 		$('.conv-wrapper').click(function(){
 			var tab_id = check_tabs();
@@ -359,8 +417,17 @@ function prepare_html_tmp(_ar,tu,tf) {
 	var html = '';
 	$.each(_ar, function(index,value) {
 		var sdr = $(this).attr('user_id');
+<<<<<<< HEAD
 		var frm_now = gago($(this).attr('ago'));
 		var tm = StrToEmo($(this).attr('message'));
+=======
+
+
+
+		var frm_now = gago($(this).attr('ago'));
+		// 
+
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 		if (tu == sdr) {
 			html += '<div class="_msnd _msgss bbl">'+
 						'<div class="_mavs">'+
@@ -419,6 +486,7 @@ function check_tabs() {
 	}
 	return data;
 }
+<<<<<<< HEAD
 function clear_ctabs() { 
 	for (var i=1; i <= 2; i++) {
 		$('#ctab'+i).attr('uid','');
@@ -427,6 +495,36 @@ function clear_ctabs() {
 }
 function make_bubble_lst(tinput,rtxt) {
 	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'" data="last">'+
+=======
+
+function make_bubble_lst(tinput,rtxt) {
+	var escapedtxt = escapeHTML(tinput);
+	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'" data="last">'+
+				'<div class="_mavs">'+
+					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+				'</div>'+
+				'<div class="_mtwps">'+
+					'<div class="_mb _sndb">'+
+					'<span class="_mtxt embd" >'+
+						'<span class="_plin">'+
+							escapedtxt+
+						'</span>'+
+						'<br>'+
+						'<div class="_mtime" style="width: 100%">'+
+							'<small><span class="_tago">Now</span></small>&nbsp'+
+							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
+						'</div>'+
+						'</span>'+
+					'</div>'+
+				'</div>'+
+			'</div>';
+	return html;
+}
+
+function make_bubble(tinput,rtxt) {
+	var escapedtxt = escapeHTML(tinput);
+	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'">'+
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 				'<div class="_mavs">'+
 					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
 				'</div>'+
@@ -447,7 +545,13 @@ function make_bubble_lst(tinput,rtxt) {
 			'</div>';
 	return html;
 }
+
+
 function make_bubble_rc(tinput,rtxt) {
+<<<<<<< HEAD
+=======
+	var escapedtxt = escapeHTML(tinput);
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 	html = '<div class="_mrcv _msgsr bbl" this-id="'+rtxt+'">'+
 				'<div class="_mavr">'+
 					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
@@ -468,7 +572,11 @@ function make_bubble_rc(tinput,rtxt) {
 			'</div>';
 	return html;
 }
+<<<<<<< HEAD
 //get ago
+=======
+
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 function gago(ttgo){
 	var s_t = $('#crnt_dt').val();
 	var ago_f = moment(ttgo, "YYYY-MM-DD hh:mm:ss");
@@ -476,6 +584,10 @@ function gago(ttgo){
 	var duration = moment.utc(server_f.diff(ago_f)).format("HH:mm:ss");
 	return moment.duration(duration, "days").humanize();
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2
 function randomString() {
     var result = '';
     var length = 4;
@@ -485,6 +597,7 @@ function randomString() {
     return dt+result;
 }
 function escapeHTML(txt) {
+
     return txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 //put msg to tmp array
@@ -526,6 +639,7 @@ function rqst_server_time(){
 	}, 180000);
 }
 
+<<<<<<< HEAD
 function renembd(elem){
 	EmbedJS.applyEmbedJS(elem);
 }
@@ -618,3 +732,39 @@ function placeCaretAtEnd(el) {
         textRange.select();
     }
 }
+=======
+function pmtoa(tu,tf,msg){
+	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
+	var nc = count + 1;
+	var c_time = $('#crnt_dt').val();
+	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tf+'" ago="'+c_time+'" message="'+msg+'"></input>';
+	$('#msgs_tmp').append(html);
+}
+
+function pmtoa_sndr(tu,tf,msg){
+	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
+	var nc = count + 1;
+	var c_time = $('#crnt_dt').val();
+	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tu+'" ago="'+c_time+'" message="'+msg+'"></input>';
+	$('#msgs_tmp').append(html);
+}
+
+function rqst_server_time(){
+	setInterval(function(){ 
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/rqst-s-time',
+			{
+				"_token": token
+			},
+			function(result){
+				var s_time = result.rst;
+				if (!$.isBlank(s_time)) {
+					$('#crnt_dt').val(s_time);
+				}
+			}
+			);
+	}, 180000);
+}
+
+>>>>>>> fad1e43b488e262bf26bc864ffaefdf00c4eeec2

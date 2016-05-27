@@ -44,7 +44,7 @@ module.exports = function (grunt) {
 				]
 			},
 			dist   : {
-				src : '.tmp/embed.css',
+				src : 'src/embed.css',
 				dest: 'dist/embed.min.css'
 			}
 		},
@@ -191,7 +191,8 @@ module.exports = function (grunt) {
 			options: {
 				changelogOpts: {
 					// conventional-changelog options go here
-					preset: 'angular'
+					preset: 'angular',
+					releaseCount: 0
 				}
 			},
 			release: {
