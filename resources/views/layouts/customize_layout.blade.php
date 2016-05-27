@@ -319,6 +319,15 @@
 
     </footer><!--/Footer-->
 
+
+
+
+
+
+
+
+
+
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
 
@@ -342,7 +351,7 @@
         left: 0;
         position: fixed;
         right: 0;
-        z-index: 300;
+        z-index: 5;
         }
         .dock-max {
         bottom: 295px;
@@ -351,27 +360,33 @@
         left: 0;
         position: fixed;
         right: 0;
-        z-index: 300;
+        z-index: 5;
         }
         .dock-max-1 {
-        bottom: 280px;
-        direction: ltr;
-        height: 28px;
-        left: 0;
-        position: fixed;
-        right: 285px;
-        z-index: 300;
+            bottom: 280px;
+            direction: ltr;
+            height: 28px;
+            left: 0;
+            position: fixed;
+            right: 285px;
+            z-index: 5;
+        }
+        .toright{
+            right: 285px !important;
         }
         .dock-max-2 {
-        bottom: 280px;
-        direction: ltr;
-        height: 28px;
-        left: 0;
-        position: fixed;
-        right: 570px;
-        z-index: 300;
+            bottom: 280px;
+            direction: ltr;
+            height: 28px;
+            left: 0;
+            position: fixed;
+            right: 570px;
+            z-index: 5;
         }
-
+        .tvis{
+            z-index: 8 !important;
+            opacity: 1 !important;
+        }
         ._dock {
         margin: 0 15px 0 0;
         }
@@ -743,7 +758,7 @@
             background-size: 600px;
             background-position: -554px -363px;
         }
-        .emoticon_heart {
+        .emoticon_heart,.emoticon_heart2,.emoticon_heart3 {
             background-image: url(/assets/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
@@ -761,6 +776,9 @@
             background-size: 600px;
             background-position: -576px -21px;
         }
+        #da{
+            padding-right: 15px;
+        }
 
 
         /*==========  Non-Mobile First Method  ==========*/
@@ -777,7 +795,7 @@
 
         /* CUS */
         @media only screen and (max-width : 870px) {
-            .dock-max-2 {
+            .ctabs {
                 bottom: 319px;
                 direction: ltr;
                 height: 28px;
@@ -785,26 +803,32 @@
                 position: fixed;
                 right: 285px;
                 opacity: 0.5;
-                z-index: 299;
+                z-index: 5;
             }
-        }
+            .tcvis{
+                bottom: 280px !important;
+                height: 28px !important;
+                right: 285px !important;
+                 z-index: 7 !important;
+                opacity: 1 !important;
+            }
 
+        }
+        p
         /* Small Devices, Tablets */
         @media only screen and (max-width : 768px) {
 
         }
 
+
         /* Extra Small Devices, Phones */ 
         @media only screen and (max-width : 586px) {
-            .dock-max-1 {
-                bottom: 280px;
-                direction: ltr;
-                height: 28px;
-                left: 0;
-                position: fixed;
-                right: 0;
-                z-index: 300;
+
+            .ctabs {
+                right: 0 !important;
+                opacity: 1 !important;
             }
+
             .dock-max-2 {
                 bottom: 319px;
                 direction: ltr;
@@ -812,8 +836,8 @@
                 left: 0;
                 position: fixed;
                 right: 0;
-                opacity: 0.9;
-                z-index: 299;
+                opacity: 0.8;
+                z-index: 5;
             }
             .dock-max {
                 bottom: 358px;
@@ -822,8 +846,8 @@
                 left: 0;
                 position: fixed;
                 right: 0;
-                z-index: 298;
-                opacity: 0.5;
+                z-index: 5;
+                opacity: 0.8;
             }
             ._dock {
                 margin: 0;
@@ -876,9 +900,9 @@
                     <div id="BuddylistPagelet">
                         <div class="_56ox ">
                             <div class="uiToggle _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
-                                <div class="wpNubButton">
-                                    <span class="label nb-lb pointer">Chat</span>
-                                    <span class="have-msg nb-lb pointer hide"><i class="fa fa-envelope-o"></i></span>
+                                <div class="wpNubButton pointer nm">
+                                    <span class="label nb-lb">Chat</span>
+                                    <span class="have-msg nb-lb hide"><i class="fa fa-envelope-o"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -887,17 +911,24 @@
             </div>
         </div>
 
-        <div class="dock_wrapper dock-max dockWrapperRight hide dtabs" type="1">
+        <div id="mtab" class="dock_wrapper dock-max dockWrapperRight hide" type="1">
             <div class="_dock m_clearfix">
                 <div class="m_clearfix nubContainer rNubContainer">
                     <div id="BuddylistPagelet">
                         <div class="_56ox ">
                             <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                                 <div class="wpNubButton-max wpNubButton-max-main">
-                                    <span class="label nb-lb lb-m pointer ">Chat</span>
+                                    <span class="label nb-lb lb-m pointer dts">
+                                    Chat
+                                        <span id="da" class="pull-right">
+                                            <i class="glyphicon glyphicon-triangle-bottom"></i>
+                                        </span>
+                                    </span>
+
                                     <div id="inner-chat-wrapper">
                                         {!!$friends_list!!}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -907,7 +938,7 @@
         </div>
     </div>
     <div class="chat_dockChilds">
-        <div class="dockChild dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide dtabs" dock-no="1" type="1" uid="">
+        <div id="ctab1" class="ctabs dc1 dock_wrapperChilds dock-max-1 dockWrapperRightChilds hide" dock-no="1" type="1" uid="">
             <div class="_dock m_clearfix">
                 <div class="m_clearfix nubContainer rNubContainer">
                     <div id="BuddylistPagelet">
@@ -915,24 +946,24 @@
                             <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                                 <div class="wpNubButton-max">
                                     <span class="label nb-lb lb-m pointer ">
-                                        <span class="_cbnm _cbnm1"></span> 
+                                        <span class="_cbnm _cbnm1 dtsc"></span> 
                                         <span class="cc1 ChatClose pull-right"><i class="fa fa-times"></i></span>
                                     </span>
                                     <div class="sc-wrapper sc-wrapper-1"></div>
                                     <div class="inputBar">
                                         <div id="emoji-list-1" class="emoji-list hide ">
-                                            <i tab="1" title=":)" txt="smile" class="ec emoticon emoticon_smile"></i>
-                                            <i tab="1" title=":)" txt="frown" class="ec emoticon emoticon_frown"></i>
-                                            <i tab="1" title=":)" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
-                                            <i tab="1" title=":)" txt="heart" class="ec emoticon emoticon_heart"></i>
-                                            <i tab="1" title=":)" txt="tongue" class="ec emoticon emoticon_tongue"></i>
-                                            <i tab="1" title=":)" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
-                                            <i tab="1" title=":)" txt="smile" class="ec emoticon emoticon_smile"></i>
-                                            <i tab="1" title=":)" txt="frown" class="ec emoticon emoticon_frown"></i>
-                                            <i tab="1" title=":)" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
-                                            <i tab="1" title=":)" txt="heart" class="ec emoticon emoticon_heart"></i>
-                                            <i tab="1" title=":)" txt="tongue" class="ec emoticon emoticon_tongue"></i>
-                                            <i tab="1" title=":)" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
+                                            <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
+                                            <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
+                                            <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
+                                            <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
+                                            <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
+                                            <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
+                                            <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
+                                            <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
+                                            <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
+                                            <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
+                                            <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
+                                            <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
                                         </div>
                                         <div ttab="1" class="ChatTextArea" id="cta1" contenteditable="true" placeholder="Type Here..."></div>
                                         
@@ -947,7 +978,7 @@
                 </div>
             </div>
         </div>
-        <div class="dockChild dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide dtabs" dock-no="2" type="1" uid="">
+        <div id="ctab2" class="ctabs dc2 dock_wrapperChilds dock-max-2 dockWrapperRightChilds hide" dock-no="2" type="1" uid="">
             <div class="_dock m_clearfix">
                 <div class="m_clearfix nubContainer rNubContainer">
                     <div id="BuddylistPagelet">
@@ -955,7 +986,7 @@
                             <div class="uiToggle-m _50-v wpNub _4mq3 hide_on_presence_error" id="wpDockChatBuddylistNub">
                                 <div class="wpNubButton-max">
                                     <span class="label nb-lb lb-m pointer ">
-                                        <span class="_cbnm _cbnm2"></span> 
+                                        <span class="_cbnm _cbnm2 dtsc"></span> 
                                         <span class="cc2 ChatClose pull-right"><i class="fa fa-times"></i></span>
                                     </span>
                                     <div class="sc-wrapper sc-wrapper-2"></div>

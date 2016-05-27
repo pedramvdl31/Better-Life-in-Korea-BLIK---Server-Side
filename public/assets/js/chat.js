@@ -20,6 +20,7 @@ chat = {
 
 
 
+
 		window.ema = {
 			"smile":":)",
 			"frown":":(",
@@ -27,8 +28,20 @@ chat = {
 			"wtongue":";p",
 			"wink":";)",
 			"bsmile":":d",
+			"smiley":":-)",
 			"heart":"&lt;3",
-			"smiley":":-)"
+			"heart2":"<3",
+			"heart3":"&amp;lt;3"
+			};
+		window.ema_plain = {
+			"smile":":)",
+			"frown":":(",
+			"tongue":":p",
+			"wtongue":";p",
+			"wink":";)",
+			"bsmile":":d",
+			"smiley":":-)",
+			"heart":"<3"
 			};
 
 		rqst_server_time();
@@ -65,10 +78,11 @@ chat = {
         	if (!$('.main-list-dock').hasClass('hide')) {
         		$('.main-list-dock').find('.have-msg').removeClass('hide');
         	}
-        	if ($('.dockChild[uid="'+data['aid']+'"]').length == 1) {
+        	if ($('.ctabs[uid="'+data['aid']+'"]').length == 1) {
 	    		var randtxt = randomString();
-	       		var input_bubble = make_bubble_rc(data['msg'],randtxt);
-	       		var dock_no = $('.dockChild[uid="'+data['aid']+'"]').attr('dock-no');
+	    		var fin = StrToEmo(data['msg']);
+	       		var input_bubble = make_bubble_rc(fin,randtxt);
+	       		var dock_no = $('.ctabs[uid="'+data['aid']+'"]').attr('dock-no');
 	       		$('._ctb'+dock_no).append(input_bubble);
 	       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
         	} else {
@@ -87,64 +101,58 @@ chat = {
 			var emh = MakeEmoHtml(ttxt);
 			$('#cta'+ttab).append(emh);
 		});
+		$('.dts').click(function(){
+			// $('.ctabs').removeClass('tcvis');
+			$('#mtab').addClass('tvis');
+		});
+		$('.dtsc').click(function(){	
+			$('.ctabs').removeClass('tcvis');
+			$(this).parents('.ctabs').addClass('tcvis');
+		});
 		$(document).on('keypress', '.ChatTextArea', function() {
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
 		    var tat = $(this).attr('ttab');
 		    if(keycode == '13'){
-		    	var tinput = $('#ex'+tat).text();
-		    	if (!$.isBlank(tinput)) {
-		    		$('#ex'+tat).text('');
+		    	var tor = $(this).html();
+		    	if (!$.isBlank(tor)) {
 		    		var randtxt = randomString();
-		       		var input_bubble = make_bubble_lst(tinput,randtxt);
-		       		var dock_no = $(this).parents('.dockChild').attr('dock-no');
+		    		var prepared_array = PrepareTArray(tor);
+		       		var input_bubble = make_bubble_lst(prepared_array['f'],randtxt);
+		       		var dock_no = $(this).parents('.ctabs').attr('dock-no');
 		       		$('._ctb'+dock_no).append(input_bubble);
 		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
-		       		var fid = $(this).parents('.dockChild').attr('uid');
-		       		request_c.snddata(tinput,fid,randtxt);
+		       		var fid = $(this).parents('.ctabs').attr('uid');
+		       		request_c.snddata(prepared_array['e'],fid,randtxt);
 		       		var cu = $('#ufh').val();
-		       		pmtoa_sndr(cu,fid,tinput);
+		       		pmtta_sndr(cu,fid,prepared_array['e']);
 		       		var thisid = $(this).attr('id');
 		       		$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
 		       		$(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
 		       		$(this).replaceWith( '<div  ttab="'+tat+'" class="ChatTextArea" id="'+thisid+'" contenteditable="true"></div>' );
-		       		setTimeout(function(){ $('#'+thisid).focus() }, 100);
+		       		setTimeout(function(){ $('#'+thisid).focus() }, 3000);
         		}
 		    }
-
+		});
+		$('.nm').click(function(){
+			$(this).parents('.wpNubButton').find('.have-msg').addClass('hide');
+			$(this).parents('.dock_wrapper:first').addClass('hide');
+			$('.dock-max').removeClass('hide');
+		});
+		$('#da').click(function(){
+			$(this).parents('.dock_wrapper:first').addClass('hide');
+			$('.dock-min').removeClass('hide');
+			clear_ctabs();
+		});
+		$(document).on('keyup', '.ChatTextArea', function() {
+		    var keycode = (event.keyCode ? event.keyCode : event.which);
+		    var tat = $(this).attr('ttab');
 		    if (keycode == '32') {
-		    	var tv = $(this).html().trim();
-		    	var tl = tv.length;
-		    		$flag = 0;
-		    		for (var i = 5; i > 0; i--) {
-		    			var l5 = tv.substr(tl - i);
-		    			var l5f = isExist(ema,l5);
-			    		if (l5f!=-1) {
-			    			$flag=1;
-			    			var emh = MakeEmoHtml(l5f);
-			    			var nt = RemoveStr(tv,i);
-			    			var ot = nt+emh;
-			    			$(this).html(ot);
-							placeCaretAtEnd(document.getElementById("cta1"));
-			    		}
-		    		}
+		    	var tv = $(this).html();
+	    		var nt = StrToEmo(tv);
+	    		$(this).html(nt);
+	    		placeCaretAtEnd(document.getElementById("cta"+tat));
 		    }
-
-
 		});
-
-		$(document).on('keypress', '#cta1', function(e) {
-		    e = e || window.event;
-		    var charCode = e.keyCode || e.which;
-		    $('#ex1').append(String.fromCharCode(charCode));
-		});
-		$(document).on('keypress', '#cta2', function(e) {
-		    e = e || window.event;
-		    var charCode = e.keyCode || e.which;
-		    $('#ex2').append(String.fromCharCode(charCode));
-		});
-
-
-
 		$('#cta1, #cta2').bind('input propertychange', function() {
 		    var len = $(this).text().length;
 		    if (len == 29) {
@@ -162,7 +170,6 @@ chat = {
 		    	var slimsc = $(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
 		    }
 		});
-
 		$(document).on('click', '#emoji-list-1>pre>code>.emoticon', function() {
 			togglehs('#emoji-list-1');
 			var t = $(this).attr('title');
@@ -191,65 +198,40 @@ chat = {
 			if ($('.dc2').hasClass('hide')) {
 				$('.dc1').addClass('hide');
 			} else { 
-				//sweap
-				var two_inst = $('._ctb2').html();
-				$('.sc-wrapper-1').html('');
-	    		$('.sc-wrapper-1').html('<div style="height:218px" class="inner-wrapper-child _ctb1" id="ctb1"></div>');
-				$('.sc-wrapper-2').html('');
-	    		$('.sc-wrapper-2').html('<div style="height:218px" class="inner-wrapper-child _ctb2" id="ctb2"></div>');
-		    	$('._ctb1').html(two_inst);
-		    	var fi = $('.dc2').attr('uid');
-		    	$('.dc2').attr('uid','');
-		    	$('.dc1').attr('uid',fi);
-				$('._cbnm1').text($('._cbnm2').text());
-				$('.dc2').addClass('hide');
-				$('._ctb1').slimScroll({
-		        	height: '218px',
-		        	start: 'bottom'
-		    	});
+				$('.dc1').addClass('hide');
+				$('.dc2').addClass('toright');
 			}
+			make_child_active(2);
+			mopac();
 		});
 		$('.cc2').click(function(){
 			$('.dc2').attr('uid','');
 			$('.dc2').addClass('hide');
+			make_child_active(1);
+			mopac();
 		});
-
 		$('.conv-wrapper').click(function(){
 			var tab_id = check_tabs();
-			satb(tab_id);
+			make_active(tab_id);
 	    	$('.sc-wrapper-'+tab_id).html('');
 	    	$('.sc-wrapper-'+tab_id).html('<div style="height:218px" class="inner-wrapper-child _ctb'+tab_id+'" id="ctb'+tab_id+'"></div>');
 			var cu = $('#ufh').val();
 			var fu = $(this).attr('tf');
+			make_active(fu);
 			var fe = $(this).find('._femail').text();
 			$('._cbnm'+tab_id).text(fe);
 			$(this).find('.conv-c').addClass('hide');
-			var duplength = $(".dockChild[uid='"+fu+"']").length;
+			var duplength = $(".ctabs[uid='"+fu+"']").length;
 			if (duplength==0) {
 					$('.dc'+tab_id).removeClass('hide');
 					$('.dc'+tab_id).attr('uid',fu);
+					$('.dc2').removeClass('toright');
 				}
 			$tmp = $('.msg-tmp-'+cu+'-'+fu+'');
 			if ($tmp.length>0) {
 				t_g_m($tmp,cu,fu,tab_id);
 			} else {
 				g_m(cu,fu,tab_id);
-			}
-		});
-		$('.nb-lb').click(function(){
-			$(this).parents('.wpNubButton').find('.have-msg').addClass('hide');
-			var parent = $(this).parents('.dock_wrapper:first');
-			var type = parseInt(parent.attr('type'));
-			parent.addClass('hide');
-			switch(type) {
-				case 0: 
-					$('.dock-max').removeClass('hide');
-				break;				
-				case 1: 
-					$('.dock-min').removeClass('hide');
-				break;
-				default:
-				break;
 			}
 		});
 	}
@@ -326,9 +308,9 @@ function t_g_m(tmp_m,cu,fu,tab_id){
 }
 function prepare_html(_ar,tu,tf) {
 	var html = '';
-	// console.log(_ar);
 	$.each(_ar, function(index,value) {
 		var sdr = value['user_id'];
+		var tm = StrToEmo(value['message']);
 		if (tu == sdr) {
 			html += '<div class="_msnd _msgss bbl">'+
 						'<div class="_mavs">'+
@@ -338,7 +320,7 @@ function prepare_html(_ar,tu,tf) {
 							'<div class="_mb _sndb">'+
 							'<span class="_mtxt embd" >'+
 								'<span class="_plin">'+
-									value['message']+
+									tm+
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
@@ -357,7 +339,7 @@ function prepare_html(_ar,tu,tf) {
 							'<div class="_mb _rcvb">'+
 							'<span class="_mtxt embd" >'+
 								'<span class="_plin">'+
-									value['message']+
+									tm+
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
@@ -376,6 +358,7 @@ function prepare_html_tmp(_ar,tu,tf) {
 	$.each(_ar, function(index,value) {
 		var sdr = $(this).attr('user_id');
 		var frm_now = gago($(this).attr('ago'));
+		var tm = StrToEmo($(this).attr('message'));
 		if (tu == sdr) {
 			html += '<div class="_msnd _msgss bbl">'+
 						'<div class="_mavs">'+
@@ -385,7 +368,7 @@ function prepare_html_tmp(_ar,tu,tf) {
 							'<div class="_mb _sndb">'+
 							'<span class="_mtxt embd" >'+
 								'<span class="_plin">'+
-									$(this).attr('message')+
+									tm+
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
@@ -404,7 +387,7 @@ function prepare_html_tmp(_ar,tu,tf) {
 							'<div class="_mb _rcvb">'+
 							'<span class="_mtxt embd" >'+
 								'<span class="_plin">'+
-									$(this).attr('message')+
+									tm+
 								'</span>'+
 								'<br>'+
 								'<div class="_mtime" style="width: 100%">'+
@@ -434,8 +417,13 @@ function check_tabs() {
 	}
 	return data;
 }
+function clear_ctabs() { 
+	for (var i=1; i <= 2; i++) {
+		$('#ctab'+i).attr('uid','');
+		$('#ctab'+i).addClass('hide');
+	}
+}
 function make_bubble_lst(tinput,rtxt) {
-	var escapedtxt = escapeHTML(tinput);
 	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'" data="last">'+
 				'<div class="_mavs">'+
 					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
@@ -444,30 +432,7 @@ function make_bubble_lst(tinput,rtxt) {
 					'<div class="_mb _sndb">'+
 					'<span class="_mtxt embd" >'+
 						'<span class="_plin">'+
-							escapedtxt+
-						'</span>'+
-						'<br>'+
-						'<div class="_mtime" style="width: 100%">'+
-							'<small><span class="_tago">Now</span></small>&nbsp'+
-							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
-						'</div>'+
-						'</span>'+
-					'</div>'+
-				'</div>'+
-			'</div>';
-	return html;
-}
-function make_bubble(tinput,rtxt) {
-	var escapedtxt = escapeHTML(tinput);
-	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'">'+
-				'<div class="_mavs">'+
-					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
-				'</div>'+
-				'<div class="_mtwps">'+
-					'<div class="_mb _sndb">'+
-					'<span class="_mtxt embd" >'+
-						'<span class="_plin">'+
-							escapedtxt+
+							tinput+
 						'</span>'+
 						'<br>'+
 						'<div class="_mtime" style="width: 100%">'+
@@ -481,7 +446,6 @@ function make_bubble(tinput,rtxt) {
 	return html;
 }
 function make_bubble_rc(tinput,rtxt) {
-	var escapedtxt = escapeHTML(tinput);
 	html = '<div class="_mrcv _msgsr bbl" this-id="'+rtxt+'">'+
 				'<div class="_mavr">'+
 					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
@@ -490,7 +454,7 @@ function make_bubble_rc(tinput,rtxt) {
 					'<div class="_mb _rcvb">'+
 					'<span class="_mtxt embd" >'+
 						'<span class="_plin">'+
-							escapedtxt+
+							tinput+
 						'</span>'+
 						'<br>'+
 						'<div class="_mtime" style="width: 100%">'+
@@ -530,12 +494,17 @@ function pmtoa(tu,tf,msg){
 	$('#msgs_tmp').append(html);
 }
 //put msg to tmp array after sent
-function pmtoa_sndr(tu,tf,msg){
+function pmtta_sndr(tu,tf,msg){
 	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
 	var nc = count + 1;
 	var c_time = $('#crnt_dt').val();
 	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tu+'" ago="'+c_time+'" message="'+msg+'"></input>';
 	$('#msgs_tmp').append(html);
+}
+function mopac(){
+	if ($('.dc1').hasClass('hide') && $('.dc2').hasClass('hide')) {
+		$('#mtab').addClass('tvis');
+	}
 }
 function rqst_server_time(){
 	setInterval(function(){ 
@@ -554,10 +523,7 @@ function rqst_server_time(){
 			);
 	}, 180000);
 }
-//set active tab id
-function satb(tid){
-	// $('.dtabs').removeClass();
-}
+
 function renembd(elem){
 	EmbedJS.applyEmbedJS(elem);
 }
@@ -568,7 +534,13 @@ function togglehs(d){
 		$(d).addClass('hide');
 	}
 }
-
+function PrepareTArray(txt){
+	var oa={"p":"","e":"","f":""};
+	oa["p"] = SrtipEmojiHtml(txt);
+	oa["e"] = escapeHTML(oa["p"]);
+	oa["f"] = StrToEmo(oa["e"],ema);
+	return oa;
+}
 function isExist(obj,str) {
 	var o = -1
 	$.each( obj, function(k,v) {
@@ -578,16 +550,55 @@ function isExist(obj,str) {
 	});
 	return o;
 }
-
-function MakeEmoHtml(str) {
-	return '<i title=":)" class="emoticon emoticon_'+str+'"></i> ';
+function SrtipEmojiHtml(txt) {
+	var o = -1
+	var ot = txt;
+	$.each(ema_plain, function(k,v) {
+		var ht = '<i class="emoticon emoticon_'+k+'"></i>';
+		var regg = new RegExp(ht,"g");
+		ot = ot.replace(regg,v);
+	});
+	return ot;
 }
-
+function StrToEmo(txt) {
+	var ot = txt;
+	$.each(ema, function(k,v) {
+		var ht = '<i class="emoticon emoticon_'+k+'"></i>';
+		var regg = new RegExp(escapeRegExp(v),"g");
+		ot = ot.replace(regg,ht);
+	});
+	return ot;
+}
+function escapeRegExp(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+}
+function MakeEmoHtml(str) {
+	return '<i class="emoticon emoticon_'+str+'"></i>';
+}
+function make_active(fi) {
+	var ti = ct_vis(fi);
+	$('#mtab').removeClass('tvis');
+	make_child_active(ti)
+}
+function ct_vis(fid) {
+	var data = null;
+	if ($('.dc1').hasClass('hide') || $('.dc1').attr('uid')==fid) {
+		data = 1;
+	} else if ($('.dc2').hasClass('hide') || $('.dc2').attr('uid')==fid ){
+		data = 2;
+	}
+	return data;
+}
 function RemoveStr(tt,cutnum) {
 	var tlen = tt.length;
 	var o = tt.slice(0,tlen-cutnum);
 	return o;
 }
+function make_child_active(ci) {
+	$('.ctabs').removeClass('tcvis');
+	$('#ctab'+ci).addClass('tcvis');
+}
+
 function placeCaretAtEnd(el) {
     el.focus();
     if (typeof window.getSelection != "undefined"

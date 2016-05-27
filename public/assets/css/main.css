@@ -2722,9 +2722,6 @@ h2.title {
 .sm-forms{
   display: none;
 }
-.flash-notification .alert {
-    margin-top: -20px;
-}
 
 /*==================================================
 =            Bootstrap 3 Media Queries             =
