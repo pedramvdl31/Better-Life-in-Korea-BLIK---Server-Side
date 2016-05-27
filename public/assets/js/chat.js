@@ -18,7 +18,9 @@ chat = {
 		// var diff = currentDate-newDate;
 		// console.log(diff);
 
-
+		$( ".resizable" ).resizable({
+		  handles: "n"
+		});
 
 
 		window.ema = {

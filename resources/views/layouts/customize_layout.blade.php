@@ -28,6 +28,8 @@
     <link href="/assets/css/general.css" rel="stylesheet">
     <link rel="stylesheet" href="/packages/embed/dist/embed.min.css" />
     <link rel="stylesheet" href="/packages/dropzone/dropzone.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
     <!-- AUTOCOMPLETE -->
     <link rel="stylesheet" href="/packages/easy_autocomplete/easy-autocomplete.css" />
 
@@ -318,8 +320,6 @@
     </div>
 
     </footer><!--/Footer-->
-
-
 
 
 
@@ -911,8 +911,8 @@
             </div>
         </div>
 
-        <div id="mtab" class="dock_wrapper dock-max dockWrapperRight hide" type="1">
-            <div class="_dock m_clearfix">
+        <div  id="mtab" class="dock_wrapper dock-max dockWrapperRight hide" type="1">
+            <div class="_dock m_clearfix resizable ">
                 <div class="m_clearfix nubContainer rNubContainer">
                     <div id="BuddylistPagelet">
                         <div class="_56ox ">
