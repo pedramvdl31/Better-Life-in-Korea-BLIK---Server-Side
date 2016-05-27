@@ -52,26 +52,6 @@ chat = {
         	height: '285px'
     	});
 
-	    EmbedJS.setOptions({
-	        // element: document.getElementById('block'),
-	        videoJS: true,
-	        videoWidth: 720,
-	        videoDetails: true,
-	        excludeEmbed: ['github'],
-	        // openGraphEndpoint:'https://opengraph.io/api/1.0/site/${url}',
-	        openGraphExclude: ['github'],
-	        googleAuthKey: 'AIzaSyCqFouT8h5DKAbxlrTZmjXEmNBjC69f0ts',
-	         // inlineEmbed: 'all',
-	        marked: true,
-	        highlightCode:true,
-	        codeHighlighter:'prismjs',
-	        link: true,
-	        // singleEmbed:true,
-	        onOpenGraphFetch: function(data) {
-	            data.hybridGraph.success = data.error ? false : true;
-	            return data.hybridGraph;
-	        }
-	    });
 	},	
 	socket_io: function() {
         socket.on('_forward', function(data) {
@@ -528,9 +508,6 @@ function rqst_server_time(){
 			}
 			);
 	}, 180000);
-}
-function renembd(elem){
-	EmbedJS.applyEmbedJS(elem);
 }
 function togglehs(d){
 	if ($(d).hasClass('hide')) {

@@ -26,7 +26,6 @@
     <link href="/assets/css/responsive.css" rel="stylesheet">
 
     <link href="/assets/css/general.css" rel="stylesheet">
-    <link rel="stylesheet" href="/packages/embed/dist/embed.min.css" />
     <link rel="stylesheet" href="/packages/dropzone/dropzone.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
@@ -1019,11 +1018,8 @@
         <script src="//platform.twitter.com/widgets.js"></script>
         <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
         <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
-        <script src="/packages/embed/src/embed.js"></script>
         <script src="/assets/js/chat.js"></script>
     @endif
-
-
     <!-- --------------------------------------------- -->
     <!-- -------------------------------------------- -->
     {!! View::make('partials.login_modal') !!}    
