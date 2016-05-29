@@ -19,6 +19,8 @@ chat = {
 		// console.log(diff);
 
 
+
+
 		$( ".resizable" ).resizable({
 		  handles: "n"
 		});
@@ -80,9 +82,8 @@ chat = {
 		$('.ec').click(function(){
 			var ttxt = $(this).attr('txt');
 			var ttab = $(this).attr('tab');
-			togglehs('#emoji-list-'+ttab);
-			var emh = MakeEmoHtml(ttxt);
-			$('#cta'+ttab).append(emh);
+			$('#cta'+ttab).append('<img class="imgemo emoticon emoticon_'+ttxt+'" src=""/> ');
+    		placeCaretAtEnd(document.getElementById("cta"+ttab));
 		});
 		$('.dts').click(function(){
 			// $('.ctabs').removeClass('tcvis');
@@ -162,7 +163,8 @@ chat = {
 			$('#cta1').text(ntb+" ");
         });
 		$('#emoi-1').click(function(){
-			togglehs('#emoji-list-1');
+			togglehs('#ew1');
+			OutClickListener('#ew1');
 		});
 		$(document).on('click', '#emoji-list-2>pre>code>.emoticon', function() {
 			togglehs('#emoji-list-2');
@@ -536,16 +538,17 @@ function SrtipEmojiHtml(txt) {
 	var o = -1
 	var ot = txt;
 	$.each(ema_plain, function(k,v) {
-		var ht = '<i class="emoticon emoticon_'+k+'"></i>';
+		var ht = '<img class="imgemo emoticon emoticon_'+k+'" src="">';
 		var regg = new RegExp(ht,"g");
 		ot = ot.replace(regg,v);
 	});
 	return ot;
 }
+
 function StrToEmo(txt) {
 	var ot = txt;
 	$.each(ema, function(k,v) {
-		var ht = '<i class="emoticon emoticon_'+k+'"></i>';
+		var ht = '<img class="imgemo emoticon emoticon_'+k+'" src=""/>';
 		var regg = new RegExp(escapeRegExp(v),"g");
 		ot = ot.replace(regg,ht);
 	});
@@ -553,9 +556,6 @@ function StrToEmo(txt) {
 }
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
-function MakeEmoHtml(str) {
-	return '<i class="emoticon emoticon_'+str+'"></i>';
 }
 function make_active(fi) {
 	var ti = ct_vis(fi);
@@ -597,4 +597,17 @@ function placeCaretAtEnd(el) {
         textRange.collapse(false);
         textRange.select();
     }
+}
+function OutClickListener(sb){
+	$(document).mouseup(function (e)
+	{
+	    var container = $(sb);
+	    if (!container.hasClass('hide')) {
+		    if (!container.is(e.target) // if the target of the click isn't the container...
+		        && container.has(e.target).length === 0) // ... nor a descendant of the container
+		    {
+		        container.addClass('hide');
+		    }		    	
+	    }
+	});
 }

@@ -146,139 +146,6 @@
     <!-- <div class="mmcontainer"></div> -->
 
     <div class="row">
-    <!--                 <div class="col-sm-3">
-        <div class="left-sidebar">
-            <h2>Category</h2>
-            <div class="panel-group category-products" id="accordian">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordian" href="#sportswear">
-                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                Real Estate 
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="sportswear" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul>
-                                <li><a class="links" cat-id="1" subcat-id="1">Agencies 
-                                <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="1" subcat-id="2">Private 
-                                <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordian" href="#res">
-                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                Restaurant
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="res" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul>
-                                <li><a class="links" cat-id="2" subcat-id="1">Asian                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="2" subcat-id="2">Italian
-                                <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="2" subcat-id="3">Western                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="2" subcat-id="4">Mexican                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="2" subcat-id="5">Other                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordian" href="#mens">
-                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                Used Car
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="mens" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul>
-                                <li><a class="links" cat-id="3" subcat-id="1">Dealership                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="3" subcat-id="2">Private                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="3" subcat-id="3">Sofa Document Fee                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title">
-                            <a  data-toggle="collapse" data-parent="#accordian" href="#womens">
-                                <span class="badge pull-right"><i class="fa fa-plus"></i></span>
-                                Move In/Out
-                            </a>
-                        </h4>
-                    </div>
-                    <div id="womens" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <ul>
-                                <li><a class="links" cat-id="4" subcat-id="1">Cleaning                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="4" subcat-id="2">Services                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="4" subcat-id="3">Moving Company                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                                <li><a class="links" cat-id="4" subcat-id="4">Cellphone                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                                </a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title"><a class="links pointer" cat-id="5" subcat-id="0">Flea Market                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                        </a></h4>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title"><a class="links pointer" cat-id="6" subcat-id="0">Events                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                        </a></h4>
-                    </div>
-                </div>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4 class="panel-title"><a class="links pointer" cat-id="7" subcat-id="0">Fun                                             <img class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                        </a></h4>
-                    </div>
-                </div>
-
-            </div>
-            <div class="text-center" id="city-search" style="">
-                <h2>Search by City</h2>
-                <select class="form-control" name="city" id="city-select-home">
-                    {!!$cities!!}
-                </select>
-                <img id="img-city" class="hide" src="/assets/images/icons/gif/loading1.gif" width="10px;">
-                
-            </div>
-            
-        </div>
-    </div> -->
-
     <div class="col-sm-12 ads-warps home-tab all-tabs">
         <div class="text-center post-loading" style="margin-top: 15px;">
         
@@ -286,6 +153,7 @@
 
         <div id="post-list">
             @yield('content')
+            <!-- <img width="118px" src="/assets/images/icons/gif/l3.gif"> -->
         </div>
     </div>
     <div class="col-sm-12 col-md-12 col-xs-12 ads-warps cat-tab all-tabs hide">
@@ -319,9 +187,6 @@
     </div>
 
     </footer><!--/Footer-->
-
-
-
 
 
 
@@ -442,7 +307,6 @@
         border: 1px solid rgba(29, 49, 91, .3);
         border-top-left-radius: 3px;
         border-top-right-radius: 3px;
-        box-shadow: none;
         padding-left: 0;
         padding-right: 0;
         padding-top: 2px;
@@ -463,19 +327,23 @@
         z-index: 1;
         }
         .wpNubButton-max {
-        border: 1px solid rgba(29, 49, 91, .3);
-        border-width: 1px 0 0;
-        color: #333;
-        display: block;
-        font-weight: bold;
-        min-height: 311px;
-        height: 311px;
-        outline: none;
-        padding: 6px 4px 5px;
-        position: relative;
-        z-index: 1;
+            background: transparent;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+            border: 1px solid rgba(29, 49, 91, .3);
+            border-width: 1px 0 0;
+            color: #333;
+            display: block;
+            font-weight: bold;
+            min-height: 311px;
+            height: 311px;
+            outline: none;
+            padding: 6px 4px 5px;
+            position: relative;
+            z-index: 1;
         }
         .wpNubButton-max-main {
+        background: transparent;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .3);
         border: 1px solid rgba(29, 49, 91, .3);
         border-width: 1px 0 0;
         color: #333;
@@ -543,13 +411,25 @@
             font-size: 29px;
             padding-top: 11px;
         }
-        .emoji-list{
+        #ew1{
+            z-index: 100;
             position: absolute;
-            top: 0;
-            height: 83%;
-            overflow: auto; 
+            top: 107px;
+            padding: 7px;
+            right: 4px;
+            height: 150px;
+            width: 164px;
+            border: 0;
+            border-radius: 2px;
+            box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 1px 10px rgba(0, 0, 0, .35);
             background-color: white;
         }
+        .el1{
+            position: relative;
+            overflow: auto;
+            background-color: inherit;
+        }
+
         .emoji-list>pre>code>.emoticon{
             cursor: pointer;
         }
@@ -738,48 +618,276 @@
             display: inline-block;
             vertical-align: top;
         }
+        .emoji-list.emoticon {
+            width: 21px !important;
+            height: 22px;
+            display: inline-block;
+            vertical-align: top;
+        }
 
         .emoticon_smile {
-            background-image: url(/assets/emoji.png);
+            background-image: url(/assets/chat/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
             background-position: -576px -831px;
         }
         .emoticon_frown {
-            background-image: url(/assets/emoji.png);
+            background-image: url(/assets/chat/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
             background-position: -576px -810px;
         }
         .emoticon_bsmile {
-            background-image: url(/assets/emoji.png);
+            background-image: url(/assets/chat/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
-            background-position: -554px -363px;
+            background-position: -555px -363px;
         }
         .emoticon_heart,.emoticon_heart2,.emoticon_heart3 {
-            background-image: url(/assets/emoji.png);
+            background-image: url(/assets/chat/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
             background-position: -425px -170px;
         }
         .emoticon_tongue {
-            background-image: url(/assets/emoji.png);
+            background-image: url(/assets/chat/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
             background-position: -576px 0;
         }
         .emoticon_wtongue {
-            background-image: url(/assets/emoji.png);
+            background-image: url(/assets/chat/emoji.png);
             background-repeat: no-repeat;
             background-size: 600px;
             background-position: -576px -21px;
         }
-        #da{
-            padding-right: 15px;
+        .emoticon_kiss {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -831px;
+        }
+        .emoticon_kiss_heart {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -810px;
+        }
+        .emoticon_kiss_shy {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -853px;
+        }
+        .emoticon_cool {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -597px;
+        }
+        .emoticon_heye {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -575px;
+        }
+        .emoticon_er {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -618px;
+        }
+        .emoticon_cah {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -575px -682px;
+        }        
+        .emoticon_ldi {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -575px -85px;
+        }
+        .emoticon_di {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -575px -64px;
+        }
+        .emoticon_adi {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -575px -106px;
+        }
+        .emoticon_ev {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -468px;
+        }
+        .emoticon_aev {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -575px -127px;
+        }
+        .emoticon_sadt {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -149px;
+        }
+        .emoticon_ssp {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -468px;
+        }
+        .emoticon_lsp {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -490px;
+        }
+        .emoticon_zz {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -532px;
+        }
+        .emoticon_wink {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -490px;
+        }
+        .emoticon_angel {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -447px;
+        }
+        .emoticon_blaugh {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -426px;
+        }
+        .emoticon_tlaugh {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -405px;
+        }
+        .emoticon_dtlaugh {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -341px;
         }
 
 
+        .emoticon_ectongue {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -42px;
+        }
+        .emoticon_shyang {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -170px;
+        }
+        .emoticon_anst {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -192px;
+        }
+        .emoticon_sick {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -576px -597px;
+        }
+        .emoticon_tonguel {
+            background-image: url(/assets/chat/emoji.png);
+            background-repeat: no-repeat;
+            background-size: 600px;
+            background-position: -555px -533px;
+        } 
+
+            
+    
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        #da{
+            padding-right: 15px;
+        }
+        .imgemo{
+            content:url("data:image/png;base64,R0lGODlhFAAUAIAAAP///wAAACH5BAEAAAAALAAAAAAUABQAAAIRhI+py+0Po5y02ouz3rz7rxUAOw==");
+        }
+        ._53io {
+            background-image: url(/assets/chat/2.png);
+            background-repeat: no-repeat;
+            background-size: auto;
+            background-position: -143px -392px;
+            bottom: -8px;
+            height: 8px;
+            width: 16px;
+        }
+        ._53io {
+            overflow: hidden;
+            position: absolute;
+        }
         /*==========  Non-Mobile First Method  ==========*/
 
         /* Large Devices, Wide Screens */
@@ -822,6 +930,9 @@
 
         /* Extra Small Devices, Phones */ 
         @media only screen and (max-width : 586px) {
+            #ew1{
+                width: 97%;
+            }
 
             .ctabs {
                 right: 0 !important;
@@ -884,9 +995,6 @@
             
         }
     </style>
-    <!-- <img src="/assets/emoji.png"> -->
-        <!-- <i title=":)" class="emoticon emoticon_smile"></i>  -->
-    
 
     @if(Auth::check())
     <input type="hidden" id="crnt_dt" value="{!!$cdt!!}"></input>
@@ -950,20 +1058,50 @@
                                     </span>
                                     <div class="sc-wrapper sc-wrapper-1"></div>
                                     <div class="inputBar">
-                                        <div id="emoji-list-1" class="emoji-list hide ">
-                                            <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
-                                            <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
-                                            <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
-                                            <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
-                                            <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
-                                            <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
-                                            <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
-                                            <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
-                                            <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
-                                            <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
-                                            <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
-                                            <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
+                                        <div id="ew1" class="hide">
+                                            <div id="el1ew" class="el1">
+
+            <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
+            <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
+            <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
+            <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
+            <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
+            <i tab="1" txt="dtlaugh" class="ec emoticon emoticon_dtlaugh"></i>
+            <i tab="1" txt="tlaugh" class="ec emoticon emoticon_tlaugh"></i>
+            <i tab="1" txt="blaugh" class="ec emoticon emoticon_blaugh"></i>
+            <i tab="1" txt="angel" class="ec emoticon emoticon_angel"></i>
+            <i tab="1" txt="wink" class="ec emoticon emoticon_wink"></i>
+            <i tab="1" txt="zz" class="ec emoticon emoticon_zz"></i>
+            <i tab="1" txt="adi" class="ec emoticon emoticon_adi"></i>
+            <i tab="1" txt="lsp" class="ec emoticon emoticon_lsp"></i>
+            <i tab="1" txt="ssp" class="ec emoticon emoticon_ssp"></i>
+            <i tab="1" txt="sadt" class="ec emoticon emoticon_sadt"></i>
+            <i tab="1" txt="aev" class="ec emoticon emoticon_aev"></i>
+            <i tab="1" txt="ev" class="ec emoticon emoticon_ev"></i>
+            <i tab="1" txt="adi" class="ec emoticon emoticon_adi"></i>
+            <i tab="1" txt="kiss_shy" class="ec emoticon emoticon_kiss_shy"></i>
+            <i tab="1" txt="kiss_heart" class="ec emoticon emoticon_kiss_heart"></i>
+            <i tab="1" txt="kiss" class="ec emoticon emoticon_kiss"></i>
+            <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
+            <i tab="1" txt="ldi" class="ec emoticon emoticon_ldi"></i>
+            <i tab="1" txt="cah" class="ec emoticon emoticon_cah"></i>
+            <i tab="1" txt="heye" class="ec emoticon emoticon_heye"></i>
+            <i tab="1" txt="er" class="ec emoticon emoticon_er"></i>
+            <i tab="1" txt="cool" class="ec emoticon emoticon_cool"></i>
+            <i tab="1" txt="ectongue" class="ec emoticon emoticon_ectongue"></i>
+            <i tab="1" txt="shyang" class="ec emoticon emoticon_shyang"></i>
+            <i tab="1" txt="anst" class="ec emoticon emoticon_anst"></i>
+            <i tab="1" txt="sick" class="ec emoticon emoticon_sick"></i>
+            <i tab="1" txt="tonguel" class="ec emoticon emoticon_tonguel"></i>
+
+                                            </div>
+
+
+                                                <i class="_53io" style="left: 100%; margin-left: -23px;"></i>
                                         </div>
+
+
+
                                         <div ttab="1" class="ChatTextArea" id="cta1" contenteditable="true" placeholder="Type Here..."></div>
                                         
                                         <div class="chatemoji">
