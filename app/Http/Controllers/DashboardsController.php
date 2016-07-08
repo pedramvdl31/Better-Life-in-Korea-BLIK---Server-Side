@@ -24,7 +24,6 @@ use App\Dashboard;
 class DashboardsController extends Controller
 {
     public function __construct() {
-
         $this->layout = 'layouts.dashboard';
     }
 

@@ -12,7 +12,6 @@ var users= {};
 io.on('connection', function (socket) {
   socket.on( '_init', function( data ) {
     console.log('init '+data['data'])
-     console.log('socket id '+socket.id)
     sockets[socket.id] = data['data'];
     socket.user_id= data['data'];
     users[data['data']]=socket.id;
@@ -31,7 +30,9 @@ io.on('connection', function (socket) {
   		io.to(users[recip]).emit( 
   			'_forward', { 
     			msg: msg,
-          aid: data['aid']
+          aid: data['aid'],
+          sav: data['sav'],
+          mid: data['mid']
 			}
     	);
   	}

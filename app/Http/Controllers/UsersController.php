@@ -191,56 +191,49 @@ class UsersController extends Controller
         return Redirect::action('HomeController@getHomepage');
     }
 
-    public function getProfile($username)
-    {
-        if (Auth::user()->username == $username) {
-            $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
-            $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
-            $current_user = User::find(Auth::user()->id);
-            $profile_image = Job::imageValidator($current_user->profile_image);
-            $email = $current_user->email;
-            $fname = $current_user->firstname;
-            $lname = $current_user->lastname;
-            return view('users.profile')
-            ->with('layout',$this->layout)
-            // ->with('threads',$prepared_thread)
-            ->with('categories_for_select',$categories_for_select)
-            ->with('categories_for_side',$categories_for_side)
-            ->with('profile_image',$profile_image)        
-            ->with('email',$email)
-            ->with('fname',$fname)
-            ->with('lname',$lname);
-        } else {
-            abort(404);
-        }
-    }
-    public function postProfile()
-    {
-        $validator = Validator::make(Input::all(), User::updatevalidation());
-        if ($validator->passes()) {
-            $user = User::find(Auth::user()->id);
-            $user->firstname = Input::get('fname');
-            $user->lastname = Input::get('lname');
-            if ($user->save()) {
-                Flash::success('Profile Successfully Updated');
-                return Redirect::action('UsersController@getProfile',$user->username);
-            //     $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-            //     if(isset($redirect)) {
-            //        return Redirect::to(Session::get('redirect'));
-            //    } else {
-            //         //SESION DOESN'T EXIST
-            //     return Redirect::to('/');
-            // }
-        }
-    } else {
-            // validation has failed, display error messages    
-        return Redirect::back()
-        ->with('message', 'The following errors occurred')
-        ->with('alert_type','alert-danger')
-        ->withErrors($validator)
-        ->withInput();
-    }
-}
+    // public function getProfile($username)
+    // {
+    //     if (Auth::user()->username == $username) {
+    //         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
+    //         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+    //         $current_user = User::find(Auth::user()->id);
+    //         $profile_image = Job::imageValidator($current_user->profile_image);
+    //         $email = $current_user->email;
+    //         $fname = $current_user->firstname;
+    //         $lname = $current_user->lastname;
+    //         return view('users.profile')
+    //         ->with('layout',$this->layout)
+    //         // ->with('threads',$prepared_thread)
+    //         ->with('categories_for_select',$categories_for_select)
+    //         ->with('categories_for_side',$categories_for_side)
+    //         ->with('profile_image',$profile_image)        
+    //         ->with('email',$email)
+    //         ->with('fname',$fname)
+    //         ->with('lname',$lname);
+    //     } else {
+    //         abort(404);
+    //     }
+    // }
+    // public function postProfile()
+    // {
+    //     $validator = Validator::make(Input::all(), User::updatevalidation());
+    //     if ($validator->passes()) {
+    //         $user = User::find(Auth::user()->id);
+    //         $user->firstname = Input::get('fname');
+    //         $user->lastname = Input::get('lname');
+    //         if ($user->save()) {
+    //             Flash::success('Profile Successfully Updated');
+    //             return Redirect::action('UsersController@getProfile',$user->username);
+    //         }
+    //     } else {
+    //             // validation has failed, display error messages    
+    //         return Redirect::back()
+    //         ->with('message', 'The following errors occurred')
+    //         ->with('alert_type','alert-danger')
+    //         ->withErrors($validator)
+    //         ->withInput();
+    //     }
+    // }
 
 public function postValidate()
 {
@@ -279,10 +272,11 @@ public function postSendFile()
         $image_types = $_FILES[0]['type'];
         $type_array = explode('/', $image_types);
         $type = $type_array[1];
-
-        $rand = Job::generateRandomString(5);
-        $time = time();
-        $final_path = $rand.'_'.$time.'.'.$type;
+        
+        do {
+            $time = time();
+            $final_path = Auth::id().'_'.$time.'_ui.'.$type;
+        } while (file_exists($imagePath.$final_path));
 
             // check if $folder is a directory
         if( ! \File::isDirectory($imagePath) ) {
@@ -298,11 +292,11 @@ public function postSendFile()
         if (move_uploaded_file($imagetemp,$newpath)) {
             $viewpath = DIRECTORY_SEPARATOR.$newpath;
             $_user = User::find(Auth::id());
-            $_user->avatar = $viewpath;
+            $_user->avatar = $final_path;
             if ($_user->save()) {
                 return Response::json(array(
                     'status' => 200,
-                    'newpath' => $viewpath
+                    'newpath' => DIRECTORY_SEPARATOR.$newpath
                     ));
             }
         } else {

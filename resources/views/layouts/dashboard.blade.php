@@ -80,12 +80,7 @@
           <!-- Sidebar user panel -->
           <div class="user-panel">
             <div class="pull-left image">
-              @if(isset(Auth::user()->avatar))
-                <img src="{!!Auth::user()->avatar!!}" alt="..." class="img-circle profile_img">
-              @else
-                <img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circle profile_img">
-              @endif
-
+                <img src="{!!$uip9!!}" alt="..." class="img-circle profile_img">
             </div>
             <div class="pull-left info">
               <p>{!! Auth::user()->first_name !!}</p>

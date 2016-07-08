@@ -48,9 +48,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {
 		//CHAT ROUTES
-		
-
-
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
 		Route::post('/store-wishlist', ['as'=>'store_wishlist','uses'=>'AdsController@postStoreAd']);
 		Route::post('/remove-wishlist',  ['as'=>'remove-wishlist', 'uses' => 'AdsController@postRemoveWishlist']);

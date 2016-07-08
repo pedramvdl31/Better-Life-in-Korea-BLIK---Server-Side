@@ -56,13 +56,16 @@ class ConversationsController extends Controller
                                 ->take(15)
                                 ->get()
                                 ->reverse();
-            foreach ($l_mgs as $k => $v) {
-                $v['ago'] =Job::formatTimeAgo(Job::humanTiming($v['created_at']));
-            }
+                foreach ($l_mgs as $k => $v) {
+                    $v['ago'] =Job::formatTimeAgo(Job::humanTiming($v['created_at']));
+                }
+            $uip = '/assets/images/profile-images/perm/';   
+            $fua1= User::where('id',$fi)->pluck('avatar');  
 
             return Response::json(array(
             'status' => 200,
-            'l_mgs' => $l_mgs
+            'l_mgs' => $l_mgs,
+            'fav' => (isset($fua1))?$uip.$fua1:$uip.'blank_male.png'
             ));
         }
         return Response::json(array(
@@ -73,7 +76,6 @@ class ConversationsController extends Controller
     public function postSaveChatMessage()
     {
         if(Request::ajax()){
-
             $status = 400;
             $fi = Input::get('fi');
             $tdata = Input::get('tdata');
@@ -105,6 +107,7 @@ class ConversationsController extends Controller
                     return Response::json(array(
                         'status' => $status,
                         'aid' => $thisuser,
+                        'mid' => $new_message->id,
                         'tcat' => date ( 'Y-m-d H:i:s',  strtotime($new_message->created_at) )
                         ));
                 }

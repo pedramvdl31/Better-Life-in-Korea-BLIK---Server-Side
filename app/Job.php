@@ -617,20 +617,22 @@ class Job extends Model
 	        60 => 'minute',
 	        1 => 'second'
 	    );
-
-	    foreach ($tokens as $unit => $text) {
-	        if ($time < $unit) continue;
-	        $numberOfUnits = floor($time / $unit);
-	        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+	    if ($time<=60) {
+	    	return 'a few seconds';
+	    } else {
+		    foreach ($tokens as $unit => $text) {
+		        if ($time < $unit) continue;
+		        $numberOfUnits = floor($time / $unit);
+		        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
+		    }	    	
 	    }
-
 	}
 	
 	static public function formatTimeAgo($human_time_data) {
 		if ($human_time_data == null) {
 			$human_time_data = 'just now';
 		} else {
-			$human_time_data = $human_time_data.' ago';
+			$human_time_data = $human_time_data;
 		}
 		return $human_time_data;
 	}

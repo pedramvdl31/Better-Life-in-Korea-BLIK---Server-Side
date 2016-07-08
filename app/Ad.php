@@ -224,15 +224,14 @@ class Ad extends Model
                             $full_name = $fname.'&nbsp'.$lname;
                         }
                         if(isset($user->avatar)){
-                            $img_src = $user->avatar;
+                            $img_src = '/assets/images/profile-images/perm/'.$user->avatar;
                         } else {
                             $img_src = '/assets/images/profile-images/perm/blank_male.png';
                         }
                     }
                 }
             }
-            $html .= '
-                        <div class="form-group">
+            $html .= '<div class="form-group">
                             <div class="media">
                             <div class="media-left">
                             <a href="#"> <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="'.$img_src.'" data-holder-rendered="true" style="width: 64px; height: 64px;"> </a> </div> <div class="media-body"> 

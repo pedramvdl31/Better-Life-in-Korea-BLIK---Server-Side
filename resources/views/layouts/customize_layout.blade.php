@@ -52,9 +52,6 @@
     </style>
     <body>
 
-
-<div id="locations" data-locations='[{"name":"Bath","url":"/location/bath","img":"/thumb.jpg"},{"name":"Berkhamsted","url":"/location/berkhamsted","img":"/thumb.jpg"}]'>
-
     
     <header id="header"><!--header-->
     <!-- -------- NAVBAR ----------- -->
@@ -819,56 +816,6 @@
             background-size: 600px;
             background-position: -555px -533px;
         } 
-
-            
-    
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         #da{
             padding-right: 15px;
         }
@@ -892,7 +839,9 @@
 
         /* Large Devices, Wide Screens */
         @media only screen and (max-width : 1200px) {
-
+            #ruler{
+                width: 1200px;
+            }
         }
 
         /* Medium Devices, Desktops */
@@ -921,7 +870,6 @@
             }
 
         }
-        p
         /* Small Devices, Tablets */
         @media only screen and (max-width : 768px) {
 
@@ -995,8 +943,9 @@
             
         }
     </style>
-
+    <input type="hidden" id="tua1" value="{!!$uip9!!}">
     @if(Auth::check())
+    <input type="hidden" id="ruler" >
     <input type="hidden" id="crnt_dt" value="{!!$cdt!!}"></input>
     <input type="hidden" id="ufh" value="{{Auth::user()->id}}"></input>
     <div id="msgs_tmp"></div>
@@ -1060,50 +1009,42 @@
                                     <div class="inputBar">
                                         <div id="ew1" class="hide">
                                             <div id="el1ew" class="el1">
-
-            <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
-            <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
-            <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
-            <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
-            <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
-            <i tab="1" txt="dtlaugh" class="ec emoticon emoticon_dtlaugh"></i>
-            <i tab="1" txt="tlaugh" class="ec emoticon emoticon_tlaugh"></i>
-            <i tab="1" txt="blaugh" class="ec emoticon emoticon_blaugh"></i>
-            <i tab="1" txt="angel" class="ec emoticon emoticon_angel"></i>
-            <i tab="1" txt="wink" class="ec emoticon emoticon_wink"></i>
-            <i tab="1" txt="zz" class="ec emoticon emoticon_zz"></i>
-            <i tab="1" txt="adi" class="ec emoticon emoticon_adi"></i>
-            <i tab="1" txt="lsp" class="ec emoticon emoticon_lsp"></i>
-            <i tab="1" txt="ssp" class="ec emoticon emoticon_ssp"></i>
-            <i tab="1" txt="sadt" class="ec emoticon emoticon_sadt"></i>
-            <i tab="1" txt="aev" class="ec emoticon emoticon_aev"></i>
-            <i tab="1" txt="ev" class="ec emoticon emoticon_ev"></i>
-            <i tab="1" txt="adi" class="ec emoticon emoticon_adi"></i>
-            <i tab="1" txt="kiss_shy" class="ec emoticon emoticon_kiss_shy"></i>
-            <i tab="1" txt="kiss_heart" class="ec emoticon emoticon_kiss_heart"></i>
-            <i tab="1" txt="kiss" class="ec emoticon emoticon_kiss"></i>
-            <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
-            <i tab="1" txt="ldi" class="ec emoticon emoticon_ldi"></i>
-            <i tab="1" txt="cah" class="ec emoticon emoticon_cah"></i>
-            <i tab="1" txt="heye" class="ec emoticon emoticon_heye"></i>
-            <i tab="1" txt="er" class="ec emoticon emoticon_er"></i>
-            <i tab="1" txt="cool" class="ec emoticon emoticon_cool"></i>
-            <i tab="1" txt="ectongue" class="ec emoticon emoticon_ectongue"></i>
-            <i tab="1" txt="shyang" class="ec emoticon emoticon_shyang"></i>
-            <i tab="1" txt="anst" class="ec emoticon emoticon_anst"></i>
-            <i tab="1" txt="sick" class="ec emoticon emoticon_sick"></i>
-            <i tab="1" txt="tonguel" class="ec emoticon emoticon_tonguel"></i>
-
+                                                <i tab="1" txt="smile" class="ec emoticon emoticon_smile"></i>
+                                                <i tab="1" txt="frown" class="ec emoticon emoticon_frown"></i>
+                                                <i tab="1" txt="bsmile" class="ec emoticon emoticon_bsmile"></i>
+                                                <i tab="1" txt="heart" class="ec emoticon emoticon_heart"></i>
+                                                <i tab="1" txt="tongue" class="ec emoticon emoticon_tongue"></i>
+                                                <i tab="1" txt="dtlaugh" class="ec emoticon emoticon_dtlaugh"></i>
+                                                <i tab="1" txt="tlaugh" class="ec emoticon emoticon_tlaugh"></i>
+                                                <i tab="1" txt="blaugh" class="ec emoticon emoticon_blaugh"></i>
+                                                <i tab="1" txt="angel" class="ec emoticon emoticon_angel"></i>
+                                                <i tab="1" txt="wink" class="ec emoticon emoticon_wink"></i>
+                                                <i tab="1" txt="zz" class="ec emoticon emoticon_zz"></i>
+                                                <i tab="1" txt="adi" class="ec emoticon emoticon_adi"></i>
+                                                <i tab="1" txt="lsp" class="ec emoticon emoticon_lsp"></i>
+                                                <i tab="1" txt="ssp" class="ec emoticon emoticon_ssp"></i>
+                                                <i tab="1" txt="sadt" class="ec emoticon emoticon_sadt"></i>
+                                                <i tab="1" txt="aev" class="ec emoticon emoticon_aev"></i>
+                                                <i tab="1" txt="ev" class="ec emoticon emoticon_ev"></i>
+                                                <i tab="1" txt="adi" class="ec emoticon emoticon_adi"></i>
+                                                <i tab="1" txt="kiss_shy" class="ec emoticon emoticon_kiss_shy"></i>
+                                                <i tab="1" txt="kiss_heart" class="ec emoticon emoticon_kiss_heart"></i>
+                                                <i tab="1" txt="kiss" class="ec emoticon emoticon_kiss"></i>
+                                                <i tab="1" txt="wtongue" class="ec emoticon emoticon_wtongue"></i>
+                                                <i tab="1" txt="ldi" class="ec emoticon emoticon_ldi"></i>
+                                                <i tab="1" txt="cah" class="ec emoticon emoticon_cah"></i>
+                                                <i tab="1" txt="heye" class="ec emoticon emoticon_heye"></i>
+                                                <i tab="1" txt="er" class="ec emoticon emoticon_er"></i>
+                                                <i tab="1" txt="cool" class="ec emoticon emoticon_cool"></i>
+                                                <i tab="1" txt="ectongue" class="ec emoticon emoticon_ectongue"></i>
+                                                <i tab="1" txt="shyang" class="ec emoticon emoticon_shyang"></i>
+                                                <i tab="1" txt="anst" class="ec emoticon emoticon_anst"></i>
+                                                <i tab="1" txt="sick" class="ec emoticon emoticon_sick"></i>
+                                                <i tab="1" txt="tonguel" class="ec emoticon emoticon_tonguel"></i>
                                             </div>
-
-
                                                 <i class="_53io" style="left: 100%; margin-left: -23px;"></i>
                                         </div>
-
-
-
                                         <div ttab="1" class="ChatTextArea" id="cta1" contenteditable="true" placeholder="Type Here..."></div>
-                                        
                                         <div class="chatemoji">
                                             <i class="fa fa-smile-o emoi " id="emoi-1" aria-hidden="true"></i>
                                         </div>

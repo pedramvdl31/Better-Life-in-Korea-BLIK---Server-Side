@@ -18,14 +18,6 @@ chat = {
 		// var diff = currentDate-newDate;
 		// console.log(diff);
 
-
-
-
-		$( ".resizable" ).resizable({
-		  handles: "n"
-		});
-
-
 		window.ema = {
 			"smile":":)",
 			"frown":":(",
@@ -48,25 +40,26 @@ chat = {
 			"smiley":":-)",
 			"heart":"<3"
 			};
-
+		window.tuaw = $('#tua1').val();
 		rqst_server_time();
 		$('#inner-chat-wrapper').slimScroll({
         	height: '285px'
     	});
-
 	},	
 	socket_io: function() {
         socket.on('_forward', function(data) {
         	var cu = $('#ufh').val();
         	var count = $('.msg-tmp-'+cu+'-'+data['aid']+'').length;
-        	if (count!=0) {pmtoa(cu,data['aid'],data['msg'])}
+        	if (count!=0) {
+        		pmtoa(cu,data['aid'],data['msg'],data['mid'],data['sav'])
+        	}
         	if (!$('.main-list-dock').hasClass('hide')) {
         		$('.main-list-dock').find('.have-msg').removeClass('hide');
         	}
         	if ($('.ctabs[uid="'+data['aid']+'"]').length == 1) {
 	    		var randtxt = randomString();
 	    		var fin = StrToEmo(data['msg']);
-	       		var input_bubble = make_bubble_rc(fin,randtxt);
+	       		var input_bubble = make_bubble_rc(fin,randtxt,data['sav'],data['mid']);
 	       		var dock_no = $('.ctabs[uid="'+data['aid']+'"]').attr('dock-no');
 	       		$('._ctb'+dock_no).append(input_bubble);
 	       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
@@ -78,7 +71,6 @@ chat = {
         });
 	},
 	events: function() {
-
 		$('.ec').click(function(){
 			var ttxt = $(this).attr('txt');
 			var ttab = $(this).attr('tab');
@@ -107,13 +99,12 @@ chat = {
 		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
 		       		var fid = $(this).parents('.ctabs').attr('uid');
 		       		request_c.snddata(prepared_array['e'],fid,randtxt);
-		       		var cu = $('#ufh').val();
-		       		pmtta_sndr(cu,fid,prepared_array['e']);
 		       		var thisid = $(this).attr('id');
 		       		$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
 		       		$(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
 		       		$(this).replaceWith( '<div  ttab="'+tat+'" class="ChatTextArea" id="'+thisid+'" contenteditable="true"></div>' );
-		       		setTimeout(function(){ $('#'+thisid).focus() }, 3000);
+		       		setTimeout(function(){ $('#'+thisid).focus() }, 10);
+		       		renew_tago('ctb'+tat);
         		}
 		    }
 		});
@@ -177,7 +168,6 @@ chat = {
 		$('#emoi-2').click(function(){
 			togglehs('#emoji-list-2');
 		});
-
 		$('.cc1').click(function(){
 			$('.dc1').attr('uid','');
 			if ($('.dc2').hasClass('hide')) {
@@ -197,7 +187,7 @@ chat = {
 		});
 		$('.conv-wrapper').click(function(){
 			var tab_id = check_tabs();
-			make_active(tab_id);
+			// make_active(tab_id);
 	    	$('.sc-wrapper-'+tab_id).html('');
 	    	$('.sc-wrapper-'+tab_id).html('<div style="height:218px" class="inner-wrapper-child _ctb'+tab_id+'" id="ctb'+tab_id+'"></div>');
 			var cu = $('#ufh').val();
@@ -233,14 +223,19 @@ request_c = {
 			},
 			function(result){
 				var status = result.status;
-				$(".bbl[this-id='"+randtxt+"']").attr('tdt',result.tcat);
+				var mi = result.mid;
+				$(".bbl[this-id='"+randtxt+"']").attr('mid',mi);
 				switch(status){					
 		 			case 200:
+		 				var cu = $('#ufh').val();
+		 				pmtta_sndr(cu,fi,tdata,mi);
 		 				$('.plane-'+randtxt).css('color','#5cb85c');
 		                socket.emit("trans", { 
 	                    	recip: fi,
 	                    	msg: tdata,
-	                    	aid:result.aid
+	                    	aid:result.aid,
+	                    	sav:tuaw,
+	                    	mid:mi
 	                     });            
 		 			break;
 		 			case 400:
@@ -261,17 +256,18 @@ function g_m(cu,fu,tab_id){
 		function(result){
 			var status = result.status;
 			var _ar = result.l_mgs;
+			var fav9 = result.fav;
 			switch(status){					
 	 			case 200:
 					if (typeof(cu) != "undefined" && cu !== null) {
-				    	var msgs_html = prepare_html(_ar,cu,fu);
+				    	var msgs_html = prepare_html(_ar,cu,fu,fav9);
 				    	$('._ctb'+tab_id).html(msgs_html);
 				    	$('._ctb'+tab_id).slimScroll({
 				        	height: '218px',
 				        	start: 'bottom'
 				    	});
 					}
-					inject_tmp(_ar,cu,fu);
+					inject_tmp(_ar,cu,fu,fav9);
 	 			break;
 	 			case 400:
 	 			break;
@@ -291,15 +287,15 @@ function t_g_m(tmp_m,cu,fu,tab_id){
 	    	});
 		}
 }
-function prepare_html(_ar,tu,tf) {
+function prepare_html(_ar,tu,tf,fav9) {
 	var html = '';
 	$.each(_ar, function(index,value) {
 		var sdr = value['user_id'];
 		var tm = StrToEmo(value['message']);
 		if (tu == sdr) {
-			html += '<div class="_msnd _msgss bbl">'+
+			html += '<div class="_msnd _msgss bbl" mid="'+value['id']+'">'+
 						'<div class="_mavs">'+
-							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+							'<img src="'+tuaw+'" width="35px">'+
 						'</div>'+
 						'<div class="_mtwps">'+
 							'<div class="_mb _sndb">'+
@@ -316,9 +312,9 @@ function prepare_html(_ar,tu,tf) {
 						'</div>'+
 					'</div>';
 		} else {
-			html += '<div class="_mrcv _msgsr bbl">'+
+			html += '<div class="_mrcv _msgsr bbl" mid="'+value['id']+'">'+
 						'<div class="_mavr">'+
-							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+							'<img src="'+fav9+'" width="35px">'+
 						'</div>'+
 						'<div class="_mtwpr">'+
 							'<div class="_mb _rcvb">'+
@@ -342,12 +338,13 @@ function prepare_html_tmp(_ar,tu,tf) {
 	var html = '';
 	$.each(_ar, function(index,value) {
 		var sdr = $(this).attr('user_id');
+		var fim1 = $(this).attr('favp');
 		var frm_now = gago($(this).attr('ago'));
 		var tm = StrToEmo($(this).attr('message'));
 		if (tu == sdr) {
 			html += '<div class="_msnd _msgss bbl">'+
 						'<div class="_mavs">'+
-							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+							'<img src="'+tuaw+'" width="35px">'+
 						'</div>'+
 						'<div class="_mtwps">'+
 							'<div class="_mb _sndb">'+
@@ -366,7 +363,7 @@ function prepare_html_tmp(_ar,tu,tf) {
 		} else {
 			html += '<div class="_mrcv _msgsr bbl">'+
 						'<div class="_mavr">'+
-							'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+							'<img src="'+fim1+'" width="35px">'+
 						'</div>'+
 						'<div class="_mtwpr">'+
 							'<div class="_mb _rcvb">'+
@@ -386,10 +383,11 @@ function prepare_html_tmp(_ar,tu,tf) {
 	});
 	return html;
 }
-function inject_tmp(_ar,tu,tf) {
+function inject_tmp(_ar,tu,tf,fav9) {
 	var html = '';
 	$.each(_ar, function(index,value) {
-		html += '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+index+']" user_id="'+value['user_id']+'" ago="'+value['created_at']+'" message="'+value['message']+'"></input>';
+		var r1 = randomString();
+		html += '<input mid="'+value['id']+'" type="hidden" name="" favp="'+fav9+'" class="m-tmp msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+index+']" user_id="'+value['user_id']+'" ago="'+value['created_at']+'" message="'+value['message']+'"></input>';
 	});
 	$('#msgs_tmp').append(html);
 }
@@ -411,7 +409,7 @@ function clear_ctabs() {
 function make_bubble_lst(tinput,rtxt) {
 	html = '<div class="_msnd _msgss bbl" this-id="'+rtxt+'" data="last">'+
 				'<div class="_mavs">'+
-					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+					'<img src="'+tuaw+'" width="35px">'+
 				'</div>'+
 				'<div class="_mtwps">'+
 					'<div class="_mb _sndb">'+
@@ -421,7 +419,7 @@ function make_bubble_lst(tinput,rtxt) {
 						'</span>'+
 						'<br>'+
 						'<div class="_mtime" style="width: 100%">'+
-							'<small><span class="_tago">Now</span></small>&nbsp'+
+							'<small><span class="_tago" tid="'+rtxt+'">Now</span></small>&nbsp'+
 							'<small class="plane-'+rtxt+'"><i class="fa fa-paper-plane-o"></i></small>'+
 						'</div>'+
 						'</span>'+
@@ -430,12 +428,10 @@ function make_bubble_lst(tinput,rtxt) {
 			'</div>';
 	return html;
 }
-
-
-function make_bubble_rc(tinput,rtxt) {
-	html = '<div class="_mrcv _msgsr bbl" this-id="'+rtxt+'">'+
+function make_bubble_rc(tinput,rtxt,sav,mid) {
+	html = '<div class="_mrcv _msgsr bbl" mid="'+mid+'" this-id="'+rtxt+'">'+
 				'<div class="_mavr">'+
-					'<img src="/assets/images/profile-images/perm/blank_male.png" width="35px">'+
+					'<img src="'+sav+'" width="35px">'+
 				'</div>'+
 				'<div class="_mtwpr">'+
 					'<div class="_mb _rcvb">'+
@@ -445,7 +441,7 @@ function make_bubble_rc(tinput,rtxt) {
 						'</span>'+
 						'<br>'+
 						'<div class="_mtime" style="width: 100%">'+
-							'<small><span class="_tago">Now</span></small>&nbsp'+
+							'<small><span class="_tago" tid="'+rtxt+'">Now</span></small>&nbsp'+
 						'</div>'+
 						'</span>'+
 					'</div>'+
@@ -460,7 +456,6 @@ function gago(ttgo){
 	var duration = moment.utc(server_f.diff(ago_f)).format("HH:mm:ss");
 	return moment.duration(duration, "days").humanize();
 }
-
 function randomString() {
     var result = '';
     var length = 4;
@@ -474,19 +469,19 @@ function escapeHTML(txt) {
     return txt.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 //put msg to tmp array
-function pmtoa(tu,tf,msg){
+function pmtoa(tu,tf,msg,mid,sav){
 	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
 	var nc = count + 1;
 	var c_time = $('#crnt_dt').val();
-	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tf+'" ago="'+c_time+'" message="'+msg+'"></input>';
+	var html = '<input favp="'+sav+'" mid="'+mid+'" type="hidden" name="" class="m-tmp msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tf+'" ago="'+c_time+'" message="'+msg+'"></input>';
 	$('#msgs_tmp').append(html);
 }
 //put msg to tmp array after sent
-function pmtta_sndr(tu,tf,msg){
+function pmtta_sndr(tu,tf,msg,mid){
 	var count = $('.msg-tmp-'+tu+'-'+tf+'').length;
 	var nc = count + 1;
 	var c_time = $('#crnt_dt').val();
-	var html = '<input type="hidden" name="" class="msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tu+'" ago="'+c_time+'" message="'+msg+'"></input>';
+	var html = '<input mid="'+mid+'" type="hidden" name="" class="m-tmp msg-tmp-'+tu+'-'+tf+'" id="msg-tmp-'+tu+'-'+tf+'['+nc+']" user_id="'+tu+'" ago="'+c_time+'" message="'+msg+'"></input>';
 	$('#msgs_tmp').append(html);
 }
 function mopac(){
@@ -509,7 +504,7 @@ function rqst_server_time(){
 				}
 			}
 			);
-	}, 180000);
+	}, 60000);
 }
 function togglehs(d){
 	if ($(d).hasClass('hide')) {
@@ -609,5 +604,20 @@ function OutClickListener(sb){
 		        container.addClass('hide');
 		    }		    	
 	    }
+	});
+}
+
+function renew_tago(tele){
+	$('#'+tele).children('.bbl').each(function (k,v) {
+		var tid = $(this).attr('mid');
+		if (typeof(tid) != "undefined" && tid !== null) {
+			var tp = $(".m-tmp[mid='"+tid+"']");
+			if (tp.length>0) {
+				var ta = gago(tp.attr('ago'));
+				$(this).find('._tago').text(ta);
+			} else {
+				console.log(tid+'misig');
+			}
+    	}
 	});
 }
