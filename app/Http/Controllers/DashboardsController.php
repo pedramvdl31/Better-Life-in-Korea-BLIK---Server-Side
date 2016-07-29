@@ -44,8 +44,10 @@ class DashboardsController extends Controller
     public function getViewProfile()
     {   
         $user = User::find(Auth::id());
+        $uiPath = '/assets/images/profile-images/perm/';
         return view('dashboard.profile_index')
             ->with('layout',$this->layout)
+            ->with('uiPath',$uiPath)
             ->with('user',isset($user)?$user:null);
     }
 

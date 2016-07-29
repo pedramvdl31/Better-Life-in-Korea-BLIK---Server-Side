@@ -28,12 +28,8 @@ Route::post('/rqst-s-time', ['as'=>'r_st','uses'=>'HomeController@postRtrnSrvrTi
 Route::post('/data-update', ['as'=>'chat-send','uses'=>'ConversationsController@postSaveChatMessage']);
 //CHAT ROUTES END
 
-
-Route::get('test', function () {
-    // this checks for the event
-    return view('test');
-});
-
+//get adds
+Route::post('get-adds', ['as'=>'get_adds', 'uses' => 'AdsController@getGetAds']);
 
 Route::post('sendmessage', ['as'=>'sendmessage', 'uses' => 'HomeController@sendMessage']);
 Route::get('writemessage', 'HomeController@writemessage');

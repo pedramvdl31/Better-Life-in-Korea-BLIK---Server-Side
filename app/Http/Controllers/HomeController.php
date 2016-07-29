@@ -83,7 +83,8 @@ class HomeController extends Controller
             $cats = Job::cat_select();
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
         }
-        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->paginate(8));
+        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->take(8)
+               ->get());
         $cities = Job::korean_cities();
         $cities = Job::korean_cities_search();
         $all_categories = Ad::PrepareCategoriesHtml();

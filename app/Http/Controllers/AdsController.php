@@ -160,6 +160,16 @@ class AdsController extends Controller
         }
     }
 
+    
+        public function getGetAds()
+    {
+        $html = Ad::PrepareAdsForHomeHTML(Ad::where('status',1)->orderBy('id', 'desc')->take(8)
+               ->get());
+        return Response::json(array(
+            'html_data' => $html
+            ));
+    }
+
     public function getPostsEdit($id = null)
     {
         if (isset($id)) {

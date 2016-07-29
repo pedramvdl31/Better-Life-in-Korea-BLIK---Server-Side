@@ -13,7 +13,7 @@
 
 
 
-    <script src="/assets/js/admins/jquery.min.js"></script>
+  <script src="/assets/js/admins/jquery.min.js"></script>
 
   <link href="/assets/css/layouts/admins_simple.css" rel="stylesheet">
 

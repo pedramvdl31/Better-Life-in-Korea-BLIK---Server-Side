@@ -6,7 +6,11 @@
  *
  */
 (function($) {
-
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    var wheel_scroll_speed = 40;
+  } else {
+    var wheel_scroll_speed = 20;
+  }
   $.fn.extend({
     slimScroll: function(options) {
 
@@ -67,10 +71,10 @@
         allowPageScroll : false,
 
         // scroll amount applied to each mouse wheel step
-        wheelStep : 20,
+        wheelStep : wheel_scroll_speed,
 
         // scroll amount applied when user is using gestures
-        touchScrollStep : 200,
+        touchScrollStep : 50,
 
         // sets border radius
         borderRadius: '7px',

@@ -49,7 +49,13 @@ class Ad extends Model
         $html = '<div class="cats-holder">';
         $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'categories'.DIRECTORY_SEPARATOR.'category';
         for ($i=1; $i <= 7; $i++) { 
-            $html .= '<div class="col-md-3 col-sm-6 col-xs-6 cats-wrap-main">';
+            $html .= '<div
+                style="
+                    padding:5px !important;
+                    border: 0;
+
+                "
+             class="col-md-4 col-sm-12 col-xs-12 cats-wrap-main">';
                 $html .= ' <div class="cat-image links" cat-id="'.$i.'" subcat-id="1" style="background-image: url(';
                 $html .= $f_image.'-'.$i.'.jpg';
                 $html .= ');">';                    
@@ -140,7 +146,7 @@ class Ad extends Model
                 }
 
                 $data_a['html'] .= '
-                        <div class="col-md-3 col-sm-6 col-xs-6 my-col">
+                        <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad">
                             <div class="product-image-wrapper">
                                 <div class="single-products view-ad pointer" data="'.$dv->id.'">
                                     <div class="productinfo text-center infoholder">
@@ -182,6 +188,103 @@ class Ad extends Model
         }
         return $data_a;
     }
+
+
+    static public function PrepareAdsForHomeHTML($data) {
+
+        $data_a = array();
+        $data_a['html'] = '<div class="text-center"><h3 id="no-data">No results found, Try looking into other categories!</h3></div>';
+        if (isset($data)) {
+            if (count($data)>0) {
+                $data_a['html'] = '';
+            }
+            foreach ($data as $dk => $dv) {
+
+                $cat_text = Ad::TranslateCat($dv->cat_id);
+                $subcat_text = Ad::TranslateSubCat($dv->cat_id,$dv->subcat_id);
+                $city_text = Ad::TranslateCity($dv->city);
+
+
+                $isinwl = count(Wishlist::where('ad_id',$dv->id)->first());
+                $_wlcolor = $isinwl>0?"rgb(0, 128, 0)":"#B3AFA8";
+
+                $new_t = '';
+                $new_des = '';
+                if (isset($dv['title'])) {
+                    $t_temp = $dv['title'];
+                    $new_t = strlen($t_temp)>20?substr($t_temp,0,20)."...":$t_temp;
+                }
+                if (isset($dv['description'])) {
+                    $des_temp = json_decode($dv['description']);
+                    $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."...":$des_temp;
+                }
+
+                $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'product1.jpg';
+                $poster_id = $dv['user_id'];
+
+
+                if (isset($dv['file_srcs']) && $dv['file_srcs'] != "null") {
+                    $src_temp = json_decode($dv['file_srcs'],true);
+                    $images_array = array();
+                    if (isset($src_temp)) {
+                        foreach ($src_temp as $stkey => $stvalue) {
+                            foreach ($stvalue as $imkey => $imvalue) {
+                                if ($imkey == "image") {
+                                    $un_path = 'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$poster_id.DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR.'image'.DIRECTORY_SEPARATOR.$imvalue['name'];
+                                        if (file_exists($un_path)) {
+                                            $images_array[$stkey] = $un_path;
+                                        }   
+                                }
+                            }
+                        }
+                    }
+                }
+
+                $data_a['html'] .= '
+                        <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad updated_ads" style="display:none">
+                            <div class="product-image-wrapper">
+                                <div class="single-products view-ad pointer" data="'.$dv->id.'">
+                                    <div class="productinfo text-center infoholder">
+                                        <div class="ad-image" style="background-image: url(';
+
+                if (isset($dv['file_srcs']) && $dv['file_srcs'] != "null") {
+                    foreach ($images_array as $fgkey => $fgvalue) {
+                        $data_a['html'] .= $fgvalue;
+                    }
+                } else {
+                    $data_a['html'] .= $f_image;
+                }    
+                $data_a['html'] .= ');">';                    
+                $data_a['html'] .= '    </div>
+                                        <h2>'.$new_t.'</h2>
+                                        <p>'.$new_des.'</p>
+
+                                    </div>
+                                    <div class="product-overlay">
+                                    </div>
+                                        <div class="label-holder label" style="font-size: 15px;">
+                                            <div class="label-div-s"><span">'.$city_text.'</span></div>
+                                            <div class="label-div-p"><span">'.$cat_text.'</span></div>
+                                            <div class="label-div-i"><span">'.$subcat_text.'</span></div>
+                                        </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li>
+                                        <a style="color:'.$_wlcolor.'" data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>Add to wishlist</a>
+
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                ';
+            }
+        }
+        return $data_a;
+    }
+
+
     static public function PrepareForEdit($data) {
 
         if (isset($data)) {

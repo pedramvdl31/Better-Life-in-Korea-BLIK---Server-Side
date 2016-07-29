@@ -1,7 +1,9 @@
 .team-member .team-img {
     margin: -15px -15px 0 -15px;
 }
-
+.all-tabs{
+    margin-top: 25px;
+}
 .team-member {
     height: 600px;
     overflow-y: auto !important;

@@ -5,19 +5,32 @@ $(document).ready(function(){
 });
 chat = {
 	pageLoad: function() {
-		var newDate = new Date().getTime(); //convert string date to Date object
-		// $('.test-tttttttttttttt').removeClass('act');
-		// $('.t1r').addClass('act');
-		// var currentDate = new Date().getTime();
-		// var diff = currentDate-newDate;
-		// console.log(diff);
-		// var newDate = new Date().getTime(); //convert string date to Date object
-		// $('.test-t2').attr('this-act','');
-		// $('.t2r').attr('this-act','1');
-		// var currentDate = new Date().getTime();
-		// var diff = currentDate-newDate;
-		// console.log(diff);
 
+
+
+		$( window ).resize(function() {
+			$('.wpNubButton-max-main').css('top','0 !important');
+			$('.dock-max-height').css('bottom','295');
+			var wh = parseInt($( window ).height());
+			if (wh<400) {
+				$( ".wpNubButton-max-main" ).resizable( "disable" );
+			} else {
+				$( ".wpNubButton-max-main" ).resizable( "enable" );
+			}
+		});
+		var newDate = new Date().getTime(); //convert string date to Date object
+		window.tuaw = $('#tua1').val();
+		rqst_server_time();
+		$('.wpNubButton-max-main').resizable({
+		    handles: {
+			    'n':'.ui-resizable-n'
+			  },
+			maxHeight: 500,
+			minHeight: 325,
+			resize: function( event, ui ) {
+				$(this).css('height',(parseInt($(this).css('height'))+9));
+			}
+		});
 		window.ema = {
 			"smile":":)",
 			"frown":":(",
@@ -38,10 +51,33 @@ chat = {
 			"wink":";)",
 			"bsmile":":d",
 			"smiley":":-)",
-			"heart":"<3"
+			"heart":"<3",
+			"dtlaugh":":)''",
+			"tlaugh":":)'",
+			"blaugh":":))",
+			"angel":"#:)",
+			"wink":";)",
+			"zz":"-z:)",
+			"adi":":ad|",
+			"lsp":"o0",
+			"ssp":"o0|",
+			"sadt":":'(",
+			"aev":":/^",
+			"ev":":/^^",
+			"kiss_shy":";s*",
+			"kiss_heart":":h*",
+			"kiss":":*",
+			"ldi":"::|",
+			"cah":":hc:",
+			"heye":"<:3",
+			"er":":)-/",
+			"cool":"^c^",
+			"ectongue":"::P",
+			"shyang":")s:",
+			"anst":":an|",
+			"sick":":--:",
+			"tonguel":":)p"
 			};
-		window.tuaw = $('#tua1').val();
-		rqst_server_time();
 		$('#inner-chat-wrapper').slimScroll({
         	height: '285px'
     	});
@@ -72,18 +108,19 @@ chat = {
 	},
 	events: function() {
 		$('.ec').click(function(){
-			var ttxt = $(this).attr('txt');
+			var tname = $(this).attr('txt');
 			var ttab = $(this).attr('tab');
-			$('#cta'+ttab).append('<img class="imgemo emoticon emoticon_'+ttxt+'" src=""/> ');
+			var nt = NameToEmoHtml(tname);
+			$('#cta'+ttab).append(nt);
     		placeCaretAtEnd(document.getElementById("cta"+ttab));
 		});
 		$('.dts').click(function(){
-			// $('.ctabs').removeClass('tcvis');
 			$('#mtab').addClass('tvis');
 		});
 		$('.dtsc').click(function(){	
 			$('.ctabs').removeClass('tcvis');
-			$(this).parents('.ctabs').addClass('tcvis');
+			$('.ctabs').removeClass('tvis');
+			$(this).parents('.ctabs:first').addClass('tcvis');
 		});
 		$(document).on('keypress', '.ChatTextArea', function() {
 		    var keycode = (event.keyCode ? event.keyCode : event.which);
@@ -93,12 +130,12 @@ chat = {
 		    	if (!$.isBlank(tor)) {
 		    		var randtxt = randomString();
 		    		var prepared_array = PrepareTArray(tor);
-		       		var input_bubble = make_bubble_lst(prepared_array['f'],randtxt);
+		       		var input_bubble = make_bubble_lst(tor,randtxt);
 		       		var dock_no = $(this).parents('.ctabs').attr('dock-no');
 		       		$('._ctb'+dock_no).append(input_bubble);
 		       		document.getElementById('ctb'+dock_no).scrollTop = 10000;
 		       		var fid = $(this).parents('.ctabs').attr('uid');
-		       		request_c.snddata(prepared_array['e'],fid,randtxt);
+		       		request_c.snddata(prepared_array['c'],fid,randtxt);
 		       		var thisid = $(this).attr('id');
 		       		$(this).parents('.inputBar:first').find('.chatemoji').css('height','52');
 		       		$(this).parents('.wpNubButton-max:first').find('.slimScrollDiv:first').css('height','218');
@@ -257,6 +294,7 @@ function g_m(cu,fu,tab_id){
 			var status = result.status;
 			var _ar = result.l_mgs;
 			var fav9 = result.fav;
+
 			switch(status){					
 	 			case 200:
 					if (typeof(cu) != "undefined" && cu !== null) {
@@ -277,15 +315,15 @@ function g_m(cu,fu,tab_id){
 		);
 }
 function t_g_m(tmp_m,cu,fu,tab_id){
-		if (typeof(cu) != "undefined" && cu !== null) {
-	    	var msgs_html = prepare_html_tmp(tmp_m,cu,fu);
-	    	$('._ctb'+tab_id).html('');
-	    	$('._ctb'+tab_id).html(msgs_html);
-	    	$('._ctb'+tab_id).slimScroll({
-	        	height: '218px',
-	        	start: 'bottom'
-	    	});
-		}
+	if (typeof(cu) != "undefined" && cu !== null) {
+    	var msgs_html = prepare_html_tmp(tmp_m,cu,fu);
+    	$('._ctb'+tab_id).html('');
+    	$('._ctb'+tab_id).html(msgs_html);
+    	$('._ctb'+tab_id).slimScroll({
+        	height: '218px',
+        	start: 'bottom'
+    	});
+	}
 }
 function prepare_html(_ar,tu,tf,fav9) {
 	var html = '';
@@ -516,9 +554,18 @@ function togglehs(d){
 function PrepareTArray(txt){
 	var oa={"p":"","e":"","f":""};
 	oa["p"] = SrtipEmojiHtml(txt);
-	oa["e"] = escapeHTML(oa["p"]);
-	oa["f"] = StrToEmo(oa["e"],ema);
+	oa["c"] = EmojiHtmlToEmojiChar(txt);
+	console.log(oa["c"]);
 	return oa;
+}
+function EmojiHtmlToEmojiChar(txt) {
+	$.each(ema_plain, function(k,v) {
+		var rt ='<img class="imgemo emoticon emoticon_'+k+'">';
+		if (rt==txt) {console.log('match')}
+		var regex = new RegExp(rt, "g");
+		txt =  txt.replace(regex, v);
+	});
+	return txt;
 }
 function isExist(obj,str) {
 	var o = -1
@@ -533,22 +580,44 @@ function SrtipEmojiHtml(txt) {
 	var o = -1
 	var ot = txt;
 	$.each(ema_plain, function(k,v) {
-		var ht = '<img class="imgemo emoticon emoticon_'+k+'" src="">';
+		var ht = '<img class="imgemo emoticon emoticon_'+k+'">';
 		var regg = new RegExp(ht,"g");
 		ot = ot.replace(regg,v);
 	});
 	return ot;
 }
-
 function StrToEmo(txt) {
 	var ot = txt;
 	$.each(ema, function(k,v) {
-		var ht = '<img class="imgemo emoticon emoticon_'+k+'" src=""/>';
+		var ht = '<img class="imgemo emoticon emoticon_'+k+'"/>';
 		var regg = new RegExp(escapeRegExp(v),"g");
 		ot = ot.replace(regg,ht);
 	});
 	return ot;
 }
+function NameToEmoHtml(txt) {
+	return '<img class="imgemo emoticon emoticon_'+txt+'"/>';
+}
+function EscStrToEmo(txt) {
+	var ot = txt;
+	$.each(ema, function(k,v) {
+		var ht = '<img class="imgemo emoticon emoticon_'+k+'"/>';
+		var regg = new RegExp(escapeRegExp(v),"g");
+		ot = ot.replace(regg,ht);
+	});
+	return ot;
+}
+function NamesToEmojiChar(txt){
+	var toReturn = 'invalid';
+	$.each(ema_plain, function(k,v) {
+		if (k==txt) {
+			toReturn = v;
+			return false;
+		}
+	});
+	return toReturn;
+}
+
 function escapeRegExp(str) {
   return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 }
@@ -575,7 +644,6 @@ function make_child_active(ci) {
 	$('.ctabs').removeClass('tcvis');
 	$('#ctab'+ci).addClass('tcvis');
 }
-
 function placeCaretAtEnd(el) {
     el.focus();
     if (typeof window.getSelection != "undefined"
@@ -606,7 +674,6 @@ function OutClickListener(sb){
 	    }
 	});
 }
-
 function renew_tago(tele){
 	$('#'+tele).children('.bbl').each(function (k,v) {
 		var tid = $(this).attr('mid');
@@ -616,7 +683,7 @@ function renew_tago(tele){
 				var ta = gago(tp.attr('ago'));
 				$(this).find('._tago').text(ta);
 			} else {
-				console.log(tid+'misig');
+				console.log(tid+'missig');
 			}
     	}
 	});

@@ -4,33 +4,22 @@ $(document).ready(function(){
 });
 mainf = {
 	pageLoad: function() {
-
-
-
 		// getContent();
 		if ( (location.hash == "#_=_" || location.href.slice(-1) == "#_=_") ) {
 		    removeHash();
 		}
+		$("#qkpost-modal").on("shown.bs.modal", function () {
 
-	$("#qkpost-modal").on("shown.bs.modal", function () {
+		});
 
-	});
-
-	  //$('#somecomponent').locationpicker(
-			// {
-			//     location: {latitude: 37.5551069, longitude: 126.97069110000007},
-			//     locationName: "",
-			//     radius: 0,
-			//     zoom: 15,
-			//     scrollwheel: true,
-			//     inputBinding: {
-			//         latitudeInput: null,
-			//         longitudeInput: null,
-			//         radiusInput: null,
-			//         locationNameInput: $('#us2-address')
-			//     }
-			// }
-			// );
+		window.flag = 0;
+		$(window).scroll(function() {
+		   if(($(window).scrollTop() + $(window).height() > $(document).height() - 100)&&flag==0) {
+		       requestm.get_ad($('.sin-ad').length);
+		       flag=1;
+		       $('#loading-data').fadeIn();
+		   }
+		});
 
 	    $('#us2').locationpicker({
 	    location: {latitude: 37.5551069, longitude: 126.97069110000007},   
@@ -46,11 +35,11 @@ mainf = {
 
 		$('#nav').affix({
 			offset: {
-		    	top: 80
+		    	top: 70
 		  	}
 		});
 		$("#nav").on('affix.bs.affix', function(){
-	    	$('.main-container').css('margin-top','80px');
+	    	$('.main-container').css('margin-top','50px');
 	    });
 
 	    $("#nav").on('affix-top.bs.affix', function(){
@@ -355,6 +344,23 @@ mainf = {
     }
 }
 requestm = {
+	get_ad: function(ad_num) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/get-adds',
+			{
+				"_token": token,
+				"ad_num":ad_num
+			},
+			function(result){
+				$('#loading-data').fadeOut();
+				$('#ads-wrapper').append(result.html_data['html']);
+				$('.updated_ads').fadeIn();
+				$('.sin-ad').removeClass('updated_ads');
+				flag=0;
+			}
+			);
+	},
 	removeWishList: function(ad_id) {
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
@@ -828,7 +834,7 @@ function clear_qp_modal() {
 }
 
 function create_loading_input() {
-	var loading_html = 	'<div class="cssload-loader">'+
+	var loading_html = 	'<div style="margin-top:10px" class="cssload-loader">'+
 							'<div class="cssload-flipper">'+
 							'<div class="cssload-front"></div>'+
 							'<div class="cssload-back"></div>'+
