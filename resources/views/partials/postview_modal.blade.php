@@ -70,8 +70,7 @@
  .flex-video { padding-top: 0; }
    }
 </style>
-<div class="modal fade" id="postview-modal">
-
+<div class="modal fade" id="postview-modal" style="padding-left:0 !important">
 	  <div class="modal-dialog qkpost_dialog" style="width: 50%;margin-top: 10px;">
 	    <div class="modal-content">
         <div class="modal-header">

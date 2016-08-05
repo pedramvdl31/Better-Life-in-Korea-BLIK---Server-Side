@@ -108,11 +108,8 @@ class Ad extends Model
                 $cat_text = Ad::TranslateCat($dv->cat_id);
                 $subcat_text = Ad::TranslateSubCat($dv->cat_id,$dv->subcat_id);
                 $city_text = Ad::TranslateCity($dv->city);
-
-
                 $isinwl = count(Wishlist::where('ad_id',$dv->id)->first());
                 $_wlcolor = $isinwl>0?"rgb(0, 128, 0)":"#B3AFA8";
-
                 $new_t = '';
                 $new_des = '';
                 if (isset($dv['title'])) {
@@ -123,26 +120,12 @@ class Ad extends Model
                     $des_temp = json_decode($dv['description']);
                     $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."...":$des_temp;
                 }
-
-                $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'product1.jpg';
+                $f_image = '/assets/images/home/product1.jpg';
                 $poster_id = $dv['user_id'];
-
-
-                if (isset($dv['file_srcs']) && $dv['file_srcs'] != "null") {
+                
+                if ((isset($dv['file_srcs'])) && ($dv['file_srcs'] != "null")) {
                     $src_temp = json_decode($dv['file_srcs'],true);
-                    $images_array = array();
-                    if (isset($src_temp)) {
-                        foreach ($src_temp as $stkey => $stvalue) {
-                            foreach ($stvalue as $imkey => $imvalue) {
-                                if ($imkey == "image") {
-                                    $un_path = 'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$poster_id.DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR.'image'.DIRECTORY_SEPARATOR.$imvalue['name'];
-                                        if (file_exists($un_path)) {
-                                            $images_array[$stkey] = $un_path;
-                                        }   
-                                }
-                            }
-                        }
-                    }
+                    $f_image = (isset($src_temp[0]['image']['name']))?'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:'/assets/images/home/product1.jpg';
                 }
 
                 $data_a['html'] .= '
@@ -152,18 +135,11 @@ class Ad extends Model
                                     <div class="productinfo text-center infoholder">
                                         <div class="ad-image" style="background-image: url(';
 
-                if (isset($dv['file_srcs']) && $dv['file_srcs'] != "null") {
-                    foreach ($images_array as $fgkey => $fgvalue) {
-                        $data_a['html'] .= $fgvalue;
-                    }
-                } else {
-                    $data_a['html'] .= $f_image;
-                }    
+                $data_a['html'] .= $f_image;
                 $data_a['html'] .= ');">';                    
                 $data_a['html'] .= '    </div>
                                         <h2>'.$new_t.'</h2>
                                         <p>'.$new_des.'</p>
-
                                     </div>
                                     <div class="product-overlay">
                                     </div>
@@ -176,8 +152,7 @@ class Ad extends Model
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
                                         <li>
-                                        <a style="color:'.$_wlcolor.'" data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>Add to wishlist</a>
-
+                                        <a style="color:'.$_wlcolor.'" data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>&nbsp;Add to wishlist</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -334,44 +309,14 @@ class Ad extends Model
                     }
                 }
             }
-            $html .= '<div class="form-group">
-                            <div class="media">
-                            <div class="media-left">
-                            <a href="#"> <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="'.$img_src.'" data-holder-rendered="true" style="width: 64px; height: 64px;"> </a> </div> <div class="media-body"> 
-                        <h4 class="media-heading">'.$full_name.'</h4> 
-
-                            '.$user->description.'
-
-                        </div> </div>
-                            <div class="image-holder-pv pull-right">
-                            ';
-                
-
-                $html .= "</div></div>
-                        <div class='form-group break_all'>
-                            <label>Title</label>
-                            <p>".$data->title."</p>
-                        </div>
-                        <div class='form-group break_all'>
-                            <label>Description</label>
-                            <p>".json_decode($data['description'])."</p>
-                        </div>
-                        ";
-            if (isset($data['lat'])&&isset($data['long'])) {
-                $html .= '
-                    <div class="form-group" style="">
-                        <label>Address:</label>
-                        <input type="text" class="form-control" readonly id="us2-address-view" />
-                        <input type="hidden" id="us2-lat-view" value="'.$data['lat'].'"/>
-                        <input type="hidden" id="us2-lon-view" value="'.$data['long'].'"/>
-                        <div id="us2-view" style="width: 90%; height: 400px;margin: 10px auto;"></div>
-                    </div>
-                ';
-            }
+                $html .= "  <div class='form-group break_all'>
+                                <h3 style='margin-top: 0'>".$data->title."</h3>
+                            </div>
+                            <div class='form-group break_all'>
+                                <p>".json_decode($data['description'])."</p>
+                            </div>";
             if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
-                 
                 $files = json_decode($data['file_srcs'],true);
-                $html .= "<hr><h4>Images and Videos (".count($files).")</h4>";
                 $base_path = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$data['user_id'].DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR;
                 $html .= "<div class='my-container'>";
                 foreach ($files as $fk => $fv) {
@@ -394,13 +339,26 @@ class Ad extends Model
                                     </video>
                                 </div>   
                             ';
-
-
-
                         }
                     }
                 }
-
+            }
+            if (isset($data['lat'])&&isset($data['long'])) {
+                $html .= '
+                    <div class="form-group" style="">
+                        <label>Address:</label>
+                        <input type="text" class="form-control" readonly id="us2-address-view" />
+                        <input type="hidden" id="us2-lat-view" value="'.$data['lat'].'"/>
+                        <input type="hidden" id="us2-lon-view" value="'.$data['long'].'"/>
+                        <div id="us2-view" style="width: 90%; height: 400px;margin: 10px auto;"></div>
+                    </div>
+                ';
+                //drive to
+                $html .= '
+                <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
+                  <button id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
+                  <button style="width:10%" id="waze-info"data-toggle="tooltip" data-placement="top" title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" type="button" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                </div><hr>';
             }
         }
         return $html;

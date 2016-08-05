@@ -120,7 +120,6 @@ class AuthController extends Controller
             $authUser->last_name =  $user['last_name'];
             $authUser->save();
         }
-        
         Auth::login($authUser, true);
         return redirect()->route('home_index');
     }

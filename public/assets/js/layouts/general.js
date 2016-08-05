@@ -6,7 +6,6 @@ $(document).ready(function(){
 general = {
 
 	pageLoad: function() {
-
 	},
 	events: function() {
 	

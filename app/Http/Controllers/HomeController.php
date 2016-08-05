@@ -24,7 +24,6 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use App\User;
 use App\Page;
-use App\WebsiteBrand;
 use App\Ad;
 use App\Wishlist;
 
@@ -46,7 +45,6 @@ class HomeController extends Controller
       // for ($i=2;$i<=11;$i++) { 
       //   DB::table('ads')->insert([
       //     [
-      //         'id' => $i,
       //         'user_id' => '1',
       //         'cat_id' => '1',
       //         'subcat_id' => '1',

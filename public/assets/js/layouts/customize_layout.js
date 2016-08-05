@@ -5,7 +5,6 @@ $(document).ready(function(){
 });
 cust_layout = {
 	pageLoad: function() {
-		alert();
 	},
 	events: function() {
 	}

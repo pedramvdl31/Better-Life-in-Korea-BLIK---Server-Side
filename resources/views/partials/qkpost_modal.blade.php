@@ -123,22 +123,12 @@
                 </div>
                 <div class="form-group hide anim 2t-wrap" style="width: 100%;visibility: hidden;
                     opacity: 0;">
-                  <div class="checkbox">
-                    <label>
-                      <input type="checkbox" id="address-checkbox"> Add Address (optional)
-                    </label>
-                  </div>
-                </div>
-                <div class="form-group hide anim address-wrap" style="width: 100%;visibility: hidden;
-                    opacity: 0;">
                     <label>Address:</label>
                     <input type="text" class="form-control" id="us2-address" />
                     <input type="hidden" id="us2-lat"/>
                     <input type="hidden" id="us2-lon"/>
-                    <div id="us2" style="width: 90%; height: 400px;margin: 10px auto;"></div>
+                    <div id="us2" style="width: 80%; height: 400px;margin: 10px auto;"></div>
                 </div>
-
-
                 <div class="form-group hide anim 2t-wrap" id="title-wrap" style="visibility: hidden;
                     opacity: 0;">
                     <label>Title: <span class="_required">*required</span></label>
