@@ -163,7 +163,7 @@
         <script src="/packages/scroll_style/jquery.slimscroll.js"></script>
         <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
         <!-- LOCATION PICKER -->
-        <script type="text/javascript" src='http://maps.google.com/maps/api/js?sensor=false&libraries=places'></script>
+        <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&?sensor=false&libraries=places'></script>
         <script src="/packages/location-picker/locationpicker.jquery.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
