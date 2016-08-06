@@ -916,7 +916,7 @@
             <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
             <script>
                 //var socket = io('http://localhost:3000');
-                window.socket = io('http://192.168.10.10:3000');
+                window.socket = io('http://202.168.154.181:3000');
                 socket.emit("_init", { data: "{!!Auth::id()!!}" });
             </script>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>

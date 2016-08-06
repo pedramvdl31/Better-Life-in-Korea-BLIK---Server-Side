@@ -125,7 +125,6 @@
         </div>
 
 
-        <!-- <a href="waze://?ll=37.555107,126.970691&navigate=yes">test</a> -->
 
         <!-- PAGE VIEW -->
         @yield('content')
@@ -133,7 +132,10 @@
 
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
-        <!-- CHAT MUST BE HERE -->
+
+
+
+        
 
         {!! View::make('partials.login_modal') !!}    
         {!! View::make('partials.postview_modal') !!}    
@@ -141,6 +143,16 @@
         {!! View::make('partials.success_modal') !!}
         {!! View::make('partials.warning_modal') !!}      
         @if(Auth::check())
+
+            <!-- CHAT MUST BE HERE -->
+            {!! View::make('chat-app')
+                ->with('uip9',$uip9)
+                ->with('cdt',$cdt)
+                ->__toString() 
+            !!} 
+
+
+
             {!! View::make('partials.qkpost_modal')
             ->with('cats',$cats)
             ->with('cities',$cities)
