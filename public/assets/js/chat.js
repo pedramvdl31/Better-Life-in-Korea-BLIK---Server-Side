@@ -688,3 +688,8 @@ function renew_tago(tele){
     	}
 	});
 }
+(function($){
+  $.isBlank = function(obj){
+    return(!obj || $.trim(obj) === "");
+  };
+})(jQuery);
