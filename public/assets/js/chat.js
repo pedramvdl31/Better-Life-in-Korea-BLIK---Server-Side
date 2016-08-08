@@ -555,13 +555,11 @@ function PrepareTArray(txt){
 	var oa={"p":"","e":"","f":""};
 	oa["p"] = SrtipEmojiHtml(txt);
 	oa["c"] = EmojiHtmlToEmojiChar(txt);
-	console.log(oa["c"]);
 	return oa;
 }
 function EmojiHtmlToEmojiChar(txt) {
 	$.each(ema_plain, function(k,v) {
 		var rt ='<img class="imgemo emoticon emoticon_'+k+'">';
-		if (rt==txt) {console.log('match')}
 		var regex = new RegExp(rt, "g");
 		txt =  txt.replace(regex, v);
 	});

@@ -47,15 +47,17 @@
         font-weight: 300;
         font-size: 12px;        
     }
-
-.col-no-padding{
-    padding-left: 0;
-    padding-right: 0;
-}
+    #qkpost-map-container{
+        margin-top: 15px;
+    }
+    .col-no-padding{
+        padding-left: 0;
+        padding-right: 0;
+    }
 </style>
 <div class="modal fade" id="qkpost-modal">
 	{!! Form::open(array('route' => 'qkpost-process', 'class'=>'','role'=>"form",'id'=>'pkpost-form', 'style'=>'height:100%')) !!}
-	  <div class="modal-dialog qkpost_dialog" style="width: 44%;margin-top: 10px;height: 563px">
+	  <div class="modal-dialog qkpost_dialog" style="width: 94%;margin-top: 10px;height: 563px">
 	    <div class="modal-content" style="height: 100%">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -63,13 +65,10 @@
 	      </div>
 	      <div class="modal-body" style="height: 78%;overflow: auto;padding-bottom: 0;margin-bottom: 5px;">
             <div class="body-wrapsp">
-
                 <div class="form-group" id="cat-wrap">
-                    <label>Select Category:</label>
                     {!! Form::select('cat',$cats ,null, ['id'=>'cats','class'=>'form-control qp-selects','status'=>false]) !!}
                 </div>
                 <div class="form-group hide anim" id="subcat-wrap" style="visibility:hidden;opacity:0">
-                    <label>Select Sub Category:</label>
                     <select class="form-control qp-selects subcats " id="subcat-select-1" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
@@ -116,18 +115,62 @@
                             width: 100% !important;
                         }
                     </style>
-                    <label>Select City:</label>
                     <select class="form-control" name="city" id="city-select">
                         {!!$cities!!}
                     </select>
                 </div>
-                <div class="form-group hide anim 2t-wrap" style="width: 100%;visibility: hidden;
+
+
+
+                <style type="text/css">
+                                    
+                    @media only screen and (max-width : 850px) {
+                        #type-selector{
+                            left: 136px !important;
+                            top: 32px !important;
+                            width: 300px !important;
+                            border-radius: 0 !important;
+                        }
+
+                    }
+                    @media only screen and (max-width : 620px) {
+                        #pac-input{
+                            left:0 !important;
+                            width: calc(100% - 24px) !important;
+                        }
+                        #type-selector{
+                            left: 12px !important;
+                            width: calc(100% - 24px) !important;
+                        }
+                        .gmnoprint.gm-style-mtc{
+                            display: none;
+                        }
+                    }
+
+                </style>
+
+
+
+                <div class="form-group hide anim 2t-wrap" style="float:left;width: 100%;visibility: hidden;
                     opacity: 0;">
-                    <label>Address:</label>
-                    <input type="text" class="form-control" id="us2-address" />
-                    <input type="hidden" id="us2-lat"/>
-                    <input type="hidden" id="us2-lon"/>
-                    <div id="us2" style="width: 80%; height: 400px;margin: 10px auto;"></div>
+                    <input type="hidden" id="qkp-lat" name="lat"/>
+                    <input type="hidden" id="qkp-lng" name="long" />
+                    <div id="qkpost-map-container" style="width:80%;margin:0 auto">
+                        <input id="pac-input" class="controls" type="text"
+                            placeholder="Enter a location">
+
+                        <div id="type-selector" class="controls">
+                        <input type="radio" name="type" id="changetype-all" checked="checked">
+                        <label for="changetype-all">All</label>
+
+                        <input type="radio" name="type" id="changetype-establishment">
+                        <label for="changetype-establishment">Establishments</label>
+
+                        </div>
+                        <div style="height:300px" id="map"></div>                        
+                    </div>
+
+
                 </div>
                 <div class="form-group hide anim 2t-wrap" id="title-wrap" style="visibility: hidden;
                     opacity: 0;">

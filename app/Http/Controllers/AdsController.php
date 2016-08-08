@@ -83,7 +83,6 @@ class AdsController extends Controller
                             }
                         }
                     }
-
                     $p_name = array('image','video');
                     foreach ($p_name as $pn => $pnv) {
                         $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
@@ -93,8 +92,6 @@ class AdsController extends Controller
                             unlink($file); // delete file
                         }
                     }
-
-
                 }
             }
 
@@ -163,8 +160,16 @@ class AdsController extends Controller
     
         public function getGetAds()
     {
-        $html = Ad::PrepareAdsForHomeHTML(Ad::where('status',1)->orderBy('id', 'desc')->take(8)
-               ->get());
+
+        $cat = Input::get('category');
+        if ($cat==0) {
+            $html = Ad::PrepareAdsScrollLoad(Ad::where('status',1)->orderBy('id', 'desc')->skip(Input::get('ad_num'))->take(8)
+                ->get());   
+        } else {
+            $html = Ad::PrepareAdsScrollLoad(Ad::where('status',1)->where('cat_id',$cat)->orderBy('id', 'desc')->skip(Input::get('ad_num'))->take(8)
+                ->get());   
+        }
+
         return Response::json(array(
             'html_data' => $html
             ));
@@ -392,16 +397,12 @@ class AdsController extends Controller
         if(Request::ajax()){
             $status = 400;
             $cat_id = Input::get('cat_id');
-            $subcat_id = Input::get('subcat_id');
-            if (isset($cat_id,$subcat_id)) {
-                $ads = Ad::PrepareAdsSearchCategory($cat_id,$subcat_id);
+            if (isset($cat_id)) {
+                $ads = Ad::PrepareAdsSearchCategory($cat_id);
                 $status = 200;
-                $render = $ads['data']->render();
                 return Response::json(array(
                     'status' => $status,
-                    'ads' => $ads,
-                    'render' => $render,
-
+                    'ads' => $ads
                 ));
             }
             return Response::json(array(
@@ -409,6 +410,7 @@ class AdsController extends Controller
                 ));
         }
     }
+    
     public function postSearchByCity()
     {
         if(Request::ajax()){
@@ -417,11 +419,9 @@ class AdsController extends Controller
             if (isset($city_id)) {
                 $ads = Ad::PrepareAdsSearchCity($city_id);
                 $status = 200;
-                $render = $ads['data']->render();
                 return Response::json(array(
                     'status' => $status,
-                    'ads' => $ads,
-                    'render' => $render,
+                    'ads' => $ads
                 ));
             }
             return Response::json(array(

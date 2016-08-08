@@ -87,41 +87,16 @@ class HomeController extends Controller
         $all_categories = Ad::PrepareCategoriesHtml();
         $layout_title = 'layouts.customize_layout';
 
-            return view('home.homepage')
-            ->with('cats',isset($cats)?$cats:null)
-            ->with('wishlist',isset($wishlist)?$wishlist:null)
-            ->with('ads',$ads)
-            ->with('all_categories',$all_categories)
-            ->with('cities',isset($cities)?$cities:null)
-            ->with('cdt',date('Y-m-d H:i:s'))
-            ->with('layout',$layout_title);
+        return view('home.homepage')
+        ->with('cats',isset($cats)?$cats:null)
+        ->with('wishlist',isset($wishlist)?$wishlist:null)
+        ->with('ads',$ads)
+        ->with('all_categories',$all_categories)
+        ->with('cities',isset($cities)?$cities:null)
+        ->with('cdt',date('Y-m-d H:i:s'))
+        ->with('layout',$layout_title);
     }
 
-    public function getUpdateMessages()
-    {
-        header("Content-Type: text/event-stream");
-
-        while (1) {
-          echo 'data: {"time": ""}\n\n';
-          
-          ob_end_flush();
-          flush();
-          sleep(1);
-        }
-    }
-
-    public function writemessage()
-    {
-      return view('writemessage');
-    }
-    public function sendMessage(){
-      $redis = Redis::connection();
-      $redis->publish('message', Request::input('message'));
-      return redirect('writemessage');
-    }
-
-
-    
     public function postRtrnSrvrTime()
     {
       return Response::json(array(

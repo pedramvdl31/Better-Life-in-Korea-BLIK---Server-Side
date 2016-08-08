@@ -6,11 +6,11 @@ $(document).ready(function(){
 // COMPONENTS
 Components = {
 	InitiateApp: function() {
+		InitFunctions.SetStates();
 		InitFunctions.PageVisualSetup();
 		InitFunctions.SetAjaxHeader();
 		InitFunctions.ClearUrl();
 		InitFunctions.WindowScrollListener();
-		InitFunctions.BindMapToDiv();
 		InitFunctions.InitiateDropZones();
 		InitFunctions.InitiateAutoComplete();
 	},
@@ -43,6 +43,9 @@ InitFunctions = {
         	height: '100%'
     	});
 	},
+	SetStates(){
+		window.user_state = document.getElementById('user-status').value;
+	},
 	SetAjaxHeader(){
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
@@ -68,10 +71,15 @@ InitFunctions = {
 	},
 	WindowScrollListener(){
 		$(window).scroll(function() {
-		   if(($(window).scrollTop() + $(window).height() > $(document).height() - 100)&&flag==0) {
-		       ServerRequests.get_ad($('.sin-ad').length);
-		       flag=1;
-		       $('#loading-data').fadeIn();
+		   if(($('#posts-page').scrollTop() + $('#posts-page').height() > $(document).height() - 100)&&flag==0) {
+		   		if (GVar.scroll_load_more==1) {
+			   		GVar.skip = GVar.skip+8;
+					ServerRequests.get_ad(GVar.skip);
+					flag=1;
+					$('#loading-data').fadeIn();		   			
+		   		} else {
+		   			$('#no-ads').fadeIn();
+		   		}
 		   }
 		});
 	},
@@ -104,11 +112,11 @@ InitFunctions = {
 				   var base_type = json['base_type'];
 				   var new_input = HelperFuncions.create_input(new_name,old_name,base_type);
 				   $("#file-div").append(new_input);
-				   $('#qk-post-btn').removeAttr('disabled');
+				   // $('#qk-post-btn').removeAttr('disabled');
 				 });
 				  
 				 this.on('addedfile', function(file) {
-				 	$('#qk-post-btn').attr('disabled','disabled');
+				 	// $('#qk-post-btn').attr('disabled','disabled');
 				 });
 				  
 				 this.on('drop', function(file) {
@@ -220,7 +228,8 @@ Listeners = {
 				setTimeout(function(){
 					$('.2t-wrap').css('visibility','visible').css('opacity',1);
 					$('#qk-post-btn').removeAttr('disabled');
-					HelperFuncions.InitGoogleMap();
+					// HelperFuncions.InitGoogleMap();
+					Maps.PostAdInit();
 				}, 50);
 			} else {
 					$('.2t-wrap').css('visibility','hidden').css('opacity',0);
@@ -279,28 +288,45 @@ Listeners = {
 	        	}
 		    }
 		});
+
 	    $('#submit-btn').click(function(){
 			var reg_form = $('#reg-form').serialize();
 			ServerRequests.form_validate(reg_form);
 		});
+
 	    $('.tab-home').click(function(){
 	    	$('.all-tabs').addClass('hide');
 	    	$('.home-tab').removeClass('hide');
+
+	    	$('.tab-cat').css('border-bottom','none');
+	    	$('.tab-home').css('border-bottom','1px solid white');
 		});
+
+
 	    $('.tab-cat').click(function(){
 	    	$('.all-tabs').addClass('hide');
 	    	$('.cat-tab').removeClass('hide');
+
+	    	$('.tab-home').css('border-bottom','none');
+	    	$('.tab-cat').css('border-bottom','1px solid white');
 		});
+
+
 	    $('.links').click(function(){
 			var cat_id = $(this).attr('cat-id');
-			var subcat_id = $(this).attr('subcat-id');
+			GVar.category = cat_id;
+			//new category reset load more
+			GVar.scroll_load_more = 1;
+			//hide no data
+			document.getElementById("no-ads").style.display = 'none';
+
 			$('.tab-c').css('border','none');
 			$('.tab-home').css('border-bottom','1px solid white');
 	    	$('.cat-tab').addClass('hide');
 	    	$('.home-tab').removeClass('hide');
 	    	$('#post-list').addClass('hide');
 			var _this = $(this);
-			ServerRequests.refresh_ads(cat_id,subcat_id,_this);
+			ServerRequests.refresh_ads(cat_id,_this);
 		});
 		$("#city-select-home").change(function(){
 			var t_v = $("#city-select-home option:selected").val();
@@ -346,16 +372,24 @@ ServerRequests = {
 			'/get-adds',
 			{
 				"_token": token,
-				"ad_num":ad_num
+				"ad_num":ad_num,
+				"category":GVar.category
 			},
 			function(result){
+				var html = result.html_data['html'];
 				$('#loading-data').fadeOut();
+
+				//no more ads in this category
+	 			if (html=='') {
+	 				GVar.scroll_load_more = 0;
+	 			}
+
 				$('#ads-wrapper').append(result.html_data['html']);
 				$('.updated_ads').fadeIn();
 				$('.sin-ad').removeClass('updated_ads');
 				flag=0;
 			}
-			);
+		);
 	},
 	removeWishList: function(ad_id) {
 		var token = $('meta[name=csrf-token]').attr('content');
@@ -380,7 +414,7 @@ ServerRequests = {
 			}
 			);
 	},
-	refresh_ads: function(cat_id,subcat_id,_this) {
+	refresh_ads: function(cat_id,_this) {
 		$loading_in = HelperFuncions.create_loading_input();
 		$('.post-loading').html($loading_in);
 		$('.post-loading').removeClass('hide');
@@ -390,8 +424,7 @@ ServerRequests = {
 			'/search-02',
 			{
 				"_token": token,
-				"cat_id":cat_id,
-				"subcat_id": subcat_id
+				"cat_id":cat_id
 			},
 			function(result){
 				$('.post-loading').addClass('hide');
@@ -403,7 +436,6 @@ ServerRequests = {
 				switch(status){					
 		 			case 200:
 		 				$('#ads-wrapper').html(ads['html']);
-		 				$('#pagi').html('');
 		 				$('#post-list').removeClass('hide');
 		 			break;
 
@@ -436,7 +468,6 @@ ServerRequests = {
 				switch(status){					
 		 			case 200:
 		 				$('#ads-wrapper').html(ads['html']);
-		 				$('#pagi').html('');
 		 				$('#post-list').removeClass('hide');
 		 			break;
 
@@ -463,7 +494,6 @@ ServerRequests = {
 				switch(status){					
 		 			case 200:
 		 				$('#ads-wrapper').html(ads);
-		 				$('#pagi').html('');
 		 			break;
 
 		 			case 400:
@@ -545,24 +575,11 @@ ServerRequests = {
 						$('.my-container').sortablePhotos({
 						  selector: '> .my-item',
 						  sortable: 0,
-						  padding: 1
+						  padding: 20
 						});
 						if (lat_long['lat']!=0 && lat_long['long']!=0) {
-			    			$('#us2-view').locationpicker({
-						    location: {latitude: lat_long['lat'], longitude: lat_long['long']},   
-						    radius: 0,
-						    inputBinding: {
-						        latitudeInput: $('#us2-lat-view'),
-						        longitudeInput: $('#us2-lon-view'),
-						        locationNameInput: $('#us2-address-view')
-						    }
-						    });
-						    lastCenter=_map.getCenter(); 
-							google.maps.event.trigger(_map, "resize");
-							_map.setCenter(lastCenter);	
+							Maps.ViewAdInit(parseFloat(lat_long['lat']),parseFloat(lat_long['long']));
 		            	}
-
-
 						var c_div = '<div class="fb-comments modalfc" '+
 									'data-href="http://kora.app/comments/'+data_id+'"'+
 									'data-width="100%" data-numposts="5"></div>';
@@ -749,3 +766,186 @@ HelperFuncions = {
 		return loading_html;
 	}
 };
+
+//MAPS
+Maps = {
+	PostAdInit(){
+		var myLatLng = {lat: 37.555172565547075, lng: 126.9708452528564};
+        var map = new google.maps.Map(document.getElementById('map'), {
+        	center: myLatLng,
+			zoom: 12,    
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+			  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			  mapTypeIds: ['roadmap', 'satellite']
+			},
+			streetViewControl: false
+        });
+
+        // GOOGLE MAP RESPONSIVENESS
+        google.maps.event.addDomListener(window, "resize", function() {
+		 var center = map.getCenter();
+		 google.maps.event.trigger(map, "resize");
+		 map.setCenter(center); 
+		});
+
+
+        var input = /** @type {!HTMLInputElement} */(
+            document.getElementById('pac-input'));
+
+        var types = document.getElementById('type-selector');
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        autocomplete.bindTo('bounds', map);
+
+
+        //MARKER
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+          map: map,
+          position:myLatLng,
+          draggable: true,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+
+
+        //LOAD FROM CURRENT CITY
+		var geocoder = new google.maps.Geocoder();
+		//     navigator.geolocation.getCurrentPosition(function (position) {
+		//        	initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		//        	map.setCenter(initialLocation);
+
+		//        	marker.setPosition(initialLocation);
+
+		//        	infowindow.setContent('<div><strong>Search or Drag Marker</strong></div>');
+		// 	infowindow.open(map, marker);
+		//     });
+
+
+        //AFTER DRAG AND DROP SHOWS THE LAT AND LONG
+        google.maps.event.addListener(marker, 'dragend', function (event) {
+			var latlng = {lat: this.getPosition().lat(), lng: this.getPosition().lng()};
+	        geocoder.geocode({'location': latlng}, function(results, status) {
+	          if (status === 'OK') {
+			    if (results[1]) {
+			    	// saving to dom
+			    	document.getElementById('qkp-lat').value = latlng.lat;
+			    	document.getElementById('qkp-lng').value = latlng.lng;
+
+					infowindow.setContent(results[1].formatted_address);
+					document.getElementById('pac-input').value = results[1].formatted_address;
+					// infowindow.open(map, marker);
+	            } else {
+	              window.alert('No results found');
+	            }
+	          } else {
+	            window.alert('Geocoder failed due to: ' + status);
+	          }
+	        });
+		});
+
+        autocomplete.addListener('place_changed', function() {
+			infowindow.close();
+			marker.setVisible(false);
+			var place = autocomplete.getPlace();
+			if (!place.geometry) {
+				window.alert("Autocomplete's returned place contains no geometry");
+				return;
+			}
+
+			// If the place has a geometry, then present it on a map.
+			if (place.geometry.viewport) {
+				map.fitBounds(place.geometry.viewport);
+			} else {
+				map.setCenter(place.geometry.location);
+				map.setZoom(17);  // Why 17? Because it looks good.
+			}
+
+			marker.setPosition(place.geometry.location);
+			marker.setVisible(true);
+
+			var address = '';
+			if (place.address_components) {
+				address = [
+				  (place.address_components[0] && place.address_components[0].short_name || ''),
+				  (place.address_components[1] && place.address_components[1].short_name || ''),
+				  (place.address_components[2] && place.address_components[2].short_name || '')
+				].join(' ');
+			}
+
+			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address+'</div>');
+			infowindow.open(map, marker);
+        });
+
+        // Sets a listener on a radio button to change the filter type on Places
+        // Autocomplete.
+        function setupClickListener(id, types) {
+          var radioButton = document.getElementById(id);
+          radioButton.addEventListener('click', function() {
+            autocomplete.setTypes(types);
+          });
+        }
+
+        setupClickListener('changetype-all', []);
+        setupClickListener('changetype-establishment', ['establishment']);
+	},
+	ViewAdInit(lat,lng){
+		var myLatLng = {lat: lat, lng: lng};
+        var map = new google.maps.Map(document.getElementById('map-post-view'), {
+        	center: myLatLng,
+			zoom: 15,    
+			mapTypeControl: true,
+			mapTypeControlOptions: {
+			  style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,
+			  mapTypeIds: ['roadmap', 'satellite']
+			},
+			streetViewControl: true
+        });
+
+        var geocoder = new google.maps.Geocoder();
+        geocoder.geocode({'location': myLatLng}, function(results, status) {
+          if (status === 'OK') {
+		    if (results[1]) {
+		    	// saving to dom
+				infowindow.setContent(results[1].formatted_address);
+				infowindow.open(map, marker);
+            } else {
+              window.alert('No results found');
+            }
+          } else {
+            window.alert('Geocoder failed due to: ' + status);
+          }
+        });
+
+
+
+        // GOOGLE MAP RESPONSIVENESS
+        google.maps.event.addDomListener(window, "resize", function() {
+		 var center = map.getCenter();
+		 google.maps.event.trigger(map, "resize");
+		 map.setCenter(center); 
+		});
+
+        //MARKER
+        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+          map: map,
+          icon:image,
+          position:myLatLng,
+          draggable: false,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+
+	}
+}
+
+//GLOBAL VARIABLES
+GVar = {
+	'take':8,
+	'skip':0,
+	'category':0,
+	'scroll_load_more':1
+}

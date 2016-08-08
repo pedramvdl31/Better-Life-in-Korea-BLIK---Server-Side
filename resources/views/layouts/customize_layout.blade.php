@@ -12,8 +12,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-        <link href="http://vjs.zencdn.net/5.0.0/video-js.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.css">
 
@@ -62,6 +60,9 @@
             color: #00aeff;
             text-shadow: none;
             font-weight: 900;
+        }
+        #flash-alert{
+            border-radius: 0;
         }
     </style>
     @yield('stylesheets')
@@ -124,35 +125,64 @@
             @include('flash::message')
         </div>
 
+        <style type="text/css">
+            .controls {
+                margin-top: 10px;
+                border: 1px solid transparent;
+                border-radius: 2px 0 0 2px;
+                box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                height: 32px;
+                outline: none;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+              }
 
+              #pac-input {
+                background-color: #fff;
+                font-family: Roboto;
+                font-size: 15px;
+                font-weight: 300;
+                margin-left: 12px;
+                padding: 0 11px 0 13px;
+                text-overflow: ellipsis;
+                width: 300px;
+              }
 
+              #pac-input:focus {
+                border-color: #4d90fe;
+              }
+
+              .pac-container {
+                z-index: 9999;
+                font-family: Roboto;
+              }
+
+              #type-selector {
+                color: #fff;
+                background-color: #4d90fe;
+                padding: 5px 11px 0px 11px;
+              }
+
+              #type-selector label {
+                font-family: Roboto;
+                font-size: 13px;
+                font-weight: 300;
+              }
+        </style>
         <!-- PAGE VIEW -->
         @yield('content')
         <!-- PAGE VIEW END -->
 
+        <input type="hidden" id="user-status" value="{!! (Auth::check())?1:0; !!}">
+
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-
-
-
-
-        
-
         {!! View::make('partials.login_modal') !!}    
         {!! View::make('partials.postview_modal') !!}    
         {!! View::make('partials.register_modal') !!}    
         {!! View::make('partials.success_modal') !!}
         {!! View::make('partials.warning_modal') !!}      
         @if(Auth::check())
-
             <!-- CHAT MUST BE HERE -->
-            {!! View::make('chat-app')
-                ->with('uip9',$uip9)
-                ->with('cdt',$cdt)
-                ->__toString() 
-            !!} 
-
-
-
             {!! View::make('partials.qkpost_modal')
             ->with('cats',$cats)
             ->with('cities',$cities)
@@ -175,8 +205,9 @@
         <script src="/packages/scroll_style/jquery.slimscroll.js"></script>
         <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
         <!-- LOCATION PICKER -->
-        <script type="text/javascript" src='http://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&?sensor=false&libraries=places'></script>
-        <script src="/packages/location-picker/locationpicker.jquery.js"></script>
+
+        <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&?sensor=false&libraries=places'></script>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
         <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>

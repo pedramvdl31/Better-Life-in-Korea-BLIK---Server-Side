@@ -36,8 +36,6 @@
         padding-right: 0;
     }
 
-
-
  .flex-video {
   position: relative;
   padding-top: 25px;
