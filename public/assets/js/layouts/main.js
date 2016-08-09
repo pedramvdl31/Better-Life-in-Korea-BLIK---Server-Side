@@ -929,7 +929,7 @@ Maps = {
 		});
 
         //MARKER
-        var image = 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png';
+        var image = '/assets/images/icons/beachflag.png';
         var infowindow = new google.maps.InfoWindow();
         var marker = new google.maps.Marker({
           map: map,
