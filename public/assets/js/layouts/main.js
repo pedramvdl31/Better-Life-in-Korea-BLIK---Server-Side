@@ -949,31 +949,41 @@ Maps = {
           draggable: false,
           anchorPoint: new google.maps.Point(0, -29)
         });
-        var contentString = '<div id="content">'+
-    	'<p>-</p>'+
-        '</div>';
-		var geocoder = new google.maps.Geocoder();
-        geocoder.geocode({'location': myLatLng}, function(results, status) {
-          if (status === 'OK') {
-		    if (results[0]) {
-				contentString = '<div id="content">'+results[1].formatted_address+'</div>';;
-		    	var infowindow = new google.maps.InfoWindow({
-		          content: contentString
-		        });
-		        infowindow.open(PostViewMap, marker);
+   //      var contentString = '<div id="content">'+
+   //  	'<p>testttt</p>'+
+   //      '</div>';
 
-            } else {
-              window.alert('No results found');
-            }
-          } else {
-            window.alert('Geocoder failed due to: ' + status);
-          }
-        });
+   //      setTimeout(function(){ 
+
+			// var geocoder = new google.maps.Geocoder();
+	  //       geocoder.geocode({'location': myLatLng}, function(results, status) {
+	  //         if (status === 'OK') {
+			//     if (results[0]) {
+			// 		contentString = '<div id="content">'+results[1].formatted_address+'</div>';;
+			//     	var infowindow = new google.maps.InfoWindow({
+			//           content: contentString
+			//         });
+			//         infowindow.open(PostViewMap, marker);
+
+	  //           } else {
+	  //             window.alert('No results found');
+	  //           }
+	  //         } else {
+	  //           window.alert('Geocoder failed due to: ' + status);
+	  //         }
+	  //       });
+
+
+   //      }, 2000);
+
 	},
 	ViewPostMapRefresh(){
-		var center = PostViewMap.getCenter();
-		google.maps.event.trigger(PostViewMap, "resize");
-		PostViewMap.setCenter(center); 
+		setTimeout(function(){ 
+			var center = PostViewMap.getCenter();
+			google.maps.event.trigger(PostViewMap, "resize");
+			PostViewMap.setCenter(center); 
+		 }, 500);
+
 	}
 }
 //GLOBAL VARIABLES
