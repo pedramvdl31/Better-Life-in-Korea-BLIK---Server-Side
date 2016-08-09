@@ -6,6 +6,9 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Home | Kora</title>
+
+        <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&libraries=places'></script>
+        
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <!-- Optional theme -->
@@ -206,7 +209,7 @@
         <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
         <!-- LOCATION PICKER -->
 
-        <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&?sensor=false&libraries=places'></script>
+
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
