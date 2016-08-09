@@ -314,15 +314,14 @@ class AdsController extends Controller
     {
         if(Request::ajax()){
             $status = 400;
-            $ads = Ad::PrepareForView(Ad::find(Input::get('data_id')));
-            $lat_long = Ad::PrepareLatLong(Ad::find(Input::get('data_id')));
-            if (isset($ads)) {
+            $this_ad = Ad::PrepareForView(Ad::find(Input::get('data_id')));
+            if (isset($this_ad)) {
                 return Response::json(array(
                     'status' => 200,
-                    'ad' => $ads,
-                    'lat_long' => $lat_long,
+                    'ad_array' => $this_ad
                     ));
             }
+            //else
             return Response::json(array(
                 'status' => $status
                 ));

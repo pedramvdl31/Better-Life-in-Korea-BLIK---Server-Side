@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	Components.InitiateApp();
 	Components.EventHandler();
+	Maps.ViewAdInit(37.554084,126.949903);
 });
 
 // COMPONENTS
@@ -565,28 +566,45 @@ ServerRequests = {
 			},
 			function(result){
 				var status = result.status;
-				var ad = result.ad;
-				var lat_long = result.lat_long;
+				var ad_array = result.ad_array;
+
 				switch(status){					
 		 			case 200:
-						$('.postview_modal_body').removeClass('hide');
-						$('.postview_modal_body').html(ad);
-						$('.vwad-loading').addClass('hide');
+			 			document.getElementById('pt').innerHTML = ad_array['title'];
+			 			document.getElementById('pd').innerHTML = ad_array['des'];
+			 			document.getElementById('pi').innerHTML = ad_array['images'];
+			 			document.getElementById('pv').innerHTML = ad_array['videos'];
+			 			document.getElementById('dtw').innerHTML = ad_array['drivebtn'];
+
+			 			//FIT IMAGES
 						$('.my-container').sortablePhotos({
 						  selector: '> .my-item',
 						  sortable: 0,
 						  padding: 20
 						});
-						if (lat_long['lat']!=0 && lat_long['long']!=0) {
-							Maps.ViewAdInit(parseFloat(lat_long['lat']),parseFloat(lat_long['long']));
+
+						if (ad_array['lat']!='' && ad_array['lng']!='') {
+							Maps.ViewAdUpdate(parseFloat(ad_array['lat']),parseFloat(ad_array['lng']));
+							
+							$(document).find('#waze-info').tooltip();
 		            	}
+						
+						//VIEW IT
+		            	$('.postview_modal_body').removeClass('hide');
+						$('.vwad-loading').addClass('hide');
+
+						//LOAD FACEBOOK COMMENT
 						var c_div = '<div class="fb-comments modalfc" '+
 									'data-href="http://kora.app/comments/'+data_id+'"'+
 									'data-width="100%" data-numposts="5"></div>';
-
 						$('.fbc').html(c_div);
 						FB.XFBML.parse();
-						$(document).find('#waze-info').tooltip();
+
+						//REFRESH MAP
+						Maps.ViewPostMapRefresh();
+
+
+
 		 			break;
 
 		 			case 400:
@@ -893,7 +911,7 @@ Maps = {
 	},
 	ViewAdInit(lat,lng){
 		var myLatLng = {lat: lat, lng: lng};
-        var map = new google.maps.Map(document.getElementById('map-post-view'), {
+        window.PostViewMap = new google.maps.Map(document.getElementById('map-post-view'), {
         	center: myLatLng,
 			zoom: 15,    
 			mapTypeControl: true,
@@ -904,13 +922,46 @@ Maps = {
 			streetViewControl: true
         });
 
-        var geocoder = new google.maps.Geocoder();
+        // GOOGLE MAP RESPONSIVENESS
+        google.maps.event.addDomListener(window, "resize", function() {
+		 var center = PostViewMap.getCenter();
+		 google.maps.event.trigger(PostViewMap, "resize");
+		 PostViewMap.setCenter(center); 
+		});
+
+        //MARKER
+        var infowindow = new google.maps.InfoWindow();
+        var marker = new google.maps.Marker({
+          map: PostViewMap,
+          icon:GVar.flag_image,
+          position:myLatLng,
+          draggable: false,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+	},
+	ViewAdUpdate(lat,lng){
+		var myLatLng = {lat: lat, lng: lng};
+		PostViewMap.setCenter(myLatLng);
+        var marker = new google.maps.Marker({
+          map: PostViewMap,
+          icon:GVar.flag_image,
+          position:myLatLng,
+          draggable: false,
+          anchorPoint: new google.maps.Point(0, -29)
+        });
+        var contentString = '<div id="content">'+
+    	'<p>-</p>'+
+        '</div>';
+		var geocoder = new google.maps.Geocoder();
         geocoder.geocode({'location': myLatLng}, function(results, status) {
           if (status === 'OK') {
-		    if (results[1]) {
-		    	// saving to dom
-				infowindow.setContent(results[1].formatted_address);
-				infowindow.open(map, marker);
+		    if (results[0]) {
+				contentString = '<div id="content">'+results[1].formatted_address+'</div>';;
+		    	var infowindow = new google.maps.InfoWindow({
+		          content: contentString
+		        });
+		        infowindow.open(PostViewMap, marker);
+
             } else {
               window.alert('No results found');
             }
@@ -918,34 +969,18 @@ Maps = {
             window.alert('Geocoder failed due to: ' + status);
           }
         });
-
-
-
-        // GOOGLE MAP RESPONSIVENESS
-        google.maps.event.addDomListener(window, "resize", function() {
-		 var center = map.getCenter();
-		 google.maps.event.trigger(map, "resize");
-		 map.setCenter(center); 
-		});
-
-        //MARKER
-        var image = '/assets/images/icons/beachflag.png';
-        var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
-          map: map,
-          icon:image,
-          position:myLatLng,
-          draggable: false,
-          anchorPoint: new google.maps.Point(0, -29)
-        });
-
+	},
+	ViewPostMapRefresh(){
+		var center = PostViewMap.getCenter();
+		google.maps.event.trigger(PostViewMap, "resize");
+		PostViewMap.setCenter(center); 
 	}
 }
-
 //GLOBAL VARIABLES
 GVar = {
 	'take':8,
 	'skip':0,
 	'category':0,
-	'scroll_load_more':1
+	'scroll_load_more':1,
+	'flag_image':'/assets/images/icons/beachflag.png'
 }

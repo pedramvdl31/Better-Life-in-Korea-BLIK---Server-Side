@@ -77,10 +77,32 @@
 	      <div class="modal-body" style="overflow: auto;">
             <div class="postview_modal_body">
                 
+
+
+              <!-- POST TITLE -->
+              <div class='form-group break_all' id='pt'></div>
+              <!-- POST DESCRIPTION -->
+              <div class='form-group break_all' id='pd'></div>
+              <!-- IMAGES -->
+              <div class='my-container' id='pi'></div>
+              <!-- VIDEOS -->
+              <div class='my-container' id='pv'></div>
+              <!-- MAP -->
+              <div class="form-group">
+                <div id="qkpost-map-container" style="width:80%;margin:0 auto;margin-top: 15px !important;">
+                  <div style="height:300px" id="map-post-view"></div>                        
+                </div>
+              </div>
+              <!-- DRIVE-TO BTN WRAPPER -->
+              <div id="dtw"></div>
+              <!-- FACEBOOK REVIEW WRAPPER -->
+              <div id="frw"></div>
+
+
+
             </div>
             <div class="text-center vwad-loading">
-                <img src="/assets/images/icons/gif/loading1.gif" width="35px;">
-                Please Wait...
+                <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw" style="font-size:25px"></i>
             </div>
             <div class="fbc"></div>
 	      </div>
@@ -91,3 +113,7 @@
 	  </div><!-- /.modal-dialog -->
 	
 </div><!-- /.modal -->
+
+
+
+

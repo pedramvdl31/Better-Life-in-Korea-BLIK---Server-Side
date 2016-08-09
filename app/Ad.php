@@ -379,86 +379,63 @@ class Ad extends Model
         return $data;
     }
 
-
-
     static public function PrepareForView($data) {
-        $html = "";
+
+        $data_array = array('title'=>'',
+                            'des'=>'',
+                            'images'=>'',
+                            'videos'=>'',
+                            'lat'=>'',
+                            'lng'=>'',
+                            'drivebtn'=>''
+                            );
+
         if (isset($data)) {
             if (isset($data['description'])) {
-               $des =  json_decode($data['description']);
+               $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
+               $data_array['des'] =  "<p>".json_decode($data['description'])."</p>";
             }
-            $username = '';
-            if ($data['user_id']) {
-                $this_user_id = $data['user_id'];
-                if (isset($this_user_id)) {
-                    $user = User::find($this_user_id);
-                    if (isset($user)) {
-                        $fname = $user->first_name;
-                        $lname = $user->last_name;
-                        $full_name = $user->email;
-                        if (isset($fname,$lname)) {
-                            $full_name = $fname.'&nbsp'.$lname;
-                        }
-                        if(isset($user->avatar)){
-                            $img_src = '/assets/images/profile-images/perm/'.$user->avatar;
-                        } else {
-                            $img_src = '/assets/images/profile-images/perm/blank_male.png';
-                        }
-                    }
-                }
-            }
-                $html .= "  <div class='form-group break_all'>
-                                <h3 style='margin-top: 0'>".$data->title."</h3>
-                            </div>
-                            <div class='form-group break_all'>
-                                <p>".json_decode($data['description'])."</p>
-                            </div>";
+
             if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
                 $files = json_decode($data['file_srcs'],true);
-                $base_path = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.$data['user_id'].DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR;
-                $html .= "<div class='my-container'>";
+                $base_path = '/assets/images/posts/'.$data['user_id'].'/prm/';
                 foreach ($files as $fk => $fv) {
                     foreach ($fv as $fvk => $fvv) {
                         if ($fvk=="image") {
-                            $html .= '
-                               <div class="my-item"><img style="max-width:100px" src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" alt="..."></div>
-                            ';
+                            $data_array['images'] .= '<div class="my-item"><img style="max-width:100px" src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" alt="..."></div>';
                         }
                     }
                 }
-                 $html .= "</div>";
                 foreach ($files as $fk => $fv) {
                     foreach ($fv as $fvk => $fvv) {
                         if ($fvk=="video") {
-                            $html .= '
-                                <div class="" style="width:100%">
+                            $data_array['videos'] .= '<div class="" style="width:100%">
                                     <video style="width:100%" class="" frameborder="0" controls>
                                         <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
                                     </video>
-                                </div>   
-                            ';
+                                </div>';
                         }
                     }
                 }
             }
+
             if (isset($data['lat'])&&isset($data['long'])) {
-                $html .= '
-                    <div class="form-group" style="">
-                        <div id="qkpost-map-container" style="width:80%;margin:0 auto;margin-top: 15px !important;">
-                            <div style="height:300px" id="map-post-view"></div>                        
-                        </div>
-                    </div>
-                ';
+                $data_array['lat'] = $data['lat'];
+                $data_array['lng'] = $data['long'];
+
                 //drive to
-                $html .= '
+                $data_array['drivebtn'] ='
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
                   <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
                   <button style="width:10%" id="waze-info"data-toggle="tooltip" data-placement="top" title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" type="button" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
                 </div><hr>';
             }
         }
-        return $html;
+        return $data_array;
     }
+
+
+
     static public function TranslateCat($data) {
         $ttxt = '';
         if (isset($data)) {
