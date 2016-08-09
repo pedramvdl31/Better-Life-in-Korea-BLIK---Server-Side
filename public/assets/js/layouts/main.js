@@ -243,7 +243,7 @@ Listeners = {
 			$('#login-modal').modal('show');
 	    });
 	    $(document).on('click','#waze-drive-to',function(){
-	    	window.location.href = "waze://?ll=37.555107,126.970691&navigate=yes";
+	    	window.location.href = "waze://?ll="+$(this).attr('lat')+","+$(this).attr('lng')+"&navigate=yes";
 	    });
 	    $(document).on('click','.logout-btn',function(){
 			$('#logout-modal').modal('show');

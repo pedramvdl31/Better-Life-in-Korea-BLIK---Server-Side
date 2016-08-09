@@ -452,7 +452,7 @@ class Ad extends Model
                 //drive to
                 $html .= '
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
-                  <button id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
+                  <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
                   <button style="width:10%" id="waze-info"data-toggle="tooltip" data-placement="top" title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" type="button" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
                 </div><hr>';
             }
