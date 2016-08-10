@@ -42,7 +42,7 @@
             }
         </style>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://cdn.rawgit.com/mattbryson/TouchSwipe-Jquery-Plugin/1.6.6/jquery.touchSwipe.min.js"></script>
+        <!-- <script src="https://cdn.rawgit.com/mattbryson/TouchSwipe-Jquery-Plugin/1.6.6/jquery.touchSwipe.min.js"></script> -->
         <script src="/packages/fullsizable/jquery-fullsizable.js"></script>
 
         <!--[if lt IE 9]>

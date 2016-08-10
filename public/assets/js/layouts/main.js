@@ -594,23 +594,22 @@ ServerRequests = {
 
 						$(document).find('._p'+data_id).fullsizable({
 							detach_id: 'pi',
-							reloadOnOpen: true,
 							loop: true
 						});
 
-						$(document).on('fullsizable:opened', function(){
-							$("#jquery-fullsizable").swipe({
-								swipeLeft: function(){
-								$(document).trigger('fullsizable:next')
-								},
-								swipeRight: function(){
-								$(document).trigger('fullsizable:prev')
-								},
-								swipeUp: function(){
-								$(document).trigger('fullsizable:close')
-								}
-							});
-						});
+						// $(document).on('fullsizable:opened', function(){
+						// 	$("#jquery-fullsizable").swipe({
+						// 		swipeLeft: function(){
+						// 		$(document).trigger('fullsizable:next')
+						// 		},
+						// 		swipeRight: function(){
+						// 		$(document).trigger('fullsizable:prev')
+						// 		},
+						// 		swipeUp: function(){
+						// 		$(document).trigger('fullsizable:close')
+						// 		}
+						// 	});
+						// });
 
 						if (ad_array['lat']!='' && ad_array['lng']!='') {
 							Maps.ViewAdUpdate(parseFloat(ad_array['lat']),parseFloat(ad_array['lng']));
