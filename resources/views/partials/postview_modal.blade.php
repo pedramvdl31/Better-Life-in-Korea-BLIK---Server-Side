@@ -44,6 +44,9 @@
   margin-bottom: 16px;
   overflow: hidden;
    }
+  .my-item{
+    cursor: zoom-in;
+  }
 
   .flex-video.widescreen { padding-bottom: 57.25%; }
   .flex-video.vimeo { padding-top: 0; }
@@ -78,15 +81,10 @@
             <div class="postview_modal_body">
                 
 
+              <div id="postview-data">
+              
+              </div>
 
-              <!-- POST TITLE -->
-              <div class='form-group break_all' id='pt'></div>
-              <!-- POST DESCRIPTION -->
-              <div class='form-group break_all' id='pd'></div>
-              <!-- IMAGES -->
-              <div class='my-container' id='pi'></div>
-              <!-- VIDEOS -->
-              <div class='my-container' id='pv'></div>
               <!-- MAP -->
               <div class="form-group">
                 <div id="qkpost-map-container" style="width:80%;margin:0 auto;margin-top: 15px !important;">

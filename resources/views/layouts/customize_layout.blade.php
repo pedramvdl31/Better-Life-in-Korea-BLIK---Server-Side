@@ -33,6 +33,18 @@
         <!-- AUTOCOMPLETE -->
         <link rel="stylesheet" href="/packages/easy_autocomplete/easy-autocomplete.css" />
 
+        <link rel="stylesheet" href="/packages/fullsizable/jquery-fullsizable.css" />
+          <link rel="stylesheet" href="/packages/fullsizable/jquery-fullsizable-theme.css" />
+
+        <style type="text/css" media="screen">
+            #jquery-fullsizable {
+                z-index: 9999 !important;
+            }
+        </style>
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdn.rawgit.com/mattbryson/TouchSwipe-Jquery-Plugin/1.6.6/jquery.touchSwipe.min.js"></script>
+        <script src="/packages/fullsizable/jquery-fullsizable.js"></script>
+
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -178,7 +190,6 @@
 
         <input type="hidden" id="user-status" value="{!! (Auth::check())?1:0; !!}">
 
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         {!! View::make('partials.login_modal') !!}    
         {!! View::make('partials.postview_modal') !!}    
         {!! View::make('partials.register_modal') !!}    

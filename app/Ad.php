@@ -402,7 +402,9 @@ class Ad extends Model
                 foreach ($files as $fk => $fv) {
                     foreach ($fv as $fvk => $fvv) {
                         if ($fvk=="image") {
-                            $data_array['images'] .= '<div class="my-item"><img style="max-width:100px" src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" alt="..."></div>';
+                            $imgs = $base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'];
+                            $data_array['images'] .= '<a href="'.$imgs.'" class="my-item _p'.$data->id.' "><img style="max-width:100px" src="'.$imgs.'" alt="..."></a>';
+                            $data_array['images_array'][$fk]['src'] = $imgs;
                         }
                     }
                 }

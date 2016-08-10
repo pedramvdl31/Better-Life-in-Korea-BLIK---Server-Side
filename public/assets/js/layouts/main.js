@@ -570,22 +570,50 @@ ServerRequests = {
 
 				switch(status){					
 		 			case 200:
+		 				document.getElementById('postview-data').innerHTML = '';
+
+		 				var new_html = "<div class='form-group break_all' id='pt'></div>"+
+		 				"<div class='form-group break_all' id='pd'></div>"+
+		 				"<div class='my-container' id='pi'></div>"+
+		 				"<div class='my-container' id='pv'></div>";
+
+		 				document.getElementById('postview-data').innerHTML = new_html;
+
 			 			document.getElementById('pt').innerHTML = ad_array['title'];
 			 			document.getElementById('pd').innerHTML = ad_array['des'];
 			 			document.getElementById('pi').innerHTML = ad_array['images'];
 			 			document.getElementById('pv').innerHTML = ad_array['videos'];
 			 			document.getElementById('dtw').innerHTML = ad_array['drivebtn'];
 
-			 			//FIT IMAGES
-						$('.my-container').sortablePhotos({
+			 			// FIT IMAGES
+						$(document).find('.my-container').sortablePhotos({
 						  selector: '> .my-item',
 						  sortable: 0,
-						  padding: 20
+						  padding: 3
+						});
+
+						$(document).find('._p'+data_id).fullsizable({
+							detach_id: 'pi',
+							reloadOnOpen: true,
+							loop: true
+						});
+
+						$(document).on('fullsizable:opened', function(){
+							$("#jquery-fullsizable").swipe({
+								swipeLeft: function(){
+								$(document).trigger('fullsizable:next')
+								},
+								swipeRight: function(){
+								$(document).trigger('fullsizable:prev')
+								},
+								swipeUp: function(){
+								$(document).trigger('fullsizable:close')
+								}
+							});
 						});
 
 						if (ad_array['lat']!='' && ad_array['lng']!='') {
 							Maps.ViewAdUpdate(parseFloat(ad_array['lat']),parseFloat(ad_array['lng']));
-							
 							$(document).find('#waze-info').tooltip();
 		            	}
 						
@@ -789,6 +817,8 @@ HelperFuncions = {
 Maps = {
 	PostAdInit(){
 		var myLatLng = {lat: 37.555172565547075, lng: 126.9708452528564};
+		document.getElementById('qkp-lat').value = myLatLng.lat;
+    	document.getElementById('qkp-lng').value = myLatLng.lng;
         var map = new google.maps.Map(document.getElementById('map'), {
         	center: myLatLng,
 			zoom: 12,    
