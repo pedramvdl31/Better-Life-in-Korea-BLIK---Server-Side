@@ -615,7 +615,7 @@ ServerRequests = {
 					      });
 					    });
 
-					    // FIT IMAGES
+					    // FIT IMAGES c
 						$(document).find('.my-container').sortablePhotos({
 						  selector: '> .my-item',
 						  sortable: 0,
