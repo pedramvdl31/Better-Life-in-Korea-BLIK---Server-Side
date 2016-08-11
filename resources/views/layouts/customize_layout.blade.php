@@ -15,8 +15,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.css">
+<!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.css"> -->
 
         <link href="/packages/bootstrap-social/bootstrap-social.css" rel="stylesheet">
         <link href="/packages/bootstrap-social/assets/css/docs.css" rel="stylesheet">
@@ -32,25 +32,18 @@
 
         <!-- AUTOCOMPLETE -->
         <link rel="stylesheet" href="/packages/easy_autocomplete/easy-autocomplete.css" />
-
-        <link rel="stylesheet" href="/packages/fullsizable/jquery-fullsizable.css" />
-          <link rel="stylesheet" href="/packages/fullsizable/jquery-fullsizable-theme.css" />
-
-        <style type="text/css" media="screen">
-            #jquery-fullsizable {
-                z-index: 9999 !important;
-            }
-        </style>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <!-- <script src="https://cdn.rawgit.com/mattbryson/TouchSwipe-Jquery-Plugin/1.6.6/jquery.touchSwipe.min.js"></script> -->
-        <script src="/packages/fullsizable/jquery-fullsizable.js"></script>
+
+        <!-- BLUEIMP-GALLERY -->
+        <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery.css">
+        <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery-indicator.css">
+        <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery-video.css">
+
 
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
         <![endif]-->       
-
-        <link rel="apple-touch-icon-precomposed" href="/assets/images/ico/apple-touch-icon-57-precomposed.png">
     </head><!--/head-->
     <style type="text/css">
         .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
@@ -195,6 +188,7 @@
         {!! View::make('partials.register_modal') !!}    
         {!! View::make('partials.success_modal') !!}
         {!! View::make('partials.warning_modal') !!}      
+        {!! View::make('partials.blueimp_gallery') !!}      
         @if(Auth::check())
             <!-- CHAT MUST BE HERE -->
             {!! View::make('partials.qkpost_modal')
@@ -213,22 +207,34 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 
 
-        <!-- <script src="/assets/js/jquery.scrollUp.min.js"></script> -->
         <script src="/assets/js/jquery.prettyPhoto.js"></script>
         <script src="/assets/js/layouts/main.js"></script>
         <script src="/packages/scroll_style/jquery.slimscroll.js"></script>
         <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
         <!-- LOCATION PICKER -->
 
-
-
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-        <script src="http://vjs.zencdn.net/5.0.0/video.js"></script>
-        <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script>
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script> -->
+        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script> -->
+        <!-- <script src="http://vjs.zencdn.net/5.0.0/video.js"></script> -->
+        <!-- <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script> -->
         <script src="/packages/dropzone/dropzone.js"></script>
-        <script src="/packages/moment/moment.js"></script>
+        <!-- <script src="/packages/moment/moment.js"></script> -->
         <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
+
+
+        <!-- //BLUEIMG-GALLERT -->
+        <script src="/packages/gallery-master/js/blueimp-helper.js"></script>
+        <script src="/packages/gallery-master/js/blueimp-gallery.js"></script>
+        <script src="/packages/gallery-master/js/blueimp-gallery-fullscreen.js"></script>
+        <script src="/packages/gallery-master/js/blueimp-gallery-indicator.js"></script>
+        <script src="/packages/gallery-master/js/blueimp-gallery-video.js"></script>
+        <script src="/packages/gallery-master/js/blueimp-gallery-vimeo.js"></script>
+        <script src="/packages/gallery-master/js/blueimp-gallery-youtube.js"></script>
+        <script src="/packages/gallery-master/js/jquery.blueimp-gallery.js"></script>
+        <!-- //BLUEIMG-GALLERT -->
+        <!-- PAEG SCRIPT -->
+        @yield('scripts')
+        <!-- PAGE SCRIPT -->
 
         <div id="fb-root"></div>
         <script>(function(d, s, id) {
@@ -238,6 +244,6 @@
           js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1728054614082756";
           fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-        @yield('scripts')
+        
     </body>
     </html>

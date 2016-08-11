@@ -28,7 +28,6 @@ class Ad extends Model
 
         return $output;
     }
-    
     static public function PrepareAdsSearchCategory($cat_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
@@ -37,7 +36,6 @@ class Ad extends Model
         }
         return $output;
     }
-
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);
@@ -46,7 +44,6 @@ class Ad extends Model
         }
         return $output;
     }
-
     static public function PrepareCategoriesHtml() {
         $html = '<div class="cats-holder">';
         $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'categories'.DIRECTORY_SEPARATOR.'category';
@@ -95,7 +92,6 @@ class Ad extends Model
         $html .= '</div>';
         return $html;
     }
-
     static public function PrepareAdsForHome($data) {
 
         $data_a = array();
@@ -165,8 +161,6 @@ class Ad extends Model
         }
         return $data_a;
     }
-
-
     static public function PrepareAdsForHomeHTML($data) {
 
         $data_a = array();
@@ -260,8 +254,6 @@ class Ad extends Model
         }
         return $data_a;
     }
-
-
     static public function PrepareAdsScrollLoad($data) {
 
         $data_a = array();
@@ -355,9 +347,6 @@ class Ad extends Model
         }
         return $data_a;
     }
-
-
-
     static public function PrepareForEdit($data) {
 
         if (isset($data)) {
@@ -378,13 +367,13 @@ class Ad extends Model
 
         return $data;
     }
-
     static public function PrepareForView($data) {
 
         $data_array = array('title'=>'',
                             'des'=>'',
                             'images'=>'',
                             'videos'=>'',
+                            'images_array'=>array(),
                             'lat'=>'',
                             'lng'=>'',
                             'drivebtn'=>''
@@ -839,11 +828,6 @@ class Ad extends Model
         }
         return $ttxt;
     }
-
-
-
-
-
     static public function PrepareLatLong($data) {
         $data_array = array('lat'=>'0','long'=>'0');
         if (isset($data)) {

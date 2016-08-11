@@ -7,6 +7,14 @@ $(document).ready(function(){
 // COMPONENTS
 Components = {
 	InitiateApp: function() {
+
+
+
+
+
+
+
+
 		InitFunctions.SetStates();
 		InitFunctions.PageVisualSetup();
 		InitFunctions.SetAjaxHeader();
@@ -302,8 +310,6 @@ Listeners = {
 	    	$('.tab-cat').css('border-bottom','none');
 	    	$('.tab-home').css('border-bottom','1px solid white');
 		});
-
-
 	    $('.tab-cat').click(function(){
 	    	$('.all-tabs').addClass('hide');
 	    	$('.cat-tab').removeClass('hide');
@@ -311,8 +317,6 @@ Listeners = {
 	    	$('.tab-home').css('border-bottom','none');
 	    	$('.tab-cat').css('border-bottom','1px solid white');
 		});
-
-
 	    $('.links').click(function(){
 			var cat_id = $(this).attr('cat-id');
 			GVar.category = cat_id;
@@ -362,6 +366,10 @@ Listeners = {
 	    	e.preventDefault();
 	    	$('#wishlist-modal').modal('show');
 		});		
+
+		$('#postview-modal').on('hidden.bs.modal', function (e) {
+		  alert();
+		})
 	}
 };
 
@@ -555,6 +563,7 @@ ServerRequests = {
 			);
 	},
 	vwad: function(data_id) {
+		$('#postview-modal').modal('show');
 		$('.postview_modal_body').addClass('hide');
 		$('.vwad-loading').removeClass('hide');
 		var token = $('meta[name=csrf-token]').attr('content');
@@ -567,6 +576,7 @@ ServerRequests = {
 			function(result){
 				var status = result.status;
 				var ad_array = result.ad_array;
+				var photos = ad_array.images_array;
 
 				switch(status){					
 		 			case 200:
@@ -576,46 +586,46 @@ ServerRequests = {
 		 				"<div class='form-group break_all' id='pd'></div>"+
 		 				"<div class='my-container' id='pi'></div>"+
 		 				"<div class='my-container' id='pv'></div>";
-
 		 				document.getElementById('postview-data').innerHTML = new_html;
-
 			 			document.getElementById('pt').innerHTML = ad_array['title'];
 			 			document.getElementById('pd').innerHTML = ad_array['des'];
-			 			document.getElementById('pi').innerHTML = ad_array['images'];
+			 			// document.getElementById('pi').innerHTML = ad_array['images'];
 			 			document.getElementById('pv').innerHTML = ad_array['videos'];
 			 			document.getElementById('dtw').innerHTML = ad_array['drivebtn'];
 
-			 			// FIT IMAGES
+
+
+					    var carouselLinks = [];
+					    var linksContainer = $('#pi');
+					    var baseUrl;
+					    var title = 'ptitle';
+					    // Add the demo images as links with thumbnails to the page:
+					    $.each(photos, function (index, photo) {
+					      baseUrl = photo.src;
+					      $('<a/>')
+					        .append($('<img>').prop('src', baseUrl))
+					        .prop('href', baseUrl)
+					        .prop('title', title)
+					        .addClass('my-item')
+					        .attr('data-gallery', '')
+					        .appendTo(linksContainer)
+					      carouselLinks.push({
+					        href: baseUrl ,
+					        title: title
+					      });
+					    });
+
+					    // FIT IMAGES
 						$(document).find('.my-container').sortablePhotos({
 						  selector: '> .my-item',
 						  sortable: 0,
 						  padding: 3
 						});
 
-						$(document).find('._p'+data_id).fullsizable({
-							detach_id: 'pi',
-							loop: true
-						});
-
-						// $(document).on('fullsizable:opened', function(){
-						// 	$("#jquery-fullsizable").swipe({
-						// 		swipeLeft: function(){
-						// 		$(document).trigger('fullsizable:next')
-						// 		},
-						// 		swipeRight: function(){
-						// 		$(document).trigger('fullsizable:prev')
-						// 		},
-						// 		swipeUp: function(){
-						// 		$(document).trigger('fullsizable:close')
-						// 		}
-						// 	});
-						// });
-
 						if (ad_array['lat']!='' && ad_array['lng']!='') {
 							Maps.ViewAdUpdate(parseFloat(ad_array['lat']),parseFloat(ad_array['lng']));
 							$(document).find('#waze-info').tooltip();
 		            	}
-						
 						//VIEW IT
 		            	$('.postview_modal_body').removeClass('hide');
 						$('.vwad-loading').addClass('hide');
@@ -713,7 +723,6 @@ HelperFuncions = {
 		$('.form-group').removeClass('has-error');
 	},
 	findAndViewAd(this_id){
-		$('#postview-modal').modal('show');
 		ServerRequests.vwad(this_id);
 	},
 	findAndViewAd2(this_id){
