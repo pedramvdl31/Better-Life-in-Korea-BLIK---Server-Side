@@ -367,9 +367,6 @@ Listeners = {
 	    	$('#wishlist-modal').modal('show');
 		});		
 
-		$('#postview-modal').on('hidden.bs.modal', function (e) {
-		  alert();
-		})
 	}
 };
 
@@ -595,10 +592,9 @@ ServerRequests = {
 
 
 
-					    var carouselLinks = [];
 					    var linksContainer = $('#pi');
 					    var baseUrl;
-					    var title = 'ptitle';
+					    var title = ad_array['title_txt'];
 					    // Add the demo images as links with thumbnails to the page:
 					    $.each(photos, function (index, photo) {
 					      baseUrl = photo.src;
@@ -609,10 +605,6 @@ ServerRequests = {
 					        .addClass('my-item')
 					        .attr('data-gallery', '')
 					        .appendTo(linksContainer)
-					      carouselLinks.push({
-					        href: baseUrl ,
-					        title: title
-					      });
 					    });
 
 					    // FIT IMAGES c
@@ -621,6 +613,29 @@ ServerRequests = {
 						  sortable: 0,
 						  padding: 3
 						});
+
+
+					    $('#pi').click(function(event){
+
+						    event = event || window.event;
+						    var target = event.target || event.srcElement,
+						        link = target.src ? target.parentNode : target,
+						        options = {
+									index: link,
+									// The number of elements to load around the current index:
+									preloadRange: 2,
+									// The transition speed for automatic slide changes, set to an integer
+									// greater 0 to override the default transition speed:
+									slideshowTransitionSpeed: 1,
+									// The event object for which the default action will be canceled
+									// on Gallery initialization (e.g. the click event to open the Gallery):
+									event: event
+								},
+						        links = this.getElementsByTagName('a');
+						    blueimp.Gallery(links, options);
+						});		
+
+
 
 						if (ad_array['lat']!='' && ad_array['lng']!='') {
 							Maps.ViewAdUpdate(parseFloat(ad_array['lat']),parseFloat(ad_array['lng']));

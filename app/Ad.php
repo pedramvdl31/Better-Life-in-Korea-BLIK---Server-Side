@@ -369,7 +369,8 @@ class Ad extends Model
     }
     static public function PrepareForView($data) {
 
-        $data_array = array('title'=>'',
+        $data_array = array('title_txt'=>'',
+                            'title'=>'',
                             'des'=>'',
                             'images'=>'',
                             'videos'=>'',
@@ -381,6 +382,7 @@ class Ad extends Model
 
         if (isset($data)) {
             if (isset($data['description'])) {
+               $data_array['title_txt'] =  $data->title;
                $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
                $data_array['des'] =  "<p>".json_decode($data['description'])."</p>";
             }

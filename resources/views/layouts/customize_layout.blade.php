@@ -36,8 +36,6 @@
 
         <!-- BLUEIMP-GALLERY -->
         <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery.css">
-        <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery-indicator.css">
-        <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery-video.css">
 
 
         <!--[if lt IE 9]>
@@ -223,14 +221,7 @@
 
 
         <!-- //BLUEIMG-GALLERT -->
-        <script src="/packages/gallery-master/js/blueimp-helper.js"></script>
         <script src="/packages/gallery-master/js/blueimp-gallery.js"></script>
-        <script src="/packages/gallery-master/js/blueimp-gallery-fullscreen.js"></script>
-        <script src="/packages/gallery-master/js/blueimp-gallery-indicator.js"></script>
-        <script src="/packages/gallery-master/js/blueimp-gallery-video.js"></script>
-        <script src="/packages/gallery-master/js/blueimp-gallery-vimeo.js"></script>
-        <script src="/packages/gallery-master/js/blueimp-gallery-youtube.js"></script>
-        <script src="/packages/gallery-master/js/jquery.blueimp-gallery.js"></script>
         <!-- //BLUEIMG-GALLERT -->
         <!-- PAEG SCRIPT -->
         @yield('scripts')
