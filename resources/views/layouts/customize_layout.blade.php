@@ -191,7 +191,6 @@
             <!-- CHAT MUST BE HERE -->
             {!! View::make('partials.qkpost_modal')
             ->with('cats',$cats)
-            ->with('cities',$cities)
             ->__toString()!!}   
             {!! View::make('partials.wishlist_modal')
             ->with('wishlist',$wishlist)

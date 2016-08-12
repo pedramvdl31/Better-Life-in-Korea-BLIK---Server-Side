@@ -82,8 +82,6 @@ class HomeController extends Controller
         }
         $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->take(8)
                ->get());
-        $cities = Job::korean_cities();
-        $cities = Job::korean_cities_search();
         $all_categories = Ad::PrepareCategoriesHtml();
         $layout_title = 'layouts.customize_layout';
 
@@ -92,7 +90,6 @@ class HomeController extends Controller
         ->with('wishlist',isset($wishlist)?$wishlist:null)
         ->with('ads',$ads)
         ->with('all_categories',$all_categories)
-        ->with('cities',isset($cities)?$cities:null)
         ->with('cdt',date('Y-m-d H:i:s'))
         ->with('layout',$layout_title);
     }

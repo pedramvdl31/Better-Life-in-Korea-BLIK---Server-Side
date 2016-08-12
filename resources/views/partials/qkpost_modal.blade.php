@@ -116,7 +116,12 @@
                         }
                     </style>
                     <select class="form-control" name="city" id="city-select">
-                        {!!$cities!!}
+                        <option value="">Select Your City</option>
+                        <option value="1" lat="36.99231316337308" lng="127.1126876079345">Pyeongtaek downtown</option>
+                        <option value="2" lat="37.456306800434405" lng="126.70522765767214">Incheon</option>
+                        <option value="3" lat="36.96916529999999" lng="127.03331281349188">Dongchangri</option>
+                        <option value="4" lat="36.81516335686547" lng="127.1138939">Cheonan</option>
+                        <option value="5" lat="37.04250471819789" lng="127.08627511349187">Songtan</option>
                     </select>
                 </div>
 

@@ -340,6 +340,12 @@ Listeners = {
 				ServerRequests.refresh_ads_city(t_v);
 			}
 		});
+		$("#city-select").change(function(){
+			var latlng = {};
+			latlng.lat = parseFloat(this.options[this.selectedIndex].getAttribute('lat'));
+			latlng.lng = parseFloat(this.options[this.selectedIndex].getAttribute('lng'));
+			Maps.SetCenterLatLng(latlng);
+		});
 	    $('#qk-post-btn').click(function(){
 			var _form = $('#pkpost-form').serialize();
 			ServerRequests.process_qkpost(_form);
@@ -842,7 +848,7 @@ Maps = {
 		var myLatLng = {lat: 37.555172565547075, lng: 126.9708452528564};
 		document.getElementById('qkp-lat').value = myLatLng.lat;
     	document.getElementById('qkp-lng').value = myLatLng.lng;
-        var map = new google.maps.Map(document.getElementById('map'), {
+        window.map = new google.maps.Map(document.getElementById('map'), {
         	center: myLatLng,
 			zoom: 12,    
 			mapTypeControl: true,
@@ -852,36 +858,27 @@ Maps = {
 			},
 			streetViewControl: false
         });
-
         // GOOGLE MAP RESPONSIVENESS
         google.maps.event.addDomListener(window, "resize", function() {
 		 var center = map.getCenter();
 		 google.maps.event.trigger(map, "resize");
 		 map.setCenter(center); 
 		});
-
-
         var input = /** @type {!HTMLInputElement} */(
             document.getElementById('pac-input'));
-
         var types = document.getElementById('type-selector');
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
-
         var autocomplete = new google.maps.places.Autocomplete(input);
         autocomplete.bindTo('bounds', map);
-
-
         //MARKER
         var infowindow = new google.maps.InfoWindow();
-        var marker = new google.maps.Marker({
+        window.PostAdMarker = new google.maps.Marker({
           map: map,
           position:myLatLng,
           draggable: true,
           anchorPoint: new google.maps.Point(0, -29)
         });
-
-
         //LOAD FROM CURRENT CITY
 		var geocoder = new google.maps.Geocoder();
 		//     navigator.geolocation.getCurrentPosition(function (position) {
@@ -893,14 +890,13 @@ Maps = {
 		//        	infowindow.setContent('<div><strong>Search or Drag Marker</strong></div>');
 		// 	infowindow.open(map, marker);
 		//     });
-
-
         //AFTER DRAG AND DROP SHOWS THE LAT AND LONG
-        google.maps.event.addListener(marker, 'dragend', function (event) {
+        google.maps.event.addListener(PostAdMarker, 'dragend', function (event) {
 			var latlng = {lat: this.getPosition().lat(), lng: this.getPosition().lng()};
 	        geocoder.geocode({'location': latlng}, function(results, status) {
 	          if (status === 'OK') {
 			    if (results[1]) {
+			    	// console.log(latlng);
 			    	// saving to dom
 			    	document.getElementById('qkp-lat').value = latlng.lat;
 			    	document.getElementById('qkp-lng').value = latlng.lng;
@@ -919,13 +915,12 @@ Maps = {
 
         autocomplete.addListener('place_changed', function() {
 			infowindow.close();
-			marker.setVisible(false);
+			PostAdMarker.setVisible(false);
 			var place = autocomplete.getPlace();
 			if (!place.geometry) {
 				window.alert("Autocomplete's returned place contains no geometry");
 				return;
 			}
-
 			// If the place has a geometry, then present it on a map.
 			if (place.geometry.viewport) {
 				map.fitBounds(place.geometry.viewport);
@@ -934,9 +929,12 @@ Maps = {
 				map.setZoom(17);  // Why 17? Because it looks good.
 			}
 
-			marker.setPosition(place.geometry.location);
-			marker.setVisible(true);
-
+	    	// saving to dom
+	    	document.getElementById('qkp-lat').value = place.geometry.location.lat();
+	    	document.getElementById('qkp-lng').value = place.geometry.location.lng();
+			PostAdMarker.setPosition(place.geometry.location);
+			PostAdMarker.setVisible(true);
+			
 			var address = '';
 			if (place.address_components) {
 				address = [
@@ -947,7 +945,7 @@ Maps = {
 			}
 
 			infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address+'</div>');
-			infowindow.open(map, marker);
+			infowindow.open(map, PostAdMarker);
         });
 
         // Sets a listener on a radio button to change the filter type on Places
@@ -1002,33 +1000,6 @@ Maps = {
           draggable: false,
           anchorPoint: new google.maps.Point(0, -29)
         });
-   //      var contentString = '<div id="content">'+
-   //  	'<p>testttt</p>'+
-   //      '</div>';
-
-   //      setTimeout(function(){ 
-
-			// var geocoder = new google.maps.Geocoder();
-	  //       geocoder.geocode({'location': myLatLng}, function(results, status) {
-	  //         if (status === 'OK') {
-			//     if (results[0]) {
-			// 		contentString = '<div id="content">'+results[1].formatted_address+'</div>';;
-			//     	var infowindow = new google.maps.InfoWindow({
-			//           content: contentString
-			//         });
-			//         infowindow.open(PostViewMap, marker);
-
-	  //           } else {
-	  //             window.alert('No results found');
-	  //           }
-	  //         } else {
-	  //           window.alert('Geocoder failed due to: ' + status);
-	  //         }
-	  //       });
-
-
-   //      }, 2000);
-
 	},
 	ViewPostMapRefresh(){
 		setTimeout(function(){ 
@@ -1036,7 +1007,13 @@ Maps = {
 			google.maps.event.trigger(PostViewMap, "resize");
 			PostViewMap.setCenter(center); 
 		 }, 500);
-
+	},
+	SetCenterLatLng(latlng){
+		document.getElementById('qkp-lat').value = latlng.lat;
+    	document.getElementById('qkp-lng').value = latlng.lng;
+		map.setCenter(latlng);
+		PostAdMarker.setPosition(latlng);
+		google.maps.event.trigger(PostViewMap, "resize");
 	}
 }
 //GLOBAL VARIABLES
