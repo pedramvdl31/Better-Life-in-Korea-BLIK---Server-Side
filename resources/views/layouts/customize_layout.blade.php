@@ -47,6 +47,9 @@
         .btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
         outline: none;
         }
+        .close {
+            font-size: 27px !important;
+        }
         .pr-img img{
         width: 100%;
         }
@@ -78,7 +81,7 @@
             <nav class="navbar navbar-default my-nav" data-spy="affix" id="nav" style="margin-bottom: 0">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#z" aria-expanded="false">
                             <span class="sr-only">Toggle navigation</span>
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -88,7 +91,7 @@
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <div class="collapse navbar-collapse" id="z">
                         <div class="navbar-form navbar-left my-navbar-left" role="search">
                             <div class="form-group">
                               <input id="searchbar" type="text" class="form-control" placeholder="Search for ads">

@@ -7,15 +7,8 @@ $(document).ready(function(){
 // COMPONENTS
 Components = {
 	InitiateApp: function() {
-
-
-
-
-
-
-
-
 		InitFunctions.SetStates();
+		InitFunctions.NavbarListener();
 		InitFunctions.PageVisualSetup();
 		InitFunctions.SetAjaxHeader();
 		InitFunctions.ClearUrl();
@@ -202,6 +195,21 @@ InitFunctions = {
 		};
 
 		$("#cities-autocomplete").easyAutocomplete(options);
+	},
+	NavbarListener(){
+		$('#z').on('shown.bs.collapse', function () {
+		  $(document).bind( "click", handler );
+		})
+		$('#z').on('hidden.bs.collapse', function () {
+		  $(document).unbind( "click", handler );
+		})
+		var handler = function() {
+			$(document).click(function(event) {
+		        if (!$(event.target).hasClass("form-control")) {
+			  		$('#z').collapse('hide');
+		        }
+			});
+		};		
 	}
 };
 
@@ -270,6 +278,19 @@ Listeners = {
 	    	var _auth = parseInt($('#_auth').attr('data'));
 	    	if (_auth == 1) {
 				$('#qkpost-modal').modal('show');
+
+				var html = '<div id="map-form-wrapper"><input id="pac-input" class="controls" type="text"'+
+							'placeholder="Enter a location">'+
+							'<div id="type-selector" class="controls">'+
+							'<input type="radio" name="type" id="changetype-all" checked="checked">'+
+							'<label for="changetype-all">All</label>'+
+							'<input type="radio" name="type" id="changetype-establishment">'+
+							'<label for="changetype-establishment">Establishments</label>'+
+							'</div></div>';
+
+				$('#qkpost-map-container').append(html);
+
+
 	    	} else {
 	    		$('#login-modal').modal('show');
 	    	}
@@ -319,19 +340,13 @@ Listeners = {
 		});
 	    $('.links').click(function(){
 			var cat_id = $(this).attr('cat-id');
-			GVar.category = cat_id;
-			//new category reset load more
-			GVar.scroll_load_more = 1;
-			//hide no data
-			document.getElementById("no-ads").style.display = 'none';
+
 
 			$('.tab-c').css('border','none');
 			$('.tab-home').css('border-bottom','1px solid white');
-	    	$('.cat-tab').addClass('hide');
-	    	$('.home-tab').removeClass('hide');
-	    	$('#post-list').addClass('hide');
-			var _this = $(this);
-			ServerRequests.refresh_ads(cat_id,_this);
+	    	
+
+			ServerRequests.refresh_ads(cat_id);
 		});
 		$("#city-select-home").change(function(){
 			var t_v = $("#city-select-home option:selected").val();
@@ -348,7 +363,7 @@ Listeners = {
 		});
 	    $('#qk-post-btn').click(function(){
 			var _form = $('#pkpost-form').serialize();
-			ServerRequests.process_qkpost(_form);
+			ServerRequests.process_qkpost(_form,document.getElementById("cats").value);
 		});
 	    $('#back-to-wl').click(function(){
 	    	$(this).parents('.modal-footer').addClass('hide');
@@ -426,7 +441,14 @@ ServerRequests = {
 			}
 			);
 	},
-	refresh_ads: function(cat_id,_this) {
+	refresh_ads: function(cat_id) {
+		GVar.category = cat_id;
+		//new category reset load more
+		GVar.scroll_load_more = 1;
+		document.getElementById("no-ads").style.display = 'none';
+		$('.home-tab').removeClass('hide');
+    	$('.cat-tab').addClass('hide');
+    	$('#post-list').addClass('hide');
 		$loading_in = HelperFuncions.create_loading_input();
 		$('.post-loading').html($loading_in);
 		$('.post-loading').removeClass('hide');
@@ -672,7 +694,7 @@ ServerRequests = {
 			}
 			);
 	},
-	process_qkpost: function(_form) {
+	process_qkpost: function(_form,cat_id) {
 		$('._required').css('color','inherit');
 		$('#validating').removeClass('hide');
 		$('#pos-gif').removeClass('hide');
@@ -688,6 +710,9 @@ ServerRequests = {
 				var status = result.status;
 				switch(status){					
 		 			case 200:
+		 				//relaod-ads-to show new post
+		 				ServerRequests.refresh_ads(cat_id);
+
 		 				$('#qkpost-modal').modal('hide');
 		 				setTimeout(function(){ 
 		 					$('#success-modal').modal('show');
@@ -696,7 +721,10 @@ ServerRequests = {
 		 					$('#success-modal').modal('hide');
 		 				 }, 1500);
 		 				HelperFuncions.clear_qp_modal();
-		 				$('body').css('padding-right','0')
+		 				$('body').css('padding-right','0');
+
+		 				//reload map search
+		 				$('#map-form-wrapper').remove();
 		 			break;
 
 		 			case 400:
@@ -826,6 +854,7 @@ HelperFuncions = {
 		$('.pk-form').val('');
 		$(".qp-selects").val("0");
 		$("#city-select").val("0");
+		$("#city-select").val("0");
 
 		Dropzone.forElement("#post_upload_zone_image").removeAllFiles(true);
 		Dropzone.forElement("#post_upload_zone_video").removeAllFiles(true);
@@ -951,6 +980,8 @@ Maps = {
         // Sets a listener on a radio button to change the filter type on Places
         // Autocomplete.
         function setupClickListener(id, types) {
+        	console.log(id);
+        	console.log(types);
           var radioButton = document.getElementById(id);
           radioButton.addEventListener('click', function() {
             autocomplete.setTypes(types);

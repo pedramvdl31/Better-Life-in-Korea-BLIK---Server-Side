@@ -116,7 +116,7 @@
                         }
                     </style>
                     <select class="form-control" name="city" id="city-select">
-                        <option value="">Select Your City</option>
+                        <option value="0">Select Your City</option>
                         <option value="1" lat="36.99231316337308" lng="127.1126876079345">Pyeongtaek Downtown</option>
                         <option value="2" lat="37.456306800434405" lng="126.70522765767214">Incheon</option>
                         <option value="3" lat="36.96916529999999" lng="127.03331281349188">Dongchang-ri</option>
@@ -161,19 +161,10 @@
                     opacity: 0;">
                     <input type="hidden" id="qkp-lat" name="lat"/>
                     <input type="hidden" id="qkp-lng" name="long" />
+
                     <div id="qkpost-map-container" style="width:80%;margin:0 auto">
-                        <input id="pac-input" class="controls" type="text"
-                            placeholder="Enter a location">
 
-                        <div id="type-selector" class="controls">
-                        <input type="radio" name="type" id="changetype-all" checked="checked">
-                        <label for="changetype-all">All</label>
-
-                        <input type="radio" name="type" id="changetype-establishment">
-                        <label for="changetype-establishment">Establishments</label>
-
-                        </div>
-                        <div style="height:300px" id="map"></div>                        
+                        <div style="height:300px" id="map"></div>
                     </div>
 
 
@@ -196,11 +187,13 @@
                 </div>
                 <div id="file-div"></div>
                 {!! Form::close() !!}
+
+
                 <div id="dropzone" class="zones hide anim 2t-wrap col-md-6 col-no-padding" style="visibility: hidden;
                     opacity: 0;
                     margin-bottom: 10px;
                     ">
-                    <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_image">
+                    <form style="overflow: auto;" accept="image/*" multiple action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_image">
                       <div class="dz-message needsclick">
                         Upload Images&nbsp<i class="glyphicon glyphicon-plus"></i><br>
                         <span class="note needsclick">(Images and Videos max size <strong>5mb</strong>.)</span>
@@ -212,7 +205,7 @@
                     <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_video">
                       <div class="dz-message needsclick">
                         Upload Videos&nbsp<i class="glyphicon glyphicon-plus"></i><br>
-                        <span class="note needsclick">(Images and Videos max size <strong>30mb</strong>.)</span>
+                        <span class="note needsclick">(Videos max size <strong>30mb</strong>.)</span>
                       </div>
                     </form>
                 </div>            
