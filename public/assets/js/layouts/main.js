@@ -327,14 +327,12 @@ Listeners = {
 	    $('.tab-home').click(function(){
 	    	$('.all-tabs').addClass('hide');
 	    	$('.home-tab').removeClass('hide');
-
 	    	$('.tab-cat').css('border-bottom','none');
 	    	$('.tab-home').css('border-bottom','1px solid white');
 		});
 	    $('.tab-cat').click(function(){
 	    	$('.all-tabs').addClass('hide');
 	    	$('.cat-tab').removeClass('hide');
-
 	    	$('.tab-home').css('border-bottom','none');
 	    	$('.tab-cat').css('border-bottom','1px solid white');
 		});
@@ -522,6 +520,12 @@ ServerRequests = {
 				"ttxt":ttxt
 			},
 			function(result){
+
+		    	$('.all-tabs').addClass('hide');
+		    	$('.home-tab').removeClass('hide');
+		    	$('.tab-cat').css('border-bottom','none');
+		    	$('.tab-home').css('border-bottom','1px solid white');
+
 				$('.search-loading').addClass('hide');
 				var status = result.status;
 				var ads = result.ads;
@@ -529,7 +533,6 @@ ServerRequests = {
 		 			case 200:
 		 				$('#ads-wrapper').html(ads);
 		 			break;
-
 		 			case 400:
 		 			break;
 

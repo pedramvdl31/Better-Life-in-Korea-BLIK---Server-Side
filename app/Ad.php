@@ -18,14 +18,24 @@ class Ad extends Model
     static public function PrepareAdsSearchTxt($txtd) {
         $output = null;
         if (isset($txtd)) {
-            $ads = Ad::where('status',1)->where('title', 'like', $txtd)
+            $ad_array = array();
+            $ad = Ad::where('status',1)->get();
+            // all ads
+            foreach ($ad as $k => $v) {
+                $t = explode(' ',$v->title);
+                // ad title exploded by space
+                foreach ($t as $tk => $tv) {
+                    if ($txtd == $tv) {
+                        array_push($ad_array, $v->id);
+                    }
+                }
+            }
+            $ads = Ad::where('status',1)->whereIn('id', $ad_array)
                 ->paginate(8);
-
             if (isset($ads)) {
                 $output = Ad::PrepareAdsForHome($ads);
             }
         }
-
         return $output;
     }
     static public function PrepareAdsSearchCategory($cat_id) {
