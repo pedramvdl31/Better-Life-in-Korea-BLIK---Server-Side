@@ -424,9 +424,10 @@ class Ad extends Model
             }
 
             if (isset($data['description'])) {
+                $des_jd = json_decode($data['description']);
                 $data_array['title_txt'] =  $data->title;
                 $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
-                $data_array['des'] =  "<p>".json_decode($data['description'])."</p>";
+                $data_array['des'] =  "<p>".$des_jd."</p>";
 
                 //FACEBOOK SHARE BUTTON
                 $data_array['fbs'] = '
@@ -436,7 +437,7 @@ class Ad extends Model
                           app_id=1728054614082756&amp;
                           display=popup&amp;
                           caption=Better Life In Korea&amp;
-                          description='.$data_array['des'].' &amp;
+                          description='.$des_jd.' &amp;
                           name='.$data->title.'&amp;
                           link='.Request::root().'&amp;
                           redirect_uri='.Request::root().'&amp;
