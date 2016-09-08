@@ -608,6 +608,18 @@ ServerRequests = {
 
 				switch(status){					
 		 			case 200:
+			 			//LOAD FACEBOOK COMMENT
+						var c_div = '<div class="fb-comments modalfc" '+
+									'data-href="http://kora.app/comments/'+data_id+'"'+
+									'data-width="100%" data-numposts="5"></div>';
+						$('.fbc').html(c_div);
+
+						//FACEBOOK SHARE BUTTON
+						document.getElementById('fbShareWrap').innerHTML = ad_array['fbs'];
+
+						FB.XFBML.parse();
+
+		 				//init
 		 				document.getElementById('postview-data').innerHTML = '';
 
 		 				var new_html = "<div class='form-group break_all' id='pt'></div>"+
@@ -620,7 +632,6 @@ ServerRequests = {
 			 			// document.getElementById('pi').innerHTML = ad_array['images'];
 			 			document.getElementById('pv').innerHTML = ad_array['videos'];
 			 			document.getElementById('dtw').innerHTML = ad_array['drivebtn'];
-
 
 
 					    var linksContainer = $('#pi');
@@ -645,9 +656,8 @@ ServerRequests = {
 						  padding: 3
 						});
 
-
+						//FULLSCREEN VIEWER
 					    $('#pi').click(function(event){
-
 						    event = event || window.event;
 						    var target = event.target || event.srcElement,
 						        link = target.src ? target.parentNode : target,
@@ -667,26 +677,18 @@ ServerRequests = {
 						});		
 
 
-
+					    //LOAD MAP
 						if (ad_array['lat']!='' && ad_array['lng']!='') {
 							Maps.ViewAdUpdate(parseFloat(ad_array['lat']),parseFloat(ad_array['lng']));
 							$(document).find('#waze-info').tooltip();
 		            	}
+
 						//VIEW IT
 		            	$('.postview_modal_body').removeClass('hide');
 						$('.vwad-loading').addClass('hide');
 
-						//LOAD FACEBOOK COMMENT
-						var c_div = '<div class="fb-comments modalfc" '+
-									'data-href="http://kora.app/comments/'+data_id+'"'+
-									'data-width="100%" data-numposts="5"></div>';
-						$('.fbc').html(c_div);
-						FB.XFBML.parse();
-
 						//REFRESH MAP
 						Maps.ViewPostMapRefresh();
-
-
 
 		 			break;
 

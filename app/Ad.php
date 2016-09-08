@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\Wishlist;
+use Request;
 class Ad extends Model
 {
     
@@ -378,6 +379,8 @@ class Ad extends Model
         return $data;
     }
     static public function PrepareForView($data) {
+        //main image
+        $mi = '';
 
         $data_array = array('title_txt'=>'',
                             'title'=>'',
@@ -387,25 +390,23 @@ class Ad extends Model
                             'images_array'=>array(),
                             'lat'=>'',
                             'lng'=>'',
-                            'drivebtn'=>''
+                            'drivebtn'=>'',
+                            'fbs'=>''
                             );
 
         if (isset($data)) {
-            if (isset($data['description'])) {
-               $data_array['title_txt'] =  $data->title;
-               $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
-               $data_array['des'] =  "<p>".json_decode($data['description'])."</p>";
-            }
-
             if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
                 $files = json_decode($data['file_srcs'],true);
                 $base_path = '/assets/images/posts/'.$data['user_id'].'/prm/';
                 foreach ($files as $fk => $fv) {
                     foreach ($fv as $fvk => $fvv) {
                         if ($fvk=="image") {
-                            $imgs = $base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'];
+                            $imgs = $base_path.$fvk.'/'.$fvv['name'];
                             $data_array['images'] .= '<a href="'.$imgs.'" class="my-item _p'.$data->id.' "><img style="max-width:100px" src="'.$imgs.'" alt="..."></a>';
                             $data_array['images_array'][$fk]['src'] = $imgs;
+                            if ($fk==0) {
+                                $mi=$imgs;
+                            }
                         }
                     }
                 }
@@ -420,6 +421,29 @@ class Ad extends Model
                         }
                     }
                 }
+            }
+
+            if (isset($data['description'])) {
+                $data_array['title_txt'] =  $data->title;
+                $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
+                $data_array['des'] =  "<p>".json_decode($data['description'])."</p>";
+
+                //FACEBOOK SHARE BUTTON
+                $data_array['fbs'] = '
+                    <a  role="button"  target="_blank" class="btn btn-primary fb-share"  
+                        title="send to Facebook" 
+                        href="https://www.facebook.com/dialog/feed?
+                          app_id=496478973878952&amp;
+                          display=popup&amp;
+                          caption=Better Life In Korea&amp;
+                          description=test&amp;
+                          name=test&nbspNet&nbspWorth&amp;
+                          link='.Request::root().'&amp;
+                          redirect_uri='.Request::root().'&amp;
+                          picture='.Request::root().$mi.'">
+                          <i class="fa fa-lg fa-facebook"></i>
+                          Share
+                    </a>';
             }
 
             if (isset($data['lat'])&&isset($data['long'])) {

@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
+
+<meta name="og:image:width" content="450" />
+
+<meta name="og:image" content="300" />
         <title>Home | Kora</title>
 
         <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&libraries=places'></script>

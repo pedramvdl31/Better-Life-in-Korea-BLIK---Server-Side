@@ -93,10 +93,6 @@
               </div>
               <!-- DRIVE-TO BTN WRAPPER -->
               <div id="dtw"></div>
-              <!-- FACEBOOK REVIEW WRAPPER -->
-              <div id="frw"></div>
-
-
 
             </div>
             <div class="text-center vwad-loading">
@@ -105,8 +101,12 @@
             <div class="fbc"></div>
 	      </div>
 	      <div class="modal-footer clearfix">
-	        <a id="atwl-btn" class="btn btn-warning pull-right add-to-wishlist" data="">Add to Wishlist</a>
-	      </div>
+
+          <form>
+            <span id="fbShareWrap"></span>
+            <a id="atwl-btn" class="btn btn-warning add-to-wishlist" data="" role="button">Add to Wishlist</a>
+          </form>
+        </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
 	
