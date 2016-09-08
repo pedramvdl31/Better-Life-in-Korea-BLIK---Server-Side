@@ -431,13 +431,13 @@ class Ad extends Model
                 //FACEBOOK SHARE BUTTON
                 $data_array['fbs'] = '
                     <a  role="button"  target="_blank" class="btn btn-primary fb-share"  
-                        title="send to Facebook" 
+                        title='.$data->title.' 
                         href="https://www.facebook.com/dialog/feed?
                           app_id=1728054614082756&amp;
                           display=popup&amp;
                           caption=Better Life In Korea&amp;
-                          description=test&amp;
-                          name=test&nbspNet&nbspWorth&amp;
+                          description='.$data_array['des'].' &amp;
+                          name='.$data->title.'&amp;
                           link='.Request::root().'&amp;
                           redirect_uri='.Request::root().'&amp;
                           picture='.Request::root().$mi.'">
