@@ -610,7 +610,7 @@ ServerRequests = {
 		 			case 200:
 			 			//LOAD FACEBOOK COMMENT
 						var c_div = '<div class="fb-comments modalfc" '+
-									'data-href="http://kora.app/comments/'+data_id+'"'+
+									'data-href="'+document.getElementById('web_root').value+'/posts/'+data_id+'"'+
 									'data-width="100%" data-numposts="5"></div>';
 						$('.fbc').html(c_div);
 
@@ -632,7 +632,6 @@ ServerRequests = {
 			 			// document.getElementById('pi').innerHTML = ad_array['images'];
 			 			document.getElementById('pv').innerHTML = ad_array['videos'];
 			 			document.getElementById('dtw').innerHTML = ad_array['drivebtn'];
-
 
 					    var linksContainer = $('#pi');
 					    var baseUrl;

@@ -434,13 +434,13 @@ class Ad extends Model
                     <a  role="button"  target="_blank" class="btn btn-primary fb-share"  
                         title='.$data->title.' 
                         href="https://www.facebook.com/dialog/feed?
-                          app_id=1728054614082756&amp;
+                          app_id=496478973878952&amp;
                           display=popup&amp;
                           caption=Better Life In Korea&amp;
                           description='.$des_jd.' &amp;
                           name='.$data->title.'&amp;
-                          link='.Request::root().'&amp;
-                          redirect_uri='.Request::root().'&amp;
+                          link='.Request::root().'/posts/'.$data->id.'&amp;
+                          redirect_uri='.Request::root().'/posts/'.$data->id.'&amp;
                           picture='.Request::root().$mi.'">
                           <i class="fa fa-lg fa-facebook"></i>
                           Share

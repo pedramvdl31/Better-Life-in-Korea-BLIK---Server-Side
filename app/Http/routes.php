@@ -26,13 +26,11 @@
 Route::post('/g-m', ['as'=>'g_m','uses'=>'ConversationsController@postRtrnMsgs']);
 Route::post('/rqst-s-time', ['as'=>'r_st','uses'=>'HomeController@postRtrnSrvrTime']);
 Route::post('/data-update', ['as'=>'chat-send','uses'=>'ConversationsController@postSaveChatMessage']);
-//CHAT ROUTES END
-
-//get adds
 Route::post('get-adds', ['as'=>'get_adds', 'uses' => 'AdsController@getGetAds']);
-
 Route::post('sendmessage', ['as'=>'sendmessage', 'uses' => 'HomeController@sendMessage']);
 Route::get('writemessage', 'HomeController@writemessage');
+//CHAT ROUTES END
+
 
 
 Route::group(['middleware' => 'beforeFilter'], function () {
@@ -40,6 +38,8 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/search-01', ['as'=>'search-01', 'uses' => 'AdsController@postSearchByText']);
 	Route::post('/search-02', ['as'=>'search-02', 'uses' => 'AdsController@postSearchByCategory']);
 	Route::post('/search-03', ['as'=>'search-03', 'uses' => 'AdsController@postSearchByCity']);
+	//to open individual ad, this route is used to open ads from facebook or for comments
+	Route::get('/posts/{id}', ['as'=>'popup-post', 'uses' => 'HomeController@getPopUpPost']);
 
 	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {
@@ -66,7 +66,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 
 	//HOME ROUTE
 	Route::get('/', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
-	Route::get('/home', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
+	// Route::get('/home', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
 
 	// WEBSITE PUBLIC PAGES
 	Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');

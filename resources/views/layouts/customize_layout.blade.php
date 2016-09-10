@@ -6,9 +6,9 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-<meta name="og:image:width" content="450" />
+        <meta name="og:image:width" content="450" />
+        <meta name="og:image" content="300" />
 
-<meta name="og:image" content="300" />
         <title>Home | Kora</title>
 
         <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&libraries=places'></script>
@@ -19,8 +19,6 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<!--         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.css"> -->
 
         <link href="/packages/bootstrap-social/bootstrap-social.css" rel="stylesheet">
         <link href="/packages/bootstrap-social/assets/css/docs.css" rel="stylesheet">
@@ -145,6 +143,8 @@
 
 
             <input type="hidden" id="_auth" data={!!Auth::check()?1:0!!}></input>
+            <input type="hidden" id="web_root" value={!!Request::root()!!}></input>
+
         </header><!--/header-->
         <div class="flash-notification">
             @include('flash::message')
@@ -225,6 +225,12 @@
 
         <script src="/assets/js/jquery.prettyPhoto.js"></script>
         <script src="/assets/js/layouts/main.js"></script>
+        <!-- POPUP AD -->
+        @if($popup!=0)
+            <input type="hidden" name="popup_id" id="popup_id" value="{{$popup}}">
+            <script src="/assets/js/layouts/popup.js"></script>
+        @endif
+        <!-- POPUP AD -->
         <script src="/packages/scroll_style/jquery.slimscroll.js"></script>
         <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
         <!-- LOCATION PICKER -->
