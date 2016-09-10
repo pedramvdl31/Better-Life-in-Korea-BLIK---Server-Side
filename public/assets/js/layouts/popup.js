@@ -4,6 +4,6 @@ $(document).ready(function(){
 	$('.fbc').html('');
 	setTimeout(function(){ 
 		HelperFuncions.findAndViewAd(this_id);
-	 }, 1000);
+	 }, 500);
 	
 });
