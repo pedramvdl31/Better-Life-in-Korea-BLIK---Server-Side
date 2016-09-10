@@ -440,7 +440,7 @@ class Ad extends Model
                           description='.$des_jd.' &amp;
                           name='.$data->title.'&amp;
                           link='.Request::root().'/posts/'.$data->id.'&amp;
-                          redirect_uri='.Request::root().'/posts/'.$data->id.'&amp;
+                          redirect_uri='.Request::root().'&amp;
                           picture='.Request::root().$mi.'">
                           <i class="fa fa-lg fa-facebook"></i>
                           Share
