@@ -434,7 +434,7 @@ class Ad extends Model
                     <a  role="button"  target="_blank" class="btn btn-primary fb-share"  
                         title='.$data->title.' 
                         href="https://www.facebook.com/dialog/feed?
-                          app_id=496478973878952&amp;
+                          app_id=1728054614082756&amp;
                           display=popup&amp;
                           caption=Better Life In Korea&amp;
                           description='.$des_jd.' &amp;
