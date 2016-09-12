@@ -624,8 +624,8 @@ ServerRequests = {
 
 		 				var new_html = "<div class='form-group break_all' id='pt'></div>"+
 		 				"<div class='form-group break_all' id='pd'></div>"+
-		 				"<div class='my-container' id='pi'></div>"+
-		 				"<div class='my-container' id='pv'></div>";
+		 				"<div class='my-container' id='pi' style='opacity:0'></div>"+
+		 				"<div class='' id='pv' style='opacity:0'></div>";
 		 				document.getElementById('postview-data').innerHTML = new_html;
 			 			document.getElementById('pt').innerHTML = ad_array['title'];
 			 			document.getElementById('pd').innerHTML = ad_array['des'];
@@ -688,6 +688,12 @@ ServerRequests = {
 
 						//REFRESH MAP
 						Maps.ViewPostMapRefresh();
+
+
+			 			setTimeout(function(){ 
+		 					$('#pi').css('opacity','1');
+		 					$('#pv').css('opacity','1');
+		 				}, 300);
 
 		 			break;
 
@@ -995,6 +1001,7 @@ Maps = {
         setupClickListener('changetype-all', []);
         setupClickListener('changetype-establishment', ['establishment']);
 	},
+	//initiation of posts map
 	ViewAdInit(lat,lng){
 		var myLatLng = {lat: lat, lng: lng};
         window.PostViewMap = new google.maps.Map(document.getElementById('map-post-view'), {
@@ -1007,6 +1014,11 @@ Maps = {
 			},
 			streetViewControl: true
         });
+
+	    // var geolocationDiv = document.createElement('div');
+	    // var geolocationControl = new GeolocationControl(geolocationDiv, PostViewMap);
+	    // PostViewMap.controls[google.maps.ControlPosition.TOP_CENTER].push(geolocationDiv);
+
 
         // GOOGLE MAP RESPONSIVENESS
         google.maps.event.addDomListener(window, "resize", function() {
@@ -1059,3 +1071,54 @@ GVar = {
 	'scroll_load_more':1,
 	'flag_image':'/assets/images/icons/beachflag.png'
 }
+
+// function GeolocationControl(controlDiv, map) {
+
+//     // Set CSS for the control button
+//     var controlUI = document.createElement('div');
+//     controlUI.style.backgroundColor = '#444';
+//     controlUI.style.borderStyle = 'solid';
+//     controlUI.style.borderWidth = '1px';
+//     controlUI.style.borderColor = 'white';
+//     controlUI.style.height = '28px';
+//     controlUI.style.marginTop = '5px';
+//     controlUI.style.cursor = 'pointer';
+//     controlUI.style.textAlign = 'center';
+//     controlUI.title = 'Click to center map on your location';
+//     controlDiv.appendChild(controlUI);
+
+//     // Set CSS for the control text
+//     var controlText = document.createElement('div');
+//     controlText.style.fontFamily = 'Arial,sans-serif';
+//     controlText.style.fontSize = '10px';
+//     controlText.style.color = 'white';
+//     controlText.style.paddingLeft = '10px';
+//     controlText.style.paddingRight = '10px';
+//     controlText.style.marginTop = '8px';
+//     controlText.innerHTML = 'Center map on your location';
+//     controlUI.appendChild(controlText);
+
+//     // Setup the click event listeners to geolocate user
+//     google.maps.event.addDomListener(controlUI, 'click', geolocate);
+// }
+
+// function geolocate() {
+
+//     if (navigator.geolocation) {
+
+//         navigator.geolocation.getCurrentPosition(function (position) {
+
+//             var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+
+//             // Create a marker and center map on user location
+//             marker = new google.maps.Marker({
+//                 position: pos,
+//                 draggable: true,
+//                 animation: google.maps.Animation.DROP,
+//                 map: PostViewMap
+//             });
+
+//             PostViewMap.setCenter(pos);
+//         });
+//     }
+// }

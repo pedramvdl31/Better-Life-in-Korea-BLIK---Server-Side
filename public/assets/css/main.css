@@ -6,7 +6,13 @@
   }
 /*END*/
 
-
+.label-div-s,.label-div-p,.label-div-i{
+  padding: 3px 0;
+}
+#pi{
+  -webkit-transition: opacity 1s;
+  transition: opacity 1s;  
+}
 
 
 /*My LOADING GIF*/
