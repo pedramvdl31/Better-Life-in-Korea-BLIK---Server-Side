@@ -693,7 +693,7 @@ ServerRequests = {
 			 			setTimeout(function(){ 
 		 					$('#pi').css('opacity','1');
 		 					$('#pv').css('opacity','1');
-		 				}, 1000);
+		 				}, 500);
 
 		 			break;
 
