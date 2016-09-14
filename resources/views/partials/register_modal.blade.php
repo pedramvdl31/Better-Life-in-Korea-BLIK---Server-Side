@@ -29,7 +29,7 @@
 	      </div>
 	      <div class="modal-footer clearfix">
 			<img class="hide" id="validating" src="/assets/images/icons/gif/loading1.gif" width="20px;">
-	        <a class="btn btn-social btn-facebook" href="auth/facebook">
+	        <a class="btn btn-social btn-facebook" href="/auth/facebook">
         		<span class="fa fa-facebook"></span>  Sign in with Facebook
         	</a>
 	        <a class="btn modal-btn btn-warning " id="submit-btn">Register</a>

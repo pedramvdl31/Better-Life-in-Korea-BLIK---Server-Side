@@ -19,7 +19,7 @@
 	        <a href="password/email" class="a-style" id="forgot"> I forgot my password</a>
 	      </div>
 	      <div class="modal-footer clearfix">
-	        <a class="btn btn-social btn-facebook" href="auth/facebook">
+	        <a class="btn btn-social btn-facebook" href="/auth/facebook">
         		<span class="fa fa-facebook"></span>  Sign in with Facebook
         	</a>
 	        <button type="submit" id="login-btn-1" class="btn btn-warning pull-right">Login</button>
