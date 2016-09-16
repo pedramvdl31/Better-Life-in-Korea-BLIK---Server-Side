@@ -355,9 +355,6 @@ class AdsController extends Controller
                         ));
                 }
 
-
-
-                
             }
             return Response::json(array(
                 'status' => $status

@@ -409,6 +409,8 @@ class Ad extends Model
                     $r_sum += $rvv['rate'];
                 }
                 if ($r_count>0) {
+                    $r_sum += 5;
+                    $r_count += 1;
                     $r_avg = $r_sum/$r_count;
                 }
                 $data_array['rvs-count'] = $r_count;
