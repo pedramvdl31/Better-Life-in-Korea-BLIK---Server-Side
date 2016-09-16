@@ -1,13 +1,10 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="content-type" content="text/html; charset=UTF8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
-
-        <meta name="og:image:width" content="450" />
-        <meta name="og:image" content="300" />
 
         <title>Home | Kora</title>
 
@@ -19,6 +16,10 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
         <!-- Custom Fonts -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+        <!-- STAR RATING -->
+        <link href="/assets/plugins/krajee-star/star-rating.css" rel="stylesheet">
+        <!-- STAR RATING -->
 
         <link href="/packages/bootstrap-social/bootstrap-social.css" rel="stylesheet">
         <link href="/packages/bootstrap-social/assets/css/docs.css" rel="stylesheet">
@@ -195,6 +196,14 @@
               }
         </style>
         <!-- PAGE VIEW -->
+
+        
+
+
+
+
+
+
         @yield('content')
         <!-- PAGE VIEW END -->
 
@@ -233,16 +242,14 @@
         <!-- POPUP AD -->
         <script src="/packages/scroll_style/jquery.slimscroll.js"></script>
         <script src="/packages/jquery-sortable-photos/jquery-sortable-photos.js"></script>
-        <!-- LOCATION PICKER -->
 
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.3.5/marked.min.js"></script> -->
-        <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script> -->
-        <!-- <script src="http://vjs.zencdn.net/5.0.0/video.js"></script> -->
-        <!-- <script src="https://cdn.jsdelivr.net/prism/1.4.1/prism.js"></script> -->
         <script src="/packages/dropzone/dropzone.js"></script>
         <!-- <script src="/packages/moment/moment.js"></script> -->
         <script src="/packages/easy_autocomplete/jquery.easy-autocomplete.js"></script>
 
+        <!-- Star-Rating -->
+        <script src="/assets/plugins/krajee-star/star-rating.min.js"></script>
+        <!-- Star-Rating -->
 
         <!-- //BLUEIMG-GALLERT -->
         <script src="/packages/gallery-master/js/blueimp-gallery.js"></script>

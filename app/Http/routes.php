@@ -31,8 +31,6 @@ Route::post('sendmessage', ['as'=>'sendmessage', 'uses' => 'HomeController@sendM
 Route::get('writemessage', 'HomeController@writemessage');
 //CHAT ROUTES END
 
-
-
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('/update-messages', ['as'=>'chat', 'uses' => 'HomeController@getUpdateMessages']);	
 	Route::post('/search-01', ['as'=>'search-01', 'uses' => 'AdsController@postSearchByText']);
@@ -44,6 +42,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	//ONLY AUTH
 	Route::group(['middleware' => 'only.auth'], function () {
 		//CHAT ROUTES
+		Route::post('/save-rate', ['uses'=>'AdsController@postSaveRate']);
 		Route::post('/process-qkpost', ['as'=>'qkpost-process','uses'=>'AdsController@postQkpst']);
 		Route::post('/store-wishlist', ['as'=>'store_wishlist','uses'=>'AdsController@postStoreAd']);
 		Route::post('/remove-wishlist',  ['as'=>'remove-wishlist', 'uses' => 'AdsController@postRemoveWishlist']);

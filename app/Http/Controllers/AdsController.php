@@ -24,6 +24,7 @@ use App\Page;
 use App\WebsiteBrand;
 use App\Ad;
 use App\Wishlist;
+use App\Review;
 
 class AdsController extends Controller
 {
@@ -309,7 +310,6 @@ class AdsController extends Controller
     }
 
 
-
     public function postPrepareAds()
     {
         if(Request::ajax()){
@@ -322,6 +322,43 @@ class AdsController extends Controller
                     ));
             }
             //else
+            return Response::json(array(
+                'status' => $status
+                ));
+        }
+    }
+
+    public function postSaveRate()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $rate = Input::get('rate');
+            $data_id = Input::get('data_id');
+            $nrate = (float)$rate;
+            if ( ($rate!='') && ($rate>=0) && ($rate<=10) ) {
+                $user_id=Auth::id();
+                $pre_rate = Review::where('ad_id',$data_id)->where('user_id',$user_id)->first();
+                //IF THIS USER ALREADY RATED REMOVE THE PREVIOUS RATE
+                if (isset($pre_rate)) {
+                    $pre_rate->delete();
+                }
+
+                //SAVE THE NEW RATE
+                $new_rev = new Review();
+                $new_rev->user_id = $user_id;
+                $new_rev->ad_id = $data_id;
+                $new_rev->rate = $nrate;
+                if ($new_rev->save()) {
+                    //IF SAVED RETURN
+                    return Response::json(array(
+                        'status' => 200
+                        ));
+                }
+
+
+
+                
+            }
             return Response::json(array(
                 'status' => $status
                 ));

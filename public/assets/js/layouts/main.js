@@ -9,6 +9,7 @@ Components = {
 	InitiateApp: function() {
 		InitFunctions.SetStates();
 		InitFunctions.NavbarListener();
+		InitFunctions.Dependencies();
 		InitFunctions.PageVisualSetup();
 		InitFunctions.SetAjaxHeader();
 		InitFunctions.ClearUrl();
@@ -44,6 +45,9 @@ InitFunctions = {
 		$('.body-wrapp').slimScroll({
         	height: '100%'
     	});
+	},
+	Dependencies(){
+
 	},
 	SetStates(){
 		window.user_state = document.getElementById('user-status').value;
@@ -295,6 +299,9 @@ Listeners = {
 	    		$('#login-modal').modal('show');
 	    	}
 	    });
+	    //star-rating
+
+		//star-rating
 	    $(document).on('click','.remove-ad-wl',function(){
 	    	$t_id = $(this).attr('data');
 	    	$('.modal-remove-btn').attr('data',$t_id);
@@ -590,10 +597,38 @@ ServerRequests = {
 			}
 			);
 	},
+	save_rate: function(rate,data_id) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/save-rate',
+			{
+				"_token": token,
+				"rate":rate,
+				"data_id":data_id
+			},
+			function(result){
+				var status = result.status;
+				switch(status){					
+		 			case 200:
+		 			document.getElementById('rev-c').innerHTML = 'Thank You!';
+		 			break;
+
+		 			case 400:
+		 			break;
+
+				}
+			}
+			);
+	},
 	vwad: function(data_id) {
 		$('#postview-modal').modal('show');
 		$('.postview_modal_body').addClass('hide');
 		$('.vwad-loading').removeClass('hide');
+		//clear reviews
+		document.getElementById('rv').innerHTML = '';
+		$('.rev').rating('destroy');
+		//clear reviews
+
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/prepare-ad',
@@ -621,6 +656,8 @@ ServerRequests = {
 
 		 				//init
 		 				document.getElementById('postview-data').innerHTML = '';
+		 				
+		 				
 
 		 				var new_html = "<div class='form-group break_all' id='pt'></div>"+
 		 				"<div class='form-group break_all' id='pd'></div>"+
@@ -688,6 +725,29 @@ ServerRequests = {
 
 						//REFRESH MAP
 						Maps.ViewPostMapRefresh();
+
+						//RENDER REVIEWS
+						var rv_html = '<input name="input-name" type="number" class="rating rev"><span id="rev-c">'+ad_array['rvs-count']+' reviews</span>';
+						document.getElementById('rv').innerHTML = rv_html;
+						$(".rev").rating({
+							min:1, 
+							max:10, 
+							step:0.5, 
+							size:'xs',
+							showCaption:0,
+							showClear:0
+						});
+						$('.rev').rating('update', ad_array['rvs-rate']);
+						$('.rev').on('rating.change', function(event, value, caption) {
+					    	var _auth = parseInt($('#_auth').attr('data'));
+					    	if (_auth == 1) {
+					    		ServerRequests.save_rate(value,data_id);
+					    	} else {
+					    		$('#postview-modal').modal('hide');
+					    		$('#login-modal').modal('show');
+					    	}
+						});
+						//RENDER REVIEWS
 
 
 			 			setTimeout(function(){ 

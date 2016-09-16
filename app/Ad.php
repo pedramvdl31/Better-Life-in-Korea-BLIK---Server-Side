@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use App\Wishlist;
+use App\Review;
 use Request;
 class Ad extends Model
 {
@@ -391,10 +392,31 @@ class Ad extends Model
                             'lat'=>'',
                             'lng'=>'',
                             'drivebtn'=>'',
-                            'fbs'=>''
+                            'fbs'=>'',
+                            'rvs-count'=>'',
+                            'rvs-rate'=>''
                             );
 
         if (isset($data)) {
+
+            //Get Reviews
+                $reviews = Review::where('ad_id',$data['id'])->get();
+                $r_count = 0;
+                $r_sum = 0;
+                $r_avg = 5.5;
+                foreach ($reviews as $rvk => $rvv) {
+                    $r_count++;
+                    $r_sum += $rvv['rate'];
+                }
+                if ($r_count>0) {
+                    $r_avg = $r_sum/$r_count;
+                }
+                $data_array['rvs-count'] = $r_count;
+                $data_array['rvs-rate'] = $r_avg;
+            //Get Reviews
+
+
+
             if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
                 $files = json_decode($data['file_srcs'],true);
                 $base_path = '/assets/images/posts/'.$data['user_id'].'/prm/';
