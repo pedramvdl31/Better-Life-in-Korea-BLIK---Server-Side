@@ -220,6 +220,24 @@ InitFunctions = {
 //LISTENERS
 Listeners = {
 	Events(){
+
+		$(".tt").mouseenter(function() {
+		  document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
+		});
+		$(".tt").mouseout(function() {
+		  document.getElementById("p"+$(this).attr('ci')).style.fill = '#dddddd';
+		});
+	    $('path').click(function(){
+	    	$('path').css('fill','#dddddd');
+	    	$(this).css('fill','#223b59');
+		});
+	    $(".tt").click(function(){
+	    	$('path').css('fill','#dddddd');
+	    	document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
+		});
+
+		// #223b59
+
 		$("#cats").change(function(){
 			var t_v = $("#cats option:selected").val();
 			if (t_v != '0') {
