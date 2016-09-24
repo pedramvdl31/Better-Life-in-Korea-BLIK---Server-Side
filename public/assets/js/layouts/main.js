@@ -230,10 +230,16 @@ Listeners = {
 	    $('path').click(function(){
 	    	$('path').css('fill','#dddddd');
 	    	$(this).css('fill','#223b59');
+
+
+
 		});
 	    $(".tt").click(function(){
 	    	$('path').css('fill','#dddddd');
 	    	document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
+
+	    	
+
 		});
 
 		// #223b59
