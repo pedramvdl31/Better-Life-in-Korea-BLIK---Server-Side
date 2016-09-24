@@ -221,28 +221,64 @@ InitFunctions = {
 Listeners = {
 	Events(){
 
+		//city map functions
 		$(".tt").mouseenter(function() {
 		  document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
 		});
 		$(".tt").mouseout(function() {
-		  document.getElementById("p"+$(this).attr('ci')).style.fill = '#dddddd';
+			if (!$("#p"+$(this).attr('ci')).hasClass('a')) {
+				$("#p"+$(this).attr('ci')).css('fill','#dddddd');
+			}
+		});
+		$(".tt").click(function(){
+	    	$('path').css('fill','#dddddd');
+	    	var ttid =  $(this).attr('ci');
+	    	if (!$("#p"+ttid).hasClass('a')) {
+	    		HelperFuncions.show_to_cat_button();
+	    		HelperFuncions.add_city_id(ttid);
+	    		document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
+	    		$("#p"+ttid).addClass('a');
+	    	} else {
+	    		HelperFuncions.hide_to_cat_button();
+	    		HelperFuncions.remove_city_id();
+	    		document.getElementById("p"+$(this).attr('ci')).style.fill = '#dddddd';
+	    		$("#p"+ttid).removeClass('a');
+	    	}
 		});
 	    $('path').click(function(){
-	    	$('path').css('fill','#dddddd');
-	    	$(this).css('fill','#223b59');
-
-
-
+	    	if ($(this).hasClass('a')) {
+	    		HelperFuncions.hide_to_cat_button();
+	    		HelperFuncions.remove_city_id();
+		    	$(this).css('fill','#dddddd');
+		    	$(this).removeClass('a');
+	    	} else {
+	    		HelperFuncions.show_to_cat_button();
+	    		HelperFuncions.add_city_id($(this).attr('c-id'));
+		    	$('path').css('fill','#dddddd');
+		    	$(this).css('fill','#223b59');
+		    	$(this).addClass('a');	    		
+	    	}
 		});
-	    $(".tt").click(function(){
-	    	$('path').css('fill','#dddddd');
-	    	document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
-
-	    	
-
+	    $('#tc').click(function(){
+	    	$('#city_select').animate({
+            	right: "100%"
+        	});
+	    	$('#cat_select').animate({
+            	left: "0"
+        	});
 		});
 
-		// #223b59
+
+		// $("path").mouseenter(function() {
+		//   var tcid = $(this).attr('c-id');
+		//   $('text[c-id*='+tcid+']').css('fill','rgb(255, 255, 255)');
+		// });
+		// $("path").mouseout(function() {
+		//   var tcid = $(this).attr('c-id');
+		//   $('text[c-id*='+tcid+']').css('fill','#000000');
+		// });
+		//city map functions
+		
 
 		$("#cats").change(function(){
 			var t_v = $("#cats option:selected").val();
@@ -853,6 +889,18 @@ ServerRequests = {
 HelperFuncions = {
 	isBlank(obj){
 		return(!obj || $.trim(obj) === "");
+	},
+	hide_to_cat_button(){
+		$('#tc').addClass('hide');
+	},
+	show_to_cat_button(){
+		$('#tc').removeClass('hide');
+	},
+	add_city_id(tid){
+		$('#tc').attr('t_city_id',tid);
+	},
+	remove_city_id(){
+		$('#tc').attr('t_city_id','');
 	},
 	InitGoogleMap(){
 		$('#us2-lat').attr('name','lat');

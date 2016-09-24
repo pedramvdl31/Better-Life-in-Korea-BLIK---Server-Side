@@ -194,6 +194,26 @@
                 font-size: 13px;
                 font-weight: 300;
               }
+              #city_select{
+                position: absolute;
+                width: 100%;
+                -webkit-transition: all 1s ease;
+                -moz-transition: all 1s ease;
+                -o-transition: all 1s ease;
+                -ms-transition: all 1s ease;
+                transition: all 1s ease;
+              }
+              #cat_select{
+                position: absolute;
+                width: 100%;
+                left: 100%;
+                -webkit-transition: all 1s ease;
+                -moz-transition: all 1s ease;
+                -o-transition: all 1s ease;
+                -ms-transition: all 1s ease;
+                transition: all 1s ease;
+                
+              }
         </style>
         <!-- PAGE VIEW -->
 
@@ -205,7 +225,7 @@
         </div>
         <!-- CITIES MAP -->
         <!-- CITIES MAP -->
-        <div id="cat_select" style="display:none">   
+        <div id="cat_select">   
             {!! View::make('partials.categories')->with('all_categories',$all_categories)
             ->with('ads',$ads)
             ->__toString()!!}

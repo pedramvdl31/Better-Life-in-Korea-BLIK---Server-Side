@@ -43,6 +43,9 @@
 	</br>
 	</center>
 	<center><span><i style="font-size: 20px;" class="glyphicon glyphicon-chevron-down" aria-hidden="true"></i></span></center>
+	<center>
+		<a id="tc" class="btn btn-primary btn-md hide">Continue <i class="glyphicon glyphicon-arrow-right"></i></a>
+	</center>
 </div>
 <div id="map" style="position: relative; width: 100%; overflow: hidden; "><div id="svggroup"><svg id="cit_svg" height="100%" version="1.1" width="100%" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden;position: relative;" viewBox="0 0 960 720">
 <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.0.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
