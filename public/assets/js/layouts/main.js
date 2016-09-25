@@ -246,17 +246,21 @@ Listeners = {
 	    	}
 		});
 	    $('path').click(function(){
+	    	var tcid = $(this).attr('c-id');
+	    	$('.tt').css('fill','#000000');
 	    	if ($(this).hasClass('a')) {
 	    		HelperFuncions.hide_to_cat_button();
 	    		HelperFuncions.remove_city_id();
 		    	$(this).css('fill','#dddddd');
 		    	$(this).removeClass('a');
+		    	$('text[c-id*='+tcid+']').css('fill','#000000');
 	    	} else {
 	    		HelperFuncions.show_to_cat_button();
-	    		HelperFuncions.add_city_id($(this).attr('c-id'));
+	    		HelperFuncions.add_city_id(tcid);
 		    	$('path').css('fill','#dddddd');
 		    	$(this).css('fill','#223b59');
-		    	$(this).addClass('a');	    		
+		    	$(this).addClass('a');	  
+		    	$('text[c-id*='+tcid+']').css('fill','rgb(255, 255, 255)');  		
 	    	}
 		});
 	    $('#tc').click(function(){
@@ -265,6 +269,15 @@ Listeners = {
         	});
 	    	$('#cat_select').animate({
             	left: "0"
+        	});
+		});
+	    //back to cities
+	    $('#btc').click(function(){
+	    	$('#city_select').animate({
+            	right: "0"
+        	});
+	    	$('#cat_select').animate({
+            	left: "100%"
         	});
 		});
 
@@ -404,14 +417,9 @@ Listeners = {
 	    	$('.tab-cat').css('border-bottom','1px solid white');
 		});
 	    $('.links').click(function(){
-			var cat_id = $(this).attr('cat-id');
-
-
 			$('.tab-c').css('border','none');
 			$('.tab-home').css('border-bottom','1px solid white');
-	    	
-
-			ServerRequests.refresh_ads(cat_id);
+			ServerRequests.refresh_ads($(this).attr('cat-id'),$('#tc').attr('t_city_id'));
 		});
 		$("#city-select-home").change(function(){
 			var t_v = $("#city-select-home option:selected").val();
@@ -506,7 +514,7 @@ ServerRequests = {
 			}
 			);
 	},
-	refresh_ads: function(cat_id) {
+	refresh_ads: function(cat_id,city_id) {
 		GVar.category = cat_id;
 		//new category reset load more
 		GVar.scroll_load_more = 1;
@@ -523,7 +531,8 @@ ServerRequests = {
 			'/search-02',
 			{
 				"_token": token,
-				"cat_id":cat_id
+				"cat_id":cat_id,
+				"city_id":city_id
 			},
 			function(result){
 				$('.post-loading').addClass('hide');

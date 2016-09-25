@@ -1,5 +1,8 @@
 <div id="app-view" class="container">
     <div class="col-sm-12 ads-warps all-tabs cat-tab">
+        <div style="float:left;margin-top: 20px;">
+            <a id="btc" class="btn btn-primary btn-md"><i class="glyphicon glyphicon-chevron-left"></i></a>
+        </div>
         <h2 class="pages-title oswald-regular" class="title text-center">Categories</h2>
         {!!$all_categories!!}
     </div>
