@@ -264,6 +264,7 @@ Listeners = {
 	    	}
 		});
 	    $('#tc').click(function(){
+	    	$('#cat_select').removeClass('hide');
 	    	$('#city_select').animate({
             	right: "100%"
         	});
@@ -279,6 +280,9 @@ Listeners = {
 	    	$('#cat_select').animate({
             	left: "100%"
         	});
+    		setTimeout(function(){
+				$('#cat_select').addClass('hide');
+			}, 1200);
 		});
 
 

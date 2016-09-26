@@ -229,7 +229,7 @@
         </div>
         <!-- CITIES MAP -->
         <!-- CITIES MAP -->
-        <div id="cat_select" class="hide">   
+        <div class="hide" id="cat_select" style="">   
             {!! View::make('partials.categories')->with('all_categories',$all_categories)
             ->with('ads',$ads)
             ->__toString()!!}
