@@ -226,41 +226,41 @@ Listeners = {
 		  document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
 		});
 		$(".tt").mouseout(function() {
-			if (!$("#p"+$(this).attr('ci')).hasClass('a')) {
+			if (!$("#p"+$(this).attr('ci')).hasClass('act')) {
 				$("#p"+$(this).attr('ci')).css('fill','#dddddd');
 			}
 		});
 		$(".tt").click(function(){
 	    	$('path').css('fill','#dddddd');
 	    	var ttid =  $(this).attr('ci');
-	    	if (!$("#p"+ttid).hasClass('a')) {
+	    	if (!$("#p"+ttid).hasClass('act')) {
+	    		$('path').removeClass('act');
 	    		HelperFuncions.show_to_cat_button();
 	    		HelperFuncions.add_city_id(ttid);
 	    		document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
-	    		$("#p"+ttid).addClass('a');
+	    		$("#p"+ttid).addClass('act');
 	    	} else {
 	    		HelperFuncions.hide_to_cat_button();
 	    		HelperFuncions.remove_city_id();
 	    		document.getElementById("p"+$(this).attr('ci')).style.fill = '#dddddd';
-	    		$("#p"+ttid).removeClass('a');
+	    		$("#p"+ttid).removeClass('act');
 	    	}
 		});
 	    $('path').click(function(){
 	    	var tcid = $(this).attr('c-id');
 	    	$('.tt').css('fill','#000000');
-	    	if ($(this).hasClass('a')) {
+	    	if ($(this).hasClass('act')) {
 	    		HelperFuncions.hide_to_cat_button();
 	    		HelperFuncions.remove_city_id();
 		    	$(this).css('fill','#dddddd');
-		    	$(this).removeClass('a');
-		    	$('text[c-id*='+tcid+']').css('fill','#000000');
+		    	$(this).removeClass('act');
 	    	} else {
+	    		$('path').removeClass('act');
 	    		HelperFuncions.show_to_cat_button();
 	    		HelperFuncions.add_city_id(tcid);
 		    	$('path').css('fill','#dddddd');
 		    	$(this).css('fill','#223b59');
-		    	$(this).addClass('a');	  
-		    	$('text[c-id*='+tcid+']').css('fill','rgb(255, 255, 255)');  		
+		    	$(this).addClass('act');	  
 	    	}
 		});
 	    $('#tc').click(function(){
@@ -323,7 +323,11 @@ Listeners = {
 					$('.2t-wrap').css('visibility','visible').css('opacity',1);
 					$('#qk-post-btn').removeAttr('disabled');
 					// HelperFuncions.InitGoogleMap();
-					Maps.PostAdInit();
+					if (GVar.qkpost_map==0) {
+						GVar.qkpost_map = 1;
+						Maps.PostAdInit();
+					}
+					
 				}, 50);
 			} else {
 					$('.2t-wrap').css('visibility','hidden').css('opacity',0);
@@ -355,7 +359,6 @@ Listeners = {
 	    	var _auth = parseInt($('#_auth').attr('data'));
 	    	if (_auth == 1) {
 				$('#qkpost-modal').modal('show');
-
 				var html = '<div id="map-form-wrapper"><input id="pac-input" class="controls" type="text"'+
 							'placeholder="Enter a location">'+
 							'<div id="type-selector" class="controls">'+
@@ -364,7 +367,6 @@ Listeners = {
 							'<input type="radio" name="type" id="changetype-establishment">'+
 							'<label for="changetype-establishment">Establishments</label>'+
 							'</div></div>';
-
 				$('#qkpost-map-container').append(html);
 
 
@@ -428,14 +430,15 @@ Listeners = {
 				ServerRequests.refresh_ads_city(t_v);
 			}
 		});
-		$("#city-select").change(function(){
-			var latlng = {};
+		$(document).on('change', '#city-select-bar', function() {
+		  	var latlng = {};
 			latlng.lat = parseFloat(this.options[this.selectedIndex].getAttribute('lat'));
 			latlng.lng = parseFloat(this.options[this.selectedIndex].getAttribute('lng'));
 			Maps.SetCenterLatLng(latlng);
 		});
 	    $('#qk-post-btn').click(function(){
 			var _form = $('#pkpost-form').serialize();
+
 			ServerRequests.process_qkpost(_form,document.getElementById("cats").value);
 		});
 	    $('#back-to-wl').click(function(){
@@ -864,6 +867,7 @@ ServerRequests = {
 
 		 				//reload map search
 		 				$('#map-form-wrapper').remove();
+		 				GVar.qkpost_map = 0;
 		 			break;
 
 		 			case 400:
@@ -1004,8 +1008,8 @@ HelperFuncions = {
 
 		$('.pk-form').val('');
 		$(".qp-selects").val("0");
-		$("#city-select").val("0");
-		$("#city-select").val("0");
+		$("#city-select-bar").val("0");
+		$("#city-select-bar").val("0");
 
 		Dropzone.forElement("#post_upload_zone_image").removeAllFiles(true);
 		Dropzone.forElement("#post_upload_zone_video").removeAllFiles(true);
@@ -1038,6 +1042,16 @@ Maps = {
 			},
 			streetViewControl: false
         });
+
+
+	    var geolocationDiv = document.createElement('div');
+	    geolocationDiv.setAttribute("id", "mylocation1");
+	    geolocationDiv.style.width = '30px';
+	    geolocationDiv.style.right = '0 !important';
+	   
+	    var geolocationControl = new GeolocationControl(geolocationDiv, map);
+	    map.controls[google.maps.ControlPosition.TOP_CENTER].push(geolocationDiv);
+
         // GOOGLE MAP RESPONSIVENESS
         google.maps.event.addDomListener(window, "resize", function() {
 		 var center = map.getCenter();
@@ -1156,9 +1170,6 @@ Maps = {
 			streetViewControl: true
         });
 
-	    // var geolocationDiv = document.createElement('div');
-	    // var geolocationControl = new GeolocationControl(geolocationDiv, PostViewMap);
-	    // PostViewMap.controls[google.maps.ControlPosition.TOP_CENTER].push(geolocationDiv);
 
 
         // GOOGLE MAP RESPONSIVENESS
@@ -1208,58 +1219,60 @@ Maps = {
 GVar = {
 	'take':8,
 	'skip':0,
+	'qkpost_map':0,
 	'category':0,
 	'scroll_load_more':1,
 	'flag_image':'/assets/images/icons/beachflag.png'
 }
 
-// function GeolocationControl(controlDiv, map) {
+function GeolocationControl(controlDiv, map) {
 
-//     // Set CSS for the control button
-//     var controlUI = document.createElement('div');
-//     controlUI.style.backgroundColor = '#444';
-//     controlUI.style.borderStyle = 'solid';
-//     controlUI.style.borderWidth = '1px';
-//     controlUI.style.borderColor = 'white';
-//     controlUI.style.height = '28px';
-//     controlUI.style.marginTop = '5px';
-//     controlUI.style.cursor = 'pointer';
-//     controlUI.style.textAlign = 'center';
-//     controlUI.title = 'Click to center map on your location';
-//     controlDiv.appendChild(controlUI);
+    // Set CSS for the control button
+    var controlUI = document.createElement('div');
 
-//     // Set CSS for the control text
-//     var controlText = document.createElement('div');
-//     controlText.style.fontFamily = 'Arial,sans-serif';
-//     controlText.style.fontSize = '10px';
-//     controlText.style.color = 'white';
-//     controlText.style.paddingLeft = '10px';
-//     controlText.style.paddingRight = '10px';
-//     controlText.style.marginTop = '8px';
-//     controlText.innerHTML = 'Center map on your location';
-//     controlUI.appendChild(controlText);
+    controlUI.style.backgroundColor = '#444';
+    controlUI.style.borderStyle = 'solid';
+    controlUI.style.borderWidth = '1px';
+    controlUI.style.borderColor = 'white';
+    controlUI.style.height = '28px';
+    controlUI.style.marginTop = '5px';
+    controlUI.style.cursor = 'pointer';
+    controlUI.style.textAlign = 'center';
+    controlUI.title = 'Click to center map on your location';
+    controlDiv.appendChild(controlUI);
 
-//     // Setup the click event listeners to geolocate user
-//     google.maps.event.addDomListener(controlUI, 'click', geolocate);
-// }
+    // Set CSS for the control text
+    var controlText = document.createElement('div');
+    controlText.style.fontFamily = 'Arial,sans-serif';
+    controlText.style.fontSize = '15px';
+    controlText.style.color = 'white';
+    // controlText.style.paddingLeft = '10px';
+    // controlText.style.paddingRight = '10px';
+    controlText.style.marginTop = '4px';
+    controlText.innerHTML = '<i class="glyphicon glyphicon-map-marker"></i>';
+    controlUI.appendChild(controlText);
 
-// function geolocate() {
+    // Setup the click event listeners to geolocate user
+    google.maps.event.addDomListener(controlUI, 'click', geolocate);
+}
 
-//     if (navigator.geolocation) {
+function geolocate() {
 
-//         navigator.geolocation.getCurrentPosition(function (position) {
+    if (navigator.geolocation) {
 
-//             var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        navigator.geolocation.getCurrentPosition(function (position) {
 
-//             // Create a marker and center map on user location
-//             marker = new google.maps.Marker({
-//                 position: pos,
-//                 draggable: true,
-//                 animation: google.maps.Animation.DROP,
-//                 map: PostViewMap
-//             });
+            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-//             PostViewMap.setCenter(pos);
-//         });
-//     }
-// }
+            // Create a marker and center map on user location
+            marker = new google.maps.Marker({
+                position: pos,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                map: map
+            });
+
+            map.setCenter(pos);
+        });
+    }
+}

@@ -115,7 +115,7 @@
                             width: 100% !important;
                         }
                     </style>
-                    <select class="form-control" name="city" id="city-select">
+                    <select class="form-control" name="city" id="city-select-bar">
                         <option value="0">Select Your City</option>
                         <option value="1" lat="36.99231316337308" lng="127.1126876079345">Pyeongtaek Downtown</option>
                         <option value="2" lat="37.456306800434405" lng="126.70522765767214">Incheon</option>
@@ -163,7 +163,6 @@
                     <input type="hidden" id="qkp-lng" name="long" />
 
                     <div id="qkpost-map-container" style="width:80%;margin:0 auto">
-
                         <div style="height:300px" id="map"></div>
                     </div>
 

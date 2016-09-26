@@ -214,6 +214,10 @@
                 transition: all 1s ease;
                 
               }
+              #mylocation1{
+                right: 0 !important;
+                left:auto !important;
+              }
         </style>
         <!-- PAGE VIEW -->
 
