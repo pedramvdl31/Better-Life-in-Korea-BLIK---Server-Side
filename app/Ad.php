@@ -481,7 +481,7 @@ class Ad extends Model
                   <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
                   <button style="width:10%" id="waze-info"data-toggle="tooltip" data-placement="top" title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" type="button" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
                 </div>
-                  <button title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["long"].'" id="daum-drive-to" type="button" class="btn btn-info btn-block">DAUM Maps</button>
+                <a href="http://map.daum.net/link/map/'.$data->title.','.$data["lat"].','.$data['long'].' traget="_blank" class="btn btn-success btn-block">Daum Maps</a>
                 
                 <hr>';
 
