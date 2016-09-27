@@ -347,6 +347,13 @@ Listeners = {
 	    $(document).on('click','#waze-drive-to',function(){
 	    	window.location.href = "waze://?ll="+$(this).attr('lat')+","+$(this).attr('lng')+"&navigate=yes";
 	    });
+	    $(document).on('click','#daum-drive-to',function(){
+	    	var mlink =  "http://map.daum.net/link/map/"+$(this).attr('title')+","+$(this).attr('lat')+","+$(this).attr('lng');
+	    	window.open(
+				  mlink,
+				  '_blank' // <- This is what makes it open in a new window.
+				);
+	    });
 	    $(document).on('click','.logout-btn',function(){
 			$('#logout-modal').modal('show');
 	    });

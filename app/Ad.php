@@ -403,13 +403,13 @@ class Ad extends Model
                 $reviews = Review::where('ad_id',$data['id'])->get();
                 $r_count = 0;
                 $r_sum = 0;
-                $r_avg = 5.5;
+                $r_avg = 8;
                 foreach ($reviews as $rvk => $rvv) {
                     $r_count++;
                     $r_sum += $rvv['rate'];
                 }
                 if ($r_count>0) {
-                    $r_sum += 5;
+                    $r_sum += 8;
                     $r_count += 1;
                     $r_avg = $r_sum/$r_count;
                 }
@@ -480,7 +480,12 @@ class Ad extends Model
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
                   <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
                   <button style="width:10%" id="waze-info"data-toggle="tooltip" data-placement="top" title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" type="button" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
-                </div><hr>';
+                </div>
+                  <button title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["long"].'" id="daum-drive-to" type="button" class="btn btn-info btn-block">DAUM Maps</button>
+                
+                <hr>';
+
+                // <a href='http://map.daum.net/link/map/우리회사d,37.402056,127.108212'>daum</a>
             }
         }
         return $data_array;

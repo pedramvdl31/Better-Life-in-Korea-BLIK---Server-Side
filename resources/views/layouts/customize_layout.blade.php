@@ -220,9 +220,6 @@
               }
         </style>
         <!-- PAGE VIEW -->
-
-        
-
         <!-- CITIES MAP -->
         <div id="city_select">   
             {!! View::make('partials.cities_map') !!} 
