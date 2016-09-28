@@ -41,6 +41,17 @@
         <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery.css">
 
 
+<!-- Used to handle Chrome then menu then share.-->
+
+<intent-filter>
+    <action android:name="android.intent.action.SEND" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:mimeType="text/plain" />
+    <data android:mimeType="image/*" />
+</intent-filter>  
+
+
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -220,6 +231,20 @@
               }
         </style>
         <!-- PAGE VIEW -->
+<script src="http://webintents.org/webintents.min.js"></script>
+         <button id="sharetest" class="btn btn-info">SHARE ME</button>
+
+<p><a href="intent:#Intent;action=android.intent.action.SEND;type=text/plain;end">intent:#Intent;action=android.intent.action.SEND;type=text/plain;end</a>
+<style>
+  @media (min-width: 600px) {
+   #intent1,#intent2,#intent3 {
+     width: 50%;
+     height: auto;<br />
+   }
+  }
+</style>
+</p>
+
         <!-- CITIES MAP -->
         <div id="city_select">   
             {!! View::make('partials.cities_map') !!} 

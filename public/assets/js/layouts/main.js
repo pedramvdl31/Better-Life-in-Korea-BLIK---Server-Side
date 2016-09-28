@@ -348,6 +348,17 @@ Listeners = {
 	    	window.location.href = "waze://?ll="+$(this).attr('lat')+","+$(this).attr('lng')+"&navigate=yes";
 	    });
 
+
+	    $(document).on('click','#sharetest',function(){
+		 // redirect to delicious sharing page
+		    window.location.href='https://www.delicious.com/save?v=5&noui&jump=close&url='
+		            +encodeURIComponent(window.webkitIntent.data)
+		            +'&title=Enter title',
+		            'delicious','toolbar=no,width=550,height=550';
+		});
+
+
+
 	    $(document).on('click','.logout-btn',function(){
 			$('#logout-modal').modal('show');
 	    });
