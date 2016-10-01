@@ -41,17 +41,7 @@
         <link rel="stylesheet" href="/packages/gallery-master/css/blueimp-gallery.css">
 
 
-<!-- Used to handle Chrome then menu then share.-->
-
-<intent-filter>
-    <action android:name="android.intent.action.SEND" />
-    <category android:name="android.intent.category.DEFAULT" />
-    <category android:name="android.intent.category.BROWSABLE" />
-    <data android:mimeType="text/plain" />
-    <data android:mimeType="image/*" />
-</intent-filter>  
-
-
+    <!-- Used to handle Chrome then menu then share.-->
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -205,7 +195,7 @@
                 font-size: 13px;
                 font-weight: 300;
               }
-              #city_select{
+              #a{
                 position: absolute;
                 width: 100%;
                 -webkit-transition: all 1s ease;
@@ -214,7 +204,7 @@
                 -ms-transition: all 1s ease;
                 transition: all 1s ease;
               }
-              #cat_select{
+              #b{
                 position: absolute;
                 width: 100%;
                 left: 100%;
@@ -223,7 +213,16 @@
                 -o-transition: all 1s ease;
                 -ms-transition: all 1s ease;
                 transition: all 1s ease;
-                
+              }
+              #c{
+                position: absolute;
+                width: 100%;
+                left: 100%;
+                -webkit-transition: all 1s ease;
+                -moz-transition: all 1s ease;
+                -o-transition: all 1s ease;
+                -ms-transition: all 1s ease;
+                transition: all 1s ease;
               }
               #mylocation1{
                 right: 0 !important;
@@ -231,33 +230,27 @@
               }
         </style>
         <!-- PAGE VIEW -->
-<script src="http://webintents.org/webintents.min.js"></script>
-         <button id="sharetest" class="btn btn-info">SHARE ME</button>
+        <!-- <script src="http://webintents.org/webintents.min.js"></script>
+                 <button id="sharetest" class="btn btn-info">SHARE ME</button>
 
-<p><a href="intent:#Intent;action=android.intent.action.SEND;type=text/plain;end">intent:#Intent;action=android.intent.action.SEND;type=text/plain;end</a>
-<style>
-  @media (min-width: 600px) {
-   #intent1,#intent2,#intent3 {
-     width: 50%;
-     height: auto;<br />
-   }
-  }
-</style>
-</p>
+        <a href="intent:#Intent;action=android.intent.action.SEND;type=text/plain;end">intent:#Intent;action=android.intent.action.SEND;type=text/plain;end</a> -->
 
-        <!-- CITIES MAP -->
-        <div id="city_select">   
+
+        <!-- CITIES MAP 1 -->
+        <div id="a">   
             {!! View::make('partials.cities_map') !!} 
         </div>
-        <!-- CITIES MAP -->
-        <!-- CITIES MAP -->
-        <div class="hide" id="cat_select" style="">   
-            {!! View::make('partials.categories')->with('all_categories',$all_categories)
-            ->with('ads',$ads)
+        <!-- CATEGORIES 2 -->
+        <div class="hide" id="b" style="">   
+            {!! View::make('partials.categories')
+            ->with('all_categories',$all_categories)
             ->__toString()!!}
         </div>
-        <!-- CITIES MAP -->
-
+        <!-- ALL ADS 3 -->
+        <div class="hide" id="c" style="">   
+            {!! View::make('partials.all_posts_view')
+             !!}
+        </div>
 
 
 
@@ -325,4 +318,4 @@
         }(document, 'script', 'facebook-jssdk'));</script>
         
     </body>
-    </html>
+</html>

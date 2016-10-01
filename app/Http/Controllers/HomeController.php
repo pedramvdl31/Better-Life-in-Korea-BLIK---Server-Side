@@ -80,15 +80,13 @@ class HomeController extends Controller
             $cats = Job::cat_select();
             $wishlist = Wishlist::PrepareForHome(Wishlist::where('status',1)->where('user_id',Auth::id())->get());
         }
-        $ads = Ad::PrepareAdsForHome(Ad::where('status',1)->orderBy('id', 'desc')->take(8)
-               ->get());
+
         $all_categories = Ad::PrepareCategoriesHtml();
         $layout_title = 'layouts.customize_layout';
 
         return view('home.homepage')
         ->with('cats',isset($cats)?$cats:null)
         ->with('wishlist',isset($wishlist)?$wishlist:null)
-        ->with('ads',$ads)
         ->with('all_categories',$all_categories)
         ->with('popup',0)
         ->with('cdt',date('Y-m-d H:i:s'))

@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	// Components.PreLoadDom();
 	Components.InitiateApp();
 	Components.EventHandler();
 	Maps.ViewAdInit(37.554084,126.949903);
@@ -6,6 +7,9 @@ $(document).ready(function(){
 
 // COMPONENTS
 Components = {
+	PreLoadDom: function() {
+		// InitFunctions.PreLoadDom();
+	},
 	InitiateApp: function() {
 		InitFunctions.SetStates();
 		InitFunctions.NavbarListener();
@@ -24,6 +28,14 @@ Components = {
 
 //FUNCTIONS
 InitFunctions = {
+	// PreLoadDom(){
+	// 	//PRELOADED DOMELEMETS
+	// 	window.DomElements = {
+	// 		'div-a': document.getElementById("a"), 
+	// 		'div-b': document.getElementById("b"), 
+	// 		'div-c': document.getElementById("c"), 
+	// 	};
+	// },
 	PageVisualSetup(){
 		window.flag = 0;
 		$('#nav').affix({
@@ -264,25 +276,28 @@ Listeners = {
 	    	}
 		});
 	    $('#tc').click(function(){
-	    	$('#cat_select').removeClass('hide');
-	    	$('#city_select').animate({
+	    	$('#b').removeClass('hide');
+	    	$('#a').animate({
             	right: "100%"
         	});
-	    	$('#cat_select').animate({
+	    	$('#b').animate({
             	left: "0"
         	});
 		});
 	    //back to cities
 	    $('#btc').click(function(){
-	    	$('#city_select').animate({
+	    	$('#a').animate({
             	right: "0"
         	});
-	    	$('#cat_select').animate({
+	    	$('#b').animate({
             	left: "100%"
         	});
     		setTimeout(function(){
-				$('#cat_select').addClass('hide');
+				$('#b').addClass('hide');
 			}, 1200);
+		});
+	    $('#btcat').click(function(){
+	    	HelperFuncions.hide_ads_page();
 		});
 
 
@@ -437,6 +452,7 @@ Listeners = {
 	    $('.links').click(function(){
 			$('.tab-c').css('border','none');
 			$('.tab-home').css('border-bottom','1px solid white');
+			HelperFuncions.view_ads_page();
 			ServerRequests.refresh_ads($(this).attr('cat-id'),$('#tc').attr('t_city_id'));
 		});
 		$("#city-select-home").change(function(){
@@ -538,8 +554,6 @@ ServerRequests = {
 		//new category reset load more
 		GVar.scroll_load_more = 1;
 		document.getElementById("no-ads").style.display = 'none';
-		$('.home-tab').removeClass('hide');
-    	$('.cat-tab').addClass('hide');
     	$('#post-list').addClass('hide');
 		$loading_in = HelperFuncions.create_loading_input();
 		$('.post-loading').html($loading_in);
@@ -930,6 +944,47 @@ HelperFuncions = {
 	},
 	remove_city_id(){
 		$('#tc').attr('t_city_id','');
+	},
+	//VIEW AND HIDE ADS PAGE
+	view_ads_page(){
+		var c = $('#c');
+		var b = $('#b');
+		c.removeClass('hide');
+		b.animate({
+	      left: "-100%"
+	    }, {
+	      duration: 500,
+	      easing: "swing"
+	    });
+		c.animate({
+	      left: "0"
+	    }, {
+	      duration: 500,
+	      easing: "swing"
+	    });
+	    setTimeout(function(){
+			b.addClass('hide');
+		}, 1200);
+	},
+	hide_ads_page(){
+		var b = $('#b');
+		var c = $('#c');
+		b.removeClass('hide');
+		b.animate({
+	      left: "0"
+	    }, {
+	      duration: 500,
+	      easing: "swing"
+	    });
+		c.animate({
+	      left: "100%"
+	    }, {
+	      duration: 500,
+	      easing: "swing"
+	    });
+	    setTimeout(function(){
+			c.addClass('hide');
+		}, 1200);
 	},
 	InitGoogleMap(){
 		$('#us2-lat').attr('name','lat');
