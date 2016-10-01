@@ -1,13 +1,20 @@
-<style type="text/css"></style>
+<style type="text/css">
+    #btcdw{
+        float:left;
+        margin-top: 20px;         
+    }
+
+
+</style>
 <div class="container">
     <div id="posts-page" class="col-sm-12 col-md-12 col-xs-12 home-tab ads-warps all-tabs">
-        <div id="btcd" style="">
+        <div id="btcdw" style="">
             <a id="btcat" class="btn btn-primary btn-md"><i class="glyphicon glyphicon-chevron-left"></i></a>
         </div>
         <div class="text-center post-loading"></div>
         <div id="post-list">
             <div class="features_items"><!--features_items-->
-                <h2 class="pages-title" class="title text-center">Posts</h2>
+                <h2 class="pages-title oswald-regular" class="title text-center">Posts</h2>
                 <div id="ads-wrapper">
                     
                 </div>
