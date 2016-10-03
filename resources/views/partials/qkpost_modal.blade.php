@@ -84,6 +84,14 @@
                     </select>
                     <select class="form-control qp-selects subcats " id="subcat-select-3" >
                         <option value="0">Select Sub Category</option>
+                        <option value="1">Hotel</option>
+                        <option value="2">Motel</option>
+                        <option value="3">Traditional House</option>
+                        <option value="4">Guest House</option>
+                        <option value="5">Other</option>
+                    </select>
+                    <select class="form-control qp-selects subcats " id="subcat-select-5" >
+                        <option value="0">Select Sub Category</option>
                         <option value="1">Dealership</option>
                         <option value="2">Private</option>
                         <option value="3">Sofa Document Fee</option>
@@ -95,12 +103,17 @@
                         <option value="3">Moving Company</option>
                         <option value="5">CellPhone</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-5" >
+                    <select class="form-control qp-selects subcats " id="subcat-select-6" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>
                     </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-6" >
+                    <select class="form-control qp-selects subcats " id="subcat-select-7" >
+                        <option value="0">Select Sub Category</option>
+                        <option value="1">Agencies</option>
+                        <option value="2">Private</option>
+                    </select>
+                    <select class="form-control qp-selects subcats " id="subcat-select-8" >
                         <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>

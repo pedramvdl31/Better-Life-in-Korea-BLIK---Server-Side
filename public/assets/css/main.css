@@ -160,8 +160,9 @@
 .label-holder{
     padding: 0;
     bottom: 0;
-    position: absolute;
+    position: relative;
     width: 100%;
+    margin-bottom: 1px;
 }
 .label-div-s{
   background-color: #5cb85c;

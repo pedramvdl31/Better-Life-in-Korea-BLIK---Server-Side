@@ -59,7 +59,7 @@ class Ad extends Model
     static public function PrepareCategoriesHtml() {
         $html = '<div class="cats-holder">';
         $f_image = DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'home'.DIRECTORY_SEPARATOR.'categories'.DIRECTORY_SEPARATOR.'category';
-        for ($i=1; $i <= 7; $i++) { 
+        for ($i=1; $i <= 8; $i++) { 
             $html .= '<div
                 style="
                     padding:5px !important;
@@ -79,18 +79,21 @@ class Ad extends Model
                         $html .= '<div class="cat-text-holder"><span>Restaurant</span></div>';
                         break;
                     case 3:
-                        $html .= '<div class="cat-text-holder"><span>Used Car</span></div>';
+                        $html .= '<div class="cat-text-holder"><span>Lodging</span></div>';
                         break;
                     case 4:
                         $html .= '<div class="cat-text-holder"><span>Move In/Out</span></div>';
                         break;
                     case 5:
-                        $html .= '<div class="cat-text-holder"><span>Flea Market</span></div>';
+                        $html .= '<div class="cat-text-holder"><span>Used Car</span></div>';
                         break;
                     case 6:
                         $html .= '<div class="cat-text-holder"><span>Events</span></div>';
                         break;
                     case 7:
+                        $html .= '<div class="cat-text-holder"><span>Flea Market</span></div>';
+                        break;
+                    case 8:
                         $html .= '<div class="cat-text-holder"><span>Fun</span></div>';
                         break;
                     
@@ -153,11 +156,11 @@ class Ad extends Model
                                     </div>
                                     <div class="product-overlay">
                                     </div>
-                                        <div class="label-holder label" style="font-size: 15px;">
-                                            <div class="label-div-s"><span">'.$city_text.'</span></div>
-                                            <div class="label-div-p"><span">'.$cat_text.'</span></div>
-                                            <div class="label-div-i"><span">'.$subcat_text.'</span></div>
-                                        </div>
+                                    <div class="label-holder" style="font-size: 15px;text-align:center">
+                                        <span class="label label-primary">'.$city_text.'</span>
+                                        <span class="label label-success">'.$cat_text.'</span>
+                                        <span class="label label-info">'.$subcat_text.'</span>
+                                    </div>
                                 </div>
                                 <div class="choose">
                                     <ul class="nav nav-pills nav-justified">
@@ -475,14 +478,27 @@ class Ad extends Model
                 $data_array['lat'] = $data['lat'];
                 $data_array['lng'] = $data['long'];
 
+                $walink = "";
+
                 //drive to
                 $data_array['drivebtn'] ='
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
                   <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
-                  <button style="width:10%" id="waze-info"data-toggle="tooltip" data-placement="top" title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" type="button" class="btn btn-primary"><i class="fa fa-info-circle" aria-hidden="true"></i></button>
+                    <button 
+                        style="width:10%" 
+                        id="waze-info" 
+                        data-toggle="tooltip" 
+                        data-html="true" 
+                        data-placement="top" 
+                        title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" 
+                        type="button" 
+                        class="btn btn-primary">
+                        <i class="fa fa-info-circle" aria-hidden="true">
+                        </i>
+                    </button>
                 </div>
                 <a href="http://map.daum.net/link/map/'.$data->title.','.$data["lat"].','.$data['long'].'"  target="_blank" class="btn btn-success btn-block">Daum Maps</a>
-                
+                <a class="pull-right" target="_blank" href="https://www.waze.com/download/">Download Waze</a>
                 <hr>';
 
                 // <a href='http://map.daum.net/link/map/우리회사d,37.402056,127.108212'>daum</a>

@@ -116,7 +116,7 @@ body{
     border-color: #45aed6 !important;
 }
 .product-image-wrapper {
-    height: 453px;
+    min-height: 396px;
     border-radius: 10px;
     background: white;
     border: 1px solid #E2E1E1;
@@ -130,7 +130,6 @@ body{
 }
 .single-products {
     position: relative;
-    height: 410px;
     overflow: hidden;
 }
 .ad-image {

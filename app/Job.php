@@ -693,11 +693,12 @@ class Job extends Model
                 '0'         => 'Select Category',
                 '1'        	=> 'Real Estate',
                 '2'        	=> 'Restaurant',
-                '3'     	=> 'Used Car',
+                '3'     	=> 'Lodging',
                 '4'  		=> 'Moving In/Out',
-                '5'     	=> 'Flea Market',
+                '5'     	=> 'Used Car',
                 '6'      	=> 'Events',
-                '7'      	=> 'Fun',
+                '7'     	=> 'Flea Market',
+                '8'      	=> 'Fun',
                 );
         }
 
@@ -724,9 +725,10 @@ class Job extends Model
 			case '3':
 				$tarray =	array(
 			                '0'      => 'Select SubCategory',
-			                '1'      => 'Agencies',
-			                '2'      => 'Private',
-			                '3'      => 'Sofa Document Fee'
+			                '1'      => 'Hotel',
+			                '2'      => 'Motel',
+			                '3'      => 'Traditional House',
+			                '4'      => 'Guest House'
 			                );
 				break;
 			case '4':
@@ -743,6 +745,7 @@ class Job extends Model
 			                '0'      => 'Select SubCategory',
 			                '1'      => 'Agencies',
 			                '2'      => 'Private',
+			                '3'      => 'Sofa Document Fee'
 			                );
 				break;
 			case '6':
@@ -752,7 +755,13 @@ class Job extends Model
 			                '2'      => 'Private',
 			                );
 				break;
-			
+			case '7':
+				$tarray =	array(
+			                '0'      => 'Select SubCategory',
+			                '1'      => 'Agencies',
+			                '2'      => 'Private',
+			                );
+				break;
 			default:
 				$tarray =	array(
 			                '0'          => 'Select SubCategory',
