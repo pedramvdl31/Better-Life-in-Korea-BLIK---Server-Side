@@ -73,13 +73,13 @@ class Ad extends Model
                 $html .= '</div>';
                 switch ($i) {
                     case 1:
-                        $html .= '<div class="cat-text-holder"><span>Real Estate</span></div>';
+                        $html .= '<div class="cat-text-holder"><span>Lodging</span></div>';
                         break;
                     case 2:
                         $html .= '<div class="cat-text-holder"><span>Restaurant</span></div>';
                         break;
                     case 3:
-                        $html .= '<div class="cat-text-holder"><span>Lodging</span></div>';
+                        $html .= '<div class="cat-text-holder"><span>Real Estate</span></div>';
                         break;
                     case 4:
                         $html .= '<div class="cat-text-holder"><span>Move In/Out</span></div>';
@@ -144,7 +144,7 @@ class Ad extends Model
                 $data_a['html'] .= '
                         <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad">
                             <div class="product-image-wrapper">
-                                <div class="single-products view-ad pointer" data="'.$dv->id.'">
+                                <div class="single-products m-vad pointer" data="'.$dv->id.'">
                                     <div class="productinfo text-center infoholder">
                                         <div class="ad-image" style="background-image: url(';
 
@@ -229,7 +229,7 @@ class Ad extends Model
                 $data_a['html'] .= '
                         <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad updated_ads" style="display:none">
                             <div class="product-image-wrapper">
-                                <div class="single-products view-ad pointer" data="'.$dv->id.'">
+                                <div class="single-products m-vad pointer" data="'.$dv->id.'">
                                     <div class="productinfo text-center infoholder">
                                         <div class="ad-image" style="background-image: url(';
 
@@ -322,7 +322,7 @@ class Ad extends Model
                 $data_a['html'] .= '
                         <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad updated_ads" style="display:none">
                             <div class="product-image-wrapper">
-                                <div class="single-products view-ad pointer" data="'.$dv->id.'">
+                                <div class="single-products m-vad pointer" data="'.$dv->id.'">
                                     <div class="productinfo text-center infoholder">
                                         <div class="ad-image" style="background-image: url(';
 

@@ -80,7 +80,6 @@
     </style>
     @yield('stylesheets')
     <body>
-        
         <!-- google analytics tag -->
         <script>
           (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -117,13 +116,15 @@
                                 margin-left: 10px;
                                 width: 20px;
                                 ">
-                                    <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 28px;"></i>
+                                <i class="fa fa-cog fa-spin fa-3x fa-fw" style="font-size: 28px;"></i>
                             </div>
                         </div>
                         <ul class="nav navbar-nav navbar-right my-navbar-right">
-                            <li><a class="tab-c tab-home"> <span class="text-to-icon">Posts</span> </a></li>
+<!--                             <li><a class="tab-c tab-home"> <span class="text-to-icon">Posts</span> </a>
+                            </li>
                             <li><a class="tab-c tab-cat tab-active"><span class="text-to-icon"><i class="glyphicon glyphicon-th-large" aria-hidden="true"></i>&nbsp;Categories</a></span></li>
-                            <li><span class="nav-vertical-seperator">|</span></li>
+                            <li><span class="nav-vertical-seperator">|</span></li> -->
+                            
                             <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Profile</a></li>
                             @if(Auth::check())
                                 <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
@@ -163,7 +164,6 @@
                 outline: none;
                 box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
               }
-
               #pac-input {
                 background-color: #fff;
                 font-family: Roboto;
@@ -174,22 +174,18 @@
                 text-overflow: ellipsis;
                 width: 300px;
               }
-
               #pac-input:focus {
                 border-color: #4d90fe;
               }
-
               .pac-container {
                 z-index: 9999;
                 font-family: Roboto;
               }
-
               #type-selector {
                 color: #fff;
                 background-color: #4d90fe;
                 padding: 5px 11px 0px 11px;
               }
-
               #type-selector label {
                 font-family: Roboto;
                 font-size: 13px;

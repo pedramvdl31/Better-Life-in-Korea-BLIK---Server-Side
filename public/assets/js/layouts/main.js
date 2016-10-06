@@ -380,7 +380,7 @@ Listeners = {
 	    $(document).on('click','.reg-btn',function(){
 			$('#register-modal').modal('show');
 	    });
-	    $(document).on('click','.view-ad',function(){
+	    $(document).on('click','.m-vad',function(){
 			var this_id = $(this).attr('data');
 			$('#atwl-btn').attr('data',this_id);
 			$('.fbc').html('');
@@ -519,7 +519,7 @@ ServerRequests = {
 	 				GVar.scroll_load_more = 0;
 	 			}
 
-				$('#ads-wrapper').append(result.html_data['html']);
+				$('#madsw').append(result.html_data['html']);
 				$('.updated_ads').fadeIn();
 				$('.sin-ad').removeClass('updated_ads');
 				flag=0;
@@ -555,9 +555,11 @@ ServerRequests = {
 		GVar.scroll_load_more = 1;
 		document.getElementById("no-ads").style.display = 'none';
     	$('#post-list').addClass('hide');
+
 		$loading_in = HelperFuncions.create_loading_input();
 		$('.post-loading').html($loading_in);
 		$('.post-loading').removeClass('hide');
+
 		$('#footer').css('margin-top','150px');
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
@@ -568,15 +570,19 @@ ServerRequests = {
 				"city_id":city_id
 			},
 			function(result){
+
 				$('.post-loading').addClass('hide');
 				$('.post-loading').html('');
+
 				$('#footer').css('margin-top','0');
 				var status = result.status;
 				var ads = result.ads;
 				var render = result.render;
 				switch(status){					
 		 			case 200:
-		 				$('#ads-wrapper').html(ads['html']);
+		 				console.log('here');
+		 				console.log(ads['html']);
+		 				$('#madsw').html(ads['html']);
 		 				$('#post-list').removeClass('hide');
 		 			break;
 
@@ -608,7 +614,8 @@ ServerRequests = {
 				var render = result.render;
 				switch(status){					
 		 			case 200:
-		 				$('#ads-wrapper').html(ads['html']);
+
+		 				$('#madsw').html(ads['html']);
 		 				$('#post-list').removeClass('hide');
 		 			break;
 
@@ -640,7 +647,7 @@ ServerRequests = {
 				var ads = result.ads;
 				switch(status){					
 		 			case 200:
-		 				$('#ads-wrapper').html(ads);
+		 				$('#madsw').html(ads);
 		 			break;
 		 			case 400:
 		 			break;

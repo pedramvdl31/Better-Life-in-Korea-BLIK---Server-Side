@@ -691,9 +691,9 @@ class Job extends Model
 	public static function cat_select() {
             return array(
                 '0'         => 'Select Category',
-                '1'        	=> 'Real Estate',
-                '2'        	=> 'Restaurant',
-                '3'     	=> 'Lodging',
+                '1'        	=> 'Lodging',
+                '2'     	=> 'Restaurant',
+                '3'        	=> 'Real Estate',
                 '4'  		=> 'Moving In/Out',
                 '5'     	=> 'Used Car',
                 '6'      	=> 'Events',

@@ -71,6 +71,14 @@
                 <div class="form-group hide anim" id="subcat-wrap" style="visibility:hidden;opacity:0">
                     <select class="form-control qp-selects subcats " id="subcat-select-1" >
                         <option value="0">Select Sub Category</option>
+                        <option value="1">Hotel</option>
+                        <option value="2">Motel</option>
+                        <option value="3">Traditional House</option>
+                        <option value="4">Guest House</option>
+                        <option value="5">Other</option>
+                    </select>
+                    <select class="form-control qp-selects subcats " id="subcat-select-3" >
+                        <option value="0">Select Sub Category</option>
                         <option value="1">Agencies</option>
                         <option value="2">Private</option>
                     </select>
@@ -80,14 +88,6 @@
                         <option value="2">Italian</option>
                         <option value="3">Western</option>
                         <option value="4">Mexican</option>
-                        <option value="5">Other</option>
-                    </select>
-                    <select class="form-control qp-selects subcats " id="subcat-select-3" >
-                        <option value="0">Select Sub Category</option>
-                        <option value="1">Hotel</option>
-                        <option value="2">Motel</option>
-                        <option value="3">Traditional House</option>
-                        <option value="4">Guest House</option>
                         <option value="5">Other</option>
                     </select>
                     <select class="form-control qp-selects subcats " id="subcat-select-5" >

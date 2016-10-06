@@ -3,8 +3,6 @@
         float:left;
         margin-top: 20px;         
     }
-
-
 </style>
 <div class="container">
     <div id="posts-page" class="col-sm-12 col-md-12 col-xs-12 home-tab ads-warps all-tabs">
@@ -15,7 +13,7 @@
         <div id="post-list">
             <div class="features_items"><!--features_items-->
                 <h2 class="pages-title oswald-regular" class="title text-center">Posts</h2>
-                <div id="ads-wrapper">
+                <div id="madsw">
                     
                 </div>
                 <div id="loading-data" style="display:none;">
