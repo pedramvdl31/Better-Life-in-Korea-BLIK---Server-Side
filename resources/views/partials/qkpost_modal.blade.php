@@ -128,15 +128,7 @@
                             width: 100% !important;
                         }
                     </style>
-                    <select class="form-control" name="city" id="city-select-bar">
-                        <option value="0">Select Your City</option>
-                        <option value="1" lat="36.99231316337308" lng="127.1126876079345">Pyeongtaek Downtown</option>
-                        <option value="2" lat="37.456306800434405" lng="126.70522765767214">Incheon</option>
-                        <option value="3" lat="36.96916529999999" lng="127.03331281349188">Dongchang-ri</option>
-                        <option value="4" lat="36.81516335686547" lng="127.1138939">Cheonan</option>
-                        <option value="5" lat="37.04250471819789" lng="127.08627511349187">Songtan</option>
-                        <option value="6" lat="36.96087981734297" lng="127.04473080000002">Anjeong-ri</option>
-                    </select>
+                    {!! Form::select('city',$provs ,null, ['id'=>'city-select-bar','class'=>'form-control','status'=>false]) !!}
                 </div>
 
 

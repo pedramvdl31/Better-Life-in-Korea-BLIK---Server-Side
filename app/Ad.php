@@ -40,9 +40,14 @@ class Ad extends Model
         }
         return $output;
     }
-    static public function PrepareAdsSearchCategory($cat_id) {
+    static public function PrepareAdsSearchCategory($cat_id,$cit) {
         $output = null;
-        $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+        if ($cit==0||$cit=='0') {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+        } else {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->where('city',$cit)->orderBy('id', 'desc')->take(8)->get();
+        }
+        
         if (isset($ads)) {
             $output = Ad::PrepareAdsForHome($ads);
         }

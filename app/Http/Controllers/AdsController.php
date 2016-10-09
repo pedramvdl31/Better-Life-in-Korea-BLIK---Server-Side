@@ -181,10 +181,12 @@ class AdsController extends Controller
         if (isset($id)) {
             $ps = Ad::PrepareForEdit(Ad::find($id));
             if (isset($ps)) {
+                $provs = Job::prov_select();
                 $cats = Job::cat_select();
                 return view('dashboard.posts_edit')
                 ->with('layout','layouts.dashboard')
                 ->with('cats',$cats)
+                ->with('provs',$provs)
                 ->with('ps',$ps);
             }
         }
@@ -430,8 +432,9 @@ class AdsController extends Controller
         if(Request::ajax()){
             $status = 400;
             $cat_id = Input::get('cat_id');
-            if (isset($cat_id)) {
-                $ads = Ad::PrepareAdsSearchCategory($cat_id);
+            $cit = Input::get('city_id');
+            if (isset($cat_id,$cit)) {
+                $ads = Ad::PrepareAdsSearchCategory($cat_id,$cit);
                 $status = 200;
                 return Response::json(array(
                     'status' => $status,

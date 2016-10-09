@@ -265,6 +265,7 @@
             <!-- CHAT MUST BE HERE -->
             {!! View::make('partials.qkpost_modal')
             ->with('cats',$cats)
+            ->with('provs',$provs)
             ->__toString()!!}   
             {!! View::make('partials.wishlist_modal')
             ->with('wishlist',$wishlist)

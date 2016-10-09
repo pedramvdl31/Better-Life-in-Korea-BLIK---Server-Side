@@ -86,10 +86,7 @@
 	        }
 	    </style>
 	    <label>Select City:</label>
-	    <input name="city" value="{{$ps->city}}" class="form-control pk-form" id="cities-autocomplete" placeholder="Search Your City" style="width: 100%"  aria-describedby="sizing-addon2" />
-	    @foreach($errors->get('city') as $message)
-		<span class='help-block'>{!! $message !!}</span>
-		@endforeach
+	    {!! Form::select('city',$provs ,$ps->city, ['id'=>'subcat-select','class'=>'form-control ','status'=>false]) !!}
 	</div>
 
 	<div class="form-group 2t-wrap {!! $errors->has('title') ? 'has-error' : false !!}" id="title-wrap">

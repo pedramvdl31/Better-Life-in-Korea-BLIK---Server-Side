@@ -4,7 +4,16 @@ $(document).ready(function(){
 	Components.EventHandler();
 	Maps.ViewAdInit(37.554084,126.949903);
 });
-
+//GLOBAL VARIABLES
+GVar = {
+	'take':8,
+	'skip':0,
+	'qkpost_map':0,
+	'category':0,
+	'cid':0,
+	'scroll_load_more':1,
+	'flag_image':'/assets/images/icons/beachflag.png'
+}
 // COMPONENTS
 Components = {
 	PreLoadDom: function() {
@@ -245,28 +254,35 @@ Listeners = {
 		$(".tt").click(function(){
 	    	$('path').css('fill','#dddddd');
 	    	var ttid =  $(this).attr('ci');
+	    	
 	    	if (!$("#p"+ttid).hasClass('act')) {
 	    		$('path').removeClass('act');
 	    		HelperFuncions.show_to_cat_button();
 	    		HelperFuncions.add_city_id(ttid);
 	    		document.getElementById("p"+$(this).attr('ci')).style.fill = '#223b59';
 	    		$("#p"+ttid).addClass('act');
+	    		GVar.cid=ttid;
 	    	} else {
 	    		HelperFuncions.hide_to_cat_button();
 	    		HelperFuncions.remove_city_id();
 	    		document.getElementById("p"+$(this).attr('ci')).style.fill = '#dddddd';
 	    		$("#p"+ttid).removeClass('act');
+	    		GVar.cid=0;
 	    	}
 		});
 	    $('path').click(function(){
 	    	var tcid = $(this).attr('c-id');
+	    	//city intent id
+	    	
 	    	$('.tt').css('fill','#000000');
 	    	if ($(this).hasClass('act')) {
 	    		HelperFuncions.hide_to_cat_button();
 	    		HelperFuncions.remove_city_id();
 		    	$(this).css('fill','#dddddd');
 		    	$(this).removeClass('act');
+		    	GVar.cid=0;
 	    	} else {
+	    		GVar.cid=tcid;
 	    		$('path').removeClass('act');
 	    		HelperFuncions.show_to_cat_button();
 	    		HelperFuncions.add_city_id(tcid);
@@ -453,7 +469,7 @@ Listeners = {
 			$('.tab-c').css('border','none');
 			$('.tab-home').css('border-bottom','1px solid white');
 			HelperFuncions.view_ads_page();
-			ServerRequests.refresh_ads($(this).attr('cat-id'),$('#tc').attr('t_city_id'));
+			ServerRequests.refresh_ads($(this).attr('cat-id'));
 		});
 		$("#city-select-home").change(function(){
 			var t_v = $("#city-select-home option:selected").val();
@@ -463,10 +479,10 @@ Listeners = {
 			}
 		});
 		$(document).on('change', '#city-select-bar', function() {
-		  	var latlng = {};
-			latlng.lat = parseFloat(this.options[this.selectedIndex].getAttribute('lat'));
-			latlng.lng = parseFloat(this.options[this.selectedIndex].getAttribute('lng'));
-			Maps.SetCenterLatLng(latlng);
+		 //  	var latlng = {};
+			// latlng.lat = parseFloat(this.options[this.selectedIndex].getAttribute('lat'));
+			// latlng.lng = parseFloat(this.options[this.selectedIndex].getAttribute('lng'));
+			// Maps.SetCenterLatLng(latlng);
 		});
 	    $('#qk-post-btn').click(function(){
 			var _form = $('#pkpost-form').serialize();
@@ -549,7 +565,7 @@ ServerRequests = {
 			}
 			);
 	},
-	refresh_ads: function(cat_id,city_id) {
+	refresh_ads: function(cat_id) {
 		GVar.category = cat_id;
 		//new category reset load more
 		GVar.scroll_load_more = 1;
@@ -567,7 +583,7 @@ ServerRequests = {
 			{
 				"_token": token,
 				"cat_id":cat_id,
-				"city_id":city_id
+				"city_id":GVar.cid
 			},
 			function(result){
 
@@ -580,8 +596,6 @@ ServerRequests = {
 				var render = result.render;
 				switch(status){					
 		 			case 200:
-		 				console.log('here');
-		 				console.log(ads['html']);
 		 				$('#madsw').html(ads['html']);
 		 				$('#post-list').removeClass('hide');
 		 			break;
@@ -1168,7 +1182,6 @@ Maps = {
 	        geocoder.geocode({'location': latlng}, function(results, status) {
 	          if (status === 'OK') {
 			    if (results[1]) {
-			    	// console.log(latlng);
 			    	// saving to dom
 			    	document.getElementById('qkp-lat').value = latlng.lat;
 			    	document.getElementById('qkp-lng').value = latlng.lng;
@@ -1223,8 +1236,6 @@ Maps = {
         // Sets a listener on a radio button to change the filter type on Places
         // Autocomplete.
         function setupClickListener(id, types) {
-        	console.log(id);
-        	console.log(types);
           var radioButton = document.getElementById(id);
           radioButton.addEventListener('click', function() {
             autocomplete.setTypes(types);
@@ -1293,15 +1304,7 @@ Maps = {
 		google.maps.event.trigger(PostViewMap, "resize");
 	}
 }
-//GLOBAL VARIABLES
-GVar = {
-	'take':8,
-	'skip':0,
-	'qkpost_map':0,
-	'category':0,
-	'scroll_load_more':1,
-	'flag_image':'/assets/images/icons/beachflag.png'
-}
+
 
 function GeolocationControl(controlDiv, map) {
 

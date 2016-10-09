@@ -702,6 +702,29 @@ class Job extends Model
                 );
         }
 
+	public static function prov_select() {
+            return array(
+                '0'         => 'Select City',
+                '1'      	=> 'Gangwon-Do',
+                '2'        	=> 'Gyeonggi-Do',
+                '3'        	=> 'Seoul',
+                '4'     	=> 'Incheon',
+                '5'      	=> 'Daejeon',
+                '6'     	=> 'Chungcheong-Bukdo',
+                '7'      	=> 'Ullung-Do',
+                '8'     	=> 'Gyeongsang-Bukdo',
+                '9'      	=> 'Ulsan',
+                '10'      	=> 'Gyeongsang-Namdo',
+                '11'      	=> 'Busan',
+                '12'      	=> 'Daegu',
+                '13'     	=> 'Gwangju',
+                '14'      	=> 'Jeolla-Bukdo',
+                '15'  		=> 'Chungcheong-Namdo',
+                '16'      	=> 'Jeollanam-Do',
+                '17'      	=> 'Jeju-Do'
+                );
+        }
+
 	public static function perpare_subcat($cat_id) {
 		$tarray = null;
 		switch ($cat_id) {
