@@ -502,7 +502,7 @@ class Ad extends Model
                         </i>
                     </button>
                 </div>
-                <a href="http://map.daum.net/link/map/'.$data->title.','.$data["lat"].','.$data['long'].'"  target="_blank" class="btn btn-success btn-block">Daum Maps</a>
+                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["long"].'" class="btn btn-success btn-block">Daum Maps</a>
                 <a class="pull-right" target="_blank" href="https://www.waze.com/download/">Download Waze</a>
                 <hr>';
 

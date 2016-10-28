@@ -22,6 +22,10 @@
 //     return "event fired";
 // });
 
+Route::post('/api/init', ['uses'=>'ApisController@postInit']);
+Route::post('/api/check-token', ['uses'=>'ApisController@postCheckToken']);
+Route::post('/api/login', ['uses'=>'ApisController@postLogin']);
+
 //CHAT ROUTES
 Route::post('/g-m', ['as'=>'g_m','uses'=>'ConversationsController@postRtrnMsgs']);
 Route::post('/rqst-s-time', ['as'=>'r_st','uses'=>'HomeController@postRtrnSrvrTime']);
@@ -64,7 +68,9 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	});
 
 	//HOME ROUTE
-	Route::get('/', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
+	Route::get('/', ['as'=>'home_index', 'uses' => 'HomeController@getHomePage']);
+	Route::get('/home', ['as'=>'home_index', 'uses' => 'HomeController@getHomePage']);
+	Route::get('/m', ['as'=>'home_m', 'uses' => 'HomeController@getHomePageM']);
 	// Route::get('/home', ['as'=>'home_index', 'uses' => 'HomeController@getHomepage']);
 
 	// WEBSITE PUBLIC PAGES

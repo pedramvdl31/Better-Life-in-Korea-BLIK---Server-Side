@@ -60,7 +60,6 @@ InitFunctions = {
 	    	$('#app-view').css('margin-top','0');
 	    });
 
-
 		$('[data-toggle="tooltip"]').tooltip();
 
 		$('.body-wrapp').slimScroll({
@@ -251,6 +250,9 @@ Listeners = {
 				$("#p"+$(this).attr('ci')).css('fill','#dddddd');
 			}
 		});
+		$(document).on('click','#ntdum',function(e){
+			window.open('http://map.daum.net/link/map/'+$(this).attr('title')+','+$(this).attr('lat')+','+$(this).attr('lng'), "_self");
+		});
 		$(".tt").click(function(){
 	    	$('path').css('fill','#dddddd');
 	    	var ttid =  $(this).attr('ci');
@@ -379,7 +381,9 @@ Listeners = {
 	    	window.location.href = "waze://?ll="+$(this).attr('lat')+","+$(this).attr('lng')+"&navigate=yes";
 	    });
 
+	    $(document).on('click','#testform',function(){
 
+	    });
 	    $(document).on('click','#sharetest',function(){
 		 // redirect to delicious sharing page
 		    window.location.href='https://www.delicious.com/save?v=5&noui&jump=close&url='

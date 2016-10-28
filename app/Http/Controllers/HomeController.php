@@ -42,39 +42,7 @@ class HomeController extends Controller
 
         public function getHomePage()
     {   
-      // for ($i=2;$i<=11;$i++) { 
-      //   DB::table('ads')->insert([
-      //     [
-      //         'user_id' => '1',
-      //         'cat_id' => '1',
-      //         'subcat_id' => '1',
-      //         'title' => 'Lorem ipsum dolor',
-      //         'city' => '4',
-      //         'description' => '"Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, Lorem ipsum dolor sit amet, "',
-      //         'status' => 1
-      //     ]
-      //  ]);
-      // }
 
-      
-      // $after_array =array();
-
-      // $names['name'] = array();
-
-      // $html = '';
-      // $file = File::get('assets/all_cities.json');
-      // $new_file = json_decode($file,true);
-      // foreach ($new_file as $k => $v) {
-      //   if ($k == "Republic of Korea") {
-      //     foreach ($v as $vk => $vv) {
-      //       $nvv = str_replace("'","",$vv);
-      //       $html .= "case '".$vk."':<br>";
-      //       $html .= "cttxt = '".$nvv."';<br>";
-      //       $html .= "break;<br>";
-      //     }
-      //   }
-      // }
-      // echo $html;
         $cats='';
         $provs='';
         $wishlist='';
@@ -96,6 +64,13 @@ class HomeController extends Controller
         ->with('popup',0)
         ->with('cdt',date('Y-m-d H:i:s'))
         ->with('layout',$layout_title);
+    }
+
+      public function getHomePageM()
+    {   
+      return view('home.m_homepage')
+        ->with('layout','layouts.default');
+
     }
 
     public function getPopUpPost($id=null)

@@ -120,11 +120,6 @@
                             </div>
                         </div>
                         <ul class="nav navbar-nav navbar-right my-navbar-right">
-<!--                             <li><a class="tab-c tab-home"> <span class="text-to-icon">Posts</span> </a>
-                            </li>
-                            <li><a class="tab-c tab-cat tab-active"><span class="text-to-icon"><i class="glyphicon glyphicon-th-large" aria-hidden="true"></i>&nbsp;Categories</a></span></li>
-                            <li><span class="nav-vertical-seperator">|</span></li> -->
-                            
                             <li><a href="{!!route('users_dash')!!}"><i class="fa fa-level-up"></i> Profile</a></li>
                             @if(Auth::check())
                                 <li><a id="view_wl" class="pointer"><i class="fa fa-folder-o"></i> Wishlist</a></li>
@@ -247,8 +242,6 @@
             {!! View::make('partials.all_posts_view')
              !!}
         </div>
-
-
 
         @yield('content')
         <!-- PAGE VIEW END -->
