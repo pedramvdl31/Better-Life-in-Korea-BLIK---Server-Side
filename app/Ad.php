@@ -53,6 +53,19 @@ class Ad extends Model
         }
         return $output;
     }
+    static public function PrepareAdsSearchCategoryApi($cat_id,$cit) {
+        $output = null;
+        if ($cit==0||$cit=='0') {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+        } else {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->where('city',$cit)->orderBy('id', 'desc')->take(8)->get();
+        }
+        
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForHomeApi($ads);
+        }
+        return $output;
+    }
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);
@@ -181,6 +194,77 @@ class Ad extends Model
         }
         return $data_a;
     }
+
+    static public function PrepareAdsForHomeApi($data) {
+        $bp = 'https://www.betterlifeinkorea.com';
+        $data_a = array();
+        $data_a['html'] = '<div class="text-center"><h3 id="no-data">No results found, Try looking into other categories!</h3></div>';
+        $data_a['data'] = $data;
+        if (isset($data)) {
+            if (count($data)>0) {
+                $data_a['html'] = '';
+            }
+            foreach ($data as $dk => $dv) {
+
+                $cat_text = Ad::TranslateCat($dv->cat_id);
+                $subcat_text = Ad::TranslateSubCat($dv->cat_id,$dv->subcat_id);
+                $city_text = Ad::TranslateCity($dv->city);
+                $isinwl = count(Wishlist::where('ad_id',$dv->id)->first());
+                $_wlcolor = $isinwl>0?"rgb(0, 128, 0)":"#B3AFA8";
+                $new_t = '';
+                $new_des = '';
+                if (isset($dv['title'])) {
+                    $t_temp = $dv['title'];
+                    $new_t = strlen($t_temp)>20?substr($t_temp,0,20)."...":$t_temp;
+                }
+                if (isset($dv['description'])) {
+                    $des_temp = json_decode($dv['description']);
+                    $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."...":$des_temp;
+                }
+                $f_image = $bp.'/assets/images/home/product1.jpg';
+                $poster_id = $dv['user_id'];
+                
+                if ((isset($dv['file_srcs'])) && ($dv['file_srcs'] != "null")) {
+                    $src_temp = json_decode($dv['file_srcs'],true);
+                    $f_image = (isset($src_temp[0]['image']['name']))?$bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:$bp.'/assets/images/home/product1.jpg';
+                }
+
+                $data_a['html'] .= '
+                        <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad">
+                            <div class="product-image-wrapper">
+                                <div class="single-products m-vad pointer" data="'.$dv->id.'">
+                                    <div class="productinfo text-center infoholder">
+                                        <div class="ad-image" style="background-image: url(';
+
+                $data_a['html'] .= $f_image;
+                $data_a['html'] .= ');">';                    
+                $data_a['html'] .= '    </div>
+                                        <h2>'.$new_t.'</h2>
+                                        <p>'.$new_des.'</p>
+                                    </div>
+                                    <div class="product-overlay">
+                                    </div>
+                                    <div class="label-holder" style="font-size: 15px;text-align:center">
+                                        <span class="label label-primary">'.$city_text.'</span>
+                                        <span class="label label-success">'.$cat_text.'</span>
+                                        <span class="label label-info">'.$subcat_text.'</span>
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li>
+                                        <a style="color:'.$_wlcolor.'" data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>&nbsp;Add to wishlist</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                ';
+            }
+        }
+        return $data_a;
+    }
+
     static public function PrepareAdsForHomeHTML($data) {
 
         $data_a = array();

@@ -15,6 +15,7 @@ use View;
 use App\Job;
 use App\User;
 use App\Admin;
+use App\Ad;
 
 class ApisController extends Controller
 {
@@ -46,4 +47,22 @@ class ApisController extends Controller
             ));
 
     }
+    public function postUpdateAds() {
+            $status = 400;
+            $cat_id = Input::get('cat_id');
+            $cit = Input::get('city_id');
+            if (isset($cat_id,$cit)) {
+                $ads = Ad::PrepareAdsSearchCategoryApi($cat_id,$cit);
+                $status = 200;
+                return Response::json(array(
+                    'status' => $status,
+                    'ads' => $ads
+                ));
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+    }
+
+
 }
