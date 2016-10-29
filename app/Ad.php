@@ -196,7 +196,7 @@ class Ad extends Model
     }
 
     static public function PrepareAdsForHomeApi($data) {
-        $bp = 'https://www.betterlifeinkorea.com';
+        $bp =Job::ReturnBp();
         $data_a = array();
         $data_a['html'] = '<div class="text-center"><h3 id="no-data">No results found, Try looking into other categories!</h3></div>';
         $data_a['data'] = $data;
@@ -596,7 +596,131 @@ class Ad extends Model
         return $data_array;
     }
 
+    static public function PrepareForViewApi($data) {
+        //main image
+        $mi = '';
 
+        $bp =Job::ReturnBp();
+        $data_array = array('title_txt'=>'',
+                            'title'=>'',
+                            'des'=>'',
+                            'images'=>'',
+                            'videos'=>'',
+                            'images_array'=>array(),
+                            'lat'=>'',
+                            'lng'=>'',
+                            'drivebtn'=>'',
+                            'fbs'=>'',
+                            'rvs-count'=>'',
+                            'rvs-rate'=>''
+                            );
+
+        if (isset($data)) {
+
+            //Get Reviews
+                $reviews = Review::where('ad_id',$data['id'])->get();
+                $r_count = 0;
+                $r_sum = 0;
+                $r_avg = 8;
+                foreach ($reviews as $rvk => $rvv) {
+                    $r_count++;
+                    $r_sum += $rvv['rate'];
+                }
+                if ($r_count>0) {
+                    $r_sum += 8;
+                    $r_count += 1;
+                    $r_avg = $r_sum/$r_count;
+                }
+                $data_array['rvs-count'] = $r_count;
+                $data_array['rvs-rate'] = $r_avg;
+            //Get Reviews
+
+
+
+            if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
+                $files = json_decode($data['file_srcs'],true);
+                $base_path = $bp.'/assets/images/posts/'.$data['user_id'].'/prm/';
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="image") {
+                            $imgs = $base_path.$fvk.'/'.$fvv['name'];
+                            $data_array['images'] .= '<a href="'.$imgs.'" class="my-item _p'.$data->id.' "><img style="max-width:100px" src="'.$imgs.'" alt="..."></a>';
+                            $data_array['images_array'][$fk]['src'] = $imgs;
+                            if ($fk==0) {
+                                $mi=$imgs;
+                            }
+                        }
+                    }
+                }
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="video") {
+                            $data_array['videos'] .= '<div class="" style="width:100%">
+                                    <video style="width:100%" class="" frameborder="0" controls>
+                                        <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
+                                    </video>
+                                </div>';
+                        }
+                    }
+                }
+            }
+
+            if (isset($data['description'])) {
+                $des_jd = json_decode($data['description']);
+                $data_array['title_txt'] =  $data->title;
+                $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
+                $data_array['des'] =  "<p>".$des_jd."</p>";
+
+                //FACEBOOK SHARE BUTTON
+                $data_array['fbs'] = '
+                    <a  role="button"  target="_blank" class="btn btn-primary fb-share"  
+                        title='.$data->title.' 
+                        href="https://www.facebook.com/dialog/feed?
+                          app_id=1728054614082756&amp;
+                          display=popup&amp;
+                          caption=Better Life In Korea&amp;
+                          description='.$des_jd.' &amp;
+                          name='.$data->title.'&amp;
+                          link='.Request::root().'/posts/'.$data->id.'&amp;
+                          redirect_uri='.Request::root().'&amp;
+                          picture='.Request::root().$mi.'">
+                          <i class="fa fa-lg fa-facebook"></i>
+                          Share
+                    </a>';
+            }
+
+            if (isset($data['lat'])&&isset($data['long'])) {
+                $data_array['lat'] = $data['lat'];
+                $data_array['lng'] = $data['long'];
+
+                $walink = "";
+
+                //drive to
+                $data_array['drivebtn'] ='
+                <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
+                  <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
+                    <button 
+                        style="width:10%" 
+                        id="waze-info" 
+                        data-toggle="tooltip" 
+                        data-html="true" 
+                        data-placement="top" 
+                        title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" 
+                        type="button" 
+                        class="btn btn-primary">
+                        <i class="fa fa-info-circle" aria-hidden="true">
+                        </i>
+                    </button>
+                </div>
+                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["long"].'" class="btn btn-success btn-block">Daum Maps</a>
+                <a class="pull-right" target="_blank" href="https://www.waze.com/download/">Download Waze</a>
+                <hr>';
+
+                // <a href='http://map.daum.net/link/map/우리회사d,37.402056,127.108212'>daum</a>
+            }
+        }
+        return $data_array;
+    }
 
     static public function TranslateCat($data) {
         $ttxt = '';

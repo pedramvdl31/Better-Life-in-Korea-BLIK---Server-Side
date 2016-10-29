@@ -26,6 +26,7 @@ Route::post('/api/init', ['uses'=>'ApisController@postInit']);
 Route::post('/api/check-token', ['uses'=>'ApisController@postCheckToken']);
 Route::post('/api/login', ['uses'=>'ApisController@postLogin']);
 Route::post('/api/search-02', ['uses' => 'ApisController@postUpdateAds']);
+Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
 
 //CHAT ROUTES
 Route::post('/g-m', ['as'=>'g_m','uses'=>'ConversationsController@postRtrnMsgs']);

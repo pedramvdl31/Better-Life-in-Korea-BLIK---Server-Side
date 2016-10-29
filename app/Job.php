@@ -42,6 +42,12 @@ class Job extends Model
 
 
 
+	static public function ReturnBp() {
+        $bp = 'https://www.betterlifeinkorea.com';
+        // $bp = 'http://kora.app:8000';
+		return $bp;
+	}
+
 	static public function dump($results) {
 		if(isset($results)) {
 			echo '<pre>';
