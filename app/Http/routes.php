@@ -27,6 +27,18 @@ Route::post('/api/check-token', ['uses'=>'ApisController@postCheckToken']);
 Route::post('/api/login', ['uses'=>'ApisController@postLogin']);
 Route::post('/api/search-02', ['uses' => 'ApisController@postUpdateAds']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
+Route::group(['middleware' => 'beforeFilter'], function () {
+	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
+	Route::get('/api/dashboard/{tkn}', ['uses' => 'DashboardsController@getIndexApi']);
+	Route::post('/api/upload-ads-tmp', ['uses'=>'ApisController@postAdsImageTmp']);
+	Route::post('/api/users/validate', ['uses'=>'ApisController@postValidate']);
+	Route::post('/api/users/register', ['uses'=>'ApisController@postRegistration']);
+	Route::post('/api/save-rate', ['uses'=>'ApisController@postSaveRate']);
+});
+
+
+
+
 
 //CHAT ROUTES
 Route::post('/g-m', ['as'=>'g_m','uses'=>'ConversationsController@postRtrnMsgs']);
