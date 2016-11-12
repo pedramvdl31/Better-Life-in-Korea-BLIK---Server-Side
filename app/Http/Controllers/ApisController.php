@@ -81,7 +81,7 @@ class ApisController extends Controller
                             Auth::loginUsingId($user->id, true);
                             return Response::json(array(
                                 'status' => 200,
-                                'tkn'=>$tuser->api_token
+                                'tkn'=>$user->api_token
                                 ));
                         }
                     }                
