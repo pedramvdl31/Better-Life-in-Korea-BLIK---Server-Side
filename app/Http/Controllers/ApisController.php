@@ -26,7 +26,6 @@ class ApisController extends Controller
             return Response::json(array(
             'status' => 200
             ));
-
     }
     public function postLogin() {
             $status = 400;
@@ -47,6 +46,50 @@ class ApisController extends Controller
             return Response::json(array(
             'status' => $status,
             'tkn' => $tkn
+            ));
+
+    }
+    public function postFBLogin() {
+            $status = 400;
+            $email = Input::get('email');
+            $token = Input::get('token');
+            $tuser = User::where('email',$email)->first();
+            if (isset($email,$token)) {
+                if (isset($tuser) && !empty($tuser)) {
+                    if (!isset($tuser->api_token)) {
+                        $tuser->api_token = $token;
+                        $tuser->save();
+                    }
+                    Auth::loginUsingId($tuser->id, true);
+                    return Response::json(array(
+                    'status' => 200,
+                    'tkn'=>$tuser->api_token
+                    ));
+                } else {
+                    $rand_sting = Job::generateRandomString(25);
+                    $user = new User;
+                    $user->roles = 5;
+                    $user->email = $email;
+                    $user->password = Hash::make('facebookloginpassword##**'); 
+                    $user->api_token=$token;
+                    $user->verification_token = $rand_sting;
+                     if($user->save()) { // Save the user and redirect to owners home
+                        $new_rule = new RoleUser;
+                        $new_rule->role_id = 5;
+                        $new_rule->user_id = $user->id;
+                        if($new_rule->save()) {
+                            Auth::loginUsingId($user->id, true);
+                            return Response::json(array(
+                                'status' => 200,
+                                'tkn'=>$tuser->api_token
+                                ));
+                        }
+                    }                
+                }
+            }
+
+            return Response::json(array(
+            'status' => $status
             ));
 
     }

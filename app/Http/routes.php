@@ -25,6 +25,7 @@
 Route::post('/api/init', ['uses'=>'ApisController@postInit']);
 Route::post('/api/check-token', ['uses'=>'ApisController@postCheckToken']);
 Route::post('/api/login', ['uses'=>'ApisController@postLogin']);
+Route::post('/api/fblogin', ['uses'=>'ApisController@postFBLogin']);
 Route::post('/api/search-02', ['uses' => 'ApisController@postUpdateAds']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
 Route::group(['middleware' => 'beforeFilter'], function () {
