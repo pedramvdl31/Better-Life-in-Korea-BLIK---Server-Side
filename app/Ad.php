@@ -671,7 +671,7 @@ class Ad extends Model
                 $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
                 $data_array['des'] =  "<p>".$des_jd."</p>";
 
-                $data_array['simage'] = Request::root().$mi;
+                $data_array['simage'] = $mi;
             }
 
             if (isset($data['lat'])&&isset($data['long'])) {
