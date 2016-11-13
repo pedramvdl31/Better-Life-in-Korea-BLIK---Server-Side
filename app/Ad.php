@@ -604,6 +604,7 @@ class Ad extends Model
         $data_array = array('title_txt'=>'',
                             'title'=>'',
                             'des'=>'',
+                            'des_txt'=>'',
                             'images'=>'',
                             'videos'=>'',
                             'images_array'=>array(),
