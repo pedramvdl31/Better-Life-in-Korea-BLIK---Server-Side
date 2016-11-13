@@ -770,6 +770,8 @@ ServerRequests = {
 
 				switch(status){					
 		 			case 200:
+
+
 			 			//LOAD FACEBOOK COMMENT
 						var c_div = '<div class="fb-comments modalfc" '+
 									'data-href="'+document.getElementById('web_root').value+'/posts/'+data_id+'"'+
@@ -779,7 +781,7 @@ ServerRequests = {
 						//FACEBOOK SHARE BUTTON
 						document.getElementById('fbShareWrap').innerHTML = ad_array['fbs'];
 
-						FB.XFBML.parse();
+						
 
 		 				//init
 		 				document.getElementById('postview-data').innerHTML = '';
@@ -880,7 +882,8 @@ ServerRequests = {
 			 			setTimeout(function(){ 
 		 					$('#pi').css('opacity','1');
 		 					$('#pv').css('opacity','1');
-		 				}, 500);
+		 					FB.XFBML.parse();
+		 				}, 700);
 
 		 			break;
 
