@@ -669,8 +669,9 @@ class Ad extends Model
                 $des_jd = json_decode($data['description']);
                 $data_array['title_txt'] =  $data->title;
                 $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
+                $data_array['des_txt'] =  $des_jd;
                 $data_array['des'] =  "<p>".$des_jd."</p>";
-
+                
                 $data_array['simage'] = $mi;
             }
 
