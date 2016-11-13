@@ -610,7 +610,7 @@ class Ad extends Model
                             'lat'=>'',
                             'lng'=>'',
                             'drivebtn'=>'',
-                            'fbs'=>'',
+                            'simage'=>'',
                             'rvs-count'=>'',
                             'rvs-rate'=>''
                             );
@@ -671,22 +671,7 @@ class Ad extends Model
                 $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
                 $data_array['des'] =  "<p>".$des_jd."</p>";
 
-                //FACEBOOK SHARE BUTTON
-                $data_array['fbs'] = '
-                    <a  role="button"  target="_blank" class="btn btn-primary fb-share"  
-                        title='.$data->title.' 
-                        href="https://www.facebook.com/dialog/feed?
-                          app_id=1728054614082756&amp;
-                          display=popup&amp;
-                          caption=Better Life In Korea&amp;
-                          description='.$des_jd.' &amp;
-                          name='.$data->title.'&amp;
-                          link='.Request::root().'/posts/'.$data->id.'&amp;
-                          redirect_uri='.Request::root().'&amp;
-                          picture='.Request::root().$mi.'">
-                          <i class="fa fa-lg fa-facebook"></i>
-                          Share
-                    </a>';
+                $data_array['simage'] = Request::root().$mi;
             }
 
             if (isset($data['lat'])&&isset($data['long'])) {
