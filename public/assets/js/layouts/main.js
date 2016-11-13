@@ -882,7 +882,9 @@ ServerRequests = {
 			 			setTimeout(function(){ 
 		 					$('#pi').css('opacity','1');
 		 					$('#pv').css('opacity','1');
-		 					FB.XFBML.parse();
+							if (typeof FB != 'undefined') {
+		 						FB.XFBML.parse();
+							}
 		 				}, 700);
 
 		 			break;
