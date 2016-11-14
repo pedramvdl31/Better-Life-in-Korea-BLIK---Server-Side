@@ -200,8 +200,10 @@ class Ad extends Model
         $data_a = array();
         $data_a['html'] = '<div class="text-center"><h3 id="no-data">No results found, Try looking into other categories!</h3></div>';
         $data_a['data'] = $data;
+        $data_a['empty'] = 1;
         if (isset($data)) {
             if (count($data)>0) {
+                $data_a['empty'] = 0;
                 $data_a['html'] = '';
             }
             foreach ($data as $dk => $dv) {
@@ -264,7 +266,93 @@ class Ad extends Model
         }
         return $data_a;
     }
+    static public function PrepareAdsScrollLoadApi($data) {
+        $bp =Job::ReturnBp();
+        $data_a = array();
+        $data_a['html'] = '';
+        $data_a['empty'] =  1;
+        if (isset($data)) {
+            if (count($data)>0) {
+                $data_a['empty'] = 0;
+                $data_a['html'] = '';
+            }
+            foreach ($data as $dk => $dv) {
 
+                $cat_text = Ad::TranslateCat($dv->cat_id);
+                $subcat_text = Ad::TranslateSubCat($dv->cat_id,$dv->subcat_id);
+                $city_text = Ad::TranslateCity($dv->city);
+
+
+                $isinwl = count(Wishlist::where('ad_id',$dv->id)->first());
+                $_wlcolor = $isinwl>0?"rgb(0, 128, 0)":"#B3AFA8";
+
+                $new_t = '';
+                $new_des = '';
+                if (isset($dv['title'])) {
+                    $t_temp = $dv['title'];
+                    $new_t = strlen($t_temp)>20?substr($t_temp,0,20)."...":$t_temp;
+                }
+                if (isset($dv['description'])) {
+                    $des_temp = json_decode($dv['description']);
+                    $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."...":$des_temp;
+                }
+
+                $f_image = $bp.'/assets/images/home/product1.jpg';
+                $poster_id = $dv['user_id'];
+
+
+                if (isset($dv['file_srcs']) && $dv['file_srcs'] != "null") {
+                    $src_temp = json_decode($dv['file_srcs'],true);
+                    $images_array = array();
+                    if (isset($src_temp)) {
+                        foreach ($src_temp as $stkey => $stvalue) {
+                            foreach ($stvalue as $imkey => $imvalue) {
+                                if ($imkey == "image") {
+                                    $un_path = $bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$imvalue['name'];
+                                        if (file_exists($un_path)) {
+                                            $images_array[$stkey] = $un_path;
+                                        }   
+                                }
+                            }
+                        }
+                    }
+                }
+
+               $data_a['html'] .= '
+                        <div class="col-md-3 col-sm-6 col-xs-12 my-col sin-ad">
+                            <div class="product-image-wrapper">
+                                <div class="single-products m-vad pointer" data="'.$dv->id.'">
+                                    <div class="productinfo text-center infoholder">
+                                        <div class="ad-image" style="background-image: url(';
+
+                $data_a['html'] .= $f_image;
+                $data_a['html'] .= ');">';                    
+                $data_a['html'] .= '    </div>
+                                        <h2>'.$new_t.'</h2>
+                                        <p>'.$new_des.'</p>
+                                    </div>
+                                    <div class="product-overlay">
+                                    </div>
+                                    <div class="label-holder" style="font-size: 15px;text-align:center">
+                                        <span class="label label-primary">'.$city_text.'</span>
+                                        <span class="label label-success">'.$cat_text.'</span>
+                                        <span class="label label-info">'.$subcat_text.'</span>
+                                    </div>
+                                </div>
+                                <div class="choose">
+                                    <ul class="nav nav-pills nav-justified">
+                                        <li>
+                                        <a style="color:'.$_wlcolor.'" data="'.$dv->id.'" class="add-to-wishlist pointer"><i class="fa fa-plus-square"></i>&nbsp;Add to wishlist</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                ';
+            }
+        }
+        return $data_a;
+    }
     static public function PrepareAdsForHomeHTML($data) {
 
         $data_a = array();
@@ -358,6 +446,7 @@ class Ad extends Model
         }
         return $data_a;
     }
+
     static public function PrepareAdsScrollLoad($data) {
 
         $data_a = array();

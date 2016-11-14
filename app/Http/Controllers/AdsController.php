@@ -159,7 +159,7 @@ class AdsController extends Controller
     }
 
     
-        public function getGetAds()
+    public function getGetAds()
     {
 
         $cat = Input::get('category');
@@ -389,7 +389,7 @@ class AdsController extends Controller
         }
     }
 
-        public function postSearchByText()
+    public function postSearchByText()
     {
         if(Request::ajax()){
             $status = 400;

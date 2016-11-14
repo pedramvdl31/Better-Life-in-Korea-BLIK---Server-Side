@@ -28,6 +28,8 @@ Route::post('/api/login', ['uses'=>'ApisController@postLogin']);
 Route::post('/api/fblogin', ['uses'=>'ApisController@postFBLogin']);
 Route::post('/api/search-02', ['uses' => 'ApisController@postUpdateAds']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
+Route::post('/api/get-more-adds',  ['uses' => 'ApisController@postMoreAds']);
+
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
 	Route::get('/api/dashboard/{tkn}', ['uses' => 'DashboardsController@getIndexApi']);

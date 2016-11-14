@@ -110,6 +110,23 @@ class ApisController extends Controller
                 ));
     }
 
+    public function postMoreAds()
+    {
+        $status = 400;
+        $cat_id = Input::get('cat_id');
+        $cit = Input::get('city_id');
+
+        if ($cit==0||$cit=='0') {
+            $ads = Ad::PrepareAdsScrollLoadApi(Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->skip(Input::get('ad_num'))->take(8)->get());
+        } else {
+            $ads = Ad::PrepareAdsScrollLoadApi(Ad::where('status',1)->where('cat_id',$cat_id)->where('city',$cit)->orderBy('id', 'desc')->skip(Input::get('ad_num'))->take(8)->get());
+        }
+
+        return Response::json(array(
+            'html_data' => $ads
+            ));
+    }
+
 
     public function postPrepareAds()
     {

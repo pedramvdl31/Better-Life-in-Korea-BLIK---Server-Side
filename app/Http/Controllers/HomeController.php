@@ -43,6 +43,19 @@ class HomeController extends Controller
         public function getHomePage()
     {   
 
+
+
+        // for ($i=0; $i < 30 ; $i++) { 
+        //     $adads = new Ad();
+        //     $adads->cat_id = 2;
+        //     $adads->city = 3;
+        //     $adads->title = 'test';
+        //     $adads->description = 'test';
+        //     $adads->status = 1;
+        //     $adads->user_id = 1;
+        //     $adads->save();
+        // }
+
         $cats='';
         $provs='';
         $wishlist='';
