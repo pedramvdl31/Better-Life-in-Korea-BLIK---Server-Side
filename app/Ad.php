@@ -301,21 +301,9 @@ class Ad extends Model
                 $poster_id = $dv['user_id'];
 
 
-                if (isset($dv['file_srcs']) && $dv['file_srcs'] != "null") {
+                if ((isset($dv['file_srcs'])) && ($dv['file_srcs'] != "null")) {
                     $src_temp = json_decode($dv['file_srcs'],true);
-                    $images_array = array();
-                    if (isset($src_temp)) {
-                        foreach ($src_temp as $stkey => $stvalue) {
-                            foreach ($stvalue as $imkey => $imvalue) {
-                                if ($imkey == "image") {
-                                    $un_path = $bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$imvalue['name'];
-                                        if (file_exists($un_path)) {
-                                            $images_array[$stkey] = $un_path;
-                                        }   
-                                }
-                            }
-                        }
-                    }
+                    $f_image = (isset($src_temp[0]['image']['name']))?$bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:$bp.'/assets/images/home/product1.jpg';
                 }
 
                $data_a['html'] .= '
