@@ -81,7 +81,7 @@ class ApisController extends Controller
                             Auth::loginUsingId($user->id, true);
                             return Response::json(array(
                                 'status' => 200,
-                                'tkn'=>$user->api_token
+                                'tkn'=>$token
                                 ));
                         }
                     }                
@@ -171,68 +171,73 @@ class ApisController extends Controller
     {
         $status = 200;
         $_form = null;
-        parse_str(Input::get('_form'), $_form);
-        $cat = $_form['cat'];
-        $subcat = $_form['subcat'];
-        $title = $_form['title'];
-        $city = $_form['city'];
-        $_long = isset($_form['long'])?$_form['long']:null;
-        $_lat = isset($_form['lat'])?$_form['lat']:null;
-        $description = $_form['description'];
-        $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
+        $tkn = Input::get('tkn');
+        if (isset($tkn)) {
+            $this_user = User::where('api_token',$tkn)->first();
+            if (isset($this_user)&&!empty($this_user)) {
+                parse_str(Input::get('_form'), $_form);
+                $cat = $_form['cat'];
+                $subcat = $_form['subcat'];
+                $title = $_form['title'];
+                $city = $_form['city'];
+                $_long = isset($_form['long'])?$_form['long']:null;
+                $_lat = isset($_form['lat'])?$_form['lat']:null;
+                $description = $_form['description'];
+                $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
 
-        if (empty($cat) || empty($subcat) || empty($title) || empty($description)) {
-            return Response::json(array(
-                'status' => 400
-                ));
-        }
-        $ThisUserId = Auth::user()->id;
-        //ELSE
-        $ads = new Ad();
-        $ads->user_id = $ThisUserId;
-        $ads->cat_id = $cat;
-        $ads->subcat_id = $subcat;
-        $ads->city = $city;
-        $ads->lng = $_long;
-        $ads->lat = $_lat;
-        $ads->title = $title;
-        $ads->description = json_encode($description);
-        $ads->status = 1;
-        $ads->file_srcs = json_encode($posted_files);
-        if ($ads->save()) {
-            if (isset($posted_files) && !empty($posted_files)) {
-          
-                foreach ($posted_files as $pk => $pv) {
-                    foreach ($pv as $pvkey => $pvval) {
-                        if ($pvkey == 'image' || $pvkey == 'video') {
-                            $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                            $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                            if (!file_exists($tmp_path)) {
-                                mkdir($tmp_path, 0777, true);
-                            }               
-                            if (!file_exists($new_path)) {
-                                mkdir($new_path, 0777, true);
-                            } 
-                            $oldpath = public_path($tmp_path.$pvval['name']);
-                            $newpath = public_path($new_path.$pvval['name']);
-                            if (file_exists($tmp_path.$pvval['name'])) {
-                                rename($oldpath, $newpath);
-                            }  
-                        }
-                    }
+                if (empty($cat) || empty($subcat) || empty($title) || empty($description)) {
+                    return Response::json(array(
+                        'status' => 400
+                        ));
                 }
-                $p_name = array('image','video');
-                foreach ($p_name as $pn => $pnv) {
-                    $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
-                    $files = glob($t_path.'*'); // get all file names
-                    foreach($files as $file){ // iterate files
-                      if(is_file($file))
-                        unlink($file); // delete file
+                $ThisUserId = $this_user->id;
+                //ELSE
+                $ads = new Ad();
+                $ads->user_id = $ThisUserId;
+                $ads->cat_id = $cat;
+                $ads->subcat_id = $subcat;
+                $ads->city = $city;
+                $ads->lng = $_long;
+                $ads->lat = $_lat;
+                $ads->title = $title;
+                $ads->description = json_encode($description);
+                $ads->status = 1;
+                $ads->file_srcs = json_encode($posted_files);
+                if ($ads->save()) {
+                    if (isset($posted_files) && !empty($posted_files)) {
+                  
+                        foreach ($posted_files as $pk => $pv) {
+                            foreach ($pv as $pvkey => $pvval) {
+                                if ($pvkey == 'image' || $pvkey == 'video') {
+                                    $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                    $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                    if (!file_exists($tmp_path)) {
+                                        mkdir($tmp_path, 0777, true);
+                                    }               
+                                    if (!file_exists($new_path)) {
+                                        mkdir($new_path, 0777, true);
+                                    } 
+                                    $oldpath = public_path($tmp_path.$pvval['name']);
+                                    $newpath = public_path($new_path.$pvval['name']);
+                                    if (file_exists($tmp_path.$pvval['name'])) {
+                                        rename($oldpath, $newpath);
+                                    }  
+                                }
+                            }
+                        }
+                        $p_name = array('image','video');
+                        foreach ($p_name as $pn => $pnv) {
+                            $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
+                            $files = glob($t_path.'*'); // get all file names
+                            foreach($files as $file){ // iterate files
+                              if(is_file($file))
+                                unlink($file); // delete file
+                            }
+                        }
                     }
                 }
             }
         }
-
 
         return Response::json(array(
             'status' => $status
