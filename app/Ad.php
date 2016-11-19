@@ -7,6 +7,7 @@ use Auth;
 use App\Wishlist;
 use App\Review;
 use Request;
+use DB;
 class Ad extends Model
 {
     
@@ -59,6 +60,29 @@ class Ad extends Model
             $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
         } else {
             $ads = Ad::where('status',1)->where('cat_id',$cat_id)->where('city',$cit)->orderBy('id', 'desc')->take(8)->get();
+        }
+        
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForHomeApi($ads);
+        }
+        return $output;
+    }
+    static public function PrepareAdsSearchCategoryApiLoc($cat_id,$lat,$lng,$radius) {
+        $output = null;
+        if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+        } else {
+            $ads = Ad::select(
+                 \DB::raw("*,
+                ( 3959 * acos( cos( radians(" . $lat . ") ) *
+                cos( radians( lat ) )
+                * cos( radians( lng ) - radians(" . $lng . ")
+                ) + sin( radians(" . $lat . ") ) *
+                sin( radians( lat ) ) )
+                ) AS distance"))
+                    ->having("distance", "<", $radius)
+                    ->orderBy("distance")
+                    ->get();
         }
         
         if (isset($ads)) {
@@ -640,16 +664,16 @@ class Ad extends Model
                     </a>';
             }
 
-            if (isset($data['lat'])&&isset($data['long'])) {
+            if (isset($data['lat'])&&isset($data['lng'])) {
                 $data_array['lat'] = $data['lat'];
-                $data_array['lng'] = $data['long'];
+                $data_array['lng'] = $data['lng'];
 
                 $walink = "";
 
                 //drive to
                 $data_array['drivebtn'] ='
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
-                  <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
+                  <button lat="'.$data["lat"].'" lng="'.$data["lng"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
                     <button 
                         style="width:10%" 
                         id="waze-info" 
@@ -663,7 +687,7 @@ class Ad extends Model
                         </i>
                     </button>
                 </div>
-                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["long"].'" class="btn btn-success btn-block">Daum Maps</a>
+                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["lng"].'" class="btn btn-success btn-block">Daum Maps</a>
                 <a class="pull-right" target="_blank" href="https://www.waze.com/download/">Download Waze</a>
                 <hr>';
 
@@ -753,16 +777,16 @@ class Ad extends Model
                 $data_array['simage'] = $mi;
             }
 
-            if (isset($data['lat'])&&isset($data['long'])) {
+            if (isset($data['lat'])&&isset($data['lng'])) {
                 $data_array['lat'] = $data['lat'];
-                $data_array['lng'] = $data['long'];
+                $data_array['lng'] = $data['lng'];
 
                 $walink = "";
 
                 //drive to
                 $data_array['drivebtn'] ='
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
-                  <button lat="'.$data["lat"].'" lng="'.$data["long"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
+                  <button lat="'.$data["lat"].'" lng="'.$data["lng"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
                     <button 
                         style="width:10%" 
                         id="waze-info" 
@@ -776,7 +800,7 @@ class Ad extends Model
                         </i>
                     </button>
                 </div>
-                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["long"].'" class="btn btn-success btn-block">Daum Maps</a>
+                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["lng"].'" class="btn btn-success btn-block">Daum Maps</a>
                 <a class="pull-right" target="_blank" href="https://www.waze.com/download/">Download Waze</a>
                 <hr>';
 
@@ -918,11 +942,11 @@ class Ad extends Model
         return $ttxt;
     }
     static public function PrepareLatLong($data) {
-        $data_array = array('lat'=>'0','long'=>'0');
+        $data_array = array('lat'=>'0','lng'=>'0');
         if (isset($data)) {
-            if (isset($data['lat'])&&isset($data['long'])) {
+            if (isset($data['lat'])&&isset($data['lng'])) {
                 $data_array['lat'] = $data['lat'];
-                $data_array['long'] = $data['long'];
+                $data_array['lng'] = $data['.dropzonex'];
             }
         }
         return $data_array;

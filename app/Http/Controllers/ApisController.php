@@ -109,6 +109,29 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
+    public function postUpdateAdsLoc() {
+            $status = 400;
+            $cat_id = Input::get('cat_id');
+            $lat = Input::get('lat');
+            $lng = Input::get('lng');
+            $radius = Input::get('radius');
+            if (!isset($radius) || empty($radius)) {
+                $radius=25;
+            }
+            if (isset($cat_id,$lat,$lng,$radius)) {
+                $ads = Ad::PrepareAdsSearchCategoryApiLoc($cat_id,$lat,$lng,$radius);
+                $status = 200;
+                return Response::json(array(
+                    'status' => $status,
+                    'ads' => $ads
+                ));
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+    }
+
+
 
     public function postMoreAds()
     {
@@ -170,7 +193,7 @@ class ApisController extends Controller
         $ads->cat_id = $cat;
         $ads->subcat_id = $subcat;
         $ads->city = $city;
-        $ads->long = $_long;
+        $ads->lng = $_long;
         $ads->lat = $_lat;
         $ads->title = $title;
         $ads->description = json_encode($description);
