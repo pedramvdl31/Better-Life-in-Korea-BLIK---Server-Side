@@ -688,7 +688,6 @@ class Ad extends Model
                     </button>
                 </div>
                 <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["lng"].'" class="btn btn-success btn-block">Daum Maps</a>
-                <a class="pull-right" target="_blank" href="https://www.waze.com/download/">Download Waze</a>
                 <hr>';
 
                 // <a href='http://map.daum.net/link/map/우리회사d,37.402056,127.108212'>daum</a>
