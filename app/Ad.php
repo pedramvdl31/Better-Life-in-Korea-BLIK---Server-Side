@@ -240,12 +240,12 @@ class Ad extends Model
                 $new_t = '';
                 $new_des = '';
                 if (isset($dv['title'])) {
-                    $t_temp = utf8_decode($dv['title']);
-                    $new_t = strlen($t_temp)>20?substr($t_temp,0,20)."...":$t_temp;
+                    $t_temp = $dv['title'];
+                    $new_t = strlen($t_temp)>20?substr($t_temp,0,20)."???":$t_temp;
                 }
                 if (isset($dv['description'])) {
-                    $des_temp = utf8_decode(json_decode($dv['description']));
-                    $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."...":$des_temp;
+                    $des_temp = json_decode($dv['description']);
+                    $new_des = strlen($des_temp)>30?substr($des_temp,0,30)."???":$des_temp;
                 }
                 $f_image = $bp.'/assets/images/home/product1.jpg';
                 $poster_id = $dv['user_id'];
