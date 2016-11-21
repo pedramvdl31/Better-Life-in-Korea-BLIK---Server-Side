@@ -246,7 +246,7 @@ class Ad extends Model
                 }
                 if (isset($dv['description'])) {
                     $des_temp = json_decode($dv['description']);
-                    $new_des = $des_temp
+                    $new_des = $des_temp;
                 }
                 $f_image = $bp.'/assets/images/home/product1.jpg';
                 $poster_id = $dv['user_id'];
