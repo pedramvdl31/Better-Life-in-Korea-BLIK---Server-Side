@@ -241,7 +241,8 @@ class Ad extends Model
                 $new_des = '';
                 if (isset($dv['title'])) {
                     $t_temp = utf8_encode($dv['title']);
-                    $new_t = strlen($t_temp)>20?mb_substr($t_temp,0,20, "utf-8")."...":$t_temp;
+                    $new_t0 = strlen($t_temp)>20?mb_substr($t_temp,0,20, "utf-8")."...":$t_temp;
+                    $new_t =utf8_decode($new_t0);
                 }
                 if (isset($dv['description'])) {
                     $des_temp = json_decode($dv['description']);
