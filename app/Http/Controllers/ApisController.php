@@ -110,6 +110,10 @@ class ApisController extends Controller
                 ));
     }
     public function postUpdateAdsLoc() {
+            $header = array (
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'
+            );
             $status = 400;
             $cat_id = Input::get('cat_id');
             $lat = Input::get('lat');
@@ -124,15 +128,12 @@ class ApisController extends Controller
                 return Response::json(array(
                     'status' => $status,
                     'ads' => $ads
-                ),JSON_UNESCAPED_UNICODE);
+                ),200,$headers,JSON_UNESCAPED_UNICODE);
             }
             return Response::json(array(
                 'status' => $status
                 ));
     }
-
-Response::json($data,200,$headers,JSON_UNESCAPED_UNICODE);
-
     public function postMoreAds()
     {
         $status = 400;
