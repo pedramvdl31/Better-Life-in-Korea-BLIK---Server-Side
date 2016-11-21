@@ -110,7 +110,7 @@ class ApisController extends Controller
                 ));
     }
     public function postUpdateAdsLoc() {
-            $header = array (
+            $headers = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'
             );
