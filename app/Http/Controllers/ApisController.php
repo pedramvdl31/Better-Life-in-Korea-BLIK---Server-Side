@@ -124,14 +124,14 @@ class ApisController extends Controller
                 return Response::json(array(
                     'status' => $status,
                     'ads' => $ads
-                ));
+                ),JSON_UNESCAPED_UNICODE);
             }
             return Response::json(array(
                 'status' => $status
                 ));
     }
 
-
+Response::json($data,200,$headers,JSON_UNESCAPED_UNICODE);
 
     public function postMoreAds()
     {
