@@ -126,8 +126,9 @@ class ApisController extends Controller
                 $ads = Ad::PrepareAdsSearchCategoryApiLoc($cat_id,$lat,$lng,$radius);
                 $status = 200;
                 return Response::json(array(
-                    'status' => $status
-                ),200,$headers,JSON_UNESCAPED_UNICODE);
+                    'status' => $status,
+                    'ads' => $ads
+                ),$headers,JSON_UNESCAPED_UNICODE);
             }
             return Response::json(array(
                 'status' => $status
