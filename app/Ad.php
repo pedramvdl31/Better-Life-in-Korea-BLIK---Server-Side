@@ -80,9 +80,11 @@ class Ad extends Model
                 ) + sin( radians(" . $lat . ") ) *
                 sin( radians( lat ) ) )
                 ) AS distance"))
-                    ->having("distance", "<", $radius)
-                    ->orderBy("distance")
-                    ->get();
+                ->having("distance", "<", $radius)
+                ->orderBy("distance")
+                ->where('cat_id',$cat_id)
+                ->take(8)
+                ->get();
         }
         
         if (isset($ads)) {
