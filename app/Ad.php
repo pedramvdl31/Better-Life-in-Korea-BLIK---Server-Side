@@ -816,24 +816,27 @@ class Ad extends Model
         if (isset($data)) {
             switch ($data) {
                 case '1':
-                    $ttxt = 'Real Estate';
+                    $ttxt = 'Lodging';
                     break;
                 case '2':
                     $ttxt = 'Restaurant';
                     break;
                 case '3':
-                    $ttxt = 'Used Car';
+                    $ttxt = 'Real Estate';
                     break;
                 case '4':
                     $ttxt = 'Moving In/Out';
                     break;
                 case '5':
-                    $ttxt = 'Flea Market';
+                    $ttxt = 'Used Car';
                     break;
                 case '6':
                     $ttxt = 'Events';
                     break;
                 case '7':
+                    $ttxt = 'Flea Market';
+                    break;
+                case '8':
                     $ttxt = 'Fun';
                     break;
                 
