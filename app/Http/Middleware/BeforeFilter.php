@@ -33,8 +33,8 @@ class BeforeFilter
             $bpath = '/assets/images/profile-images/perm/';
             $uip = '/assets/images/profile-images/perm/blank_male.png';
             if (Auth::check()) {
-                $ua1 = Auth::user()->avatar;
-                $uip = (isset($ua1))?$bpath.$ua1:$bpath.'blank_male.png';
+                // $ua1 = Auth::user()->avatar;
+                // $uip = (isset($ua1))?$bpath.$ua1:$bpath.'blank_male.png';
                 $tu = Auth::user()->id;
                 $relations= Relationship::where('status',1)
                     ->where('user_one',$tu)

@@ -20,7 +20,11 @@
 	  <dt></dt>
 	  <dd>
 	  	
+		@if(isset(Auth::user()->avatar))
+		<img src="{!!$uiPath.Auth::user()->avatar!!}" width="125px" alt="..." class="img-circle profile_img" >
+		@else
 		<img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circle profile_img" width="125px">
+		@endif
 
 	  </dd>
 	  <dt>Email</dt>
