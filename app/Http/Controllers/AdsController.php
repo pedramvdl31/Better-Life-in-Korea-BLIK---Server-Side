@@ -308,8 +308,8 @@ class AdsController extends Controller
                 // }
             }
         }
-        Flash::error('Oops somthing went wrong!');
-        return Redirect::route('dash_view_posts');
+        // Flash::error('Oops somthing went wrong!');
+        // return Redirect::route('dash_view_posts');
     }
 
 
