@@ -292,19 +292,20 @@ class AdsController extends Controller
             $ps = Ad::find($id);
             if (isset($ps)) {
                 $files_ins = json_decode($ps->file_srcs,true);
-                foreach ($files_ins as $fik => $fiv) {
-                    foreach ($fiv as $fivk => $fivv) {
-                        $prm_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.Auth::id().DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$fivk.DIRECTORY_SEPARATOR;
-                        if (file_exists($prm_path.$fivv['name'])) {
-                            unlink($prm_path.$fivv['name']);
-                        } 
-                    }
-                }
+                Job::dump($files_ins);
+                // foreach ($files_ins as $fik => $fiv) {
+                //     foreach ($fiv as $fivk => $fivv) {
+                //         $prm_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.Auth::id().DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$fivk.DIRECTORY_SEPARATOR;
+                //         if (file_exists($prm_path.$fivv['name'])) {
+                //             unlink($prm_path.$fivv['name']);
+                //         } 
+                //     }
+                // }
 
-                if ($ps->delete()) {
-                    Flash::success('Successfully Removed');
-                    return Redirect::route('dash_view_posts');
-                }
+                // if ($ps->delete()) {
+                //     Flash::success('Successfully Removed');
+                //     return Redirect::route('dash_view_posts');
+                // }
             }
         }
         Flash::error('Oops somthing went wrong!');
