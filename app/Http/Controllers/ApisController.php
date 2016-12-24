@@ -249,7 +249,7 @@ class ApisController extends Controller
     public function postAdsImageTmp()
     {
         $status = 400;
-        $files = $_FILES;
+        $files = $_FILES['imuri'];
         $tempPath = $files['file']['tmp_name']; 
         $image_name = $files['file']['name'];
 
@@ -260,9 +260,9 @@ class ApisController extends Controller
 
         
         if ($base_type == "image") {
-            $imagePath = public_path('assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.Auth::user()->id.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'image');
+            $imagePath = public_path('assets/images/posts/'.Auth::user()->id.'/tmp/image');
         } elseif ($base_type == "video") {
-            $imagePath = public_path('assets'.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.'posts'.DIRECTORY_SEPARATOR.Auth::user()->id.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'video');
+            $imagePath = public_path('assets/images/posts/'.Auth::user()->id.'/tmp/video');
         }
 
         if( ! \File::isDirectory($imagePath) ) {
