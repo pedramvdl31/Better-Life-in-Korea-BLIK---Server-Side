@@ -249,15 +249,18 @@ class ApisController extends Controller
     public function postAdsImageTmp()
     {
         $status = 400;
-        $files = $_FILES['imuri'];
+        $files = $_FILES;
         $tempPath = $files['file']['tmp_name']; 
         $image_name = $files['file']['name'];
-
         $image_types = $files['file']['type'];
+
+        $utoken = $_POST['usertoken'];
+        Job::dump('here');
+        Job::dump($utoken);
+
         $type_array = explode('/', $image_types);
         $type = $type_array[1];
         $base_type = $type_array[0];
-
         
         if ($base_type == "image") {
             $imagePath = public_path('assets/images/posts/'.Auth::user()->id.'/tmp/image');
