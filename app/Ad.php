@@ -945,15 +945,5 @@ class Ad extends Model
         }
         return $ttxt;
     }
-    static public function PrepareLatLong($data) {
-        $data_array = array('lat'=>'0','lng'=>'0');
-        if (isset($data)) {
-            if (isset($data['lat'])&&isset($data['lng'])) {
-                $data_array['lat'] = $data['lat'];
-                $data_array['lng'] = $data['.dropzonex'];
-            }
-        }
-        return $data_array;
-    }
 
 }
