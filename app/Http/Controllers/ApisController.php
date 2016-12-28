@@ -388,12 +388,12 @@ class ApisController extends Controller
                 ));
     }
 
-    public function getFBComments($id=null)
+    public function getFBComments($id=null,$actkn=null)
     {   
-        if (isset($id)) {
-            
+        if (isset($id,$actkn)) {
             return view('fb.comments')
                 ->with('pid',$id)
+                ->with('actkn',$actkn)
                 ->with('layout',$this->layout);
         }
 

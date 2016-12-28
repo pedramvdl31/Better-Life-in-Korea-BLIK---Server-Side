@@ -31,7 +31,7 @@ Route::post('/api/search-02loc', ['uses' => 'ApisController@postUpdateAdsLoc']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
 Route::post('/api/get-more-adds',  ['uses' => 'ApisController@postMoreAds']);
 //facebook comments
-Route::get('/api/fbcomment/{id}',  ['uses' => 'ApisController@getFBComments']);
+Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComments']);
 
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
