@@ -22,6 +22,9 @@ use App\Review;
 
 class ApisController extends Controller
 {
+    public function __construct() {
+        $this->layout = 'layouts.fbcomments';
+    }
     public function postInit() {
             return Response::json(array(
             'status' => 200
@@ -383,6 +386,17 @@ class ApisController extends Controller
             return Response::json(array(
                 'status' => $status
                 ));
+    }
+
+    public function getFBComments($id=null)
+    {   
+        if (isset($id)) {
+            
+            return view('fb.comments')
+                ->with('pid',$id)
+                ->with('layout',$this->layout);
+        }
+
     }
 
 }
