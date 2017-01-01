@@ -189,7 +189,7 @@ class ApisController extends Controller
                 $description = $_form['description'];
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
 
-                if (empty($cat) || empty($subcat) || empty($title) || empty($description)) {
+                if (empty($cat) ||  empty($title) || empty($description)) {
                     return Response::json(array(
                         'status' => 400
                         ));
