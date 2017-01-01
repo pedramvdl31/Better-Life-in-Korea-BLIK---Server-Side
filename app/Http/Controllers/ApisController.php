@@ -181,7 +181,7 @@ class ApisController extends Controller
             if (isset($this_user)&&!empty($this_user)) {
                 parse_str(Input::get('_form'), $_form);
                 $cat = $_form['cat'];
-                $subcat = $_form['subcat'];
+                // $subcat = $_form['subcat'];
                 $title = $_form['title'];
                 $city = $_form['city'];
                 $_long = isset($_form['long'])?$_form['long']:null;
@@ -199,7 +199,7 @@ class ApisController extends Controller
                 $ads = new Ad();
                 $ads->user_id = $ThisUserId;
                 $ads->cat_id = $cat;
-                $ads->subcat_id = $subcat;
+                // $ads->subcat_id = $subcat;
                 $ads->city = $city;
                 $ads->lng = $_long;
                 $ads->lat = $_lat;
