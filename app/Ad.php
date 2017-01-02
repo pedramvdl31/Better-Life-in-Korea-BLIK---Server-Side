@@ -321,10 +321,13 @@ class Ad extends Model
         $data_array = array();
         if (isset($data)) {
             foreach ($data as $dk => $dv) {
-                $data_array[$dk] = array('lat' => '',
-                                         'lng' => '',
-                                         'title' => '',
-                                         'des' =>'' );
+                $data_array[$dk] = array(   'id' => '',
+                                            'lat' => '',
+                                            'lng' => '',
+                                            'title' => '',
+                                            'des' =>''
+                                        );
+                $data_array[$dk]['id'] = $dv['id'];
                 $data_array[$dk]['lat'] = $dv['lat'];
                 $data_array[$dk]['lng'] = $dv['lng'];
                 $new_t = '';
