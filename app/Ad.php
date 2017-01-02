@@ -92,6 +92,30 @@ class Ad extends Model
         }
         return $output;
     }
+    static public function PrepareAdsMap($cat_id,$lat,$lng,$radius) {
+        $output = null;
+        if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+        } else {
+            $ads = Ad::select(
+                 \DB::raw("*,
+                ( 3959 * acos( cos( radians(" . $lat . ") ) *
+                cos( radians( lat ) )
+                * cos( radians( lng ) - radians(" . $lng . ")
+                ) + sin( radians(" . $lat . ") ) *
+                sin( radians( lat ) ) )
+                ) AS distance"))
+                ->having("distance", "<", $radius)
+                ->orderBy("distance")
+                ->where('cat_id',$cat_id)
+                ->take(8)
+                ->get();
+        }
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForMap($ads);
+        }
+        return $output;
+    }
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);
@@ -292,6 +316,31 @@ class Ad extends Model
             }
         }
         return $data_a;
+    }
+    static public function PrepareAdsForMap($data) {
+        $data_array = array();
+        if (isset($data)) {
+            foreach ($data as $dk => $dv) {
+                $data_array[$dk] = array('lat' => '',
+                                         'lng' => '',
+                                         'title' => '',
+                                         'des' =>'' );
+                $data_array[$dk]['lat'] = $dv['lat'];
+                $data_array[$dk]['lng'] = $dv['lng'];
+                $new_t = '';
+                $new_des = '';
+                if (isset($dv['title'])) {
+                    $t_temp = $dv['title'];
+                    $data_array[$dk]['title'] = strlen($t_temp)>20?mb_substr($t_temp,0,20, "utf-8")."...":$t_temp;
+                    // $new_t =utf8_decode($new_t0);
+                }
+                if (isset($dv['description'])) {
+                    $des_temp = json_decode($dv['description']);
+                    $data_array[$dk]['des'] = strlen($des_temp)>30?mb_substr($des_temp,0,30,"utf-8")."...":$des_temp;
+                }
+            }
+        }
+        return $data_array;
     }
     static public function PrepareAdsScrollLoadApi($data) {
         $bp =Job::ReturnBp();

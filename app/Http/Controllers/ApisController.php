@@ -112,6 +112,7 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
+
     public function postUpdateAdsLoc() {
             $headers = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
@@ -137,6 +138,36 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
+
+    public function postViewAdsOnMap() {
+            $headers = array (
+                'Content-Type' => 'application/json; charset=UTF-8',
+                'charset' => 'utf-8'
+            );
+            $status = 400;
+            $cat_id = Input::get('cat_id');
+            $lat = Input::get('lat');
+            $lng = Input::get('lng');
+            $radius = Input::get('radius');
+            if (!isset($radius) || empty($radius)) {
+                $radius=30;
+            } else {
+                $radius += 5;
+            }
+            if (isset($cat_id,$lat,$lng,$radius)) {
+                $ads = Ad::PrepareAdsMap($cat_id,$lat,$lng,$radius);
+                $status = 200;
+                return Response::json(array(
+                    'status' => $status,
+                    'ads' => $ads
+                ),200,$headers,JSON_UNESCAPED_UNICODE);
+            }
+            return Response::json(array(
+                'status' => $status
+                ));
+    }
+
+
     public function postMoreAds()
     {
         $status = 400;
