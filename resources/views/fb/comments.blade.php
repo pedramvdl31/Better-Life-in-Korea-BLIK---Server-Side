@@ -6,6 +6,7 @@
 
 @section('content')
 	<script type="text/javascript">
+	alert('terst');
 	$("button").click(function(e){
 		  e.preventDefault();
 		  alert('ehre');
