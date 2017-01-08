@@ -121,7 +121,14 @@ class AuthController extends Controller
             $authUser->save();
         }
         Auth::login($authUser, true);
-        return redirect()->route('home_index');
+        
+        if (Session::has('apifbcom')) {
+            Redirect::to(Session::get('apifbcom')
+        } else {
+            return redirect()->route('home_index');
+        }
+        
+        
     }
  
     /**

@@ -5,16 +5,17 @@
 @stop
 
 @section('content')
-	<script type="text/javascript">
-	</script>
-	@if(Auth::check())
 
+	@if(!Auth::check())
+		<center>
+			<a class="btn btn-social btn-facebook" href="api/auth/facebook">
+				<span class="fa fa-facebook"></span>  Sign in to Facebook
+			</a>		
+		</center>
 	@else
-	    <a class="btn btn-social btn-facebook" href="/auth/facebook">
-			<span class="fa fa-facebook"></span>  Sign in with Facebook
-		</a>
+		<div class="fb-comments modalfc"  data-href={!!Request::root()!!}/posts/{{$pid}}
+		data-width="100%" data-numposts="5">
+		</div>
 	@endif
-	<div class="fb-comments modalfc"  data-href={!!Request::root()!!}/posts/{{$pid}}
-	data-width="100%" data-numposts="5">
-	</div>
+
 @stop
