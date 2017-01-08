@@ -31,7 +31,8 @@ Route::post('/api/search-02loc', ['uses' => 'ApisController@postUpdateAdsLoc']);
 Route::post('/api/ads-req-map', ['uses' => 'ApisController@postViewAdsOnMap']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
 Route::post('/api/get-more-adds',  ['uses' => 'ApisController@postMoreAds']);
-
+//facebook comments
+Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComments']);
 
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
@@ -96,10 +97,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	// WEBSITE PUBLIC PAGES
 	Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
 	Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
-	Route::get('api/auth/facebook', 'Auth\AuthController@redirectToProvider');
-	Route::get('api/auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
-	//facebook comments
-	Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComments']);
 	// Password reset link request routes...
 	Route::get('password/email', 'Auth\PasswordController@getEmail');
 	Route::post('password/email', 'Auth\PasswordController@postEmail');

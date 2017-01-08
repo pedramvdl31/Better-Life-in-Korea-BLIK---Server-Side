@@ -1,7 +1,5 @@
 <?php
 namespace App\Http\Controllers\Auth;
-
-header('X-Frame-Options: GOFORIT'); 
 use Redirect;
 use Hash;
 use Request;
@@ -123,13 +121,7 @@ class AuthController extends Controller
             $authUser->save();
         }
         Auth::login($authUser, true);
-
-        if (Session::has('apifbcom')) {
-            return redirect(Session::get('apifbcom'));
-        } else {
-            return redirect()->route('home_index');
-        }
-        
+        return redirect()->route('home_index');
     }
  
     /**

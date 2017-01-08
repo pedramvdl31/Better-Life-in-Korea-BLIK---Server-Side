@@ -76,11 +76,6 @@ class BeforeFilter
         {
             Session::flash('redirect_flash',$url);
         } 
-
-        if (Request::is('api/fbcomment/*'))
-        {
-            Session::put('apifbcom',$url);
-        }
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
         $response = $next($request);
         //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
