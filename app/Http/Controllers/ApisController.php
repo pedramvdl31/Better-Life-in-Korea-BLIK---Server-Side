@@ -1,6 +1,7 @@
 <?php
-header('X-Frame-Options: GOFORIT'); 
 namespace App\Http\Controllers;
+
+header('X-Frame-Options: GOFORIT'); 
 
 use Illuminate\Http\Request;
 

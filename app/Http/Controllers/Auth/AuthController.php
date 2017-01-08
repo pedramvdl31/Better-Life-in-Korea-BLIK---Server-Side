@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Auth;
+
 header('X-Frame-Options: GOFORIT'); 
 use Redirect;
 use Hash;
