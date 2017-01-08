@@ -8,7 +8,7 @@
 
 	@if(!Auth::check())
 		<center>
-			<a class="btn btn-social btn-facebook" href="api/auth/facebook">
+			<a class="btn btn-social btn-facebook" href="/api/auth/facebook">
 				<span class="fa fa-facebook"></span>  Sign in to Facebook
 			</a>		
 		</center>
