@@ -123,7 +123,7 @@ class AuthController extends Controller
         Auth::login($authUser, true);
 
         if (Session::has('apifbcom')) {
-            Redirect::to(Session::get('apifbcom'));
+            return redirect()->route('home_index');
         } else {
             return redirect()->route('home_index');
         }
