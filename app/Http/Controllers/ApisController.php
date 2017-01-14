@@ -96,6 +96,7 @@ class ApisController extends Controller
             ));
 
     }
+
     public function postUpdateAds() {
             $status = 400;
             $cat_id = Input::get('cat_id');
@@ -429,5 +430,13 @@ class ApisController extends Controller
         }
 
     }
+    public function getAppUrlHandler($id=null)
+    {   
+        return view('home.urlhandler')
+            ->with('pid',$id)
+            ->with('layout',"layouts.urlhandler");
+
+    }
+
 
 }

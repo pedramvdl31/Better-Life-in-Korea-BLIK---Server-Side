@@ -232,10 +232,6 @@
                  <button id="sharetest" class="btn btn-info">SHARE ME</button>
 
         <a href="intent:#Intent;action=android.intent.action.SEND;type=text/plain;end">intent:#Intent;action=android.intent.action.SEND;type=text/plain;end</a> -->
-
-        <div style="width: 500px;height: 500px">
-            <a href="blikapp://">Open my app</a>
-        </div>
         <!-- CITIES MAP 1 -->
         <div id="a">   
             {!! View::make('partials.cities_map') !!} 

@@ -31,6 +31,7 @@ Route::post('/api/search-02loc', ['uses' => 'ApisController@postUpdateAdsLoc']);
 Route::post('/api/ads-req-map', ['uses' => 'ApisController@postViewAdsOnMap']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
 Route::post('/api/get-more-adds',  ['uses' => 'ApisController@postMoreAds']);
+Route::post('/api/appurlhandler/{id}',  ['uses' => 'ApisController@getAppUrlHandler']);
 //facebook comments
 Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComments']);
 
