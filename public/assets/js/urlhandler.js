@@ -7,8 +7,7 @@ uh = {
 			if (adid==0) {
 				window.location.href = 'blikapp://';
 			} else {
-				alert(adid);
-				// window.location.href = 'blikapp://?adid='+adid;
+				window.location.href = 'blikapp://somepath?adid='+adid;
 			}
 			
 		},
