@@ -432,8 +432,11 @@ class ApisController extends Controller
     }
     public function getAppUrlHandler($id=null)
     {   
+        if (!isset($id)) {
+            $id = 0;
+        }
         return view('home.urlhandler')
-            ->with('pid',$id)
+            ->with('adid',$id)
             ->with('layout',"layouts.urlhandler");
 
     }

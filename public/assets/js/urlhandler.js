@@ -4,7 +4,12 @@ $(document).ready(function(){
 });
 uh = {
 	pageLoad: function() {
-			window.location.href = 'blikapp://';
+			if (adid==0) {
+				window.location.href = 'blikapp://';
+			} else {
+				window.location.href = 'blikapp://'+adid;
+			}
+			
 		},
 	events: function() {
 

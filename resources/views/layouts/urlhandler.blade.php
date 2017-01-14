@@ -11,7 +11,9 @@
         </head><!--/head-->
         @yield('stylesheets')
         <body>
-
+        <script>    
+            var adid = {!!$adid!!};
+        </script>
 
         @yield('content')
 
