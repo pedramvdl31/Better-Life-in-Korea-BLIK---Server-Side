@@ -6,6 +6,5 @@
 @stop
 
 @section('content')
-	
-	
+	<p>Opening Blik App (if app doesn't open please download it from store!)</p>
 @stop
