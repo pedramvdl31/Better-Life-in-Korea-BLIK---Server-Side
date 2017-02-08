@@ -30,6 +30,18 @@ class ApisController extends Controller
             'status' => 200
             ));
     }
+    public function postPostComment() {
+
+        Job::dump(Input::get('token'));
+        Job::dump(Input::get('post_id'));
+        Job::dump(Input::get('comment'));
+
+        return Response::json(array(
+        'status' => 200
+        ));
+    }
+
+
     public function postLogin() {
             $status = 400;
             $_form = null;
@@ -43,14 +55,10 @@ class ApisController extends Controller
                 $cu->save();
                 $status = 200;
             }
-
-
-
             return Response::json(array(
             'status' => $status,
             'tkn' => $tkn
             ));
-
     }
     public function postFBLogin() {
             $status = 400;

@@ -384,6 +384,7 @@ class ComposerStaticInit6ff8fbba5f58ec266906a0f204970d71
         'ConvsTableSeeder' => __DIR__ . '/../..' . '/database/seeds/ConvsTableSeeder.php',
         'CreateAdminsTable' => __DIR__ . '/../..' . '/database/migrations/2015_09_14_043442_create_admins_table.php',
         'CreateAdsTable' => __DIR__ . '/../..' . '/database/migrations/2016_03_05_043548_create-ads-table.php',
+        'CreateCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_08_100537_create_comments_table.php',
         'CreateConversationMessagesTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_28_133400_create-conversation-messages-table.php',
         'CreateConversationsTable' => __DIR__ . '/../..' . '/database/migrations/2016_02_28_132542_create-conversations-table.php',
         'CreatePagesTable' => __DIR__ . '/../..' . '/database/migrations/2015_10_10_172631_create_pages_table.php',

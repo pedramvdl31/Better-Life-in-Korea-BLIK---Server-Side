@@ -27,6 +27,7 @@ return array(
     'ConvsTableSeeder' => $baseDir . '/database/seeds/ConvsTableSeeder.php',
     'CreateAdminsTable' => $baseDir . '/database/migrations/2015_09_14_043442_create_admins_table.php',
     'CreateAdsTable' => $baseDir . '/database/migrations/2016_03_05_043548_create-ads-table.php',
+    'CreateCommentsTable' => $baseDir . '/database/migrations/2017_02_08_100537_create_comments_table.php',
     'CreateConversationMessagesTable' => $baseDir . '/database/migrations/2016_02_28_133400_create-conversation-messages-table.php',
     'CreateConversationsTable' => $baseDir . '/database/migrations/2016_02_28_132542_create-conversations-table.php',
     'CreatePagesTable' => $baseDir . '/database/migrations/2015_10_10_172631_create_pages_table.php',

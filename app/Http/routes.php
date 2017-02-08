@@ -34,6 +34,10 @@ Route::post('/api/get-more-adds',  ['uses' => 'ApisController@postMoreAds']);
 Route::get('/api/appurlhandler/{id}',  ['uses' => 'ApisController@getAppUrlHandler']);
 //facebook comments
 Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComments']);
+//facebook comments
+Route::post('/api/post-comment',  ['uses' => 'ApisController@postPostComment']);
+
+
 
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
