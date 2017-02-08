@@ -840,24 +840,10 @@ class Ad extends Model
                 //drive to
                 $data_array['drivebtn'] ='
                 <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
-                  <button lat="'.$data["lat"].'" lng="'.$data["lng"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i></button>
-                    <button 
-                        style="width:10%" 
-                        id="waze-info" 
-                        data-toggle="tooltip" 
-                        data-html="true" 
-                        data-placement="top" 
-                        title="Make sure Waze - GPS, Maps & Traffic App is installed on your device" 
-                        type="button" 
-                        class="btn btn-primary">
-                        <i class="fa fa-info-circle" aria-hidden="true">
-                        </i>
-                    </button>
+                  <button lat="'.$data["lat"].'" lng="'.$data["lng"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i>
+                  </button>
                 </div>
-                <a id="ntdum" title="'.$data->title.'" lat="'.$data["lat"].'" lng="'.$data["lng"].'" class="btn btn-success btn-block">Daum Maps</a>
                 <hr>';
-
-                // <a href='http://map.daum.net/link/map/우리회사d,37.402056,127.108212'>daum</a>
             }
         }
         return $data_array;
