@@ -839,11 +839,7 @@ class Ad extends Model
 
                 //drive to
                 $data_array['drivebtn'] ='
-                <div style="width:100%" class="btn-group btn-block" role="group" aria-label="...">
-                  <button lat="'.$data["lat"].'" lng="'.$data["lng"].'" id="waze-drive-to" style="width:90%" type="button" class="btn btn-primary">Drive To Location <i class="fa fa-car" aria-hidden="true"></i>
-                  </button>
-                </div>
-                <hr>';
+                <a id="waze-drive-to" lat="'.$data["lat"].'" lng="'.$data["lng"].'" class="btn btn-success drivebtnm">Drive To Location</a>';
             }
         }
         return $data_array;
