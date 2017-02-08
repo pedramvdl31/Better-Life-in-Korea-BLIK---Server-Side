@@ -19,6 +19,7 @@ use App\User;
 use App\Admin;
 use App\Ad;
 use App\Review;
+use App\Comment;
 
 class ApisController extends Controller
 {
@@ -32,9 +33,23 @@ class ApisController extends Controller
     }
     public function postPostComment() {
 
-        Job::dump(Input::get('token'));
-        Job::dump(Input::get('post_id'));
-        Job::dump(Input::get('comment'));
+        $status = 400;
+        $tkn = Input::get('token');
+        $postid = Input::get('post_id');
+        $ncom = Input::get('comment');
+        if (isset($tkn,$postid,$ncom)) {
+            $this_user = User::where('api_token',$tkn)->first();
+            if (isset($this_user)&&!empty($this_user)) {
+                $com = new Comment();
+                $com->user_id = $this_user->id;
+                $com->post_id = $postid;
+                $com->comment = $ncom;
+                $com->status = 1;
+                if ($com->save()) {
+                    $status = 200;
+                }
+            }
+        }
 
         return Response::json(array(
         'status' => 200
