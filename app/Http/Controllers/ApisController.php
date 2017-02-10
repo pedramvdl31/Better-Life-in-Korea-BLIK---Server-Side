@@ -49,7 +49,7 @@ class ApisController extends Controller
                 if ($com->save()) {
                     $rhtml ='<li class="clearfix">
                                   <div class="post-comments">
-                                      <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :</p>
+                                      <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :<i class="pull-right"><a href="#"><small>Delete</small></a></i></p>
                                       <p>
                                           '.$ncom.'
                                       </p>
