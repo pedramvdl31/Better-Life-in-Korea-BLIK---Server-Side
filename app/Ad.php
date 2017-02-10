@@ -803,7 +803,7 @@ class Ad extends Model
             }
             $data_array['coms'] .=    '<li id="snd-li" class="clearfix">
                                   <div class="post-comments sendcomment">
-                                    <textarea class="" placeholder="Write Review"></textarea>
+                                    <textarea class="" placeholder="Write a Review"></textarea>
                                     <a href="#" class="btn btn-default btn-sm rvcom">Send</a>
                                   </div>
                                 </li>
