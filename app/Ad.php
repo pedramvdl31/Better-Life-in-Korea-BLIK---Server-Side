@@ -770,7 +770,7 @@ class Ad extends Model
                             'simage'=>'',
                             'rvs-count'=>'',
                             'rvs-rate'=>'',
-                            'comments'=>''
+                            'coms'=>''
                             );
 
         if (isset($data)) {
@@ -779,11 +779,11 @@ class Ad extends Model
             $comments = Comment::where('post_id',$data['id'])->get();
             if (isset($comments) && !empty($comments)) {
 
-                $com_html = '<ul class="comments">';
+                $data_array['coms'] = '<ul class="comments">';
 
                 foreach ($comments as $kco => $vco) {
                     $couser = User::where('id',$vco['user_id'])->first();
-                    $com_html .='<li class="clearfix">
+                    $data_array['coms'] .='<li class="clearfix">
                                   <div class="post-comments">
                                       <p class="meta">'.date("M j Y", strtotime($vco['created_at'])).' <a href="#">'.substr($couser['email'], 0, 4).'***</a> says :</p>
                                       <p>
@@ -793,7 +793,7 @@ class Ad extends Model
                                  </li>';
                 }
 
-                $com_html .=    '<li class="clearfix">
+                $data_array['coms'] .=    '<li class="clearfix">
                                   <div class="post-comments sendcomment">
                                     <textarea class="" placeholder="Write Review"></textarea>
                                     <a href="#" class="btn btn-default btn-sm rvcom">Send</a>
@@ -801,7 +801,7 @@ class Ad extends Model
                                 </li>
                               </ul>';
             }
-            Job::dump($com_html);
+
             // GET Comment
 
             //Get Reviews
