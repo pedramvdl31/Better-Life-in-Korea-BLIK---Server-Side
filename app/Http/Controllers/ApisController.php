@@ -65,7 +65,7 @@ class ApisController extends Controller
         'rhtml'=>$rhtml
         ));
     }
-    public function postPostComment() {
+    public function postDelComment() {
         $status = 400;
         $tkn = Input::get('token');
         $comid = Input::get('com_id');
