@@ -779,7 +779,7 @@ class Ad extends Model
             $com_array = array();
             $comments = Comment::where('post_id',$data['id'])->get();
             foreach ($comments as $kco => $vco) {
-                $couser = User::where('user_id',$vco['user_id'])->first();
+                $couser = User::where('id',$vco['user_id'])->first();
                 $com_array[$kco]['com'] = $vco['comment'];
                 $com_array[$kco]['username'] = substr($couser['email'], 0, 4).'***';
                 $com_array[$kco]['date'] = date("M j Y", strtotime($vco['created_at']));
