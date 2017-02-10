@@ -34,6 +34,7 @@ class ApisController extends Controller
     public function postPostComment() {
 
         $status = 400;
+        $rhtml = '';
         $tkn = Input::get('token');
         $postid = Input::get('post_id');
         $ncom = Input::get('comment');
@@ -46,13 +47,22 @@ class ApisController extends Controller
                 $com->comment = $ncom;
                 $com->status = 1;
                 if ($com->save()) {
+                    $rhtml ='<li class="clearfix">
+                                  <div class="post-comments">
+                                      <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :</p>
+                                      <p>
+                                          '.$ncom.'
+                                      </p>
+                                  </div>
+                                 </li>';
                     $status = 200;
                 }
             }
         }
 
         return Response::json(array(
-        'status' => 200
+        'status' => 200,
+        'rhtml'=>$rhtml
         ));
     }
 

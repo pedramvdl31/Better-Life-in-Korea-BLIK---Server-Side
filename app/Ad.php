@@ -775,12 +775,9 @@ class Ad extends Model
 
         if (isset($data)) {
             // GET Comment
-            $com_array = array();
             $comments = Comment::where('post_id',$data['id'])->get();
+            $data_array['coms'] = '<ul class="comments">';
             if (isset($comments) && !empty($comments)) {
-
-                $data_array['coms'] = '<ul class="comments">';
-
                 foreach ($comments as $kco => $vco) {
                     $couser = User::where('id',$vco['user_id'])->first();
                     $data_array['coms'] .='<li class="clearfix">
@@ -792,16 +789,14 @@ class Ad extends Model
                                   </div>
                                  </li>';
                 }
-
-                $data_array['coms'] .=    '<li class="clearfix">
+            }
+            $data_array['coms'] .=    '<li id="snd-li" class="clearfix">
                                   <div class="post-comments sendcomment">
                                     <textarea class="" placeholder="Write Review"></textarea>
                                     <a href="#" class="btn btn-default btn-sm rvcom">Send</a>
                                   </div>
                                 </li>
                               </ul>';
-            }
-
             // GET Comment
 
             //Get Reviews
