@@ -47,7 +47,7 @@ class ApisController extends Controller
                 $com->comment = $ncom;
                 $com->status = 1;
                 if ($com->save()) {
-                    $rhtml ='<li tc="'.$com->id.'" class="clearfix">
+                    $rhtml ='<li tc="'.$com->id.'" class="clearfix coli">
                                   <div class="post-comments">
                                       <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a></i></p>
                                       <p>
