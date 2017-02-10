@@ -65,6 +65,27 @@ class ApisController extends Controller
         'rhtml'=>$rhtml
         ));
     }
+    public function postPostComment() {
+        $status = 400;
+        $tkn = Input::get('token');
+        $comid = Input::get('com_id');
+        if (isset($tkn,$comid)) {
+            $this_user = User::where('api_token',$tkn)->first();
+            if (isset($this_user)&&!empty($this_user)) {
+                $tcomnt = Comment::where('id',$comid)->first();
+                if (isset($tcomnt)&&!empty($tcomnt)) {
+                    if ($tcomnt->user_id == $this_user->id) {
+                        if ($tcomnt->delete()) {
+                            $status = 200;
+                        }
+                    }
+                }
+            }
+        }
+        return Response::json(array(
+        'status' => 200
+        ));
+    }
 
 
     public function postLogin() {

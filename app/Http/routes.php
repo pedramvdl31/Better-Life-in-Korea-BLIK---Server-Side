@@ -36,6 +36,7 @@ Route::get('/api/appurlhandler/{id}',  ['uses' => 'ApisController@getAppUrlHandl
 Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComments']);
 //facebook comments
 Route::post('/api/post-comment',  ['uses' => 'ApisController@postPostComment']);
+Route::post('/api/del-comment',  ['uses' => 'ApisController@postDelComment']);
 
 
 
