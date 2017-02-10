@@ -781,7 +781,7 @@ class Ad extends Model
             foreach ($comments as $kco => $vco) {
                 $com_array[$kco]['com'] = $vco['comment'];
             }
-            Job::dump($com_array);
+            // Job::dump($com_array);
             // GET Comment
 
             //Get Reviews
