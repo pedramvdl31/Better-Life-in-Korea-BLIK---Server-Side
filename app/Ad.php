@@ -780,8 +780,9 @@ class Ad extends Model
             $comments = Comment::where('post_id',$data['id'])->get();
             foreach ($comments as $kco => $vco) {
                 $com_array[$kco]['com'] = $vco['comment'];
+                $com_array[$kco]['date'] = date("M j Y", strtotime($vco['created_at']));
             }
-            // Job::dump($com_array);
+            Job::dump($com_array);
             // GET Comment
 
             //Get Reviews
