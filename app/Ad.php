@@ -780,9 +780,20 @@ class Ad extends Model
             if (isset($comments) && !empty($comments)) {
                 foreach ($comments as $kco => $vco) {
                     $couser = User::where('id',$vco['user_id'])->first();
-                    $data_array['coms'] .='<li class="clearfix">
+                    $data_array['coms'] .='<li tc="'.$vco['id'].'" class="clearfix">
                                   <div class="post-comments">
-                                      <p class="meta">'.date("M j Y", strtotime($vco['created_at'])).' <a href="#">'.substr($couser['email'], 0, 4).'***</a> says :</p>
+                                      <p class="meta">'.date("M j Y", strtotime($vco['created_at'])).' <a href="#">'.substr($couser['email'], 0, 4).'***</a> says :';
+
+                    if (isset($user_token)) {
+                        $curu = User::where('api_token',$user_token)->first();
+                        if (isset($curu)&&!empty($curu)) {
+                            if ($curu->id == $vco['user_id']) {
+                                $data_array['coms'] .= '<i class="pull-right"><a href="#"><small>Delete</small></a></i>';
+                            }
+                        }
+                    }                            
+
+                    $data_array['coms'] .= '</p>
                                       <p>
                                           '.$vco['comment'].'
                                       </p>
