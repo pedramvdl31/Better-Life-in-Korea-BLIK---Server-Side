@@ -8,6 +8,7 @@ use App\Wishlist;
 use App\Review;
 use Request;
 use DB;
+use App\Comment;
 class Ad extends Model
 {
     
@@ -751,7 +752,7 @@ class Ad extends Model
         return $data_array;
     }
 
-    static public function PrepareForViewApi($data) {
+    static public function PrepareForViewApi($data,$user_token) {
         //main image
         $mi = '';
 
@@ -768,27 +769,37 @@ class Ad extends Model
                             'drivebtn'=>'',
                             'simage'=>'',
                             'rvs-count'=>'',
-                            'rvs-rate'=>''
+                            'rvs-rate'=>'',
+                            'comments'=>''
                             );
 
         if (isset($data)) {
 
+            // GET Comment
+            $com_array = array();
+            $comments = Comment::where('post_id',$data['id'])->get();
+            foreach ($comments as $kco => $vco) {
+                $com_array[$kco]['com'] = $vco['comment'];
+            }
+            Job::dump($com_array);
+            // GET Comment
+
             //Get Reviews
-                $reviews = Review::where('ad_id',$data['id'])->get();
-                $r_count = 0;
-                $r_sum = 0;
-                $r_avg = 8;
-                foreach ($reviews as $rvk => $rvv) {
-                    $r_count++;
-                    $r_sum += $rvv['rate'];
-                }
-                if ($r_count>0) {
-                    $r_sum += 8;
-                    $r_count += 1;
-                    $r_avg = $r_sum/$r_count;
-                }
-                $data_array['rvs-count'] = $r_count;
-                $data_array['rvs-rate'] = $r_avg;
+            $reviews = Review::where('ad_id',$data['id'])->get();
+            $r_count = 0;
+            $r_sum = 0;
+            $r_avg = 8;
+            foreach ($reviews as $rvk => $rvv) {
+                $r_count++;
+                $r_sum += $rvv['rate'];
+            }
+            if ($r_count>0) {
+                $r_sum += 8;
+                $r_count += 1;
+                $r_avg = $r_sum/$r_count;
+            }
+            $data_array['rvs-count'] = $r_count;
+            $data_array['rvs-rate'] = $r_avg;
             //Get Reviews
 
 

@@ -213,7 +213,7 @@ class ApisController extends Controller
     public function postPrepareAds()
     {
         $status = 400;
-        $this_ad = Ad::PrepareForViewApi(Ad::find(Input::get('data_id')));
+        $this_ad = Ad::PrepareForViewApi(Ad::find(Input::get('data_id')),Input::get('user_token'));
         if (isset($this_ad)) {
             return Response::json(array(
                 'status' => 200,
