@@ -788,7 +788,7 @@ class Ad extends Model
                         $curu = User::where('api_token',$user_token)->first();
                         if (isset($curu)&&!empty($curu)) {
                             if ($curu->id == $vco['user_id']) {
-                                $data_array['coms'] .= '<i class="pull-right"><a href="#"><small>Delete</small></a></i>';
+                                $data_array['coms'] .= '<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a></i>';
                             }
                         }
                     }                            
