@@ -774,17 +774,34 @@ class Ad extends Model
                             );
 
         if (isset($data)) {
-
             // GET Comment
             $com_array = array();
             $comments = Comment::where('post_id',$data['id'])->get();
-            foreach ($comments as $kco => $vco) {
-                $couser = User::where('id',$vco['user_id'])->first();
-                $com_array[$kco]['com'] = $vco['comment'];
-                $com_array[$kco]['username'] = substr($couser['email'], 0, 4).'***';
-                $com_array[$kco]['date'] = date("M j Y", strtotime($vco['created_at']));
+            if (isset($comments) && !empty($comments)) {
+
+                $com_html = '<ul class="comments">';
+
+                foreach ($comments as $kco => $vco) {
+                    $couser = User::where('id',$vco['user_id'])->first();
+                    $com_html .='<li class="clearfix">
+                                  <div class="post-comments">
+                                      <p class="meta">'.date("M j Y", strtotime($vco['created_at'])).' <a href="#">'.substr($couser['email'], 0, 4).'***</a> says :</p>
+                                      <p>
+                                          '.$vco['comment'].'
+                                      </p>
+                                  </div>
+                                 </li>';
+                }
+
+                $com_html .=    '<li class="clearfix">
+                                  <div class="post-comments sendcomment">
+                                    <textarea class="" placeholder="Write Review"></textarea>
+                                    <a href="#" class="btn btn-default btn-sm rvcom">Send</a>
+                                  </div>
+                                </li>
+                              </ul>';
             }
-            Job::dump($com_array);
+            Job::dump($com_html);
             // GET Comment
 
             //Get Reviews
