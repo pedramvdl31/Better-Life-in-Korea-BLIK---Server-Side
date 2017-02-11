@@ -788,13 +788,12 @@ class Ad extends Model
                         $curu = User::where('api_token',$user_token)->first();
                         if (isset($curu)&&!empty($curu)) {
                             if ($curu->id == $vco['user_id']) {
-                                $data_array['coms'] .= '<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a><div class="comrw"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="10"></div></i>';
+                                $data_array['coms'] .= '<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a><div class="comrw"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="10"></div></i></p>';
                             }
                         }
                     }                            
 
-                    $data_array['coms'] .= '</p>
-                                      <p>
+                    $data_array['coms'] .= '<p>
                                           '.$vco['comment'].'
                                       </p>
                                   </div>
