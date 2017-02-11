@@ -805,6 +805,7 @@ class Ad extends Model
                                   <div class="post-comments sendcomment">
                                     <textarea class="" placeholder="Write a Review"></textarea>
                                     <a href="#" class="btn btn-default btn-sm rvcom">Send</a>
+                                    <input name="comment-rev" type="number" class="rating crev">
                                   </div>
                                 </li>
                               </ul>';
