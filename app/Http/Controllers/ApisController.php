@@ -61,7 +61,7 @@ class ApisController extends Controller
                 if ($com->save()) {
                     $rhtml ='<li tc="'.$com->id.'" class="clearfix coli">
                                   <div class="post-comments">
-                                      <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a></i></p>
+                                      <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a></i><span class="comrw pull-right"><input name="input-name" type="number" class="rating comrate nrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="'.$nrate.'"></span></p>
                                       <p>
                                           '.$ncom.'
                                       </p>
