@@ -39,17 +39,14 @@ class ApisController extends Controller
         $postid = Input::get('post_id');
         $ncom = Input::get('comment');
         if (isset($tkn,$postid,$ncom)) {
-            Job::dump($tkn);
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user)&&!empty($this_user)) {
-                Job::dump('here2');
                 $com = new Comment();
                 $com->user_id = $this_user->id;
                 $com->post_id = $postid;
                 $com->comment = $ncom;
                 $com->status = 1;
                 if ($com->save()) {
-                    Job::dump('here3');
                     $rhtml ='<li tc="'.$com->id.'" class="clearfix coli">
                                   <div class="post-comments">
                                       <p class="meta">'.date("M j Y", strtotime($com['created_at'])).' <a href="#">'.substr($this_user['email'], 0, 4).'***</a> says :<i class="pull-right"><a class="delcom" href="#"><small>Delete</small></a></i></p>
