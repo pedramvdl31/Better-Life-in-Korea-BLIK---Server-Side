@@ -42,6 +42,15 @@ class ApisController extends Controller
         if (isset($tkn,$postid,$ncom)) {
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user)&&!empty($this_user)) {
+
+                $pcom = Comment::where('user_id',$this_user)->where('post_id',$postid)->first();
+                if (isset($pcom)&&!empty($pcom)) {
+                    return Response::json(array(
+                    'status' => 401,
+                    'rhtml'=>''
+                    ));
+                }
+
                 $com = new Comment();
                 $com->user_id = $this_user->id;
                 $com->post_id = $postid;
