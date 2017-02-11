@@ -38,6 +38,7 @@ class ApisController extends Controller
         $tkn = Input::get('token');
         $postid = Input::get('post_id');
         $ncom = Input::get('comment');
+        $rate = Input::get('rate');
         if (isset($tkn,$postid,$ncom)) {
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user)&&!empty($this_user)) {
@@ -46,6 +47,8 @@ class ApisController extends Controller
                 $com->post_id = $postid;
                 $com->comment = $ncom;
                 $com->status = 1;
+                $user_id = $this_user->id;
+                $nrate = (float)$rate;
                 if ($com->save()) {
                     $rhtml ='<li tc="'.$com->id.'" class="clearfix coli">
                                   <div class="post-comments">
@@ -55,6 +58,19 @@ class ApisController extends Controller
                                       </p>
                                   </div>
                                 </li>';
+                    if ( ($rate!='') && ($rate>=0) && ($rate<=10) ) {
+                        $pre_rate = Review::where('ad_id',$postid)->where('user_id',$user_id)->first();
+                        //IF THIS USER ALREADY RATED REMOVE THE PREVIOUS RATE
+                        if (isset($pre_rate)) {
+                            $pre_rate->delete();
+                        }
+                        //SAVE THE NEW RATE
+                        $new_rev = new Review();
+                        $new_rev->user_id = $user_id;
+                        $new_rev->ad_id = $postid;
+                        $new_rev->rate = $nrate;
+                        $new_rev->save();
+                    }
                     $status = 200;
                 }
             }

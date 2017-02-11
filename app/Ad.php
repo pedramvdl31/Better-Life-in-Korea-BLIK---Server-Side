@@ -792,7 +792,7 @@ class Ad extends Model
                                             <small>Delete</small>
                                             </a>
                                             </i>
-                                        <span class="comrw"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="10"></span>
+                                        <span class="comrw pull-right"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="10"></span>
                                     </p>';
                             }
                         }
