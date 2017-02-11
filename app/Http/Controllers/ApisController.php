@@ -39,7 +39,7 @@ class ApisController extends Controller
         $postid = Input::get('post_id');
         $ncom = Input::get('comment');
         if (isset($tkn,$postid,$ncom)) {
-            Job::dump('here1');
+            Job::dump($tkn);
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user)&&!empty($this_user)) {
                 Job::dump('here2');
