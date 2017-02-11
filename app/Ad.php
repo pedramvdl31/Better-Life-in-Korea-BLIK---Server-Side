@@ -777,14 +777,20 @@ class Ad extends Model
             // GET Comment
             $comments = Comment::where('post_id',$data['id'])->get();
             $data_array['coms'] = '<ul class="comments">';
+
             if (isset($comments) && !empty($comments)) {
                 foreach ($comments as $kco => $vco) {
+                    $this_rate = 0;
                     $couser = User::where('id',$vco['user_id'])->first();
                     $data_array['coms'] .='<li tc="'.$vco['id'].'" class="clearfix coli">
                                   <div class="post-comments">
                                       <p class="meta">'.date("M j Y", strtotime($vco['created_at'])).' <a href="#">'.substr($couser['email'], 0, 4).'***</a> says :';
 
                     if (isset($user_token)) {
+                        $trate = Review::where('ad_id',$data['id'])->where('user_id',$vco['user_id'])->first();
+                        if (isset($trate)&& !empty($trate)) {
+                            $this_rate = $trate->rate;
+                        }
                         $curu = User::where('api_token',$user_token)->first();
                         if (isset($curu)&&!empty($curu)) {
                             if ($curu->id == $vco['user_id']) {
@@ -792,7 +798,7 @@ class Ad extends Model
                                             <small>Delete</small>
                                             </a>
                                             </i>
-                                        <span class="comrw pull-right"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="10"></span>
+                                        <span class="comrw pull-right"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="'.$this_rate.'"></span>
                                     </p>';
                             }
                         }
