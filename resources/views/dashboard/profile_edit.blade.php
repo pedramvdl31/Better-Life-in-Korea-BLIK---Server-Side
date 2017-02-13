@@ -7,13 +7,6 @@
 
 @section('content')
 <input type="hidden" id="cities-autocomplete"></input>
-<div class="jumbotron">
-	<h1>Profile</h1>
-	<ol class="breadcrumb">
-		<li class="active">Profile Overview</li>
-		<li class=""><a href="{!!route('edit-profile','current')!!}">Edit Profile</a></li>
-	</ol>
-</div>
     <style type="text/css">
 		/* This is copied from https://github.com/blueimp/jQuery-File-Upload/blob/master/css/jquery.fileupload.css */
 		 .fileinput-button {

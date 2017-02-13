@@ -7,12 +7,6 @@
 
 @section('content')
 <input type="hidden" id="cities-autocomplete"></input>
-<div class="jumbotron">
-	<h1>Posts</h1>
-	<ol class="breadcrumb">
-		<li class="active">Posts Overview</li>
-	</ol>
-</div>
 <div class="table-responsive">
 	<table id="inventory_table" class="table table-striped table-bordered table-hover table-responsive">
 		<thead>
