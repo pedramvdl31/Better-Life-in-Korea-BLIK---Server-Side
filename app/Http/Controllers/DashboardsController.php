@@ -38,7 +38,7 @@ class DashboardsController extends Controller
             $this_u = User::where('api_token',$tkn)->first();
             if (isset($this_u)&&!empty($this_u)) {
                 Auth::loginUsingId($this_u->id);
-                return view('dashboard.index')
+                return view('dashboard.posts_index')
                     ->with('layout',$this->layout);
             }
         }
