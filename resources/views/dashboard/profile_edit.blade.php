@@ -34,9 +34,9 @@
 
 		<div class="form-group {!! $errors->has('email') ? 'has-error' : false !!}">
 			@if(isset(Auth::user()->avatar))
-				<img src="{!!$uiPath.Auth::user()->avatar!!}"  width="125px" alt="..." class="img-circle profile_img" >
+				<img src="{!!$uiPath.Auth::user()->avatar!!}"  width="125px" alt="..." class="img-circlex profile_img" >
 			@else
-				<img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circle profile_img" width="125px" height="125px">
+				<img src="/assets/images/profile-images/perm/blank_male.png" alt="..." class="img-circlex profile_img" width="125px" height="125px">
 			@endif
 			<span class="btn btn-success fileinput-button">
 		        <span>Change Avatar</span>
