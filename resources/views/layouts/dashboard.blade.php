@@ -130,7 +130,7 @@
       </style>
 
       <div class="content-wrapper">
-        <div class="container-fluid" style="padding-top:10px;background-color:#FFF">
+        <div class="container-fluid" style="padding-top:10px;background-color:#FFF;margin-bottom: 50px;">
           @include('flash::message')
           @yield('content')
         </div>
