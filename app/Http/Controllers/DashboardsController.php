@@ -66,9 +66,11 @@ class DashboardsController extends Controller
 
     public function getProfileEdit($id=null)
     {   
+        $uiPath = '/assets/images/profile-images/perm/';
         $user = User::find(Auth::id());
         return view('dashboard.profile_edit')
             ->with('layout',$this->layout)
+            ->with('uiPath',$uiPath)
             ->with('user',isset($user)?$user:null);
     }
 
