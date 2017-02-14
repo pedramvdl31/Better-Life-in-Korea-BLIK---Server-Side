@@ -142,16 +142,6 @@
 	      </div>
 	    </form>
 	</div>            
-	<div id="dropzone" class="2t-wrap col-md-6 col-no-padding">
-	    <form style="overflow: auto;" accept="video/*" action="/upload-ads" class="dropzone needsclick dz-clickable" id="post_upload_zone_video">
-	      <div class="dz-message needsclick">
-	        Drop images and videos here or click to upload.<br>
-	        <span class="note needsclick">(Images and Videos max size <strong>30000000mb</strong>.)</span>
-	      </div>
-	    </form>
-	</div>   
-
-
   </div>
   <div class="panel-footer clearfix">
   	<a class="btn btn-default pull-left" href="{!!route('dash_view_posts')!!}">Back</a>
