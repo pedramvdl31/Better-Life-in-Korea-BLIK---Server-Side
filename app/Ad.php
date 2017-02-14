@@ -14,8 +14,6 @@ class Ad extends Model
     
     public static $rules_edit = array(
         'cat'=>'required',
-        'subcat'=>'required',
-        'city'=>'required',
         'title'=>'required',
         'description'=>'required'
     );
