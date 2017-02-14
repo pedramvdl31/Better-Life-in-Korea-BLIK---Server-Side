@@ -72,12 +72,12 @@
    <div class="form-group" id="cat-wrap">
 	    <label>Select Category:</label>
         <select name="cat" class="form-control qp-selects" id="cats">
-            <option value="1" {!! @if ($ps->cat_id == 6) selected  @endif!!}>Bar & Pub</option>
+            <option value="1" @if ($ps->cat_id == 6) selected  @endif >Bar & Pub</option>
             <option value="2">Car Dealership</option>
             <option value="3">Coffee Shop</option>
             <option value="4">Entertainment</option>
             <option value="5">Food</option>
-            <option value="6" {!! @if ($ps->cat_id == 6) selected  @endif!!}>Gas Station</option>
+            <option value="6" @if ($ps->cat_id == 6) selected  @endif>Gas Station</option>
             <option value="7">Hotel</option>
             <option value="8">Medical Center</option>
             <option value="9">Movie Theater</option>
