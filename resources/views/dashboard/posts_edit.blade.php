@@ -132,32 +132,6 @@
 			@endif	
 	    </div>
 	</div>
-	<div class="form-group">
-	    <label>Videos:</label>
-	    	<div class="row thumb-row" style="margin: 0;">
-		    	@if(isset($ps->decoded_files))
-					@foreach($ps->decoded_files as $pfk => $pfv)
-						@foreach($pfv as $pk => $pv)
-							@if($pk=="video")
-						      <div class="col-xs-12 col-md-3 thumb-wrap">
-							    <div href="#" class="thumbnail">
-								    <div class="flex-video widescreen ">
-						                <video class="" frameborder="0" controls>
-						                	<source src="{!!$ps['base-path'].$pk.DIRECTORY_SEPARATOR.$pv['name']!!}" type="video/mp4">
-						                </video>
-						            </div>   
-
-							      	<a data="{!!$pv['name']!!}" class="btn btn-block btn-danger remove-ofile" style="margin-top: 5px">Remove</a>
-							    </div>
-							  </div>
-							@endif
-						@endforeach
-					@endforeach
-				@else
-					<p>None</p>
-				@endif	
-			</div>
-	</div>
 	{!! Form::close() !!}
 	<hr>
 	<div id="dropzone" class="2t-wrap col-md-6 col-no-padding">
