@@ -225,42 +225,9 @@ class AdsController extends Controller
                         }
                     }
                 }
-                if (isset($posted_files) && !empty($posted_files)) {
-                    $posted_merge = array_merge($files_ins, $posted_files);
-                    foreach ($posted_files as $pk => $pv) {
-                        foreach ($pv as $pvkey => $pvval) {
-                            if ($pvkey == 'image' || $pvkey == 'video') {
-                                $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                                $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                                if (!file_exists($tmp_path)) {
-                                    mkdir($tmp_path, 0777, true);
-                                }               
-                                if (!file_exists($new_path)) {
-                                    mkdir($new_path, 0777, true);
-                                } 
-                                $oldpath = public_path($tmp_path.$pvval['name']);
-                                $newpath = public_path($new_path.$pvval['name']);
-                                if (file_exists($tmp_path.$pvval['name'])) {
-                                    rename($oldpath, $newpath);
-                                }  
-                            }
-                        }
-                    }
-                    $p_name = array('image','video');
-                    foreach ($p_name as $pn => $pnv) {
-                        $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
-                        $files = glob($t_path.'*'); // get all file names
-                        foreach($files as $file){ // iterate files
-                          if(is_file($file))
-                            unlink($file); // delete file
-                        }
-                    }
-                }
 
                 $ads->user_id = $ThisUserId;
                 $ads->cat_id = Input::get('cat');
-                $ads->subcat_id = Input::get('subcat');
-                $ads->city = Input::get('city');
                 $ads->title = Input::get('title');
                 $ads->description = json_encode(Input::get('description'));
                 $ads->file_srcs = isset($posted_merge)?json_encode($posted_merge):json_encode($files_ins);

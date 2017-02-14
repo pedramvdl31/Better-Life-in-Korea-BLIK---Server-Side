@@ -73,22 +73,6 @@
 	    <label>Select Category:</label>
 	    {!! Form::select('cat',$cats ,$ps->cat_id, ['id'=>'cats','class'=>'form-control qp-selects','status'=>false]) !!}
 	</div>
-	<div class="form-group" id="subcat-wrap">
-	    <label>Select Sub Category:</label>
-	    {!! Form::select('subcat',$ps->subcats_select ,$ps->subcat_id, ['id'=>'subcat-select','class'=>'form-control qp-selects','status'=>false]) !!}
-	</div>
-
-
-	<div class="form-group 2t-wrap {!! $errors->has('city') ? 'has-error' : false !!}">
-	    <style type="text/css">
-	        .eac-description{
-	            width: 100% !important;
-	        }
-	    </style>
-	    <label>Select City:</label>
-	    {!! Form::select('city',$provs ,$ps->city, ['id'=>'subcat-select','class'=>'form-control ','status'=>false]) !!}
-	</div>
-
 	<div class="form-group 2t-wrap {!! $errors->has('title') ? 'has-error' : false !!}" id="title-wrap">
 	    <label>Title: <span class="_required">*required</span></label>
 	    <input value="{{$ps->title}}" type="text" class="form-control  pk-form" name="title" id="email" placeholder="Title" aria-describedby="sizing-addon2">
@@ -96,7 +80,6 @@
 		<span class='help-block'>{!! $message !!}</span>
 		@endforeach
 	</div>
-
 
 	<div class="form-group 2t-wrap {!! $errors->has('description') ? 'has-error' : false !!}" id="des-wrap">
 	    <label>Description: <span class="_required">*required</span></label>
