@@ -175,7 +175,7 @@ class AdsController extends Controller
             'html_data' => $html
             ));
     }
-
+    //xxx
     public function getPostsEdit($id = null)
     {
         if (isset($id)) {
