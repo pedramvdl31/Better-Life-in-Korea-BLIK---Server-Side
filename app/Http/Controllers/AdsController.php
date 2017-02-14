@@ -216,12 +216,44 @@ class AdsController extends Controller
                             foreach ($remove_files as $rfk => $rfv) {
                                 if ($rfv['name'] == $fivv['name']) {
                                     unset($files_ins[$fik]);
-                                    $prm_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$fivk.DIRECTORY_SEPARATOR;
+                                    $prm_path = "assets/images/posts/".$ThisUserId."/prm/".$fivk.'/';
                                     if (file_exists($prm_path.$fivv['name'])) {
                                         unlink($prm_path.$fivv['name']);
                                     } 
                                 }
                             }
+                        }
+                    }
+                }
+
+                if (isset($posted_files) && !empty($posted_files)) {
+                    $posted_merge = array_merge($files_ins, $posted_files);
+                    foreach ($posted_files as $pk => $pv) {
+                        foreach ($pv as $pvkey => $pvval) {
+                            if ($pvkey == 'image') {
+                                $tmp_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                $new_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                if (!file_exists($tmp_path)) {
+                                    mkdir($tmp_path, 0777, true);
+                                }               
+                                if (!file_exists($new_path)) {
+                                    mkdir($new_path, 0777, true);
+                                } 
+                                $oldpath = public_path($tmp_path.$pvval['name']);
+                                $newpath = public_path($new_path.$pvval['name']);
+                                if (file_exists($tmp_path.$pvval['name'])) {
+                                    rename($oldpath, $newpath);
+                                }  
+                            }
+                        }
+                    }
+                    $p_name = array('image','video');
+                    foreach ($p_name as $pn => $pnv) {
+                        $t_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
+                        $files = glob($t_path.'*'); // get all file names
+                        foreach($files as $file){ // iterate files
+                          if(is_file($file))
+                            unlink($file); // delete file
                         }
                     }
                 }
