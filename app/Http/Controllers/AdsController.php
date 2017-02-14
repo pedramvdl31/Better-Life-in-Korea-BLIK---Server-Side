@@ -182,10 +182,10 @@ class AdsController extends Controller
             $ps = Ad::PrepareForEdit(Ad::find($id));
             if (isset($ps)) {
                 $provs = Job::prov_select();
-                $cats = Job::cat_select();
+                // $cats = Job::cat_select();
                 return view('dashboard.posts_edit')
                 ->with('layout','layouts.dashboard')
-                ->with('cats',$cats)
+                // ->with('cats',$cats)
                 ->with('provs',$provs)
                 ->with('ps',$ps);
             }

@@ -71,7 +71,26 @@
 	<input type="hidden" name="ad_id" value="{{$ps->id}}"></input>
    <div class="form-group" id="cat-wrap">
 	    <label>Select Category:</label>
-	    {!! Form::select('cat',$cats ,$ps->cat_id, ['id'=>'cats','class'=>'form-control qp-selects','status'=>false]) !!}
+        <select name="cat" class="form-control qp-selects" id="cats">
+            <option value="1">Bar & Pub</option>
+            <option value="2">Car Dealership</option>
+            <option value="3">Coffee Shop</option>
+            <option value="4">Entertainment</option>
+            <option value="5">Food</option>
+            <option value="6">Gas Station</option>
+            <option value="7">Hotel</option>
+            <option value="8">Medical Center</option>
+            <option value="9">Movie Theater</option>
+            <option value="10">Nightlife Spot</option>
+            <option value="11">Outdoors & Recreation</option>
+            <option value="12">Parking</option>
+            <option value="13">Pharmacy</option>
+            <option value="14">Real Estate</option>
+            <option value="15">Supermarket</option>
+            <option value="16">Taxi</option>
+            <option value="17">Transport</option>
+            <option value="18">Travel Agency</option>
+        </select>
 	</div>
 	<div class="form-group 2t-wrap {!! $errors->has('title') ? 'has-error' : false !!}" id="title-wrap">
 	    <label>Title: <span class="_required">*required</span></label>
