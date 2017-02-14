@@ -208,68 +208,68 @@ class AdsController extends Controller
             //ELSE
             $ads = Ad::findOrFail($ThisAdId);
             if (isset($ads)) {
-                Job::dump(Input::all());
-                // $files_ins = json_decode($ads->file_srcs,true);
-                // if (isset($remove_files) && !empty($remove_files)) {
-                //     foreach ($files_ins as $fik => $fiv) {
-                //         foreach ($fiv as $fivk => $fivv) {
-                //             foreach ($remove_files as $rfk => $rfv) {
-                //                 if ($rfv['name'] == $fivv['name']) {
-                //                     unset($files_ins[$fik]);
-                //                     $prm_path = "assets/images/posts/".$ThisUserId."/prm/".$fivk.'/';
-                //                     if (file_exists($prm_path.$fivv['name'])) {
-                //                         unlink($prm_path.$fivv['name']);
-                //                     } 
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
+                // Job::dump(Input::all());
+                $files_ins = json_decode($ads->file_srcs,true);
+                if (isset($remove_files) && !empty($remove_files)) {
+                    foreach ($files_ins as $fik => $fiv) {
+                        foreach ($fiv as $fivk => $fivv) {
+                            foreach ($remove_files as $rfk => $rfv) {
+                                if ($rfv['name'] == $fivv['name']) {
+                                    unset($files_ins[$fik]);
+                                    $prm_path = "assets/images/posts/".$ThisUserId."/prm/".$fivk.'/';
+                                    if (file_exists($prm_path.$fivv['name'])) {
+                                        unlink($prm_path.$fivv['name']);
+                                    } 
+                                }
+                            }
+                        }
+                    }
+                }
 
-                // if (isset($posted_files) && !empty($posted_files)) {
-                //     $posted_merge = array_merge($files_ins, $posted_files);
-                //     foreach ($posted_files as $pk => $pv) {
-                //         foreach ($pv as $pvkey => $pvval) {
-                //             if ($pvkey == 'image') {
-                //                 $tmp_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                //                 $new_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                //                 if (!file_exists($tmp_path)) {
-                //                     mkdir($tmp_path, 0777, true);
-                //                 }               
-                //                 if (!file_exists($new_path)) {
-                //                     mkdir($new_path, 0777, true);
-                //                 } 
-                //                 $oldpath = public_path($tmp_path.$pvval['name']);
-                //                 $newpath = public_path($new_path.$pvval['name']);
-                //                 if (file_exists($tmp_path.$pvval['name'])) {
-                //                     rename($oldpath, $newpath);
-                //                 }  
-                //             }
-                //         }
-                //     }
-                //     $p_name = array('image','video');
-                //     foreach ($p_name as $pn => $pnv) {
-                //         $t_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
-                //         $files = glob($t_path.'*'); // get all file names
-                //         foreach($files as $file){ // iterate files
-                //           if(is_file($file))
-                //             unlink($file); // delete file
-                //         }
-                //     }
-                // }
+                if (isset($posted_files) && !empty($posted_files)) {
+                    $posted_merge = array_merge($files_ins, $posted_files);
+                    foreach ($posted_files as $pk => $pv) {
+                        foreach ($pv as $pvkey => $pvval) {
+                            if ($pvkey == 'image') {
+                                $tmp_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                $new_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                if (!file_exists($tmp_path)) {
+                                    mkdir($tmp_path, 0777, true);
+                                }               
+                                if (!file_exists($new_path)) {
+                                    mkdir($new_path, 0777, true);
+                                } 
+                                $oldpath = public_path($tmp_path.$pvval['name']);
+                                $newpath = public_path($new_path.$pvval['name']);
+                                if (file_exists($tmp_path.$pvval['name'])) {
+                                    rename($oldpath, $newpath);
+                                }  
+                            }
+                        }
+                    }
+                    $p_name = array('image','video');
+                    foreach ($p_name as $pn => $pnv) {
+                        $t_path = "assets/images/posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
+                        $files = glob($t_path.'*'); // get all file names
+                        foreach($files as $file){ // iterate files
+                          if(is_file($file))
+                            unlink($file); // delete file
+                        }
+                    }
+                }
 
-                // $ads->user_id = $ThisUserId;
-                // $ads->cat_id = Input::get('cat');
-                // $ads->title = Input::get('title');
-                // $ads->description = json_encode(Input::get('description'));
-                // $ads->file_srcs = isset($posted_merge)?json_encode($posted_merge):json_encode($files_ins);
-                // if ($ads->save()) {
-                //     Flash::Success('Successfully Edited.');
-                //     return Redirect::route('dash_view_posts');
-                // } else {
-                //     Flash::error('Oops somthing went wrong!');
-                //     return Redirect::route('dash_view_posts');
-                // }
+                $ads->user_id = $ThisUserId;
+                $ads->cat_id = Input::get('cat');
+                $ads->title = Input::get('title');
+                $ads->description = json_encode(Input::get('description'));
+                $ads->file_srcs = isset($posted_merge)?json_encode($posted_merge):json_encode($files_ins);
+                if ($ads->save()) {
+                    Flash::Success('Successfully Edited.');
+                    return Redirect::route('dash_view_posts');
+                } else {
+                    Flash::error('Oops somthing went wrong!');
+                    return Redirect::route('dash_view_posts');
+                }
             }
 
         }   else {
