@@ -764,7 +764,6 @@ class Ad extends Model
                             'images_array'=>array(),
                             'lat'=>'',
                             'lng'=>'',
-                            'drivebtn'=>'',
                             'simage'=>'',
                             'rvs-count'=>'',
                             'rvs-rate'=>'',
@@ -881,11 +880,6 @@ class Ad extends Model
                 $data_array['lat'] = $data['lat'];
                 $data_array['lng'] = $data['lng'];
 
-                $walink = "";
-
-                //drive to
-                $data_array['drivebtn'] ='
-                <a id="waze-drive-to" lat="'.$data["lat"].'" lng="'.$data["lng"].'" class="btn btn-success drivebtnm">Drive To Location</a>';
             }
         }
         return $data_array;
