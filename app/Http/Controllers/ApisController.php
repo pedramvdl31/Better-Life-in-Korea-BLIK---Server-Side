@@ -375,7 +375,7 @@ class ApisController extends Controller
             $this_user = User::where('api_token',$utoken)->first();
             if (isset($this_user) && isset($this_user->id)) {
                 $thisuid = $this_user->id;
-                Auth::loginUsingId($thisuid, true);
+                // Auth::loginUsingId($thisuid, true);
                 $type_array = explode('/', $image_types);
                 $type = $type_array[1];
                 $base_type = $type_array[0];
