@@ -239,6 +239,7 @@ class ApisController extends Controller
 
                 if (preg_match_all('/#([\p{L}\p{Mn}]+)/u',$cat_id,$matches)) {
                     if (isset($matches[0][0])) {
+                        Job::dump('here');
                         $htag = $matches[0][0];
                         $ads = Ad::PrepareAdsMapHashtag($htag,$lat,$lng,$radius);
                     }
@@ -312,9 +313,6 @@ class ApisController extends Controller
                 if (isset($matches[0])) {
                     $hashtags = serialize($matches[0]);
                 }
-                
-
-
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
 
                 if (empty($cat) ||  empty($title) || empty($description)) {
