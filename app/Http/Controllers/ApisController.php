@@ -219,7 +219,7 @@ class ApisController extends Controller
                 ));
     }
 
-    public function postViewAdsOnMap() {xxx
+    public function postViewAdsOnMap() {
             $headers = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'
