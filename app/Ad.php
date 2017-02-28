@@ -130,8 +130,9 @@ class Ad extends Model
                 ) AS distance"))
                 ->having("distance", "<", $radius)
                 ->orderBy("distance")
-                ->take(8)
                 ->get();
+
+                Job::dump($xads);
 
 
                 if (isset($xads)) {
