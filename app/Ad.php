@@ -94,7 +94,7 @@ class Ad extends Model
     static public function PrepareAdsMap($cat_id,$lat,$lng,$radius) {
         $output = null;
         if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
-            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->get();
         } else {
             $ads = Ad::select(
                  \DB::raw("*,
@@ -107,7 +107,6 @@ class Ad extends Model
                 ->having("distance", "<", $radius)
                 ->orderBy("distance")
                 ->where('cat_id',$cat_id)
-                ->take(8)
                 ->get();
         }
         if (isset($ads)) {
@@ -119,9 +118,9 @@ class Ad extends Model
         $output = null;
         $adds_arary = array();
         if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
-            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->get();
         } else {
-            $ads = Ad::select(
+            $xads = Ad::select(
                  \DB::raw("*,
                 ( 3959 * acos( cos( radians(" . $lat . ") ) *
                 cos( radians( lat ) )
@@ -135,8 +134,8 @@ class Ad extends Model
                 ->get();
 
 
-                if (isset($ads)) {
-                    foreach ($ads as $ak => $av) {
+                if (isset($xads)) {
+                    foreach ($xads as $ak => $av) {
                         $flag = 0;
                         if (isset($av['htag'])) {
                             $tht = unserialize($av['htag']);
@@ -152,7 +151,11 @@ class Ad extends Model
                         
                     }
                 }
-                Job::dump($adds_arary);
+                if (isset($adds_arary) && !empty($adds_arary)) {
+                    $ads = Ad::where('status',1)->whereIn('id', $adds_arary)->get();
+                    Job::dump($ads);
+                }
+
         }
         if (isset($ads)) {
             $output = Ad::PrepareAdsForMap($ads);
