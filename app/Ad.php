@@ -115,6 +115,36 @@ class Ad extends Model
         }
         return $output;
     }
+    static public function PrepareAdsMapHashtag($hashtag,$lat,$lng,$radius) {
+        $output = null;
+        if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
+            $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
+        } else {
+            $ads = Ad::select(
+                 \DB::raw("*,
+                ( 3959 * acos( cos( radians(" . $lat . ") ) *
+                cos( radians( lat ) )
+                * cos( radians( lng ) - radians(" . $lng . ")
+                ) + sin( radians(" . $lat . ") ) *
+                sin( radians( lat ) ) )
+                ) AS distance"))
+                ->having("distance", "<", $radius)
+                ->orderBy("distance")
+                ->take(8)
+                ->get();
+
+
+                if (isset($ads)) {
+                    foreach ($ads as $ak => $av) {
+                        Job::dump($av['htag']);
+                    }
+                }
+        }
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForMap($ads);
+        }
+        return $output;
+    }
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);

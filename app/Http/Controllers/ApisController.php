@@ -229,6 +229,7 @@ class ApisController extends Controller
             $lat = Input::get('lat');
             $lng = Input::get('lng');
             $radius = Input::get('radius');
+            $ads = '';
             if (!isset($radius) || empty($radius)) {
                 $radius=30;
             } else {
@@ -237,7 +238,10 @@ class ApisController extends Controller
             if (isset($cat_id,$lat,$lng,$radius)) {
 
                 if (preg_match_all('/#([\p{L}\p{Mn}]+)/u',$cat_id,$matches)) {
-                    Job::dump($matches);
+                    if (isset($matches[0][0])) {
+                        $htag = $matches[0][0];
+                        $ads = Ad::PrepareAdsMapHashtag($htag,$lat,$lng,$radius);
+                    }
                 } else {
                     $ads = Ad::PrepareAdsMap($cat_id,$lat,$lng,$radius);
                 }
