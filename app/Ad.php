@@ -132,9 +132,6 @@ class Ad extends Model
                 ->orderBy("distance")
                 ->get();
 
-                Job::dump($xads);
-
-
                 if (isset($xads)) {
                     foreach ($xads as $ak => $av) {
                         $flag = 0;
