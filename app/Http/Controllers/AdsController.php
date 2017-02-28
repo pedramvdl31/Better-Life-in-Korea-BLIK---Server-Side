@@ -266,7 +266,7 @@ class AdsController extends Controller
                 if (isset($matches[0])) {
                     $hashtags = serialize($matches[0]);
                 }
-                $ads->htag= $hashtags;
+                $ads->htag = $hashtags;
                 $ads->file_srcs = isset($posted_merge)?json_encode($posted_merge):json_encode($files_ins);
                 if ($ads->save()) {
                     Flash::Success('Successfully Edited.');
