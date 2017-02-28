@@ -219,7 +219,7 @@ class ApisController extends Controller
                 ));
     }
 
-    public function postViewAdsOnMap() {
+    public function postViewAdsOnMap() {xxx
             $headers = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
                 'charset' => 'utf-8'
@@ -235,7 +235,12 @@ class ApisController extends Controller
                 $radius += 5;
             }
             if (isset($cat_id,$lat,$lng,$radius)) {
-                $ads = Ad::PrepareAdsMap($cat_id,$lat,$lng,$radius);
+
+                if (preg_match_all('/#([\p{L}\p{Mn}]+)/u',$cat_id,$matches)) {
+                    Job::dump($matches);
+                } else {
+                    $ads = Ad::PrepareAdsMap($cat_id,$lat,$lng,$radius);
+                }
                 $status = 200;
                 return Response::json(array(
                     'status' => $status,
