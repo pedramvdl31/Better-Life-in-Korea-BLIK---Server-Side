@@ -153,7 +153,6 @@ class Ad extends Model
                 }
                 if (isset($adds_arary) && !empty($adds_arary)) {
                     $ads = Ad::where('status',1)->whereIn('id', $adds_arary)->get();
-                    Job::dump($ads);
                 }
 
         }
