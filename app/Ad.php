@@ -117,6 +117,7 @@ class Ad extends Model
     }
     static public function PrepareAdsMapHashtag($hashtag,$lat,$lng,$radius) {
         $output = null;
+        $adds_arary = array();
         if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
             $ads = Ad::where('status',1)->where('cat_id',$cat_id)->orderBy('id', 'desc')->take(8)->get();
         } else {
@@ -136,9 +137,22 @@ class Ad extends Model
 
                 if (isset($ads)) {
                     foreach ($ads as $ak => $av) {
-                        Job::dump($av['htag']);
+                        $flag = 0;
+                        if (isset($av['htag'])) {
+                            $tht = unserialize($av['htag']);
+                            foreach ($tht as $ht => $hv) {
+                                if ($hashtag == $hv) {
+                                    $flag = 1;
+                                }
+                            }
+                        }
+                        if ($flag == 1) {
+                            array_push($adds_arary,$ads['id']);
+                        }
+                        
                     }
                 }
+                Job::dump($adds_arary);
         }
         if (isset($ads)) {
             $output = Ad::PrepareAdsForMap($ads);
