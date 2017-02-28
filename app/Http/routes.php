@@ -1,27 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
-// Route::get('/', function() {
-//     // this doesn't do anything other than to
-//     // tell you to go to /fire
-//     return "go to /fire";
-// });
-
-// Route::get('fire', function () {
-//     // this fires the event
-//     event(new App\Events\EventName());
-//     return "event fired";
-// });
-
 Route::post('/api/init', ['uses'=>'ApisController@postInit']);
 Route::post('/api/check-token', ['uses'=>'ApisController@postCheckToken']);
 Route::post('/api/login', ['uses'=>'ApisController@postLogin']);
@@ -139,57 +117,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('login', 'AdminsController@postLogin');
 		Route::get('logout', 'AdminsController@getLogout');			
 	});
-
-
-	// 	// NO ACL
-	// Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
-	// Route::group(['prefix' => 'admins'], function () {
-	// 	Route::get('login', 'AdminsController@getLogin');
-	// 	Route::post('login', 'AdminsController@postLogin');
-	// 	Route::get('logout', 'AdminsController@getLogout');			
-	// 	Route::get('roles',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex']);
-	// 	Route::get('roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
-	// 	Route::post('roles/add',  ['uses' => 'RolesController@postAdd']);
-	// 	Route::get('roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit']);
-	// 	Route::post('roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit']);
-	// 	Route::get('roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete']);
-
-	// 	Route::get('permissions',  ['as'=>'permissions_index', 'uses' => 'PermissionsController@getIndex']);
-	// 	Route::get('permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
-	// 	Route::post('permissions/add',  ['uses' => 'PermissionsController@postAdd']);
-	// 	Route::get('permissions/edit/{id}',  ['as'=>'permissions_edit','uses' => 'PermissionsController@getEdit']);
-	// 	Route::post('permissions/edit',  ['uses' => 'PermissionsController@postEdit']);
-	// 	Route::get('permissions/delete-data/{id}',  ['as'=>'permissions_delete','uses' => 'PermissionsController@getDelete']);
-
-	// 	Route::get('permission-roles',  ['as'=>'permission_roles_index', 'uses' => 'PermissionRolesController@getIndex']);
-	// 	Route::get('permission-roles/add',  ['as'=>'permission_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
-	// 	Route::post('permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
-	// 	Route::get('permission-roles/edit/{id}',  ['as'=>'permission_roles_edit', 'uses' => 'PermissionRolesController@getEdit']);
-	// 	Route::post('permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit']);
-	// 	Route::get('permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete']);
-
-	// 	Route::get('flags',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex']);
-	// 	Route::get('flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView']);
-	// 	Route::post('flags/view',  ['uses' => 'FlagsController@postView']);
-	// 	Route::get('flags/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved']);
-	// 	Route::get('flags/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected']);
-	// 	Route::get('flags/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged']);
-	// 	Route::get('flags/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved']);
-	// 	Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected']);
-	// 	Route::get('flags/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned']);
-
-	// 	Route::get('acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
-	// 	Route::get('categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
-	// 	Route::get('categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
-	// 	Route::post('categories/add',  ['uses' => 'CategoriesController@postAdd']);
-	// 	Route::get('categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
-	// 	Route::post('categories/edit',  ['uses' => 'CategoriesController@postEdit']);
-	// 	Route::get('users/index',  ['as' => 'users_index','uses' => 'AdminsController@getUsersIndex']);
-	// 	Route::get('users/add',  ['as' => 'users_add','uses' => 'AdminsController@getUsersAdd']);
-	// 	Route::post('users/add',  ['uses' => 'AdminsController@postUsersAdd']);
-	// 	Route::get('users/edit/{id}',  ['as' => 'users_edit','uses' => 'AdminsController@getUsersEdit']);
-	// 	Route::post('users/edit',  ['uses' => 'AdminsController@postUsersEdit']);
-	// });
 
 
 			/** ADMINS ACL GROUP **/

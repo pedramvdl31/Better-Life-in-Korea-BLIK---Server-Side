@@ -298,6 +298,14 @@ class ApisController extends Controller
                 $_long = isset($_form['long'])?$_form['long']:null;
                 $_lat = isset($_form['lat'])?$_form['lat']:null;
                 $description = $_form['description'];
+                preg_match_all('/#([\p{L}\p{Mn}]+)/u',$description,$matches);
+                $hashtags = '';
+                if (isset($matches[0])) {
+                    $hashtags = serialize($matches[0]);
+                }
+                
+
+
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
 
                 if (empty($cat) ||  empty($title) || empty($description)) {
@@ -316,6 +324,7 @@ class ApisController extends Controller
                 $ads->lat = $_lat;
                 $ads->title = $title;
                 $ads->description = json_encode($description);
+                $ads->htag = $hashtags;
                 $ads->status = 1;
                 $ads->file_srcs = json_encode($posted_files);
                 if ($ads->save()) {
