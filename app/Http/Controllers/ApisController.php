@@ -240,6 +240,7 @@ class ApisController extends Controller
                 if (preg_match_all('/#([\p{L}\p{Mn}]+)/u',$cat_id,$matches)) {
                     if (isset($matches[0][0])) {
                         Job::dump('here');
+                        Job::dump($matches[0][0]);
                         $htag = $matches[0][0];
                         $ads = Ad::PrepareAdsMapHashtag($htag,$lat,$lng,$radius);
                     }
