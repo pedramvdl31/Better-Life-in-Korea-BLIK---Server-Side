@@ -147,7 +147,7 @@ class Ad extends Model
                             }
                         }
                         if ($flag == 1) {
-                            array_push($adds_arary,$ads['id']);
+                            array_push($adds_arary,$av['id']);
                         }
                         
                     }
