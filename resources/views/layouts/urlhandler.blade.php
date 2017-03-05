@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A Better Life in Korea, find country's favorite places and quickly get around.">
         <meta name="author" content="">
-
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <title>Home | Kora</title>
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         </head><!--/head-->
