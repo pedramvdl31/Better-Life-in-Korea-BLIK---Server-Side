@@ -8,7 +8,7 @@
         <meta property="og:title" content="Better Life in Korea" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.betterlifeinkorea.com/" />
-        <meta property="og:image" content="/assets/images/blik.jpg" />
+        <meta property="og:image" content="https://www.betterlifeinkorea.com/assets/images/blik.jpg" />
 
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />

@@ -8,7 +8,7 @@
         <meta property="og:title" content="Better Life in Korea" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.betterlifeinkorea.com/" />
-        <meta property="og:image" content="/assets/images/blik.jpg" />
+        <meta property="og:image" content="https://www.betterlifeinkorea.com/assets/images/blik.jpg" />
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <title>Home | Kora</title>
