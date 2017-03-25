@@ -5,10 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="A Better Life in Korea, find country's favorite places and quickly get around.">
         <meta name="author" content="">
-        <meta property="og:title" content="BLIK" />
+        <meta property="og:title" content="Better Life in Korea" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://www.betterlifeinkorea.com/" />
-        <meta property="og:image" content="ogimage.jpg" />
+        <meta property="og:image" content="/assets/images/blik.jpg" />
 
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
