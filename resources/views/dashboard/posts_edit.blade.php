@@ -72,24 +72,37 @@
    <div class="form-group" id="cat-wrap">
 	    <label>Select Category:</label>
         <select name="cat" class="form-control qp-selects" id="cats">
-            <option value="1" @if ($ps->cat_id == 1) selected  @endif >Bar & Pub</option>
-            <option value="2" @if ($ps->cat_id == 2) selected  @endif >Car Dealership</option>
-            <option value="3" @if ($ps->cat_id == 3) selected  @endif >Coffee Shop</option>
-            <option value="4" @if ($ps->cat_id == 4) selected  @endif >Entertainment</option>
-            <option value="5" @if ($ps->cat_id == 5) selected  @endif >Food</option>
+            <option value="1" @if ($ps->cat_id == 1) selected  @endif>Bar & Pub</option>
+            <option value="2" @if ($ps->cat_id == 2) selected  @endif>Car Dealership</option>
+            <option value="3" @if ($ps->cat_id == 3) selected  @endif>Coffee Shop</option>
+            <option value="4" @if ($ps->cat_id == 4) selected  @endif>Entertainment</option>
+            <option value="5" @if ($ps->cat_id == 5) selected  @endif>Food</option>
             <option value="6" @if ($ps->cat_id == 6) selected  @endif>Gas Station</option>
-            <option value="7" @if ($ps->cat_id == 7) selected  @endif >Hotel</option>
-            <option value="8" @if ($ps->cat_id == 8) selected  @endif >Medical Center</option>
-            <option value="9" @if ($ps->cat_id == 9) selected  @endif >Movie Theater</option>
-            <option value="10" @if ($ps->cat_id == 10) selected  @endif >Nightlife Spot</option>
-            <option value="11" @if ($ps->cat_id == 11) selected  @endif >Outdoors & Recreation</option>
-            <option value="12" @if ($ps->cat_id == 12) selected  @endif >Parking</option>
-            <option value="13" @if ($ps->cat_id == 13) selected  @endif >Pharmacy</option>
-            <option value="14" @if ($ps->cat_id == 14) selected  @endif >Real Estate</option>
-            <option value="15" @if ($ps->cat_id == 15) selected  @endif >Supermarket</option>
-            <option value="16" @if ($ps->cat_id == 16) selected  @endif >Taxi</option>
-            <option value="17" @if ($ps->cat_id == 17) selected  @endif >Transport</option>
-            <option value="18" @if ($ps->cat_id == 18) selected  @endif >Travel Agency</option>
+            <option value="29" @if ($ps->cat_id == 29) selected  @endif>Church</option>
+            <option value="7" @if ($ps->cat_id == 7) selected  @endif>Hotel</option>
+            <option value="8" @if ($ps->cat_id == 8) selected  @endif>Medical Center</option>
+            <option value="9" @if ($ps->cat_id == 9) selected  @endif>Movie Theater</option>
+            <option value="10" @if ($ps->cat_id == 10) selected  @endif>Nightlife Spot</option>
+            <option value="23" @if ($ps->cat_id == 23) selected  @endif>Institution</option>
+            <option value="11" @if ($ps->cat_id == 11) selected  @endif>Outdoors & Recreation</option>
+            <option value="12" @if ($ps->cat_id == 12) selected  @endif>Parking</option>
+            <option value="13" @if ($ps->cat_id == 13) selected  @endif>Pharmacy</option>
+            <option value="14" @if ($ps->cat_id == 14) selected  @endif>Real Estate</option>
+            <option value="28" @if ($ps->cat_id == 28) selected  @endif>Temple</option>
+            <option value="15" @if ($ps->cat_id == 15) selected  @endif>Supermarket</option>
+            <option value="16" @if ($ps->cat_id == 16) selected  @endif>Taxi</option>
+            <option value="17" @if ($ps->cat_id == 17) selected  @endif>Transport</option>
+            <option value="18" @if ($ps->cat_id == 18) selected  @endif>Travel Agency</option>
+            <option value="19" @if ($ps->cat_id == 19) selected  @endif>Cosmetic</option>
+            <option value="20" @if ($ps->cat_id == 20) selected  @endif>Pet-Shop</option>
+            <option value="27" @if ($ps->cat_id == 27) selected  @endif>Museum</option>
+            <option value="21" @if ($ps->cat_id == 21) selected  @endif>Event</option>
+            <option value="22" @if ($ps->cat_id == 22) selected  @endif>Mall</option>
+            <option value="24" @if ($ps->cat_id == 24) selected  @endif>Sightseeing</option>
+            <option value="25" @if ($ps->cat_id == 25) selected  @endif>Subway-Station</option>
+            <option value="26" @if ($ps->cat_id == 26) selected  @endif>Government</option>
+            <option value="30" @if ($ps->cat_id == 30) selected  @endif>Kids</option>
+            <option value="31" @if ($ps->cat_id == 31) selected  @endif>Beach</option>
         </select>
 	</div>
 	<div class="form-group 2t-wrap {!! $errors->has('title') ? 'has-error' : false !!}" id="title-wrap">
