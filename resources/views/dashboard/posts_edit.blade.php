@@ -103,6 +103,10 @@
             <option value="26" @if ($ps->cat_id == 26) selected  @endif>Government</option>
             <option value="30" @if ($ps->cat_id == 30) selected  @endif>Kids</option>
             <option value="31" @if ($ps->cat_id == 31) selected  @endif>Beach</option>
+            <option value="32" @if ($ps->cat_id == 32) selected  @endif>Nail-Shop</option>
+            <option value="33" @if ($ps->cat_id == 33) selected  @endif>Convenient-Store</option>
+            <option value="34" @if ($ps->cat_id == 34) selected  @endif>Health-Center</option>
+            <option value="35" @if ($ps->cat_id == 35) selected  @endif>Acupuncture</option>
         </select>
 	</div>
 	<div class="form-group 2t-wrap {!! $errors->has('title') ? 'has-error' : false !!}" id="title-wrap">
