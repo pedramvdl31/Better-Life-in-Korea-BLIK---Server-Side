@@ -303,7 +303,6 @@ class ApisController extends Controller
                 $cat = $_form['cat'];
                 // $subcat = $_form['subcat'];
                 $title = $_form['title'];
-                $city = $_form['city'];
                 $_long = isset($_form['long'])?$_form['long']:null;
                 $_lat = isset($_form['lat'])?$_form['lat']:null;
                 $description = $_form['description'];
@@ -317,7 +316,7 @@ class ApisController extends Controller
                 if (empty($cat) ||  empty($title) || empty($description)) {
                     return Response::json(array(
                         'status' => 400
-                        ));
+                    ));
                 }
                 $ThisUserId = $this_user->id;
                 //ELSE
@@ -325,7 +324,6 @@ class ApisController extends Controller
                 $ads->user_id = $ThisUserId;
                 $ads->cat_id = $cat;
                 // $ads->subcat_id = $subcat;
-                $ads->city = $city;
                 $ads->lng = $_long;
                 $ads->lat = $_lat;
                 $ads->title = $title;
