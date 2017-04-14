@@ -134,6 +134,7 @@ class Ad extends Model
 
                 if (isset($xads)) {
                     foreach ($xads as $ak => $av) {
+                        Job::dump($ak);
                         $flag = 0;
                         if (isset($av['htag'])) {
                             $tht = unserialize($av['htag']);
