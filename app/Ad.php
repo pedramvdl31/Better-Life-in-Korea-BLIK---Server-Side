@@ -147,12 +147,9 @@ class Ad extends Model
 
                         $flag = 0;
                         if (isset($av['htag'])) {
-                            // Job::dump($av['id']);
                             $error_reporting = error_reporting(error_reporting() ^ E_NOTICE);
-
-                            $y = unserialize($av['htag']);
-                            if($y) {
-                                $tht = unserialize($av['htag']);
+                            $tht = unserialize($av['htag']);
+                            if($tht) {
                                 foreach ($tht as $ht => $hv) {
                                     if ($hashtag == $hv) {
                                         $flag = 1;
