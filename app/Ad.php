@@ -148,12 +148,14 @@ class Ad extends Model
                         $flag = 0;
                         if (isset($av['htag'])) {
                             Job::dump($av['id']);
-                            $fixed_serialized_data = preg_replace_callback ( '!s:(\d+):"(.*?)";!',
-                                function($match) {
-                                    return ($match[1] == strlen($match[2])) ? $match[0] : 's:' . strlen($match[2]) . ':"' . $match[2] . '";';
-                                },
-                            unserialize($av['htag']) );
-                            $tht = $fixed_serialized_data;
+                            $ret = @unserialize($av['htag']);
+                            $tht = '';
+                            if($ret === null){
+                               //Error case
+                            } else {
+                                $tht = unserialize($av['htag']);
+                            }
+                            
                             foreach ($tht as $ht => $hv) {
                                 if ($hashtag == $hv) {
                                     $flag = 1;
