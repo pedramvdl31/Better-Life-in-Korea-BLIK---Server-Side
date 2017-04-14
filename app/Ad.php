@@ -175,17 +175,19 @@ class Ad extends Model
         if (isset($ads)) {
             $output = Ad::PrepareAdsForMap($ads);
         }
+
         return $output;
     }
+    static public function exceptions_error_handler($severity, $message, $filename, $lineno) {
 set_error_handler('exceptions_error_handler');
-function exceptions_error_handler($severity, $message, $filename, $lineno) {
-  if (error_reporting() == 0) {
-    return;
-  }
-  if (error_reporting() & $severity) {
-    throw new ErrorException($message, 0, $severity, $filename, $lineno);
-  }
-}
+        
+      if (error_reporting() == 0) {
+        return;
+      }
+      if (error_reporting() & $severity) {
+        throw new ErrorException($message, 0, $severity, $filename, $lineno);
+      }
+    }
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);
