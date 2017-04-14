@@ -144,7 +144,6 @@ class Ad extends Model
 
                 if (isset($xads)) {
                     foreach ($xads as $ak => $av) {
-
                         $flag = 0;
                         if (isset($av['htag'])) {
                             $error_reporting = error_reporting(error_reporting() ^ E_NOTICE);
@@ -156,11 +155,6 @@ class Ad extends Model
                                     }
                                 }
                             }
-                            else {
-                                // do something else
-                            }
-
-
                         }
                         if ($flag == 1) {
                             array_push($adds_arary,$av['id']);
