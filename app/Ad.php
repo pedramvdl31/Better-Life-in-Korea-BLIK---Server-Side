@@ -147,19 +147,23 @@ class Ad extends Model
 
                         $flag = 0;
                         if (isset($av['htag'])) {
-                            try {
-                               $result = unserialize($av['htag']);
-                            } catch (Exception $e) {
-                               echo 'Caught exception: ',  $e->getMessage(), "\n";
-                            }
-                            if(isset($result)) {
-                                $tht = $result;
+                            // Job::dump($av['id']);
+                            $error_reporting = error_reporting(error_reporting() ^ E_NOTICE);
+
+                            $y = unserialize($av['htag']);
+                            if($y) {
+                                $tht = unserialize($av['htag']);
                                 foreach ($tht as $ht => $hv) {
                                     if ($hashtag == $hv) {
                                         $flag = 1;
                                     }
                                 }
                             }
+                            else {
+                                // do something else
+                            }
+
+
                         }
                         if ($flag == 1) {
                             array_push($adds_arary,$av['id']);
@@ -175,19 +179,17 @@ class Ad extends Model
         if (isset($ads)) {
             $output = Ad::PrepareAdsForMap($ads);
         }
-
         return $output;
     }
-    static public function exceptions_error_handler($severity, $message, $filename, $lineno) {
 set_error_handler('exceptions_error_handler');
-        
-      if (error_reporting() == 0) {
-        return;
-      }
-      if (error_reporting() & $severity) {
-        throw new ErrorException($message, 0, $severity, $filename, $lineno);
-      }
-    }
+function exceptions_error_handler($severity, $message, $filename, $lineno) {
+  if (error_reporting() == 0) {
+    return;
+  }
+  if (error_reporting() & $severity) {
+    throw new ErrorException($message, 0, $severity, $filename, $lineno);
+  }
+}
     static public function PrepareAdsSearchCity($city_id) {
         $output = null;
         $ads = Ad::where('status',1)->where('city',$city_id)->paginate(8);
