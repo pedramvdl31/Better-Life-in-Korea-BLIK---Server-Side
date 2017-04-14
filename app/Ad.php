@@ -148,7 +148,6 @@ class Ad extends Model
                         $flag = 0;
                         if (isset($av['htag'])) {
                             // Job::dump($av['id']);
-                            $error_reporting = error_reporting(error_reporting() ^ E_NOTICE);
 
                             $y = unserialize($av['htag']);
                             if($y) {
