@@ -395,7 +395,7 @@ class Ad extends Model
                     $ndis = 'bigger';
                 }
 
-                $data_array[$dk]['dis'] = number_format($ndis, 2, '.', '').$dun;
+                $data_array[$dk]['dis'] = $ndis.$dun;
 
                 $new_t = '';
                 $new_des = '';
