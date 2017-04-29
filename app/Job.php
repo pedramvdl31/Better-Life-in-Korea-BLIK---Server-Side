@@ -41,7 +41,7 @@ class Job extends Model
 	}
 
 
-	static public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+	static public function distance($lat1, $lon1, $lat2, $lon2, $unit, $decimal) {
 	  $theta = $lon1 - $lon2;
 	  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
 	  $dist = acos($dist);
@@ -50,9 +50,9 @@ class Job extends Model
 	  $unit = strtoupper($unit);
 
 	  if ($unit == "K") {
-	  	return ($miles * 1.609344);
+	  	return ( number_format(($miles * 1.609344), $decimal, '.', ''));
 	  } else if ($unit == "M") {
-	    	return ($miles * 1609.34);
+	    	return (number_format(($miles * 1609.34), $decimal, '.', ''));
 	    } 	else {
 	        	return $miles;
 	      	}
