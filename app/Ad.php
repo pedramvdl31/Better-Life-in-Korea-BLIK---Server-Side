@@ -380,7 +380,7 @@ class Ad extends Model
                 $data_array[$dk]['lat'] = $dv['lat'];
                 $data_array[$dk]['lng'] = $dv['lng'];
 
-                $ndis = Job::distance($dv['lat'],$dv['lng',$orlat,$orlng,"K");
+                $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"K");
                 $dun = ' KM';
                 if ($ndis<=0) {
                     $dun = ' M';
