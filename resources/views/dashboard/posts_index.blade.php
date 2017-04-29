@@ -20,7 +20,7 @@
 		<tbody id="inventory_table_body">
 			@foreach($all_posts as $avk => $apv)
 			<tr>
-				<td>{{ $avk }}</td>
+				<td>{{ $avk+1 }}</td>
 				<td>{{ $apv->title }}</td>
 				<td>{{ $apv->date_html }}</td>
 				<td><a href="{!!route('edit-post',$apv->id)!!}" class="pointer">Edit</a>/ <a class="remove-post pointer" data="{{$apv->id}}">Remove</a></td>
