@@ -387,7 +387,7 @@ class Ad extends Model
                     $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"M");
                 }
 
-                $data_array[$dk]['dis'] = $ndis.$dun;
+                $data_array[$dk]['dis'] = number_format($ndis, 2, '.', '').$dun;
 
                 $new_t = '';
                 $new_des = '';
