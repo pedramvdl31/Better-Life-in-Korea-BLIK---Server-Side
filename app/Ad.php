@@ -390,9 +390,9 @@ class Ad extends Model
                 }
 
                 if ($ndis<0) {
-                    $ndis = 'smaller';
+                    $ndis = $ndis.' smaller than'.0;
                 } else {
-                    $ndis = 'bigger';
+                    $ndis = $ndis.' bigger than'.0;
                 }
 
                 $data_array[$dk]['dis'] = $ndis.$dun;
