@@ -390,7 +390,7 @@ class Ad extends Model
                 }
 
                 $ndis = 0.8985666;
-                if ($ndis<0) {
+                if ($ndis<1.0) {
                     $ndis = $ndis.' smaller than 0';
                 } else {
                     $ndis = $ndis.' bigger than 0';
