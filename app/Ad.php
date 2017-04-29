@@ -389,6 +389,12 @@ class Ad extends Model
                     $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"M");
                 }
 
+                if ($ndis<0) {
+                    $ndis = 'smaller';
+                } else {
+                    $ndis = 'bigger';
+                }
+
                 $data_array[$dk]['dis'] = number_format($ndis, 2, '.', '').$dun;
 
                 $new_t = '';
