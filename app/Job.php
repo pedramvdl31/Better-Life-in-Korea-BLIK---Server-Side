@@ -59,6 +59,11 @@ class Job extends Model
 	}
 
 	static public function distanceCalculation($point1_lat, $point1_long, $point2_lat, $point2_long, $unit = 'km', $decimals = 2) {
+
+		Job::dump($point1_lat);
+		Job::dump($point1_long);
+		Job::dump($point2_lat);
+		Job::dump($point2_long);
 		// Calculate the distance in degrees
 		$degrees = rad2deg(acos((sin(deg2rad($point1_lat))*sin(deg2rad($point2_lat))) + (cos(deg2rad($point1_lat))*cos(deg2rad($point2_lat))*cos(deg2rad($point1_long-$point2_long)))));
 	 
