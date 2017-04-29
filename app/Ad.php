@@ -759,8 +759,8 @@ class Ad extends Model
             if (isset($data['description'])) {
                 $des_jd = json_decode($data['description']);
                 $data_array['title_txt'] =  $data->title;
-                $data_array['title'] =  "<h3 style='margin-top: 0'>".$data->title."</h3>";
-                $data_array['des'] =  "<p>".$des_jd."</p>";
+                $data_array['title'] =  "<h3 class='nat' style='margin-top: 0'>".$data->title."</h3>";
+                $data_array['des'] =  "<p class='nades'>".$des_jd."</p>";
 
                 //FACEBOOK SHARE BUTTON
                 $data_array['fbs'] = '
