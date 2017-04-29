@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	master.pageLoad();
 	master.events();
-
+	
 });
 master = {
 

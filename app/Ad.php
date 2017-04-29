@@ -110,20 +110,10 @@ class Ad extends Model
                 ->get();
         }
         if (isset($ads)) {
-            $output = Ad::PrepareAdsForMap($ads);
+            $output = Ad::PrepareAdsForMap($ads,$lat,$lng);
         }
         return $output;
     }
-
-
-
-
-
-
-
-
-
-
     static public function PrepareAdsMapHashtag($hashtag,$lat,$lng,$radius) {
         $output = null;
         $adds_arary = array();
@@ -168,7 +158,7 @@ class Ad extends Model
 
         }
         if (isset($ads)) {
-            $output = Ad::PrepareAdsForMap($ads);
+            $output = Ad::PrepareAdsForMap($ads,$lat,$lng);
         }
         return $output;
     }
@@ -373,7 +363,7 @@ class Ad extends Model
         }
         return $data_a;
     }
-    static public function PrepareAdsForMap($data) {
+    static public function PrepareAdsForMap($data,$orlat,$orlng) {
         $data_array = array();
         if (isset($data)) {
             foreach ($data as $dk => $dv) {
@@ -381,11 +371,17 @@ class Ad extends Model
                                             'lat' => '',
                                             'lng' => '',
                                             'title' => '',
-                                            'des' =>''
+                                            'des' =>'',
+                                            'dis' =>''
                                         );
+
+                
                 $data_array[$dk]['id'] = $dv['id'];
                 $data_array[$dk]['lat'] = $dv['lat'];
                 $data_array[$dk]['lng'] = $dv['lng'];
+
+                $data_array[$dk]['dis'] = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"K");
+
                 $new_t = '';
                 $new_des = '';
                 if (isset($dv['title'])) {
