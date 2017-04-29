@@ -383,7 +383,7 @@ class Ad extends Model
                 $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"K");
                 $dun = ' KM';
                 // Job::dump($ndis);
-                if ($ndis<=0.0) {
+                if ($ndis<=1.0) {
                     // Job::dump('here m');
                     $dun = ' M';
                     $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"M");
