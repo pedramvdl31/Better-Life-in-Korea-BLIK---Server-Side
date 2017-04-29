@@ -380,8 +380,6 @@ class Ad extends Model
                 $data_array[$dk]['lat'] = $dv['lat'];
                 $data_array[$dk]['lng'] = $dv['lng'];
 
-                Job::dump(Job::distanceCalculation(floatval($dv['lat']),floatval($dv['lng']),floatval($orlat),floatval($orlng)));
-
                 $data_array[$dk]['dis'] = Job::distance(floatval($dv['lat']),floatval($dv['lng']),floatval($orlat),floatval($orlng),"K");
 
                 $new_t = '';
