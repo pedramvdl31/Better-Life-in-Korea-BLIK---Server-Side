@@ -389,6 +389,7 @@ class Ad extends Model
                     $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"M");
                 }
 
+                $ndis = 0.8985666;
                 if ($ndis<0) {
                     $ndis = $ndis.' smaller than 0';
                 } else {
