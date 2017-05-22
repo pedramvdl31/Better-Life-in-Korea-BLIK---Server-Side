@@ -148,7 +148,8 @@ return [
         Barryvdh\DomPDF\ServiceProvider::class,
         // EXTRA
         Laracasts\Flash\FlashServiceProvider::class,
-        Laravel\Socialite\SocialiteServiceProvider::class
+        Laravel\Socialite\SocialiteServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class
 
     ],
 
@@ -203,7 +204,8 @@ return [
         'Flash'     => 'Laracasts\Flash\Flash',
         'UploadHelper'=> App\Helpers\UploadHelper::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
-        'Socialite' => Laravel\Socialite\Facades\Socialite::class
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+        'Image' => Intervention\Image\Facades\Image::class
 
 
     ],

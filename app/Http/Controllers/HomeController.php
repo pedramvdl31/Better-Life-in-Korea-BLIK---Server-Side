@@ -18,6 +18,7 @@ use View;
 use Redis;
 use File;
 use DB;
+use Image;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -43,18 +44,65 @@ class HomeController extends Controller
         public function getHomePage()
     {   
 
+        $files = scandir('assets/images/posts');
+        foreach($files as $file) {
+
+            $this_file = 'assets/images/posts/'.$file.'/prm/image/';
+            if ( file_exists($this_file) ) {
+                $files2 = scandir($this_file);
+                foreach($files2  as $img_name) {
+                    if ( $img_name!='.'&&$img_name!='..') {
+                        
+                        // $img_name = 'd0jKR_1486958664.jpeg';
+                    
+                        // open an image file
+                        $img = Image::make($this_file.$img_name);
+
+                        $size = $img->filesize();
+                        $width = $img->width();
+
+                        if ($width>750 || $size > 250000) {
+                            // insert watermark at bottom-right corner with 10px offset
+                            $img->insert('watermark.png', 'bottom-right', 10, 10);
+                            // resize the image to a width of 300 and constrain aspect ratio (auto height)
+                            $img->resize(750, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                            // finally we save the image as a new file
+                            $img->save($this_file.$img_name);
+                        }
+                    }
 
 
-        // for ($i=0; $i < 30 ; $i++) { 
-        //     $adads = new Ad();
-        //     $adads->cat_id = 2;
-        //     $adads->city = 3;
-        //     $adads->title = 'test';
-        //     $adads->description = 'test';
-        //     $adads->status = 1;
-        //     $adads->user_id = 1;
-        //     $adads->save();
-        // }
+
+                }                       
+            }
+         
+        }
+
+        
+        
+        // $img_name = 'watermark.png';
+        
+        // // open an image file
+        // $img = Image::make($img_name);
+
+        // $size = $img->filesize();
+        // $width = $img->width();
+
+        // // insert watermark at bottom-right corner with 10px offset
+        // $img->insert('watermark.png', 'bottom-right', 10, 10);
+        // // resize the image to a width of 300 and constrain aspect ratio (auto height)
+        // $img->resize(300, null, function ($constraint) {
+        //     $constraint->aspectRatio();
+        // });
+        // // finally we save the image as a new file
+        // $img->save($img_name);
+
+
+
+
+
 
         $cats='';
         $provs='';
@@ -81,6 +129,8 @@ class HomeController extends Controller
 
       public function getHomePageM()
     {   
+
+
       return view('home.m_homepage')
         ->with('layout','layouts.default');
 
