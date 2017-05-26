@@ -321,7 +321,7 @@ class AdsController extends Controller
 
     public function postPrepareAds()
     {
-        if(Request::ajax()){xxx
+        if(Request::ajax()){
             $status = 400;
             $this_ad = Ad::PrepareForView(Ad::find(Input::get('data_id')));
             if (isset($this_ad)) {
