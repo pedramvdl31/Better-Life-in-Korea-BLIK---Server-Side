@@ -25,9 +25,6 @@
         <br>
         <small><a href="https://itunes.apple.com/us/app/blik-better-life-in-korea/id1183706806?ls=1&mt=8">BLIK APP - IPHONE</a></small>
         </p>
-
-
-        <a onClick="javascript:try_to_open_app();" href="'blikapp://?adid='{{adid}}">App name</a>
     </div>
 </article>
 @stop
