@@ -20,6 +20,7 @@ use App\Admin;
 use App\Ad;
 use App\Review;
 use App\Comment;
+use Image;
 
 class ApisController extends Controller
 {
@@ -347,8 +348,17 @@ class ApisController extends Controller
                                     } 
                                     $oldpath = public_path($tmp_path.$pvval['name']);
                                     $newpath = public_path($new_path.$pvval['name']);
-                                    if (file_exists($tmp_path.$pvval['name'])) {
-                                        rename($oldpath, $newpath);
+                                    $filetmp = $tmp_path.$pvval['name'];
+                                    if (file_exists($filetmp)) {
+
+                                        $img = Image::make($oldpath);
+                                        $img->resize(700, null, function ($constraint) {
+                                            $constraint->aspectRatio();
+                                        });
+                                        if ($img->save($oldpath,100)) {
+                                            rename($oldpath, $newpath);
+                                        }
+                                        
                                     }  
                                 }
                             }
