@@ -2,7 +2,8 @@
 @section('stylesheets')
 @stop
 @section('scripts')
-	<script src="/assets/js/urlhandler.js"></script>
+  <script src="/assets/js/deeplink.js"></script>
+  <script src="/assets/js/urlhandler.js"></script>
 @stop
 
 @section('content')
@@ -17,7 +18,7 @@
 </style>
 
 <article class="col-md-6 col-sm-12 col-xs-12">
-    <h3>Redirecting to BLIK APP!&nbsp;<img src="/assets/images/icons/gif/loading1.gif" width="20px;"></h3>
+    <h3><a href="blikapp://?adid={{$adid}}">View Post</a></h3>
     <div>
         <p>**You must have the app installed on your phone, Download the app and try again**
         <br>
@@ -25,6 +26,11 @@
         <br>
         <small><a href="https://itunes.apple.com/us/app/blik-better-life-in-korea/id1183706806?ls=1&mt=8">BLIK APP - IPHONE</a></small>
         </p>
+
+ 
+
+
+          
     </div>
 </article>
 @stop

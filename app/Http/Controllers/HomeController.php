@@ -44,52 +44,6 @@ class HomeController extends Controller
         public function getHomePage()
     {   
 
-        $files = scandir('assets/images/posts');
-        foreach($files as $file) {
-
-            $this_file = 'assets/images/posts/'.$file.'/prm/image/';
-            if ( file_exists($this_file) ) {
-                $files2 = scandir($this_file);
-                foreach($files2  as $img_name) {
-                    if ( $img_name!='.'&&$img_name!='..') {
-                        $img = Image::make($this_file.$img_name);
-                        $size = $img->filesize();
-                        $width = $img->width();
-                        $img->resize(700, null, function ($constraint) {
-                            $constraint->aspectRatio();
-                        });
-                        $img->save($this_file.$img_name,100);
-                    }
-                }                       
-            }
-         
-        }
-        //xx
-
-        
-        
-        // $img_name = 'watermark.png';
-        
-        // // open an image file
-        // $img = Image::make($img_name);
-
-        // $size = $img->filesize();
-        // $width = $img->width();
-
-        // // insert watermark at bottom-right corner with 10px offset
-        // $img->insert('watermark.png', 'bottom-right', 10, 10);
-        // // resize the image to a width of 300 and constrain aspect ratio (auto height)
-        // $img->resize(300, null, function ($constraint) {
-        //     $constraint->aspectRatio();
-        // });
-        // // finally we save the image as a new file
-        // $img->save($img_name);
-
-
-
-
-
-
         $cats='';
         $provs='';
         $wishlist='';
