@@ -4,7 +4,7 @@
 Homestead.yaml
 Homestead.json
 
-/public/assets/images/inventories
-/public/assets/images/posts
-/public/assets/images/brand_image
-/public/assets/images/articles
+/public/assets/images/inventories/*
+/public/assets/images/posts/*
+/public/assets/images/brand_image/*
+/public/assets/images/articles/*
