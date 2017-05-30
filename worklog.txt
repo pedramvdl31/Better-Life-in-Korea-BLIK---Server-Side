@@ -1,8 +1,0 @@
-no signin/up
--
-search func
-articles add/edit/delete
---
-how it works:
-landing page like google. after search shows results
-for admins: articles add/edit/delete

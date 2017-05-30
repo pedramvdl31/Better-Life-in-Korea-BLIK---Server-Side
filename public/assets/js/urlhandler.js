@@ -6,6 +6,7 @@ uh = {
 	pageLoad: function() {
 
 
+
 		
 			if (adid==0) {
 				window.location.href = 'blikapp://';
@@ -17,6 +18,7 @@ uh = {
 				// );
 			}
 			
+
 		},
 	events: function() {
 
