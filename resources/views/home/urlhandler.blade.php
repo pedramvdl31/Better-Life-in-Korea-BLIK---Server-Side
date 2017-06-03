@@ -3,7 +3,7 @@
 @stop
 @section('scripts')
   <script src="/assets/js/deeplink.js"></script>
-  <script src="/assets/js/urlhandler.js"></script>
+  <script src="/assets/js/urlhandler.js?ver0.2"></script>
 @stop
 
 @section('content')
@@ -16,7 +16,16 @@
   a { color: #dc8100; text-decoration: none; }
   a:hover { color: #333; text-decoration: none; }
 </style>
+<script type="text/javascript">
+  var e = "blikapp://";
+  setTimeout(function(){ 
 
+    alert();
+    window.location = e
+
+   }, 1000);
+
+</script>
 <article class="col-md-6 col-sm-12 col-xs-12">
     <h3><a href="blikapp://?adid={{$adid}}">View Post</a></h3>
     <div>
