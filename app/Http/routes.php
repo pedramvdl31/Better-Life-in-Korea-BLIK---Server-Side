@@ -15,6 +15,7 @@ Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComme
 //facebook comments
 Route::post('/api/post-comment',  ['uses' => 'ApisController@postPostComment']);
 Route::post('/api/del-comment',  ['uses' => 'ApisController@postDelComment']);
+Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
 
 
 

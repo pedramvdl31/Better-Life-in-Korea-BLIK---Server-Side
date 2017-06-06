@@ -114,6 +114,29 @@ class Ad extends Model
         }
         return $output;
     }
+    static public function PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng) {
+        $output = null;
+        if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
+            $ads = Ad::where('status',1)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
+        } else {
+            $ads = Ad::select(
+                 \DB::raw("*,
+                ( 3959 * acos( cos( radians(" . $lat . ") ) *
+                cos( radians( lat ) )
+                * cos( radians( lng ) - radians(" . $lng . ")
+                ) + sin( radians(" . $lat . ") ) *
+                sin( radians( lat ) ) )
+                ) AS distance"))
+                ->orderBy("distance")
+                ->skip($skip_ad)
+                ->take($take_ad)
+                ->get();
+        }
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForMapAjax($ads,$lat,$lng);
+        }
+        return $output;
+    }
     static public function PrepareAdsMapHashtag($hashtag,$lat,$lng,$radius) {
         $output = null;
         $adds_arary = array();
@@ -406,6 +429,57 @@ class Ad extends Model
         }
         return $data_array;
     }
+    static public function PrepareAdsForMapAjax($data,$orlat,$orlng) {
+        $data_array = array();
+        $bp =Job::ReturnBp();
+        if (isset($data)) {
+            foreach ($data as $dk => $dv) {
+                $data_array[$dk] = array(   'id' => '',
+                                            'lat' => '',
+                                            'lng' => '',
+                                            'title' => '',
+                                            'des' =>'',
+                                            'dis' =>'',
+                                            'imgsrc'=>''
+                                        );
+
+                
+                $data_array[$dk]['id'] = $dv['id'];
+                $data_array[$dk]['lat'] = $dv['lat'];
+                $data_array[$dk]['lng'] = $dv['lng'];
+
+                $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"K",2);
+                $dun = ' KM';
+                // Job::dump($ndis);
+                if ($ndis<=1.0) {
+                    // Job::dump('here m');
+                    $dun = ' M';
+                    $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"M",0);
+                }
+
+                $data_array[$dk]['dis'] = $ndis.$dun;
+
+                $new_t = '';
+                $new_des = '';
+                if (isset($dv['title'])) {
+                    $t_temp = $dv['title'];
+                    $data_array[$dk]['title'] = strlen($t_temp)>20?mb_substr($t_temp,0,20, "utf-8")."...":$t_temp;
+                    // $new_t =utf8_decode($new_t0);
+                }
+                if (isset($dv['description'])) {
+                    $des_temp = json_decode($dv['description']);
+                    $data_array[$dk]['des'] = strlen($des_temp)>30?mb_substr($des_temp,0,30,"utf-8")."...":$des_temp;
+                }
+                $poster_id = $dv['user_id'];
+                if ((isset($dv['file_srcs'])) && ($dv['file_srcs'] != "null")) {
+                    $src_temp = json_decode($dv['file_srcs'],true);
+                    $data_array[$dk]['imgsrc'] = (isset($src_temp[0]['image']['name']))?$bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:$bp.'/assets/images/home/product1.jpg';
+                }
+            }
+        }
+        return $data_array;
+    }
+
     static public function PrepareAdsScrollLoadApi($data) {
         $bp =Job::ReturnBp();
         $data_a = array();

@@ -542,6 +542,30 @@ class ApisController extends Controller
             ->with('layout',"layouts.urlhandler");
 
     }
+    public function postLoadAds()
+    {   
+        $headers = array (
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
+        $status = 400;
+        $lat = Input::get('lat');
+        $lng = Input::get('lng');
+        $take_ad = Input::get('take_ad');
+        $skip_ad = Input::get('skip_ad');
+        if (isset($lat,$lng)) {
+            $ads = Ad::PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng);
+            $status = 200;
+            return Response::json(array(
+                'status' => $status,
+                'ads' => $ads
+            ),200,$headers,JSON_UNESCAPED_UNICODE);
+        }
+
+        return Response::json(array(
+            'status' => $status
+            ));
+    }
 
 
 }
