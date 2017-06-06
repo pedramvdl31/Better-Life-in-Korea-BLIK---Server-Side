@@ -553,6 +553,7 @@ class ApisController extends Controller
         $lng = Input::get('lng');
         $take_ad = Input::get('take_ad');
         $skip_ad = Input::get('skip_ad');
+        $skip_ad = $skip_ad + 1;
         if (isset($lat,$lng)) {
             $ads = Ad::PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng);
             $status = 200;
