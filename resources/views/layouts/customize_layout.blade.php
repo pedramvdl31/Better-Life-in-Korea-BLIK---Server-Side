@@ -1,19 +1,20 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
+        <title>Home | Kora</title>
         <meta http-equiv="content-type" content="text/html; charset=UTF8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A Better Life in Korea, find country's favorite places and quickly get around.">
-        <meta name="author" content="">
+        <meta name="author" content="webprinciples"> 
+        <meta name="description" content="Better Life in Korea allows you to promote your business, service or event. Your costumers and friends can use all available GPS applications to directly drive or walk to your posts.">
         <meta property="og:title" content="Better Life in Korea" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.betterlifeinkorea.com/" />
-        <meta property="og:image" content="https://www.betterlifeinkorea.com/assets/images/blik.jpg" />
-
+        <meta property="og:url" content="https://www.betterlifeinkorea.com" />
+        <meta property="og:image" content="https://www.betterlifeinkorea.com/assets/images/icons/main.jpg" />
+        <meta property="og:description" content="Better Life in Korea allows you to promote your business, service or event. Your costumers and friends can use all available GPS applications to directly drive or walk to your posts." /> 
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
-        <title>Home | Kora</title>
+        
 
         <script type="text/javascript" src='https://maps.google.com/maps/api/js?key=AIzaSyAN5kdxBmHyX28NMWF3z3ZaV-71FjRiAh0&libraries=places'></script>
         
