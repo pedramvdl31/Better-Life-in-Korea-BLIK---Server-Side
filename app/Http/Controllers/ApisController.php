@@ -534,11 +534,37 @@ class ApisController extends Controller
     }
     public function getAppUrlHandler($id=null)
     {   
+        $status = 400;
+        $nimgpath = '';
         if (!isset($id)) {
             $id = 0;
+        } else {
+
+            $this_post = Ad::where('id',$id)->first();
+            if (!empty($this_post) && isset($this_post)) {
+                $poster_id = $this_post->user_id;
+                $src_temp = json_decode($this_post['file_srcs'],true);
+                $f_image = (isset($src_temp[0]['image']['name']))?'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:'/assets/images/home/product1.jpg';
+                $thisimgpath = public_path($f_image);
+                if (file_exists($thisimgpath)) {
+                    $rand = Job::generateRandomString(5);
+                    $time = time();
+                    $final_path = $rand.'_'.$time.'.jpg';
+                    $new_path = "assets/images/urlsharing/".$final_path;
+                    $nimgpath = public_path($new_path);
+                    
+                    $img = Image::make($thisimgpath);
+                    $img->fit(200, 200);
+                    if ($img->save($nimgpath,70)) {
+                        $status = 200;
+                    }
+                } 
+            }
         }
+
         return view('home.urlhandler')
             ->with('adid',$id)
+            ->with('img_path',$nimgpath)
             ->with('layout',"layouts.urlhandler");
 
     }

@@ -1,14 +1,18 @@
     <!DOCTYPE html>
     <html lang="en">
     <head>
+        <title>Home | Kora</title>
         <meta http-equiv="content-type" content="text/html; charset=UTF8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="A Better Life in Korea, find country's favorite places and quickly get around.">
-        <meta name="author" content="webprinciples">
+        <meta name="author" content="webprinciples"> 
+        <meta name="description" content="Better Life in Korea allows you to promote your business, service or event. Your costumers and friends can use all available GPS applications to directly drive or walk to your posts.">
         <meta property="og:title" content="Better Life in Korea" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.betterlifeinkorea.com/" />
-        <meta property="og:image" content="https://www.betterlifeinkorea.com/assets/images/blik.jpg" />
+        <meta property="og:url" content="https://www.betterlifeinkorea.com" />
+        <meta property="og:image" content="{!!$img_path!!}" />
+        <meta property="og:description" content="Better Life in Korea allows you to promote your business, service or event. Your costumers and friends can use all available GPS applications to directly drive or walk to your posts." /> 
+        <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="favicon-16x16.png" sizes="16x16" />
 
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -21,17 +25,17 @@
         </head><!--/head-->
         @yield('stylesheets')
         <body>
-        <script>    
-            var adid = {!!$adid!!};
-        </script>
+            <img style="display: none" src="{!!$img_path!!}">
+            <script>    
+                var adid = {!!$adid!!};
+            </script>
 
-        @yield('content')
+            @yield('content')
 
-        <!-- PAEG SCRIPT -->
-        @yield('scripts')
-        <!-- PAGE SCRIPT -->
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-        
-    </body>
+            <!-- PAEG SCRIPT -->
+            @yield('scripts')
+            <!-- PAGE SCRIPT -->
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        </body>
 </html>
