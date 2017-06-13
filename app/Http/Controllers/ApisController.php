@@ -536,6 +536,9 @@ class ApisController extends Controller
     {   
         $status = 400;
         $nimgpath = '';
+        $new_pathx = '';
+        $arraykeyt = 0;
+        $firstkey = 0;
         if (!isset($id)) {
             $id = 0;
         } else {
@@ -544,7 +547,14 @@ class ApisController extends Controller
             if (!empty($this_post) && isset($this_post)) {
                 $poster_id = $this_post->user_id;
                 $src_temp = json_decode($this_post['file_srcs'],true);
-                $f_image = (isset($src_temp[0]['image']['name']))?'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:'/assets/images/home/product1.jpg';
+                foreach ($src_temp as $key => $value) {
+                    if ($arraykeyt == 0) {
+                        $firstkey = $key;
+                    }
+                    $arraykeyt++;
+                }
+                
+                $f_image = ( isset($src_temp[$firstkey]['image']['name']) )?'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[$firstkey]['image']['name']:'/assets/images/home/product1.jpg';
                 $thisimgpath = public_path($f_image);
                 if (file_exists($thisimgpath)) {
                     $rand = Job::generateRandomString(5);
