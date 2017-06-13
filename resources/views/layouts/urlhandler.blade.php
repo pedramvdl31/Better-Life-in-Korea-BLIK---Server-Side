@@ -8,7 +8,7 @@
         <meta name="description" content="Better Life in Korea allows you to promote your business, service or event. Your costumers and friends can use all available GPS applications to directly drive or walk to your posts.">
         <meta property="og:title" content="Better Life in Korea" />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.betterlifeinkorea.com" />
+        <meta property="og:url" content="{!!Request::url()!!}" />
         <meta property="og:image" content="{!!$img_path!!}" />
         <meta property="og:description" content="Better Life in Korea allows you to promote your business, service or event. Your costumers and friends can use all available GPS applications to directly drive or walk to your posts." /> 
         <link rel="icon" type="image/png" href="favicon-32x32.png" sizes="32x32" />
