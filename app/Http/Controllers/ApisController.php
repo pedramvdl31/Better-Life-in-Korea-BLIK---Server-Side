@@ -550,6 +550,7 @@ class ApisController extends Controller
                     $rand = Job::generateRandomString(5);
                     $time = time();
                     $final_path = $rand.'_'.$time.'.jpg';
+                    $new_pathx = URL::to('/')."/assets/images/urlsharing/".$final_path;
                     $new_path = "assets/images/urlsharing/".$final_path;
                     $nimgpath = public_path($new_path);
                     
@@ -564,7 +565,7 @@ class ApisController extends Controller
 
         return view('home.urlhandler')
             ->with('adid',$id)
-            ->with('img_path',$nimgpath)
+            ->with('img_path',$new_pathx)
             ->with('layout',"layouts.urlhandler");
 
     }
