@@ -21,7 +21,7 @@ use App\Ad;
 use App\Review;
 use App\Comment;
 use Image;
-
+use URL;
 class ApisController extends Controller
 {
     public function __construct() {
@@ -550,7 +550,7 @@ class ApisController extends Controller
                     $rand = Job::generateRandomString(5);
                     $time = time();
                     $final_path = $rand.'_'.$time.'.jpg';
-                    $new_pathx = "/assets/images/urlsharing/".$final_path;
+                    $new_pathx = URL::to('/')."/assets/images/urlsharing/".$final_path;
                     $new_path = "assets/images/urlsharing/".$final_path;
                     $nimgpath = public_path($new_path);
                     
