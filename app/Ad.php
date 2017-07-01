@@ -440,14 +440,21 @@ class Ad extends Model
                                             'title' => '',
                                             'des' =>'',
                                             'dis' =>'',
-                                            'imgsrc'=>''
+                                            'imgsrc'=>'',
+                                            'user_email'=>'',
+                                            'user_id'=>''
                                         );
 
-                
+                $cur_user_id = $dv['user_id'];
                 $data_array[$dk]['id'] = $dv['id'];
                 $data_array[$dk]['lat'] = $dv['lat'];
                 $data_array[$dk]['lng'] = $dv['lng'];
+                $data_array[$dk]['user_id'] = $cur_user_id;
 
+                //GET USEREMAIL
+                $data_array[$dk]['user_email'] = Job::obfuscate_email(User::where('id',$cur_user_id)->value('email'));
+
+                $poster_id = $dv['user_id'];
                 $ndis = Job::distance($dv['lat'],$dv['lng'],$orlat,$orlng,"K",2);
                 $dun = ' KM';
                 // Job::dump($ndis);
@@ -470,7 +477,7 @@ class Ad extends Model
                     $des_temp = json_decode($dv['description']);
                     $data_array[$dk]['des'] = strlen($des_temp)>30?mb_substr($des_temp,0,30,"utf-8")."...":$des_temp;
                 }
-                $poster_id = $dv['user_id'];
+                
                 if ((isset($dv['file_srcs'])) && ($dv['file_srcs'] != "null")) {
                     $src_temp = json_decode($dv['file_srcs'],true);
                     $data_array[$dk]['imgsrc'] = (isset($src_temp[0]['image']['name']))?$bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:$bp.'/assets/images/home/product1.jpg';

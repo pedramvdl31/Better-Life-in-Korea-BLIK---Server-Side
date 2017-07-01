@@ -18,7 +18,6 @@ Route::post('/api/del-comment',  ['uses' => 'ApisController@postDelComment']);
 Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
 
 
-
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
 	Route::get('/api/dashboard/{tkn}', ['uses' => 'DashboardsController@getIndexApi']);
@@ -27,9 +26,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/users/register', ['uses'=>'ApisController@postRegistration']);
 	Route::post('/api/save-rate', ['uses'=>'ApisController@postSaveRate']);
 });
-
-
-
 
 
 //CHAT ROUTES
