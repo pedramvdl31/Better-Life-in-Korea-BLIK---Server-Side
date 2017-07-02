@@ -44,15 +44,17 @@ class ApisController extends Controller
     public function postProfileInfo() {
         $tkn = Input::get('tkn');
         $obf_email = "Default";
+        $num_posts = "0";
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
             $obf_email = Job::obfuscate_email($this_user->email);
+            $num_posts = count(Ads::where('status','1')->where('user_id',$this_user->id)->get());
             $status = 200;
         }
         return Response::json(array(
             'status' => $status,
-            'obf_email' => $obf_email
+            'num_posts' => $num_posts
         ));
     }
 
