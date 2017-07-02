@@ -137,6 +137,19 @@ class Ad extends Model
         }
         return $output;
     }
+    static public function PrepareAdsMapAjaxProfile($take_ad,$skip_ad,$tkn,$lat,$lng) {
+        $output = null;
+        if (isset($tkn)) {
+            $this_user = User::where('api_token',$tkn)->first();
+            if (isset($this_user) && isset($this_user->id)) {
+                $ads = Ad::where('user_id',$this_user->id)->where('status',1)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
+            }
+        }
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForMapAjax($ads,$lat,$lng);
+        }
+        return $output;
+    }
     static public function PrepareAdsMapHashtag($hashtag,$lat,$lng,$radius) {
         $output = null;
         $adds_arary = array();

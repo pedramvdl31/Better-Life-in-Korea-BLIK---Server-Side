@@ -16,6 +16,7 @@ Route::get('/api/fbcomment/{id}/{actkn}',  ['uses' => 'ApisController@getFBComme
 Route::post('/api/post-comment',  ['uses' => 'ApisController@postPostComment']);
 Route::post('/api/del-comment',  ['uses' => 'ApisController@postDelComment']);
 Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
+Route::post('/api/load-ads-profile',  ['uses' => 'ApisController@postLoadAdsProfile']);
 
 
 Route::group(['middleware' => 'beforeFilter'], function () {

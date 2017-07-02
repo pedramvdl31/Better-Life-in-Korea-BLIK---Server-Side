@@ -475,11 +475,12 @@ class ApisController extends Controller
     {
         $reg_form = null;
         parse_str(Input::get('reg_form'), $reg_form);
+        $obf_email = "Default";
         $validator = Validator::make($reg_form, User::$registration);
         if ($validator->passes()) {
             $tkn = Job::generateRandomString(60);
             $rand_sting = Job::generateRandomString(25);
-
+            $obf_email = $reg_form['email'];
             $user = new User;
             $user->roles = 5;
             $user->email = $reg_form['email'];
@@ -494,7 +495,8 @@ class ApisController extends Controller
                     if (Auth::attempt(array('email'=> $user->email, 'password'=>$reg_form['password']),true)) {
                         return Response::json(array(
                             'status' => 200,
-                            'tkn'=>$tkn
+                            'tkn'=>$tkn,
+                            'obf_email' => $obf_email
                             ));
                     }
                 }
@@ -608,6 +610,32 @@ class ApisController extends Controller
         $skip_ad = $skip_ad + 1;
         if (isset($lat,$lng)) {
             $ads = Ad::PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng);
+            $status = 200;
+            return Response::json(array(
+                'status' => $status,
+                'ads' => $ads
+            ),200,$headers,JSON_UNESCAPED_UNICODE);
+        }
+
+        return Response::json(array(
+            'status' => $status
+            ));
+    }
+    public function postLoadAdsProfile()
+    {   
+        $headers = array (
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
+        $status = 400;
+        $lat = Input::get('lat');
+        $lng = Input::get('lng');
+        $tkn = Input::get('tkn');
+        $take_ad = Input::get('take_ad');
+        $skip_ad = Input::get('skip_ad');
+        $skip_ad = $skip_ad + 1;
+        if (isset($lat,$lng)) {
+            $ads = Ad::PrepareAdsMapAjaxProfile($take_ad,$skip_ad,$tkn,$lat,$lng);
             $status = 200;
             return Response::json(array(
                 'status' => $status,
