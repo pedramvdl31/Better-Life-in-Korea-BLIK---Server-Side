@@ -28,12 +28,14 @@ class ApisController extends Controller
         $this->layout = 'layouts.fbcomments';
     }
     public function postInit() {
-            return Response::json(array(
+        Job::dump('here');
+        $tkn = Input::get('token');
+        Job::dump($tkn);
+        return Response::json(array(
             'status' => 200
-            ));
+        ));
     }
     public function postPostComment() {
-
         $status = 400;
         $rhtml = '';
         $tkn = Input::get('token');
