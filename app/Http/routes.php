@@ -17,6 +17,9 @@ Route::post('/api/post-comment',  ['uses' => 'ApisController@postPostComment']);
 Route::post('/api/del-comment',  ['uses' => 'ApisController@postDelComment']);
 Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
 Route::post('/api/load-ads-profile',  ['uses' => 'ApisController@postLoadAdsProfile']);
+Route::post('/api/get-profile-info',  ['uses' => 'ApisController@postProfileInfo']);
+
+
 
 
 Route::group(['middleware' => 'beforeFilter'], function () {

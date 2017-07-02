@@ -41,6 +41,22 @@ class ApisController extends Controller
             'obf_email' => $obf_email
         ));
     }
+    public function postProfileInfo() {
+        $tkn = Input::get('tkn');
+        $obf_email = "Default";
+        $this_user = User::where('api_token',$tkn)->first();
+        $status = 400;
+        if (isset($this_user)&&!empty($this_user)) {
+            $obf_email = Job::obfuscate_email($this_user->email);
+            $status = 200;
+        }
+        return Response::json(array(
+            'status' => $status,
+            'obf_email' => $obf_email
+        ));
+    }
+
+
     public function postPostComment() {
         $status = 400;
         $rhtml = '';
