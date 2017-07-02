@@ -30,7 +30,7 @@ class ApisController extends Controller
     public function postInit() {
         $tkn = Input::get('token');
         $this_user = User::where('api_token',$tkn)->first();
-        $status = 200;
+        $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
             $status = 200;
         }
