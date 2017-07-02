@@ -29,13 +29,16 @@ class ApisController extends Controller
     }
     public function postInit() {
         $tkn = Input::get('token');
+        $obf_email = "Default";
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
+            $obf_email = Job::obfuscate_email($this_user->email);
             $status = 200;
         }
         return Response::json(array(
-            'status' => $status
+            'status' => $status,
+            'obf_email' => $obf_email
         ));
     }
     public function postPostComment() {
@@ -125,7 +128,9 @@ class ApisController extends Controller
             $tkn = null;
             $email = Input::get('email');
             $password = Input::get('password');
+            $obf_email = "Default";
             if (Auth::attempt(array('email'=>$email, 'password'=>$password))) {
+                $obf_email = Job::obfuscate_email($email);
                 $tkn = Job::generateRandomString(60);
                 $cu = User::where('email',$email)->first();
                 $cu->api_token=$tkn;
@@ -134,7 +139,8 @@ class ApisController extends Controller
             }
             return Response::json(array(
             'status' => $status,
-            'tkn' => $tkn
+            'tkn' => $tkn,
+            'obf_email' => $obf_email
             ));
     }
     public function postFBLogin() {
@@ -142,7 +148,9 @@ class ApisController extends Controller
             $email = Input::get('email');
             $token = Input::get('token');
             $tuser = User::where('email',$email)->first();
+            $obf_email = "Default";
             if (isset($email,$token)) {
+                $obf_email = Job::obfuscate_email($email);
                 if (isset($tuser) && !empty($tuser)) {
                     if (!isset($tuser->api_token)) {
                         $tuser->api_token = $token;
@@ -151,7 +159,8 @@ class ApisController extends Controller
                     Auth::loginUsingId($tuser->id, true);
                     return Response::json(array(
                     'status' => 200,
-                    'tkn'=>$tuser->api_token
+                    'tkn'=>$tuser->api_token,
+                    'obf_email' => $obf_email
                     ));
                 } else {
                     $rand_sting = Job::generateRandomString(25);
@@ -169,7 +178,8 @@ class ApisController extends Controller
                             Auth::loginUsingId($user->id, true);
                             return Response::json(array(
                                 'status' => 200,
-                                'tkn'=>$token
+                                'tkn'=>$token,
+                                'obf_email' => $obf_email
                                 ));
                         }
                     }                
