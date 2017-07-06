@@ -30,7 +30,7 @@ class ApisController extends Controller
     public function postInit() {
         $tkn = Input::get('token');
         $obf_email = "Default";
-        $user_avatar = NULL;
+        $user_avatar = "";
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
@@ -50,9 +50,13 @@ class ApisController extends Controller
         $tkn = Input::get('tkn');
         $obf_email = "Default";
         $num_posts = "0";
+        $user_avatar = "";
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
+            $user_img = $this_user->avatar;
+            $base_url = "/assets/images/profile-images/perm/";
+            $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
             $obf_email = Job::obfuscate_email($this_user->email);
             $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
             $status = 200;
@@ -60,7 +64,8 @@ class ApisController extends Controller
         return Response::json(array(
             'status' => $status,
             'num_posts' => $num_posts,
-            'obf_email' => $obf_email
+            'obf_email' => $obf_email,
+            'user_avatar' => $user_avatar
         ));
     }
 
