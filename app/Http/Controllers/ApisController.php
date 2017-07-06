@@ -54,7 +54,8 @@ class ApisController extends Controller
         }
         return Response::json(array(
             'status' => $status,
-            'num_posts' => $num_posts
+            'num_posts' => $num_posts,
+            'obf_email' => $obf_email
         ));
     }
 
