@@ -142,7 +142,7 @@ class Ad extends Model
         if (isset($tkn)) {
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user) && isset($this_user->id)) {
-                $ads = Ad::where('user_id',$this_user->id)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
+                $ads = Ad::where('user_id',$this_user->id)->orderBy('id', 'desc')->get();
                 Job::dump($ads);
             }
         }
