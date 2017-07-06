@@ -625,7 +625,7 @@ class ApisController extends Controller
         $lng = Input::get('lng');
         $take_ad = Input::get('take_ad');
         $skip_ad = Input::get('skip_ad');
-        $skip_ad = $skip_ad + 1;
+        $skip_ad = $skip_ad + 1;//WHAT IS THIS?????
         if (isset($lat,$lng)) {
             $ads = Ad::PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng);
             $status = 200;
@@ -651,7 +651,6 @@ class ApisController extends Controller
         $tkn = Input::get('tkn');
         $take_ad = Input::get('take_ad');
         $skip_ad = Input::get('skip_ad');
-        $skip_ad = $skip_ad + 1;
         if (isset($lat,$lng)) {
             $ads = Ad::PrepareAdsMapAjaxProfile($take_ad,$skip_ad,$tkn,$lat,$lng);
             $status = 200;
