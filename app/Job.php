@@ -552,6 +552,7 @@ class Job extends Model
 	}
 
 
+
 	static public function cleanInput($input) {
 	  $search = array(
 	    '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
