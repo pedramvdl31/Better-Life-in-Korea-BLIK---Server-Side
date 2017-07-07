@@ -626,13 +626,13 @@ class Job extends Model
 		$time=strtotime($time);
 	    $time = time() - $time; // to get the time since that moment
 	    $tokens = array (
-	        31536000 => 'year',
-	        2592000 => 'month',
-	        604800 => 'week',
-	        86400 => 'day',
-	        3600 => 'hour',
-	        60 => 'minute',
-	        1 => 'second'
+	        31536000 => 'year ago',
+	        2592000 => 'month ago',
+	        604800 => 'week ago',
+	        86400 => 'day ago',
+	        3600 => 'hour ago',
+	        60 => 'minute ago',
+	        1 => 'second ago'
 	    );
 	    if ($time<=60) {
 	    	return 'a few seconds';
