@@ -434,7 +434,55 @@ class ApisController extends Controller
         $tempPath = $files['file']['tmp_name']; 
         $image_name = $files['file']['name'];
         $image_types = $files['file']['type'];
+        $utoken = $_POST['usertoken'];
+        if (isset($utoken)) {
+            $this_user = User::where('api_token',$utoken)->first();
+            if (isset($this_user) && isset($this_user->id)) {
+                $thisuid = $this_user->id;
+                $type_array = explode('/', $image_types);
+                $type = $type_array[1];
+                $base_type = $type_array[0];
+                $imagePath = public_path('assets/images/posts/'.$thisuid.'/prm/image');
+                if( ! \File::isDirectory($imagePath) ) {
+                    \File::makeDirectory($imagePath, 493, true);
+                }
+                $rand = Job::generateRandomString(5);
+                $time = time();
+                $final_path = $rand.'_'.$time.'.'.$type;
+                if (!is_writable(dirname($imagePath))) {
+                    $status = 401;
+                    return Response::json(array(
+                        "error" => 'Destination Unwritable'
+                        ));
+                } else {
+                    $newpath = $imagePath.DIRECTORY_SEPARATOR.$final_path;
+                    if (move_uploaded_file($tempPath,$newpath)) {
+                        return Response::json(array(
+                            'status' => 200,
+                            'img_name' => $final_path,
+                            'old_name' => $image_name,
+                            'base_type' => $base_type
+                            ));
+                    } else {
+                        $status = 402;
+                    }
+                }
+            }
 
+        }
+
+        return Response::json(array(
+            'status' => $status
+            ));
+    }
+
+    public function postProfileChangeImage()
+    {
+        $status = 400;
+        $files = $_FILES;
+        $tempPath = $files['file']['tmp_name']; 
+        $image_name = $files['file']['name'];
+        $image_types = $files['file']['type'];
         $utoken = $_POST['usertoken'];
 
         if (isset($utoken)) {
@@ -446,7 +494,7 @@ class ApisController extends Controller
                 $type_array = explode('/', $image_types);
                 $type = $type_array[1];
                 $base_type = $type_array[0];
-                if ($base_type == "image") {
+                if ($base_type == "image") {xxx
                     $imagePath = public_path('assets/images/posts/'.$thisuid.'/tmp/image');
                 } elseif ($base_type == "video") {
                     $imagePath = public_path('assets/images/posts/'.$thisuid.'/tmp/video');
@@ -477,16 +525,12 @@ class ApisController extends Controller
                 }
             }
 
-
         }
-
-
 
         return Response::json(array(
             'status' => $status
             ));
     }
-
 
     public function postValidate()
     {
