@@ -512,6 +512,11 @@ class ApisController extends Controller
                     $newpath = $imagePath.DIRECTORY_SEPARATOR.$final_path;
                     $on_server_image = Job::ReturnBp().'/assets/images/posts/'.$thisuid.'/prm/image/'.$final_path;
                     if (move_uploaded_file($tempPath,$newpath)) {
+                        $prm_pathx = public_path('assets/images/posts/'.$thisuid.'/prm/image'.$this_user->avatar);
+                        if (file_exists($prm_pathx)) {
+                            File::delete($prm_pathx);
+                        }
+                        
                         $this_user->avatar = $final_path;
                         if ($this_user->save()) {
                             return Response::json(array(
