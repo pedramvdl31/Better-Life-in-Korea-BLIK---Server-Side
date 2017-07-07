@@ -484,7 +484,6 @@ class ApisController extends Controller
         $image_name = $files['file']['name'];
         $image_types = $files['file']['type'];
         $utoken = $_POST['usertoken'];
-
         if (isset($utoken)) {
 
             $this_user = User::where('api_token',$utoken)->first();
@@ -513,13 +512,16 @@ class ApisController extends Controller
                     $newpath = $imagePath.DIRECTORY_SEPARATOR.$final_path;
                     $on_server_image = Job::ReturnBp().'/assets/images/posts/'.$thisuid.'/prm/image/'.$final_path;
                     if (move_uploaded_file($tempPath,$newpath)) {
-                        return Response::json(array(
-                            'status' => 200,
-                            'newpath' => $on_server_image,
-                            'img_name' => $final_path,
-                            'old_name' => $image_name,
-                            'base_type' => $base_type
-                            ));
+                        $this_user->avatar = $final_path;
+                        if ($this_user->save()) {
+                            return Response::json(array(
+                                'status' => 200,
+                                'newpath' => $on_server_image,
+                                'img_name' => $final_path,
+                                'old_name' => $image_name,
+                                'base_type' => $base_type
+                                ));
+                        }
                     } else {
                         $status = 402;
                     }
