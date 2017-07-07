@@ -456,7 +456,7 @@ class Ad extends Model
                                             'imgsrc'=>'',
                                             'user_email'=>'',
                                             'user_id'=>'',
-                                            'time-ago' => ''
+                                            'time_ago' => ''
                                         );
 
                 $cur_user_id = $dv['user_id'];
