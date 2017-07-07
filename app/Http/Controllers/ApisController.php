@@ -22,6 +22,7 @@ use App\Review;
 use App\Comment;
 use Image;
 use URL;
+use File;
 class ApisController extends Controller
 {
     public function __construct() {
