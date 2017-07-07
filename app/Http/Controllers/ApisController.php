@@ -494,7 +494,7 @@ class ApisController extends Controller
                 $type_array = explode('/', $image_types);
                 $type = $type_array[1];
                 $base_type = $type_array[0];
-                if ($base_type == "image") {xxx
+                if ($base_type == "image") {
                     $imagePath = public_path('assets/images/posts/'.$thisuid.'/tmp/image');
                 } elseif ($base_type == "video") {
                     $imagePath = public_path('assets/images/posts/'.$thisuid.'/tmp/video');
