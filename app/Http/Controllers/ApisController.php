@@ -490,14 +490,12 @@ class ApisController extends Controller
             $this_user = User::where('api_token',$utoken)->first();
             if (isset($this_user) && isset($this_user->id)) {
                 $thisuid = $this_user->id;
-                // Auth::loginUsingId($thisuid, true);
+                
                 $type_array = explode('/', $image_types);
                 $type = $type_array[1];
                 $base_type = $type_array[0];
                 if ($base_type == "image") {
-                    $imagePath = public_path('assets/images/posts/'.$thisuid.'/tmp/image');
-                } elseif ($base_type == "video") {
-                    $imagePath = public_path('assets/images/posts/'.$thisuid.'/tmp/video');
+                    $imagePath = public_path('assets/images/posts/'.$thisuid.'/prm/image');
                 }
                 if( ! \File::isDirectory($imagePath) ) {
                     \File::makeDirectory($imagePath, 493, true);
@@ -505,6 +503,7 @@ class ApisController extends Controller
                 $rand = Job::generateRandomString(5);
                 $time = time();
                 $final_path = $rand.'_'.$time.'.'.$type;
+                
                 if (!is_writable(dirname($imagePath))) {
                     $status = 401;
                     return Response::json(array(
@@ -512,10 +511,11 @@ class ApisController extends Controller
                         ));
                 } else {
                     $newpath = $imagePath.DIRECTORY_SEPARATOR.$final_path;
+                    $on_server_image = Job::ReturnBp().'/assets/images/posts/'.$thisuid.'/prm/image/'.$final_path;
                     if (move_uploaded_file($tempPath,$newpath)) {
                         return Response::json(array(
                             'status' => 200,
-                            'newpath' => $newpath,
+                            'newpath' => $on_server_image,
                             'img_name' => $final_path,
                             'old_name' => $image_name,
                             'base_type' => $base_type
