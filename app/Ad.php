@@ -465,7 +465,7 @@ class Ad extends Model
                 $data_array[$dk]['lng'] = $dv['lng'];
                 $data_array[$dk]['user_id'] = $cur_user_id;
 
-                $data_array[$dk]['time-ago'] = Job::formatTimeAgo(Job::humanTiming($dv['created_at']));
+                $data_array[$dk]['time_ago'] = Job::formatTimeAgo(Job::humanTiming($dv['created_at']));
 
                 //GET USEREMAIL
                 $data_array[$dk]['user_email'] = Job::obfuscate_email(User::where('id',$cur_user_id)->value('email'));
