@@ -36,7 +36,7 @@ class ApisController extends Controller
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
             $user_img = $this_user->avatar;
-            $base_url = 'assets/images/posts/'.$this_user->id.'/prm/image/';
+            $base_url = '/assets/images/posts/'.$this_user->id.'/prm/image/';
             $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
             $obf_email = Job::obfuscate_email($this_user->email);
             $status = 200;
@@ -56,7 +56,7 @@ class ApisController extends Controller
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
             $user_img = $this_user->avatar;
-            $base_url = 'assets/images/posts/'.$this_user->id.'/prm/image/';
+            $base_url = '/assets/images/posts/'.$this_user->id.'/prm/image/';
             $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
             $obf_email = Job::obfuscate_email($this_user->email);
             $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
