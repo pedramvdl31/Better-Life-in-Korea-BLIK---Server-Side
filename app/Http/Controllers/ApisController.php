@@ -515,6 +515,7 @@ class ApisController extends Controller
                     if (move_uploaded_file($tempPath,$newpath)) {
                         return Response::json(array(
                             'status' => 200,
+                            'newpath' => $newpath,
                             'img_name' => $final_path,
                             'old_name' => $image_name,
                             'base_type' => $base_type
