@@ -32,7 +32,6 @@ class ApisController extends Controller
         $tkn = Input::get('token');
         $obf_email = "Default";
         $user_avatar = "";
-        Job::dump($tkn);
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
@@ -52,7 +51,6 @@ class ApisController extends Controller
         $tkn = Input::get('tkn');
         $obf_email = "Default";
         $num_posts = "0";
-        Job::dump($tkn);
         $user_avatar = "";
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
