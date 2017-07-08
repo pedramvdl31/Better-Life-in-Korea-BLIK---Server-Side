@@ -68,17 +68,20 @@ class ApisController extends Controller
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
-
             $this_ad = Ad::where('id',$ad_id)->where('user_id',$this_user->id)->first();
             if (isset($this_ad)&&!empty($this_ad)) {
                 if ($this_ad->delete()) {
                     $status = 200;
                     $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
+                    return Response::json(array(
+                        'status' => 200,
+                        'num_posts' => $num_posts
+                    ));
                 }
             }
         }
         return Response::json(array(
-            'status' => $status,
+            'status' => 400,
             'num_posts' => $num_posts
         ));
     }
