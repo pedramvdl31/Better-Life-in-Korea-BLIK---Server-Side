@@ -19,6 +19,7 @@ Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
 Route::post('/api/load-ads-profile',  ['uses' => 'ApisController@postLoadAdsProfile']);
 Route::post('/api/get-profile-info',  ['uses' => 'ApisController@postProfileInfo']);
 Route::post('/api/upload-profile-image', ['uses'=>'ApisController@postProfileChangeImage']);
+Route::post('/api/delete-post', ['uses'=>'ApisController@postDeletePost']);
 
 
 

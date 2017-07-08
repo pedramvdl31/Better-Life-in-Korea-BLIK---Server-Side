@@ -30,21 +30,13 @@ class ApisController extends Controller
     }
     public function postInit() {
         $tkn = Input::get('token');
-        $obf_email = "Default";
-        $user_avatar = "";
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
         if (isset($this_user)&&!empty($this_user)) {
-            $user_img = $this_user->avatar;
-            $base_url = '/assets/images/posts/'.$this_user->id.'/prm/image/';
-            $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
-            $obf_email = Job::obfuscate_email($this_user->email);
             $status = 200;
         }
         return Response::json(array(
-            'status' => $status,
-            'obf_email' => $obf_email,
-            'user_avatar' => $user_avatar
+            'status' => $status
         ));
     }
     public function postProfileInfo() {
@@ -67,6 +59,23 @@ class ApisController extends Controller
             'num_posts' => $num_posts,
             'obf_email' => $obf_email,
             'user_avatar' => $user_avatar
+        ));
+    }
+    public function postDeletePost() {
+        $tkn = Input::get('tkn');
+        $ad_id = Input::get('ad_id');
+        $this_user = User::where('api_token',$tkn)->first();
+        $status = 400;
+        if (isset($this_user)&&!empty($this_user)) {
+            $this_ad = Ad::where('id',$ad_id)->where('user_id',$this_user->id)->first();
+            if (isset($this_ad)&&!empty($this_ad)) {
+                if ($this_ad->delete()) {
+                    $status = 200;
+                }
+            }
+        }
+        return Response::json(array(
+            'status' => $status
         ));
     }
 
