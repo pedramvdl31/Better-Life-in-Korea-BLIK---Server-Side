@@ -351,7 +351,7 @@ class ApisController extends Controller
     }
 
     public function postQkpst()
-    {xxx
+    {
         $status = 200;
         $_form = null;
         $tkn = Input::get('tkn');
