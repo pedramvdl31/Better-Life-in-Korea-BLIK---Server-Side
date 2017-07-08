@@ -355,7 +355,6 @@ class ApisController extends Controller
         $status = 200;
         $_form = null;
         $tkn = Input::get('tkn');
-        $num_posts = "0";
         if (isset($tkn)) {
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user)&&!empty($this_user)) {
@@ -375,8 +374,7 @@ class ApisController extends Controller
 
                 if (empty($cat) ||  empty($title) || empty($description)) {
                     return Response::json(array(
-                        'status' => 400,
-                        'num_posts' => $num_posts
+                        'status' => 400
                     ));
                 }
                 $ThisUserId = $this_user->id;
@@ -393,7 +391,6 @@ class ApisController extends Controller
                 $ads->status = 1;
                 $ads->file_srcs = json_encode($posted_files);
                 if ($ads->save()) {
-                    $num_posts = count(Ad::where('status','1')->where('user_id',$ThisUserId)->get());
                     if (isset($posted_files) && !empty($posted_files)) {
                   
                         foreach ($posted_files as $pk => $pv) {
@@ -439,8 +436,7 @@ class ApisController extends Controller
         }
 
         return Response::json(array(
-            'status' => $status,
-            'num_posts' => $num_posts
+            'status' => $status
             ));
     }
 
