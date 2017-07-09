@@ -456,7 +456,9 @@ class Ad extends Model
                                             'imgsrc'=>'',
                                             'user_email'=>'',
                                             'user_id'=>'',
-                                            'time_ago' => ''
+                                            'time_ago' => '',
+                                            'img_w' => '',
+                                            'img_h' => ''
                                         );
 
                 $cur_user_id = $dv['user_id'];
@@ -497,6 +499,7 @@ class Ad extends Model
                 if ((isset($dv['file_srcs'])) && ($dv['file_srcs'] != "null")) {
                     $src_temp = json_decode($dv['file_srcs'],true);
                     $data_array[$dk]['imgsrc'] = (isset($src_temp[0]['image']['name']))?$bp.'/assets/images/posts/'.$poster_id.'/prm/image/'.$src_temp[0]['image']['name']:$bp.'/assets/images/home/product1.jpg';
+                    list($data_array[$dk]['img_w'], $data_array[$dk]['img_h']) = getimagesize($data_array[$dk]['imgsrc']);
                 }
             }
         }
