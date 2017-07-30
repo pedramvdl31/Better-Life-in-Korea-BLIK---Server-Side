@@ -757,12 +757,27 @@ class ApisController extends Controller
         $tkn = Input::get('tkn');
         $take_ad = Input::get('take_ad');
         $skip_ad = Input::get('skip_ad');
+        $obf_email = "Default";
+        $num_posts = "0";
+        $user_avatar = "";
+        $this_ad = Ad::where('id',$id)->first();
+        $this_user = User::where('id',$this_ad->user_id)->first();
+        if (isset($this_user)&&!empty($this_user)) {
+            $user_img = $this_user->avatar;
+            $base_url = '/assets/images/posts/'.$this_user->id.'/prm/image/';
+            $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
+            $obf_email = Job::obfuscate_email($this_user->email);
+            $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
+        }
         if (isset($lat,$lng,$id)) {
             $ads = Ad::PrepareProfileAdsAjax($id,$take_ad,$skip_ad,$tkn,$lat,$lng);
             $status = 200;
             return Response::json(array(
                 'status' => $status,
-                'ads' => $ads
+                'ads' => $ads,
+                'num_posts' => $num_posts,
+                'obf_email' => $obf_email,
+                'user_avatar' => $user_avatar
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
