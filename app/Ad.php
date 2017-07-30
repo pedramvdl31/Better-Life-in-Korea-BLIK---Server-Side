@@ -150,6 +150,20 @@ class Ad extends Model
         }
         return $output;
     }
+    static public function PrepareProfileAdsAjax($id,$take_ad,$skip_ad,$tkn,$lat,$lng) {
+        $output = null;
+        if (isset($tkn)) {
+            $this_ad = Ad::where('id',$id)->first();
+            $this_user = User::where('id',$this_ad->user_id)->first();
+            if (isset($this_user) && isset($this_user->id)) {
+                $ads = Ad::where('user_id',$this_user->id)->orderBy('id', 'asc')->skip($skip_ad)->take($take_ad)->get();
+            }
+        }
+        if (isset($ads)) {
+            $output = Ad::PrepareAdsForMapAjax($ads,$lat,$lng);
+        }
+        return $output;
+    }
     static public function PrepareAdsMapHashtag($hashtag,$lat,$lng,$radius) {
         $output = null;
         $adds_arary = array();

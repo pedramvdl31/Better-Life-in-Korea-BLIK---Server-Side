@@ -17,6 +17,7 @@ Route::post('/api/post-comment',  ['uses' => 'ApisController@postPostComment']);
 Route::post('/api/del-comment',  ['uses' => 'ApisController@postDelComment']);
 Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
 Route::post('/api/load-ads-profile',  ['uses' => 'ApisController@postLoadAdsProfile']);
+Route::post('/api/view-profile-ads',  ['uses' => 'ApisController@postViewProfileAds']);
 Route::post('/api/get-profile-info',  ['uses' => 'ApisController@postProfileInfo']);
 Route::post('/api/upload-profile-image', ['uses'=>'ApisController@postProfileChangeImage']);
 Route::post('/api/delete-post', ['uses'=>'ApisController@postDeletePost']);

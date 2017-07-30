@@ -744,6 +744,32 @@ class ApisController extends Controller
             'status' => $status
             ));
     }
+    public function postViewProfileAds()
+    {   
+        $headers = array (
+            'Content-Type' => 'application/json; charset=UTF-8',
+            'charset' => 'utf-8'
+        );
+        $status = 400;
+        $id = Input::get('profile_id');
+        $lat = Input::get('lat');
+        $lng = Input::get('lng');
+        $tkn = Input::get('tkn');
+        $take_ad = Input::get('take_ad');
+        $skip_ad = Input::get('skip_ad');
+        if (isset($lat,$lng,$id)) {
+            $ads = Ad::PrepareProfileAdsAjax($id,$take_ad,$skip_ad,$tkn,$lat,$lng);
+            $status = 200;
+            return Response::json(array(
+                'status' => $status,
+                'ads' => $ads
+            ),200,$headers,JSON_UNESCAPED_UNICODE);
+        }
+
+        return Response::json(array(
+            'status' => $status
+            ));
+    }
 
 
 }
