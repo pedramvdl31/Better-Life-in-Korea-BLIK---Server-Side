@@ -680,8 +680,8 @@ class ApisController extends Controller
                     $nimgpath = public_path($new_path);
                     
                     $img = Image::make($thisimgpath);
-                    $img->fit(500, 500);
-                    if ($img->save($nimgpath,70)) {
+                    $img->fit(300, 300);
+                    if ($img->save($nimgpath,100)) {
                         $status = 200;
                     }
                 } 
