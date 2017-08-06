@@ -25,11 +25,11 @@
 <article class="col-md-6 col-sm-12 col-xs-12" style="margin-top: 90px">
     <div>
         <center>
-          <a href="https://play.google.com/store/apps/details?id=com.phonegap.blikrel&hl=en"><img width="200px" src="/assets/images/gp.png"></a>
+<!--           <a href="https://play.google.com/store/apps/details?id=com.phonegap.blikrel&hl=en"><img width="200px" src="/assets/images/gp.png"></a>
           <p>&nbsp;&nbsp;</p>
-          <a href="https://itunes.apple.com/us/app/blik-better-life-in-korea/id1183706806?ls=1&mt=8"><img width="200px" src="/assets/images/it.png"></a>
+          <a href="https://itunes.apple.com/us/app/blik-better-life-in-korea/id1183706806?ls=1&mt=8"><img width="200px" src="/assets/images/it.png"></a> -->
         </center>
-        <meta property="og:image" content="{!!$img_path!!}" />
+          
         <script type="text/javascript">
 
           var e = "blikapp://?adid={{$adid}}";
@@ -40,5 +40,4 @@
         </script>
     </div>
 </article>
-<meta property="og:image" content="{!!$img_path!!}" />
 @stop
