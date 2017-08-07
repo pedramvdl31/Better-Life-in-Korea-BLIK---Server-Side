@@ -768,6 +768,7 @@ class ApisController extends Controller
         $user_avatar = "";
         $followers = "0";
         $followtext = "Follow";
+        $followclass = "follow-user";
         $this_ad = Ad::where('id',$id)->first();
         $this_user = User::where('id',$this_ad->user_id)->first();
         if (isset($this_user)&&!empty($this_user)) {
@@ -776,6 +777,7 @@ class ApisController extends Controller
                 $prefollowers = count(Follow::where('followe_id',$this_user->id)->where('follower_id',$logged_user->id)->get());
                 if ($prefollowers>0) {
                     $followtext = "Unfollow";
+                    $followclass = "unfollow-user";
                 }
             }
             
@@ -795,7 +797,8 @@ class ApisController extends Controller
                 'obf_email' => $obf_email,
                 'followers' => $followers,
                 'user_avatar' => $user_avatar,
-                'followtext'=> $followtext
+                'followtext'=> $followtext,
+                'followclass' => $followclass
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
@@ -825,6 +828,26 @@ class ApisController extends Controller
             if ($t_follow->save()) {
                 $status = 200;
             }
+        }
+        return Response::json(array(
+            'status' => $status
+        ));
+    }
+    public function postFollowUser()
+    {
+        $tkn = Input::get('tkn');
+        $this_user = User::where('api_token',$tkn)->first();
+        $profile_id = Input::get('profile_id');
+        $status = 400;
+        if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {
+
+            $prefolow = Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->first();
+            if (isset($prefolow)&&!empty($prefolow)) {
+                if ($prefolow->delete()) {
+                    $status = 200;
+                }
+            }
+
         }
         return Response::json(array(
             'status' => $status
