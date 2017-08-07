@@ -833,7 +833,7 @@ class ApisController extends Controller
             'status' => $status
         ));
     }
-    public function postFollowUser()
+    public function postUnFollowUser()
     {
         $tkn = Input::get('tkn');
         $this_user = User::where('api_token',$tkn)->first();
