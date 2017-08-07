@@ -21,6 +21,7 @@ Route::post('/api/view-profile-ads',  ['uses' => 'ApisController@postViewProfile
 Route::post('/api/get-profile-info',  ['uses' => 'ApisController@postProfileInfo']);
 Route::post('/api/upload-profile-image', ['uses'=>'ApisController@postProfileChangeImage']);
 Route::post('/api/delete-post', ['uses'=>'ApisController@postDeletePost']);
+Route::post('/api/follow-user', ['uses'=>'ApisController@postFollowUser']);
 
 
 

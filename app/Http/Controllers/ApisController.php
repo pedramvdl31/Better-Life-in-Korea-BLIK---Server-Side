@@ -23,6 +23,7 @@ use App\Comment;
 use Image;
 use URL;
 use File;
+use Follow;
 class ApisController extends Controller
 {
     public function __construct() {
@@ -636,6 +637,28 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
+    public function postFollowUser()
+    {
+        $tkn = Input::get('tkn');
+        $this_user = User::where('api_token',$tkn)->first();
+        $profile_id = Input::get('profile_id');
+        $status = 400;
+        if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {  
+            $t_follow = new Follow();
+            $t_follow->followe_id = $profile_id;
+            $t_follow->follower_id = $this_user;
+            $t_follow->status = 1;
+            if ($t_follow->save()) {
+                $status = 200;
+            }
+        }
+        return Response::json(array(
+            'status' => $status
+        ));
+    }
+
+
+
 
     public function getFBComments($id=null,$actkn=null)
     {   
