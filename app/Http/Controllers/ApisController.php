@@ -637,33 +637,7 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
-    public function postFollowUser()
-    {
-        $tkn = Input::get('tkn');
-        $this_user = User::where('api_token',$tkn)->first();
-        $profile_id = Input::get('profile_id');
-        $status = 400;
-        if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {
 
-            $prefolow = Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->first();
-            if (isset($prefolow)&&!empty($prefolow)) {
-                    return Response::json(array(
-                    'status' => 401,
-                    'rhtml'=>''
-                    ));
-            }
-            $t_follow = new Follow();
-            $t_follow->followe_id = $profile_id;
-            $t_follow->follower_id = $this_user->id;
-            $t_follow->status = 1;
-            if ($t_follow->save()) {
-                $status = 200;
-            }
-        }
-        return Response::json(array(
-            'status' => $status
-        ));
-    }
 
 
 
@@ -776,7 +750,7 @@ class ApisController extends Controller
             ));
     }
     public function postViewProfileAds()
-    {   
+    {   xxx
         $headers = array (
             'Content-Type' => 'application/json; charset=UTF-8',
             'charset' => 'utf-8'
@@ -786,16 +760,25 @@ class ApisController extends Controller
         $lat = Input::get('lat');
         $lng = Input::get('lng');
         $tkn = Input::get('tkn');
+        $logged_user = User::where('api_token',$tkn)->first();
         $take_ad = Input::get('take_ad');
         $skip_ad = Input::get('skip_ad');
         $obf_email = "Default";
         $num_posts = "0";
         $user_avatar = "";
         $followers = "0";
+        $followtext = "Follow";
         $this_ad = Ad::where('id',$id)->first();
         $this_user = User::where('id',$this_ad->user_id)->first();
         if (isset($this_user)&&!empty($this_user)) {
             $followers = count(Follow::where('followe_id',$this_user->id)->get());
+            if (isset($logged_user)&&!empty($logged_user)) {
+                $prefollowers = count(Follow::where('followe_id',$this_user->id)->where('follower_id',$logged_user->id)->get());
+                if ($prefollowers>0) {
+                    $followtext = "Unfollow";
+                }
+            }
+            
             $user_img = $this_user->avatar;
             $base_url = '/assets/images/posts/'.$this_user->id.'/prm/image/';
             $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
@@ -812,7 +795,7 @@ class ApisController extends Controller
                 'obf_email' => $obf_email,
                 'followers' => $followers,
                 'user_avatar' => $user_avatar,
-                'user_id' => $this_user->id
+                'followtext'=>$followtext
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
@@ -820,6 +803,32 @@ class ApisController extends Controller
             'status' => $status
             ));
     }
+    public function postFollowUser()
+    {
+        $tkn = Input::get('tkn');
+        $this_user = User::where('api_token',$tkn)->first();
+        $profile_id = Input::get('profile_id');
+        $status = 400;
+        if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {
 
+            $prefolow = Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->first();
+            if (isset($prefolow)&&!empty($prefolow)) {
+                    return Response::json(array(
+                    'status' => 401,
+                    'rhtml'=>''
+                    ));
+            }
+            $t_follow = new Follow();
+            $t_follow->followe_id = $profile_id;
+            $t_follow->follower_id = $this_user->id;
+            $t_follow->status = 1;
+            if ($t_follow->save()) {
+                $status = 200;
+            }
+        }
+        return Response::json(array(
+            'status' => $status
+        ));
+    }
 
 }
