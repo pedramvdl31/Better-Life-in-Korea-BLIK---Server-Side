@@ -811,7 +811,8 @@ class ApisController extends Controller
                 'num_posts' => $num_posts,
                 'obf_email' => $obf_email,
                 'followers' => $followers,
-                'user_avatar' => $user_avatar
+                'user_avatar' => $user_avatar,
+                'user_id' => $this_user->id
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
