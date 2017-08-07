@@ -750,7 +750,7 @@ class ApisController extends Controller
             ));
     }
     public function postViewProfileAds()
-    {   xxx
+    {   
         $headers = array (
             'Content-Type' => 'application/json; charset=UTF-8',
             'charset' => 'utf-8'
@@ -795,7 +795,7 @@ class ApisController extends Controller
                 'obf_email' => $obf_email,
                 'followers' => $followers,
                 'user_avatar' => $user_avatar,
-                'followtext'=>$followtext
+                'followtext'=> $followtext
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
