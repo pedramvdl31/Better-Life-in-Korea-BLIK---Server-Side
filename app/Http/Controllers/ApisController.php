@@ -795,7 +795,6 @@ class ApisController extends Controller
         $this_ad = Ad::where('id',$id)->first();
         $this_user = User::where('id',$this_ad->user_id)->first();
         if (isset($this_user)&&!empty($this_user)) {
-            Job::dump($this_user->id);
             $followers = count(Follow::where('followe_id',$this_user->id)->get());
             $user_img = $this_user->avatar;
             $base_url = '/assets/images/posts/'.$this_user->id.'/prm/image/';
