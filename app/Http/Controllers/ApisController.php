@@ -23,7 +23,7 @@ use App\Comment;
 use Image;
 use URL;
 use File;
-use Follow;
+use App\Follow;
 class ApisController extends Controller
 {
     public function __construct() {
