@@ -815,6 +815,7 @@ class ApisController extends Controller
         $status = 400;
         if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {
             $prefolow = count(Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->get());
+            $followers = count(Follow::where('followe_id',$profile_id)->get());
             if (isset($prefolow)&&!empty($prefolow)) {
                     return Response::json(array(
                     'status' => 401,
@@ -832,7 +833,8 @@ class ApisController extends Controller
 
         }
         return Response::json(array(
-            'status' => $status
+            'status' => $status,
+            'followers'=>$followers
         ));
     }
     public function postUnFollowUser()
@@ -842,7 +844,7 @@ class ApisController extends Controller
         $profile_id = Input::get('profile_id');
         $status = 400;
         if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {
-
+            $followers = count(Follow::where('followe_id',$profile_id)->get());
             $prefolow = Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->first();
             if (isset($prefolow)&&!empty($prefolow)) {
                 if ($prefolow->delete()) {
@@ -852,7 +854,8 @@ class ApisController extends Controller
 
         }
         return Response::json(array(
-            'status' => $status
+            'status' => $status,
+            'followers'=>$followers
         ));
     }
 
