@@ -814,21 +814,22 @@ class ApisController extends Controller
         $profile_id = Input::get('profile_id');
         $status = 400;
         if (isset($this_user)&&!empty($this_user) && isset($profile_id)) {
-
-            $prefolow = Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->first();
+            $prefolow = count(Follow::where('followe_id',$profile_id)->where('follower_id',$this_user->id)->get());
             if (isset($prefolow)&&!empty($prefolow)) {
                     return Response::json(array(
                     'status' => 401,
                     'rhtml'=>''
                     ));
+            } else {
+                $t_follow = new Follow();
+                $t_follow->followe_id = $profile_id;
+                $t_follow->follower_id = $this_user->id;
+                $t_follow->status = 1;
+                if ($t_follow->save()) {
+                    $status = 200;
+                } 
             }
-            $t_follow = new Follow();
-            $t_follow->followe_id = $profile_id;
-            $t_follow->follower_id = $this_user->id;
-            $t_follow->status = 1;
-            if ($t_follow->save()) {
-                $status = 200;
-            }
+
         }
         return Response::json(array(
             'status' => $status
