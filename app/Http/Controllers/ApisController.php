@@ -798,7 +798,8 @@ class ApisController extends Controller
                 'followers' => $followers,
                 'user_avatar' => $user_avatar,
                 'followtext'=> $followtext,
-                'followclass' => $followclass
+                'followclass' => $followclass,
+                'user_id' => $this_user->id
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
