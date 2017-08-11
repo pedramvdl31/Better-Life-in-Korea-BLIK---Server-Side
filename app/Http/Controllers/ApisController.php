@@ -730,6 +730,7 @@ class ApisController extends Controller
             'Content-Type' => 'application/json; charset=UTF-8',
             'charset' => 'utf-8'
         );
+        $num_posts=0;
         $status = 400;
         $lat = Input::get('lat');
         $lng = Input::get('lng');
@@ -738,10 +739,16 @@ class ApisController extends Controller
         $skip_ad = Input::get('skip_ad');
         if (isset($lat,$lng)) {
             $ads = Ad::PrepareAdsMapAjaxProfile($take_ad,$skip_ad,$tkn,$lat,$lng);
+            $this_user = User::where('api_token',$tkn)->first();
+            if (isset($this_user) && isset($this_user->id)) {
+                $num_posts = count(Ad::where('user_id',$this_user->id)->get());
+            }
+            
             $status = 200;
             return Response::json(array(
                 'status' => $status,
-                'ads' => $ads
+                'ads' => $ads,
+                'num_posts'=>$num_posts
             ),200,$headers,JSON_UNESCAPED_UNICODE);
         }
 
