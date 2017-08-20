@@ -354,10 +354,10 @@ class ApisController extends Controller
             ));
     }
 
-    public function postEPrepareAds()
+    public function postE_PrepareAds()
     {
         $status = 400;
-        $this_ad = Ad::PrepareForViewApi(Ad::find(Input::get('data_id')),Input::get('user_token'));
+        $this_ad = Ad::E_PrepareForViewApi(Ad::find(Input::get('data_id')),Input::get('user_token'));
         if (isset($this_ad)) {
             return Response::json(array(
                 'status' => 200,

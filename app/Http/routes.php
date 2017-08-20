@@ -8,7 +8,7 @@ Route::post('/api/search-02', ['uses' => 'ApisController@postUpdateAds']);
 Route::post('/api/search-02loc', ['uses' => 'ApisController@postUpdateAdsLoc']);
 Route::post('/api/ads-req-map', ['uses' => 'ApisController@postViewAdsOnMap']);
 Route::post('/api/prepare-ad',  ['uses' => 'ApisController@postPrepareAds']);
-Route::post('/api/e_prepare-ad',  ['uses' => 'ApisController@postEPrepareAds']);
+Route::post('/api/e_prepare-ad',  ['uses' => 'ApisController@postE_PrepareAds']);
 Route::post('/api/get-more-adds',  ['uses' => 'ApisController@postMoreAds']);
 Route::get('/api/appurlhandler/{id}',  ['uses' => 'ApisController@getAppUrlHandler']);
 //facebook comments

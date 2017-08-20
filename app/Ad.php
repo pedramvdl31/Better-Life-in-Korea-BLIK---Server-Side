@@ -923,6 +923,210 @@ class Ad extends Model
         return $data_array;
     }
 
+    static public function PrepareForViewApi($data,$user_token) {
+        //main image
+        $mi = '';
+
+        $bp =Job::ReturnBp();
+        $data_array = array('title_txt'=>'',
+                            'title'=>'',
+                            'des'=>'',
+                            'des_txt'=>'',
+                            'images'=>'',
+                            'videos'=>'',
+                            'images_array'=>array(),
+                            'lat'=>'',
+                            'lng'=>'',
+                            'simage'=>'',
+                            'rvs-count'=>'',
+                            'rvs-rate'=>'',
+                            'coms'=>''
+                            );
+
+        if (isset($data)) {
+            // GET Comment
+            $comments = Comment::where('post_id',$data['id'])->get();
+            $data_array['coms'] = '<ul class="comments">';
+
+            if (isset($comments) && !empty($comments)) {
+                foreach ($comments as $kco => $vco) {
+                    $this_rate = 0;
+                    $couser = User::where('id',$vco['user_id'])->first();
+                    $data_array['coms'] .='<li tc="'.$vco['id'].'" class="clearfix coli">
+                                  <div class="post-comments">
+                                      <p class="meta">'.date("M j Y", strtotime($vco['created_at'])).' <a href="#">'.substr($couser['email'], 0, 4).'***</a> says :';
+
+                    if (isset($user_token)) {
+                        $trate = Review::where('ad_id',$data['id'])->where('user_id',$vco['user_id'])->first();
+                        if (isset($trate)&& !empty($trate)) {
+                            $this_rate = $trate->rate;
+                        }
+                        $curu = User::where('api_token',$user_token)->first();
+                        if (isset($curu)&&!empty($curu)) {
+                            if ($curu->id == $vco['user_id']) {
+                                $data_array['coms'] .= '<i class="pull-right"><a class="delcom" href="#">
+                                            <small>Delete</small>
+                                            </a>
+                                            </i>
+                                        <span class="comrw pull-right"><input name="input-name" type="number" class="rating comrate" min=1 max=10 step=0.5 data-size="xs" data-rtl="false" disabled="true" value="'.$this_rate.'"></span>
+                                    </p>';
+                            }
+                        }
+                    }                            
+
+                    $data_array['coms'] .= '<p>
+                                          '.$vco['comment'].'
+                                      </p>
+                                  </div>
+                                 </li>';
+                }
+            }
+            $data_array['coms'] .=    '<li id="snd-li" class="clearfix">
+                                  <div class="post-comments sendcomment">
+                                    <textarea id="_rt" placeholder="Write a Review"></textarea>
+                                    <a href="#" class="btn btn-default btn-sm rvcom" revstar="999" >Send</a>
+                                    <input name="comment-rev" type="number" class="rating sbtnrev">
+                                  </div>
+                                </li>
+                              </ul>';
+            // GET Comment
+
+            //Get Reviews
+            $reviews = Review::where('ad_id',$data['id'])->get();
+            $r_count = 0;
+            $r_sum = 0;
+            $r_avg = 8;
+            foreach ($reviews as $rvk => $rvv) {
+                $r_count++;
+                $r_sum += $rvv['rate'];
+            }
+            if ($r_count>0) {
+                $r_sum += 8;
+                $r_count += 1;
+                $r_avg = $r_sum/$r_count;
+            }
+            $data_array['rvs-count'] = $r_count;
+            $data_array['rvs-rate'] = $r_avg;
+            //Get Reviews
+
+
+
+            if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
+                $files = json_decode($data['file_srcs'],true);
+                $base_path = $bp.'/assets/images/posts/'.$data['user_id'].'/prm/';
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="image") {
+                            $imgs = $base_path.$fvk.'/'.$fvv['name'];
+                            $data_array['images'] .= '<a href="'.$imgs.'" class="my-item _p'.$data->id.' "><img style="max-width:100px" src="'.$imgs.'" alt="..."></a>';
+                            $data_array['images_array'][$fk]['src'] = $imgs;
+                            if ($fk==0) {
+                                $mi=$imgs;
+                            }
+                        }
+                    }
+                }
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="video") {
+                            $data_array['videos'] .= '<div class="" style="width:100%">
+                                    <video style="width:100%" class="" frameborder="0" controls>
+                                        <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
+                                    </video>
+                                </div>';
+                        }
+                    }
+                }
+            }
+
+            if (isset($data['description'])) {
+                $des_jd = json_decode($data['description']);
+                $data_array['title_txt'] =  $data->title;
+                $data_array['title'] =  "<h3 class='nat' style='margin-top: 0'>".$data->title."</h3>";
+                $data_array['des_txt'] =  $des_jd;
+                $data_array['des'] =  "<p class='nades'>".$des_jd."</p>";
+                
+                $data_array['simage'] = $mi;
+            }
+
+            if (isset($data['lat'])&&isset($data['lng'])) {
+                $data_array['lat'] = $data['lat'];
+                $data_array['lng'] = $data['lng'];
+
+            }
+        }
+        return $data_array;
+    }
+
+    static public function E_PrepareForViewApi($data,$user_token) {
+        //main image
+        $mi = '';
+
+        $bp =Job::ReturnBp();
+        $data_array = array('title_txt'=>'',
+                            'title'=>'',
+                            'des'=>'',
+                            'des_txt'=>'',
+                            'images'=>'',
+                            'videos'=>'',
+                            'images_array'=>array(),
+                            'lat'=>'',
+                            'lng'=>'',
+                            'simage'=>''
+                            );
+
+        if (isset($data)) {
+
+            if (isset($data['file_srcs']) && $data['file_srcs'] != 'null') {
+                $files = json_decode($data['file_srcs'],true);
+                $base_path = $bp.'/assets/images/posts/'.$data['user_id'].'/prm/';
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="image") {
+                            $imgs = $base_path.$fvk.'/'.$fvv['name'];
+                            $data_array['images'] .= '<a href="'.$imgs.'" class="my-item _p'.$data->id.' "><img style="max-width:100px" src="'.$imgs.'" alt="..."></a>';
+                            $data_array['images_array'][$fk]['src'] = $imgs;
+                            if ($fk==0) {
+                                $mi=$imgs;
+                            }
+                        }
+                    }
+                }
+                foreach ($files as $fk => $fv) {
+                    foreach ($fv as $fvk => $fvv) {
+                        if ($fvk=="video") {
+                            $data_array['videos'] .= '<div class="" style="width:100%">
+                                    <video style="width:100%" class="" frameborder="0" controls>
+                                        <source src="'.$base_path.$fvk.DIRECTORY_SEPARATOR.$fvv['name'].'" type="video/mp4">
+                                    </video>
+                                </div>';
+                        }
+                    }
+                }
+            }
+
+            if (isset($data['description'])) {
+                $des_jd = json_decode($data['description']);
+                $data_array['title_txt'] =  $data->title;
+                $data_array['title'] =  "<h3 class='nat' style='margin-top: 0'>".$data->title."</h3>";
+                $data_array['des_txt'] =  $des_jd;
+                $data_array['des'] =  "<p class='nades'>".$des_jd."</p>";
+                
+                $data_array['simage'] = $mi;
+            }
+
+            if (isset($data['lat'])&&isset($data['lng'])) {
+                $data_array['lat'] = $data['lat'];
+                $data_array['lng'] = $data['lng'];
+
+            }
+        }
+        return $data_array;
+    }
+
+
+
+
 
     static public function TranslateCat($data) {
         $ttxt = '';
