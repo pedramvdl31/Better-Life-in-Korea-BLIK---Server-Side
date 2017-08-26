@@ -29,6 +29,7 @@ Route::post('/api/unfollow-user', ['uses'=>'ApisController@postUnFollowUser']);
 
 Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::post('/api/process-qkpost', ['uses'=>'ApisController@postQkpst']);
+	Route::post('/api/e-process-qkpost', ['uses'=>'ApisController@postEQkpst']);
 	Route::get('/api/dashboard/{tkn}', ['uses' => 'DashboardsController@getIndexApi']);
 	Route::post('/api/upload-ads-tmp', ['uses'=>'ApisController@postAdsImageTmp']);
 	Route::post('/api/users/validate', ['uses'=>'ApisController@postValidate']);
