@@ -471,7 +471,7 @@ class ApisController extends Controller
                                     foreach ($dv as $dvkey => $dval) {
                                         if ($dvkey == 'image') {
                                             if (basename($dval['src'])==$alv['image']['name']) {
-                                                Job::dump('delete_this');
+                                                Job::dump('delete_this '.$alv['image']['name']);
                                             }
                                         }
                                     }
