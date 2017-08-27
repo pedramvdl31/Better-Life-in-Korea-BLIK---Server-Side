@@ -461,11 +461,12 @@ class ApisController extends Controller
                 $this_post = Ad::where('user_id',$ThisUserId)->where('id',$this_post_id)->first();
                 $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/";
 
+                $all_images = json_decode($this_post->file_srcs,1);
                 //delete files
                 if (isset($deleted_files) && !empty($deleted_files)) {
                     if ($this_post) {
                         if ($this_post->file_srcs) {
-                            $all_images = json_decode($this_post->file_srcs,1);
+                            
                             //REMOVE DELETED FILES
                             foreach ($all_images as $alk => $alv) {
                                 foreach ($deleted_files as $dk => $dv) {
@@ -481,19 +482,11 @@ class ApisController extends Controller
                         }
                     }
                 }
-                Job::dump($_form);
                 //add posted files
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
-
-                Job::dump($_form['posted_files']);
-                Job::dump('the posted files varialbge');
-                Job::dump($posted_files);
-
-                if ( isset($posted_files) && !empty($posted_files)) {
+                if (isset($posted_files) && !empty($posted_files)) {
                     foreach ($posted_files as $pfk => $pfv) {
-                        if (is_array($pfv)) {
-                            array_push($all_images, $pfv);
-                        }
+                        array_push($all_images, $pfv);
                     }
                 }
 
