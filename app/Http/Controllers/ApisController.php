@@ -460,27 +460,27 @@ class ApisController extends Controller
 
                 $this_post_id = $_form['this_post_id'];
                 $this_post = Ad::where('user_id',$ThisUserId)->where('id',$this_post_id)->first();
-                if ($this_post) {
-                    if ($this_post->file_srcs) {
-                        $all_images = json_decode($this_post->file_srcs,1);
-                        foreach ($all_images as $alk => $alv) {
-                            Job::dump($alv['image']['name']);
-                        }
-                    }
-                }
-
-                //ALL PICTURES IN USER FOLDER
                 $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/";
 
                 if (isset($deleted_files) && !empty($deleted_files)) {
-                    foreach ($deleted_files as $dk => $dv) {
-                        foreach ($dv as $dvkey => $dval) {
-                            if ($dvkey == 'image') {
-                                Job::dump($dval['src']);
+                    if ($this_post) {
+                        if ($this_post->file_srcs) {
+                            $all_images = json_decode($this_post->file_srcs,1);
+                            foreach ($all_images as $alk => $alv) {
+                                foreach ($deleted_files as $dk => $dv) {
+                                    foreach ($dv as $dvkey => $dval) {
+                                        if ($dvkey == 'image') {
+                                            if (basename($dval['src'])==$alv['image']['name']) {
+                                                Job::dump('delete_this');
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
                 }
+
        
 
 
