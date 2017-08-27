@@ -465,11 +465,12 @@ class ApisController extends Controller
                 if (isset($deleted_files) && !empty($deleted_files)) {
                     if ($this_post) {
                         if ($this_post->file_srcs) {
+
                             $all_images = json_decode($this_post->file_srcs,1);
 
                             Job::dump('before ');
                             Job::dump($all_images);
-
+                            //REMOVE DELETED FILES
                             foreach ($all_images as $alk => $alv) {
                                 foreach ($deleted_files as $dk => $dv) {
                                     foreach ($dv as $dvkey => $dval) {
@@ -489,9 +490,16 @@ class ApisController extends Controller
                     }
                 }
 
-       
+                $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
+                if ($posted_files) {
+                    foreach ($pf as $pfk => $pfv) {
+                        array_push($all_images, $pfv);
+                    }
+                }
+        
 
-
+                Job::dump('after pushing new files');
+                Job::dump($all_images);
 
 
                 // $cat = $_form['cat'];
