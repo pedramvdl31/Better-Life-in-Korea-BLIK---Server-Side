@@ -462,14 +462,11 @@ class ApisController extends Controller
                 $this_post = Ad::where('user_id',$ThisUserId)->where('id',$this_post_id)->first();
                 $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/";
 
+                //delete files
                 if (isset($deleted_files) && !empty($deleted_files)) {
                     if ($this_post) {
                         if ($this_post->file_srcs) {
-
                             $all_images = json_decode($this_post->file_srcs,1);
-
-                            Job::dump('before ');
-                            Job::dump($all_images);
                             //REMOVE DELETED FILES
                             foreach ($all_images as $alk => $alv) {
                                 foreach ($deleted_files as $dk => $dv) {
@@ -482,99 +479,91 @@ class ApisController extends Controller
                                     }
                                 }
                             }
-
-                            Job::dump('after ');
-                            Job::dump($all_images);
-
                         }
                     }
                 }
 
+                //add posted files
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
                 if ($posted_files) {
                     foreach ($posted_files as $pfk => $pfv) {
                         array_push($all_images, $pfv);
                     }
                 }
-        
 
-                Job::dump('after pushing new files');
-                Job::dump($all_images);
+                $cat = $_form['e_cat'];
+                // $subcat = $_form['subcat'];
+                $title = $_form['e_title'];
+                $_long = isset($_form['e_long'])?$_form['e_long']:null;
+                $_lat = isset($_form['e_lat'])?$_form['e_lat']:null;
+                $description = $_form['e_description'];
+                preg_match_all('/#([\p{L}\p{Mn}]+)/u',$description,$matches);
+                $hashtags = '';
+                if (isset($matches[0])) {
+                    $hashtags = serialize($matches[0]);
+                }
 
+                if (empty($cat) ||  empty($title) || empty($description)) {
+                    return Response::json(array(
+                        'status' => 400
+                    ));
+                }
 
-                // $cat = $_form['cat'];
-                // // $subcat = $_form['subcat'];
-                // $title = $_form['title'];
-                // $_long = isset($_form['long'])?$_form['long']:null;
-                // $_lat = isset($_form['lat'])?$_form['lat']:null;
-                // $description = $_form['description'];
-                // preg_match_all('/#([\p{L}\p{Mn}]+)/u',$description,$matches);
-                // $hashtags = '';
-                // if (isset($matches[0])) {
-                //     $hashtags = serialize($matches[0]);
-                // }
-                // $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
+                $this_post->cat_id = $cat;
+                // $ads->subcat_id = $subcat;
+                $ads->lng = $_long;
+                $ads->lat = $_lat;
+                $ads->title = $title;
+                $ads->description = json_encode($description);
+                $ads->htag = $hashtags;
+                $ads->status = 1;
+                $ads->file_srcs = json_encode($posted_files);
+                if ($ads->save()) {
+                    if (isset($posted_files) && !empty($posted_files)) {
+                        foreach ($posted_files as $pk => $pv) {
+                            foreach ($pv as $pvkey => $pvval) {
+                                if ($pvkey == 'image' || $pvkey == 'video') {
+                                    $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                    $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                    $oldpath = public_path($tmp_path.$pvval['name']);
+                                    $newpath = public_path($new_path.$pvval['name']);
+                                    $filetmp = $tmp_path.$pvval['name'];
+                                    if (file_exists($filetmp)) {
+                                        $img = Image::make($oldpath);
+                                        $img->resize(700, null, function ($constraint) {
+                                            $constraint->aspectRatio();
+                                        });
+                                        if ($img->save($oldpath,100)) {
+                                            rename($oldpath, $newpath);
+                                        }
+                                    }  
+                                }
+                            }
+                        }
+                        $p_name = array('image','video');
+                        foreach ($p_name as $pn => $pnv) {
+                            $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
+                            $files = glob($t_path.'*'); // get all file names
+                            foreach($files as $file){ // iterate files
+                              if(is_file($file))
+                                unlink($file); // delete file
+                            }
+                        }
+                        if (isset($deleted_files) && !empty($deleted_files)) {
+                            foreach ($deleted_files as $ldk => $ldv) {
+                                foreach ($ldv as $ldvkey => $ldval) {
+                                    $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'prm'.DIRECTORY_SEPARATOR.basename($ldval['src']).DIRECTORY_SEPARATOR;
+                                    $files = glob($t_path.'*'); // get all file names
+                                    foreach($files as $file){ // iterate files
+                                      if(is_file($file))
+                                        unlink($file); // delete file
+                                    }
+                                }
+                            }
+                        }
 
-                // if (empty($cat) ||  empty($title) || empty($description)) {
-                //     return Response::json(array(
-                //         'status' => 400
-                //     ));
-                // }
-                // $ThisUserId = $this_user->id;
-                // //ELSE
-                // $ads = new Ad();
-                // $ads->user_id = $ThisUserId;
-                // $ads->cat_id = $cat;
-                // // $ads->subcat_id = $subcat;
-                // $ads->lng = $_long;
-                // $ads->lat = $_lat;
-                // $ads->title = $title;
-                // $ads->description = json_encode($description);
-                // $ads->htag = $hashtags;
-                // $ads->status = 1;
-                // $ads->file_srcs = json_encode($posted_files);
-                // if ($ads->save()) {
-                //     if (isset($posted_files) && !empty($posted_files)) {
-                  
-                //         foreach ($posted_files as $pk => $pv) {
-                //             foreach ($pv as $pvkey => $pvval) {
-                //                 if ($pvkey == 'image' || $pvkey == 'video') {
-                //                     $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                //                     $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                //                     if (!file_exists($tmp_path)) {
-                //                         mkdir($tmp_path, 0777, true);
-                //                     }               
-                //                     if (!file_exists($new_path)) {
-                //                         mkdir($new_path, 0777, true);
-                //                     } 
-                //                     $oldpath = public_path($tmp_path.$pvval['name']);
-                //                     $newpath = public_path($new_path.$pvval['name']);
-                //                     $filetmp = $tmp_path.$pvval['name'];
-                //                     if (file_exists($filetmp)) {
-
-                //                         $img = Image::make($oldpath);
-                //                         $img->resize(700, null, function ($constraint) {
-                //                             $constraint->aspectRatio();
-                //                         });
-                //                         if ($img->save($oldpath,100)) {
-                //                             rename($oldpath, $newpath);
-                //                         }
-                                        
-                //                     }  
-                //                 }
-                //             }
-                //         }
-                //         $p_name = array('image','video');
-                //         foreach ($p_name as $pn => $pnv) {
-                //             $t_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.$pnv.DIRECTORY_SEPARATOR;
-                //             $files = glob($t_path.'*'); // get all file names
-                //             foreach($files as $file){ // iterate files
-                //               if(is_file($file))
-                //                 unlink($file); // delete file
-                //             }
-                //         }
-                //     }
-                // }
+                    }
+                }
             }
         }
 
