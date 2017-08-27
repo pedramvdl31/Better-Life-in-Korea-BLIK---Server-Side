@@ -461,7 +461,10 @@ class ApisController extends Controller
                 $this_post_id = $_form['this_post_id'];
                 $this_post = Ad::where('user_id',$ThisUserId)->where('id',$this_post_id)->first();
                 if ($this_post) {
-                    Job::dump($this_post);
+                    if ($this_post->file_srcs) {
+                        $all_images = json_decode($this_post->file_srcs);
+                        Job::dump($all_images);
+                    }
                 }
 
                 //ALL PICTURES IN USER FOLDER
