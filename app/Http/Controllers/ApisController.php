@@ -456,7 +456,7 @@ class ApisController extends Controller
                 parse_str(Input::get('_form'), $_form);
                 Job::dump($_form);
                 $ThisUserId = $this_user->id;
-                $old_files = isset($_form['e_posted_files']['old'])?$_form['posted_files']['old']:NULL;
+                $old_files = isset($_form['e_posted_files']['old'])?$_form['e_posted_files']['old']:NULL;
 
                 if (isset($old_files) && !empty($old_files)) {
                     foreach ($old_files as $po => $po) {
