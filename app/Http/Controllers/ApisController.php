@@ -458,6 +458,12 @@ class ApisController extends Controller
                 $ThisUserId = $this_user->id;
                 $deleted_files = isset($_form['e-deleted-files'])?$_form['e-deleted-files']:NULL;
 
+                $this_post_id = $_form['this_post_id'];
+                $this_post = Ad::where('user_id',$ThisUserId)->where('id',$this_post_id)->first();
+                if ($this_post) {
+                    Job::dump($this_post);
+                }
+
                 //ALL PICTURES IN USER FOLDER
                 $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/";
 
