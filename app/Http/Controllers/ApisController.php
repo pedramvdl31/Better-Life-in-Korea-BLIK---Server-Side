@@ -509,15 +509,14 @@ class ApisController extends Controller
                 }
 
                 $this_post->cat_id = $cat;
-                // $ads->subcat_id = $subcat;
-                $ads->lng = $_long;
-                $ads->lat = $_lat;
-                $ads->title = $title;
-                $ads->description = json_encode($description);
-                $ads->htag = $hashtags;
-                $ads->status = 1;
-                $ads->file_srcs = json_encode($all_images);
-                if ($ads->save()) {
+                $this_post->lng = $_long;
+                $this_post->lat = $_lat;
+                $this_post->title = $title;
+                $this_post->description = json_encode($description);
+                $this_post->htag = $hashtags;
+                $this_post->status = 1;
+                $this_post->file_srcs = json_encode($all_images);
+                if ($this_post->save()) {
                     if (isset($all_images) && !empty($all_images)) {
                         foreach ($all_images as $pk => $pv) {
                             foreach ($pv as $pvkey => $pvval) {
