@@ -456,48 +456,21 @@ class ApisController extends Controller
                 parse_str(Input::get('_form'), $_form);
                 Job::dump($_form);
                 $ThisUserId = $this_user->id;
-                $old_files = isset($_form['e_posted_files']['old'])?$_form['e_posted_files']['old']:NULL;
+                $deleted_files = isset($_form['e-deleted-files'])?$_form['e-deleted-files']:NULL;
 
                 //ALL PICTURES IN USER FOLDER
-                $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/".DIRECTORY_SEPARATOR;
+                $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/";
 
-                $files = glob($pathtouserfolder.'*'); // get all file names
-                foreach($files as $file){ // iterate files
-                    Job::dump(basename($file));
+                if (isset($deleted_files) && !empty($deleted_files)) {
+                    foreach ($deleted_files as $dk => $dv) {
+                        foreach ($dv as $dvkey => $dval) {
+                            if ($dvkey == 'image') {
+                                Job::dump($dval);
+                            }
+                        }
+                    }
                 }
-
-
-                // if (isset($old_files) && !empty($old_files)) {
-                //     foreach ($old_files as $pk => $po) {
-                //         foreach ($po as $pokey => $pvval) {
-                //             if ($pokey == 'image') {
-                //                 Job::dump($pvval);
-                //                 // $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                //                 // $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
-                //                 // if (!file_exists($tmp_path)) {
-                //                 //     mkdir($tmp_path, 0777, true);
-                //                 // }               
-                //                 // if (!file_exists($new_path)) {
-                //                 //     mkdir($new_path, 0777, true);
-                //                 // } 
-                //                 // $oldpath = public_path($tmp_path.$pvval['name']);
-                //                 // $newpath = public_path($new_path.$pvval['name']);
-                //                 // $filetmp = $tmp_path.$pvval['name'];
-                //                 // if (file_exists($filetmp)) {
-
-                //                 //     $img = Image::make($oldpath);
-                //                 //     $img->resize(700, null, function ($constraint) {
-                //                 //         $constraint->aspectRatio();
-                //                 //     });
-                //                 //     if ($img->save($oldpath,100)) {
-                //                 //         rename($oldpath, $newpath);
-                //                 //     }
-                                    
-                //                 // }  
-                //             }
-                //         }
-                //     }
-                // }
+       
 
 
 
