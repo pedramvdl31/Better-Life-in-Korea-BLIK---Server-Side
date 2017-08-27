@@ -492,7 +492,7 @@ class ApisController extends Controller
 
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
                 if ($posted_files) {
-                    foreach ($pf as $pfk => $pfv) {
+                    foreach ($posted_files as $pfk => $pfv) {
                         array_push($all_images, $pfv);
                     }
                 }
