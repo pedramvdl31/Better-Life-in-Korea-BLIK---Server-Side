@@ -86,8 +86,6 @@ class ApisController extends Controller
             'num_posts' => $num_posts
         ));
     }
-
-
     public function postPostComment() {
         $status = 400;
         $rhtml = '';
@@ -167,8 +165,6 @@ class ApisController extends Controller
         'status' => 200
         ));
     }
-
-
     public function postLogin() {
             $status = 400;
             $_form = null;
@@ -236,9 +232,7 @@ class ApisController extends Controller
             return Response::json(array(
             'status' => $status
             ));
-
     }
-
     public function postUpdateAds() {
             $status = 400;
             $cat_id = Input::get('cat_id');
@@ -255,7 +249,6 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
-
     public function postUpdateAdsLoc() {
             $headers = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
@@ -281,7 +274,6 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
-
     public function postViewAdsOnMap() {
             $headers = array (
                 'Content-Type' => 'application/json; charset=UTF-8',
@@ -318,8 +310,6 @@ class ApisController extends Controller
                 'status' => $status
                 ));
     }
-
-
     public function postMoreAds()
     {
         $status = 400;
@@ -336,8 +326,6 @@ class ApisController extends Controller
             'html_data' => $ads
             ));
     }
-
-
     public function postPrepareAds()
     {
         $status = 400;
@@ -353,7 +341,6 @@ class ApisController extends Controller
             'status' => $status
             ));
     }
-
     public function postE_PrepareAds()
     {
         $status = 400;
@@ -369,7 +356,6 @@ class ApisController extends Controller
             'status' => $status
             ));
     }
-
     public function postQkpst()
     {
         $status = 200;
@@ -469,6 +455,44 @@ class ApisController extends Controller
             if (isset($this_user)&&!empty($this_user)) {
                 parse_str(Input::get('_form'), $_form);
                 Job::dump($_form);
+                $ThisUserId = $this_user->id;
+                $old_files = isset($_form['e_posted_files']['old'])?$_form['posted_files']['old']:NULL;
+
+                if (isset($old_files) && !empty($old_files)) {
+                    foreach ($old_files as $po => $po) {
+                        foreach ($po as $pokey => $pvval) {
+                            if ($pokey == 'image') {
+                                Job::dump($pvval);
+                                // $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                // $new_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."prm".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
+                                // if (!file_exists($tmp_path)) {
+                                //     mkdir($tmp_path, 0777, true);
+                                // }               
+                                // if (!file_exists($new_path)) {
+                                //     mkdir($new_path, 0777, true);
+                                // } 
+                                // $oldpath = public_path($tmp_path.$pvval['name']);
+                                // $newpath = public_path($new_path.$pvval['name']);
+                                // $filetmp = $tmp_path.$pvval['name'];
+                                // if (file_exists($filetmp)) {
+
+                                //     $img = Image::make($oldpath);
+                                //     $img->resize(700, null, function ($constraint) {
+                                //         $constraint->aspectRatio();
+                                //     });
+                                //     if ($img->save($oldpath,100)) {
+                                //         rename($oldpath, $newpath);
+                                //     }
+                                    
+                                // }  
+                            }
+                        }
+                    }
+                }
+
+
+
+
                 // $cat = $_form['cat'];
                 // // $subcat = $_form['subcat'];
                 // $title = $_form['title'];
