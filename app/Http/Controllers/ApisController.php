@@ -484,16 +484,17 @@ class ApisController extends Controller
 
                 //add posted files
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
-                if ($posted_files) {
+                if ( isset($posted_files) && !empty($posted_files)) {
                     foreach ($posted_files as $pfk => $pfv) {
-                        array_push($all_images, $pfv);
+                        if (is_array($pfv)) {
+                            array_push($all_images, $pfv);
+                        }
                     }
                 }
 
                 $all_images = array_values($all_images);
 
                 $cat = $_form['e_cat'];
-                // $subcat = $_form['subcat'];
                 $title = $_form['e_title'];
                 $_long = isset($_form['e_long'])?$_form['e_long']:null;
                 $_lat = isset($_form['e_lat'])?$_form['e_lat']:null;
