@@ -466,17 +466,25 @@ class ApisController extends Controller
                     if ($this_post) {
                         if ($this_post->file_srcs) {
                             $all_images = json_decode($this_post->file_srcs,1);
+
+                            Job::dump('before ');
+                            Job::dump($all_images);
+
                             foreach ($all_images as $alk => $alv) {
                                 foreach ($deleted_files as $dk => $dv) {
                                     foreach ($dv as $dvkey => $dval) {
                                         if ($dvkey == 'image') {
                                             if (basename($dval['src'])==$alv['image']['name']) {
-                                                Job::dump('delete_this '.$alv['image']['name']);
+                                                unset($all_images[$alk]);
                                             }
                                         }
                                     }
                                 }
                             }
+
+                            Job::dump('after ');
+                            Job::dump($all_images);
+
                         }
                     }
                 }
