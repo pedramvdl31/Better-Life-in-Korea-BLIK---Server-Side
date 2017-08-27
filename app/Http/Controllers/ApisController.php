@@ -490,6 +490,8 @@ class ApisController extends Controller
                     }
                 }
 
+                $all_images = array_values($all_images);
+
                 $cat = $_form['e_cat'];
                 // $subcat = $_form['subcat'];
                 $title = $_form['e_title'];
