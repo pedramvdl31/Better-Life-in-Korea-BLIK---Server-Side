@@ -462,6 +462,16 @@ class ApisController extends Controller
                 $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/";
 
                 $all_images = json_decode($this_post->file_srcs,1);
+
+
+                //add posted files
+                $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
+                if (isset($posted_files) && !empty($posted_files)) {
+                    foreach ($posted_files as $pfk => $pfv) {
+                        array_push($all_images, $pfv);
+                    }
+                }
+                
                 //delete files
                 if (isset($deleted_files) && !empty($deleted_files)) {
                     if ($this_post) {
@@ -482,13 +492,7 @@ class ApisController extends Controller
                         }
                     }
                 }
-                //add posted files
-                $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
-                if (isset($posted_files) && !empty($posted_files)) {
-                    foreach ($posted_files as $pfk => $pfv) {
-                        array_push($all_images, $pfv);
-                    }
-                }
+
 
                 $all_images = array_values($all_images);
 
