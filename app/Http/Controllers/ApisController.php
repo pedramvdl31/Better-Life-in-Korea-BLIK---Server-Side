@@ -459,7 +459,7 @@ class ApisController extends Controller
                 $old_files = isset($_form['e_posted_files']['old'])?$_form['e_posted_files']['old']:NULL;
 
                 if (isset($old_files) && !empty($old_files)) {
-                    foreach ($old_files as $po => $po) {
+                    foreach ($old_files as $pk => $po) {
                         foreach ($po as $pokey => $pvval) {
                             if ($pokey == 'image') {
                                 Job::dump($pvval);
