@@ -463,7 +463,8 @@ class ApisController extends Controller
 
                 $files = glob($pathtouserfolder.'*'); // get all file names
                 foreach($files as $file){ // iterate files
-                  Job::dump(end(explode('/',$file)));
+                    $this_name = end(explode('/',$file));
+                    Job::dump($this_name);
                 }
 
 
