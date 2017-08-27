@@ -454,7 +454,6 @@ class ApisController extends Controller
             $this_user = User::where('api_token',$tkn)->first();
             if (isset($this_user)&&!empty($this_user)) {
                 parse_str(Input::get('_form'), $_form);
-                Job::dump($_form);
                 $ThisUserId = $this_user->id;
                 $deleted_files = isset($_form['e-deleted-files'])?$_form['e-deleted-files']:NULL;
 
@@ -517,10 +516,10 @@ class ApisController extends Controller
                 $ads->description = json_encode($description);
                 $ads->htag = $hashtags;
                 $ads->status = 1;
-                $ads->file_srcs = json_encode($posted_files);
+                $ads->file_srcs = json_encode($all_images);
                 if ($ads->save()) {
-                    if (isset($posted_files) && !empty($posted_files)) {
-                        foreach ($posted_files as $pk => $pv) {
+                    if (isset($all_images) && !empty($all_images)) {
+                        foreach ($all_images as $pk => $pv) {
                             foreach ($pv as $pvkey => $pvval) {
                                 if ($pvkey == 'image' || $pvkey == 'video') {
                                     $tmp_path = "assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."posts".DIRECTORY_SEPARATOR.$ThisUserId.DIRECTORY_SEPARATOR."tmp".DIRECTORY_SEPARATOR.$pvkey.DIRECTORY_SEPARATOR;
