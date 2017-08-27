@@ -459,7 +459,7 @@ class ApisController extends Controller
                 $old_files = isset($_form['e_posted_files']['old'])?$_form['e_posted_files']['old']:NULL;
 
                 //ALL PICTURES IN USER FOLDER
-                $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/images/".DIRECTORY_SEPARATOR;
+                $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/".DIRECTORY_SEPARATOR;
 
                 $files = glob($pathtouserfolder.'*'); // get all file names
                 foreach($files as $file){ // iterate files
