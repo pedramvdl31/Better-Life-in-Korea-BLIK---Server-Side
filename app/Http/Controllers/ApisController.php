@@ -465,7 +465,7 @@ class ApisController extends Controller
                     foreach ($deleted_files as $dk => $dv) {
                         foreach ($dv as $dvkey => $dval) {
                             if ($dvkey == 'image') {
-                                Job::dump($dval);
+                                Job::dump($dval['src']);
                             }
                         }
                     }
