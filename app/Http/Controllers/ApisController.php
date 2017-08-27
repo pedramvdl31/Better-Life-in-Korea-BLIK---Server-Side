@@ -484,6 +484,11 @@ class ApisController extends Controller
                 Job::dump($_form);
                 //add posted files
                 $posted_files = isset($_form['posted_files'])?$_form['posted_files']:NULL;
+
+                Job::dump($_form['posted_files']);
+                Job::dump('the posted files varialbge');
+                Job::dump($posted_files);
+
                 if ( isset($posted_files) && !empty($posted_files)) {
                     foreach ($posted_files as $pfk => $pfv) {
                         if (is_array($pfv)) {
