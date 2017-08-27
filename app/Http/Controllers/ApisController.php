@@ -461,9 +461,9 @@ class ApisController extends Controller
                 //ALL PICTURES IN USER FOLDER
                 $pathtouserfolder = "assets/images/posts/".$ThisUserId."/prm/image/".DIRECTORY_SEPARATOR;
 
-                $files = glob($pathtouserfolder.".{jpg,JPG,jpeg,JPEG,png,PNG}", GLOB_BRACE);
+                $files = glob($pathtouserfolder.'*'); // get all file names
                 foreach($files as $file){ // iterate files
-                  Job::dump($file);
+                  Job::dump(end(explode('/',$file)));
                 }
 
 
