@@ -462,9 +462,9 @@ class ApisController extends Controller
                 $this_post = Ad::where('user_id',$ThisUserId)->where('id',$this_post_id)->first();
                 if ($this_post) {
                     if ($this_post->file_srcs) {
-                        $all_images = json_decode($this_post->file_srcs);
+                        $all_images = json_decode($this_post->file_srcs,1);
                         foreach ($all_images as $alk => $alv) {
-                            Job::dump($alv['image']['name']);
+                            Job::dump($alv->image['image']['name']);
                         }
                     }
                 }
