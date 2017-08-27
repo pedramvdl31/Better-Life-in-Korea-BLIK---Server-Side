@@ -464,8 +464,7 @@ class ApisController extends Controller
                     if ($this_post->file_srcs) {
                         $all_images = json_decode($this_post->file_srcs,1);
                         foreach ($all_images as $alk => $alv) {
-                            // Job::dump($alv->image['image']['name']);
-                            Job::dump($alv);
+                            Job::dump($alv['image']['name']);
                         }
                     }
                 }
