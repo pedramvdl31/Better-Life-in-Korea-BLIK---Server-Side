@@ -53,13 +53,15 @@ class ApisController extends Controller
             $user_avatar = (isset($user_img))?$base_url.$user_img:$base_url.'blank_male.png';
             $obf_email = Job::obfuscate_email($this_user->email);
             $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
+            $followers = count(Follow::where('followe_id',$this_user->id)->get());
             $status = 200;
         }
         return Response::json(array(
             'status' => $status,
             'num_posts' => $num_posts,
             'obf_email' => $obf_email,
-            'user_avatar' => $user_avatar
+            'user_avatar' => $user_avatar,
+            'followers_count' => $followers
         ));
     }
     public function postDeletePost() {
