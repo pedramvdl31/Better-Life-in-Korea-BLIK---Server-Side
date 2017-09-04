@@ -31,7 +31,7 @@ class Follow extends Model
     		$followingyou = Follow::where('followe_id',$this_user->id)->get();
     		if ($followingyou) {
     			foreach ($followingyou as $flk => $flv) {
-    				$data_array['followers'][$flk]['date'] = date('m d', strtotime($flv->created_at));
+    				$data_array['followers'][$flk]['date'] = date('M j', strtotime($flv->created_at));
 					$user_follower = User::find($flv->follower_id);
 					if ($user_follower) {
 						$data_array['followers'][$flk]['email'] = $user_follower->email;
@@ -43,7 +43,7 @@ class Follow extends Model
     		$followee = Follow::where('follower_id',$this_user->id)->get();
     		if ($followee) {
     			foreach ($followee as $flek => $flev) {
-    				$data_array['followee'][$flek]['date'] = date('m d', strtotime($flev->created_at));
+    				$data_array['followee'][$flek]['date'] = date('M j', strtotime($flev->created_at));
 					$user_followee = User::find($flev->followe_id);
 					if ($user_followee) {
 						$data_array['followee'][$flek]['email'] = $user_followee->email;
