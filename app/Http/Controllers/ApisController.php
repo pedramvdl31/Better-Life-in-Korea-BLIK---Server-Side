@@ -64,7 +64,7 @@ class ApisController extends Controller
             'followers_count' => $followers
         ));
     }
-    public function getFollowPageData() {
+    public function postgetFollowPageData() {
         $tkn = Input::get('tkn');
         $this_user = User::where('api_token',$tkn)->first();
         $status = 400;
