@@ -64,6 +64,21 @@ class ApisController extends Controller
             'followers_count' => $followers
         ));
     }
+    public function getFollowPageData() {
+        $tkn = Input::get('tkn');
+        $this_user = User::where('api_token',$tkn)->first();
+        $status = 400;
+        $data_array=null;
+        if (isset($this_user)&&!empty($this_user)) {
+            $data_array = Follow::PrepareFollowPageData($this_user);
+            $status = 200;
+        }
+        return Response::json(array(
+            'status' => $status,
+            'data_array' => $data_array
+        ));
+    }
+
     public function postDeletePost() {
         $tkn = Input::get('tkn');
         $num_posts = "0";

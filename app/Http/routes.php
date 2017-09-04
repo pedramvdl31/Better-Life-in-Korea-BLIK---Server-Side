@@ -20,6 +20,7 @@ Route::post('/api/load-ads',  ['uses' => 'ApisController@postLoadAds']);
 Route::post('/api/load-ads-profile',  ['uses' => 'ApisController@postLoadAdsProfile']);
 Route::post('/api/view-profile-ads',  ['uses' => 'ApisController@postViewProfileAds']);
 Route::post('/api/get-profile-info',  ['uses' => 'ApisController@postProfileInfo']);
+Route::post('/api/get-followpage-data',  ['uses' => 'ApisController@postgetFollowPageData']);
 Route::post('/api/upload-profile-image', ['uses'=>'ApisController@postProfileChangeImage']);
 Route::post('/api/delete-post', ['uses'=>'ApisController@postDeletePost']);
 Route::post('/api/follow-user', ['uses'=>'ApisController@postFollowUser']);
