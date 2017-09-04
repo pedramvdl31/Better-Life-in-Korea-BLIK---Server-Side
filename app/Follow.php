@@ -35,7 +35,8 @@ class Follow extends Model
                     $data_array['followers'][$flk]['j'] = date('j', strtotime($flv->created_at));
 					$user_follower = User::find($flv->follower_id);
 					if ($user_follower) {
-						$data_array['followers'][$flk]['email'] = $user_follower->email;
+                        $data_array['followers'][$flk]['email'] = $user_follower->email;
+                        $data_array['followers'][$flk]['id'] = $user_follower->id;
 					}
     			}
     		}
@@ -48,7 +49,8 @@ class Follow extends Model
                     $data_array['followee'][$flek]['j'] = date('j', strtotime($flev->created_at));
 					$user_followee = User::find($flev->followe_id);
 					if ($user_followee) {
-						$data_array['followee'][$flek]['email'] = $user_followee->email;
+                        $data_array['followee'][$flek]['email'] = $user_followee->email;
+                        $data_array['followee'][$flek]['id'] = $user_followee->id;
 					}
     			}
     		}
