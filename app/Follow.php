@@ -50,12 +50,8 @@ class Follow extends Model
 					}
     			}
     		}
-
-
-
     	}
 
-    	Job::dump($data_array);
         return $data_array;
     }
 }
