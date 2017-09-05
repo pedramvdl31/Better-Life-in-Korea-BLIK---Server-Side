@@ -28,7 +28,7 @@ class Follow extends Model
     	if (isset($this_user)) {
     		$data_array=array();
             $count = 0 ;
-    		$all_f = Follow::where('status',1)->get();
+    		$all_f = Follow::where('status',1)->orderBy('created_at')->get();
 
             if ($all_f) {
                 foreach ($all_f as $k => $flv) {
