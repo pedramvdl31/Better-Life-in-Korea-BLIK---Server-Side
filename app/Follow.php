@@ -67,7 +67,7 @@ class Follow extends Model
         return $data_array;
     }
 
-    private function compare($a, $b)
+    function compare($a, $b)
     {
         return strtotime($a['date']) - strtotime($b['date']);
     }
