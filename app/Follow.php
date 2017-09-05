@@ -63,14 +63,14 @@ class Follow extends Model
     		}
     	}
 
-        usort($data_array, follow::compare());
+        usort($data_array, 'compare');
         return $data_array;
     }
 
-    static public function compare($a, $b)
+    private function compare($a, $b)
     {
         return strtotime($a['date']) - strtotime($b['date']);
     }
-    
+
 }
 
