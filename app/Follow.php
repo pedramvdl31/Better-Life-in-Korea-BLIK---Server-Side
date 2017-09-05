@@ -49,7 +49,7 @@ class Follow extends Model
     		$followee = Follow::where('follower_id',$this_user->id)->get();
     		if ($followee) {
     			foreach ($followee as $flek => $flev) {
-                    $data_array[strtotime($flev->created_at)['date'] = $flev->created_at;
+                    $data_array[strtotime($flev->created_at)]['date'] = $flev->created_at;
                     $data_array[strtotime($flev->created_at)]['type'] = 'following';
                     $data_array[strtotime($flev->created_at)]['m'] = date('M', strtotime($flev->created_at));
                     $data_array[strtotime($flev->created_at)]['j'] = date('j', strtotime($flev->created_at));
