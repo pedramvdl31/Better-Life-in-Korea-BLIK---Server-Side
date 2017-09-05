@@ -64,13 +64,14 @@ class Follow extends Model
     	}
 
         usort($data_array, 'compare');
-        return $data_array;
-    }
-
+        
     function compare($a, $b)
     {
         return strtotime($a['date']) - strtotime($b['date']);
     }
+        return $data_array;
+    }
+
 
 }
 
