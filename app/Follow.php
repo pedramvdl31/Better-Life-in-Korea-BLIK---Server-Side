@@ -33,7 +33,8 @@ class Follow extends Model
             if ($all_f) {
                 foreach ($all_f as $k => $flv) {
                     $data_array[$k]['date'] = $flv->created_at;
-                    if ((int)$flv->follower_id == $this_user) {
+                    $int_follower_id = (int)$flv->follower_id;
+                    if ($int_follower_id == $this_user) {
                         $data_array[$k]['type'] = 'follower';
                     } else {
                         $data_array[$k]['type'] = 'following';
