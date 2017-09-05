@@ -31,14 +31,14 @@ class Follow extends Model
     		$followingyou = Follow::where('followe_id',$this_user->id)->get();
     		if ($followingyou) {
     			foreach ($followingyou as $flk => $flv) {
-                    $data_array[$count]['type'] = 'follower';
-                    $data_array[$count]['m'] = date('M', strtotime($flv->created_at));
-                    $data_array[$count]['m'] = date('M', strtotime($flv->created_at));
-                    $data_array[$count]['j'] = date('j', strtotime($flv->created_at));
+                    $data_array[$flv->created_at]['type'] = 'follower';
+                    $data_array[$flv->created_at]['m'] = date('M', strtotime($flv->created_at));
+                    $data_array[$flv->created_at]['m'] = date('M', strtotime($flv->created_at));
+                    $data_array[$flv->created_at]['j'] = date('j', strtotime($flv->created_at));
 					$user_follower = User::find($flv->follower_id);
 					if ($user_follower) {
-                        $data_array[$count]['email'] = $user_follower->email;
-                        $data_array[$count]['id'] = $user_follower->id;
+                        $data_array[$flv->created_at]['email'] = $user_follower->email;
+                        $data_array[$flv->created_at]['id'] = $user_follower->id;
 					}
                     $count++;
     			}
@@ -48,13 +48,13 @@ class Follow extends Model
     		$followee = Follow::where('follower_id',$this_user->id)->get();
     		if ($followee) {
     			foreach ($followee as $flek => $flev) {
-                    $data_array[$count]['type'] = 'following';
-                    $data_array[$count]['m'] = date('M', strtotime($flev->created_at));
-                    $data_array[$count]['j'] = date('j', strtotime($flev->created_at));
+                    $data_array[$flev->created_at]['type'] = 'following';
+                    $data_array[$flev->created_at]['m'] = date('M', strtotime($flev->created_at));
+                    $data_array[$flev->created_at]['j'] = date('j', strtotime($flev->created_at));
 					$user_followee = User::find($flev->followe_id);
 					if ($user_followee) {
-                        $data_array[$count]['email'] = $user_followee->email;
-                        $data_array[$count]['id'] = $user_followee->id;
+                        $data_array[$flev->created_at]['email'] = $user_followee->email;
+                        $data_array[$flev->created_at]['id'] = $user_followee->id;
 					}
                     $count++;
     			}
