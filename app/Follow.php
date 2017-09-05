@@ -63,7 +63,7 @@ class Follow extends Model
     		}
     	}
 
-        usort($data_array, 'compare');
+        usort($data_array, 'follow::compare');
         return $data_array;
     }
 }
