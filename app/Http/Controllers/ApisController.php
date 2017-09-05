@@ -911,7 +911,7 @@ class ApisController extends Controller
             'charset' => 'utf-8'
         );
         $status = 400;
-        $id = Input::get('profile_id');
+        $id = Input::get('profile_id');//this is AD ID NOT PROFILE ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         $lat = Input::get('lat');
         $lng = Input::get('lng');
         $tkn = Input::get('tkn');
