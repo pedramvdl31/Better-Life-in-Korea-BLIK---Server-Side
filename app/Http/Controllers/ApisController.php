@@ -943,7 +943,7 @@ class ApisController extends Controller
             $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
         }
         if (isset($lat,$lng,$user_id)) {
-            $ads = Ad::PrepareProfileAdsAjax($id,$take_ad,$skip_ad,$tkn,$lat,$lng);
+            $ads = Ad::PrepareProfileAdsAjax($user_id,$take_ad,$skip_ad,$tkn,$lat,$lng);
             $status = 200;
             return Response::json(array(
                 'status' => $status,
