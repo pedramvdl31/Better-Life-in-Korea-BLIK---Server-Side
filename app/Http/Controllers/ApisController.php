@@ -925,8 +925,8 @@ class ApisController extends Controller
         $followers = "0";
         $followtext = "Follow";
         $followclass = "follow-user";
-        $this_ad = Ad::where('id',$id)->first();
-        $this_user = User::where('id',$this_ad->user_id)->first();
+        // $this_ad = Ad::where('id',$id)->first();
+        $this_user = User::where('id',$user_id)->first();
         if (isset($this_user)&&!empty($this_user)) {
             $followers = count(Follow::where('followe_id',$this_user->id)->get());
             if (isset($logged_user)&&!empty($logged_user)) {
