@@ -911,7 +911,6 @@ class ApisController extends Controller
             'charset' => 'utf-8'
         );
         $status = 400;
-        $id = Input::get('ad_id');
         $user_id = Input::get('user_id');
         $lat = Input::get('lat');
         $lng = Input::get('lng');
@@ -943,7 +942,7 @@ class ApisController extends Controller
             $obf_email = Job::obfuscate_email($this_user->email);
             $num_posts = count(Ad::where('status','1')->where('user_id',$this_user->id)->get());
         }
-        if (isset($lat,$lng,$id)) {
+        if (isset($lat,$lng,$user_id)) {
             $ads = Ad::PrepareProfileAdsAjax($id,$take_ad,$skip_ad,$tkn,$lat,$lng);
             $status = 200;
             return Response::json(array(
