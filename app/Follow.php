@@ -47,7 +47,7 @@ class Follow extends Model
                         $data_array[$k]['id'] = $user_follower->id;
                     }
                 }
-                $data_array[$k]['m'] = date('y M', strtotime($flv->created_at));
+                $data_array[$k]['m'] = date('M Y', strtotime($flv->created_at));
                 $data_array[$k]['j'] = date('j', strtotime($flv->created_at));
                 $count++;
             }
