@@ -503,13 +503,13 @@ class Ad extends Model
                 $data_array[$dk]['user_email'] = Job::obfuscate_email(User::where('id',$cur_user_id)->value('email'));
 
                 $poster_id = $dv['user_id'];
-                $ndis = Job::distance(($float)$dv['lat'],($float)$dv['lng'],$orlat,$orlng,"K",2);
+                $ndis = Job::distance(floatval($dv['lat']),floatval($dv['lng']),$orlat,$orlng,"K",2);
                 $dun = ' KM';
                 // Job::dump($ndis);
                 if ($ndis<=1.0) {
                     // Job::dump('here m');
                     $dun = ' M';
-                    $ndis = Job::distance(($float)$dv['lat'],($float)$dv['lng'],$orlat,$orlng,"M",0);
+                    $ndis = Job::distance(floatval($dv['lat']),floatval($dv['lng']),$orlat,$orlng,"M",0);
                 }
 
                 $data_array[$dk]['dis'] = $ndis.$dun;
