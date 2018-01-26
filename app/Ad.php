@@ -114,12 +114,13 @@ class Ad extends Model
         }
         return $output;
     }
-    static public function PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng) {
+    static public function PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng,$cat) {
         $output = null;
-        if ($lat==0||$lat=='0'||$lng==0||$lng=='0') {
+        if (!isset($lat,$lng)||empty($lat)&&empty($lng)) {
             $ads = Ad::where('status',1)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
         } else {
-            $ads = Ad::select(
+            if ($cat != 0) {
+                $ads = Ad::select(
                  \DB::raw("*,
                 ( 3959 * acos( cos( radians(" . $lat . ") ) *
                 cos( radians( lat ) )
@@ -130,7 +131,23 @@ class Ad extends Model
                 ->orderBy("distance")
                 ->skip($skip_ad)
                 ->take($take_ad)
-                ->get();
+                ->where('cat_id',$cat)
+                ->get(); 
+                
+            } else {
+                $ads = Ad::select(
+                     \DB::raw("*,
+                    ( 3959 * acos( cos( radians(" . $lat . ") ) *
+                    cos( radians( lat ) )
+                    * cos( radians( lng ) - radians(" . $lng . ")
+                    ) + sin( radians(" . $lat . ") ) *
+                    sin( radians( lat ) ) )
+                    ) AS distance"))
+                    ->orderBy("distance")
+                    ->skip($skip_ad)
+                    ->take($take_ad)
+                    ->get();   
+            }
         }
         if (isset($ads)) {
             $output = Ad::PrepareAdsForMapAjax($ads,$lat,$lng);
