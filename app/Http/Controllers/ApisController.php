@@ -869,6 +869,10 @@ class ApisController extends Controller
 
         if (isset($ads)) {
             Job::dump('isset');
+            Job::dump($ads);
+            if (empty($ads)) {
+                Job::dump('empty(var)');
+            }
         } elseif(empty($ads)){
             Job::dump('empty(var)');
         }
