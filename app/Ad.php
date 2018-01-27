@@ -115,15 +115,11 @@ class Ad extends Model
         return $output;
     }
     static public function PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng,$cat) {
-        Job::dump('here 1');
         $output = null;
         if (!isset($lat,$lng)||empty($lat)&&empty($lng)) {
-            Job::dump('here 2');
             $ads = Ad::where('status',1)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
         } else {
-            Job::dump('here 3');
             if ($cat != 0) {
-                Job::dump('here 4');
                 $ads = Ad::select(
                  \DB::raw("*,
                 ( 3959 * acos( cos( radians(" . $lat . ") ) *
@@ -139,7 +135,6 @@ class Ad extends Model
                 ->get(); 
                 
             } else {
-                Job::dump('here 5'.$cat);
                 $ads = Ad::select(
                      \DB::raw("*,
                     ( 3959 * acos( cos( radians(" . $lat . ") ) *
