@@ -861,7 +861,11 @@ class ApisController extends Controller
         $skip_ad = $skip_ad + 1;//WHAT IS THIS?????
         $cat = Input::get('allPostPreferedCategory');
         $ads = Ad::PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng,$cat);
-        $status = 200;
+        if (isset($ads)) {
+            $status = 200;
+        } else {
+            $status = 401;
+        }
         return Response::json(array(
             'status' => $status,
             'ads' => $ads
