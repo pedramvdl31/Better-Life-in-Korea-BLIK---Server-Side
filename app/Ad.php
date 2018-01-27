@@ -122,7 +122,7 @@ class Ad extends Model
             $ads = Ad::where('status',1)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
         } else {
             Job::dump('here 3');
-            if ($cat != 0) {
+            if ((int)$cat != 0) {
                 Job::dump('here 4');
                 $ads = Ad::select(
                  \DB::raw("*,
