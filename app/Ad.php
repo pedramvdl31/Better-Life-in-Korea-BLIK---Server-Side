@@ -115,6 +115,7 @@ class Ad extends Model
         return $output;
     }
     static public function PrepareAdsMapAjax($take_ad,$skip_ad,$lat,$lng,$cat) {
+        Job::dump('here');
         $output = null;
         if (!isset($lat,$lng)||empty($lat)&&empty($lng)) {
             $ads = Ad::where('status',1)->orderBy('id', 'desc')->skip($skip_ad)->take($take_ad)->get();
