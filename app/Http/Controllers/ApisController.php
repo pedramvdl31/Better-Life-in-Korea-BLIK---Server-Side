@@ -866,6 +866,12 @@ class ApisController extends Controller
         } else {
             $status = 401;
         }
+
+        if (isset($ads)) {
+            Job::dump('isset');
+        } elseif(empty($ads)){
+            Job::dump('empty(var)');
+        }
         return Response::json(array(
             'status' => $status,
             'ads' => $ads
